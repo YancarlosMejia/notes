@@ -1,0 +1,538 @@
+\documentclass{article}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+
+\section*{Lecture 4} % (fold)
+\label{sec:lecture_4}
+\textbf{Functional requirements} - requirements that are concerned with what the system should do/how it should behave
+
+\textbf{Quality Requirements} - requirements that are concerned with how well the system supports functionalities
+
+\paragraph{Modifiability} % (fold)
+\label{par:modifiability}
+is  a quality attribute that is more concerned with ``fitness for future'' as opposed to ``fitness for purpose'' like functionality, performance, reliability and security. Think of modifiability as the foundation for balancing the other qualities. Often \textbf{maintainability} is used to describe this as well. A \textbf{module implementation} is the secrets hidden in the module.The \textbf{axiom of independence} states that a specific module can be adjusted to satisfy its requirement without effecting other requirements.
+% paragraph modifiability (end)
+
+\paragraph{Modularity} % (fold)
+\label{par:modularity}
+is the key to achieving modifiability. A \textbf{module} is an unit of the system with a defined purpose and interface. They allow:
+\begin{itemize}
+    \item better understanding of system pieces
+    \item parallel development
+    \item evolution by hiding implementation details (limits ripples of changes)
+    \item independent compilation
+\end{itemize}
+
+\paragraph{Interfaces} % (fold)
+\label{par:interfaces}
+are contracts between modules and their environments. Interfaces should be based on abstractions that are unlikely to change (shit gets crazy when interfaces change). A \textbf{provided interface} tells what services the module provides its environment. A \textbf{required interface} tells what services the module requires of its environment. A \textbf{syntactic interface} specifies how to invoke a modules provided services (usually in class declarations). A \textbf{semantic interface} specifies how a module behaves (usually in comments).
+%paragraph modularity (end)
+
+\paragraph{Organization} % (fold)
+\label{par:organization}
+Smaller simpler modules are usually preferred wince they will use less dependencies. These are also easier to implement and maintain. Often large systems are modularized into a hierarchy so that we can make larger modules out of smaller ones. Keep your mappings of module names in the hierarchy simple. \textbf{Crosscutting} is when a module has dependencies at different levels of the hierarchy which can get confusing. \textbf{Tangling} is when a module satisfies requirements across the hierarchy. Try to avoid these.
+% paragraph organization (end)
+
+\paragraph{Analysis} % (fold)
+\label{par:analysis}
+of modifiability can be improved by increasing coupling (clearer rules, more abstraction of common services, localize changes), or by decreasing coupling(reduce ripple effects, no globals, dependency injection)
+% paragraph analysis (end)
+
+%section lecture_4 (end)
+
+
+\section*{Lecture 5} % (fold)
+\label{sec:lecture_5}
+\textbf{Cohesion} is a measure of the coherence of a module amongst its other pieces (GOOD).
+
+\textbf{Coupling} is the degree of relatedness between modules (BAD).
+
+\paragraph{Good Cohesion} % (fold)
+\label{par:good_cohesion}
+means that each module has a clear purpose (responsibility). Modules gather like purposed operations and classes. A good design has clear rules where to put new code during its evolution. Good cohesion happens when there is a clear purpose for each module, function are related by topic or interaction, and modules are abstractions.
+% paragraph good_cohesion (end)
+
+
+\paragraph{Bad Cohesion} % (fold)
+\label{par:bad_cohesion}
+happens through:
+\begin{itemize}
+    \item  coincidental cohesion - when code is put in a random module (can happen when design is not clear)
+    \item  god classes - when a class has too many responsibilities, often has non communicating behaviors(functions that share no data or results)
+    \item  control flow cohesion - when code is merged into a single module to share common flow
+    \item  and temporal cohesion.all operation executed at a similar point in time into a module (leads to duplication, and complicated logic)
+\end{itemize}
+
+% paragraph bad_cohesion (end)
+
+\paragraph{Coupling} % (fold)
+\label{par:coupling}
+happens due to different types of dependencies:
+\begin{itemize}
+    \item data - A provides data to B
+    \item control - A controls execution of B
+    \item service - A calls a service in B
+    \item identity - A knows of target module B
+    \item location - A knows the location of target module B
+    \item quality of service - A expects certain quality of service from B
+    \item content - A includes code from B
+\end{itemize}
+You can minimize coupling by minimizing the number of dependencies among modules (dependencies within module is fine) or minimizing the strength of the dependencies (data is weakest). Its OK to have more dependencies on stable interfaces, but frequent interface changes should have less dependencies.
+% paragraph coupling (end)
+
+\paragraph{High Coupling} % (fold)
+\label{par:high_coupling}
+is bad. Hidden coupling is even worse, everything should be explicit and in interfaces (I'm looking at you JavaScript). This can be caused by mutable globals and reflection. \textbf{Implementation inheritance} causes strong coupling and lacks a clear interface, inheriting interfaces is much more desirable since it doesnt suffer the ``fragile base class'' problem (base class can break everything). \textbf{Control coupling} occurs when one module controls execution flow of another usually through flags, should try to use polymorphism instead. \textbf{Stamp coupling} occurs when more data is passed to a module than is necessary, it introduces more dependency than is needed.
+% paragraph high_coupling (end)
+
+% section lecture_5 (end)
+
+\section*{Lecture 6} % (fold)
+\label{sec:lecture_6}
+\paragraph{Refactoring}
+\label{par:refactoring}
+is improving design without changing functionality.
+% paragraph refactoring (end)
+
+\paragraph{Technical Debt and Incremental Design} % (fold)
+\label{par:technical_debt_and_incremental_design}
+\textbf{Incremental Design} is looking at refactoring anytime anything new is added or fixed. By frequently refactoring to avoid building up design problems which lead to architectural erosion. \textbf{Technical debt} is the accumulation of design problems anytime something new is added without refactoring. Better to floss every night than have to get a root canal.
+% paragraph technical_debt_and_incremental_design (end)
+
+\paragraph{Test Drive Design} % (fold)
+\label{par:test_drive_design}
+is writing tests for a design before you start coding. Refactoring requires a comprehensive test suite to make sure you don't introduce new bugs. Tests should be written based on the requirements so they capture what should happen. Tests can also help flush out a design or interface.
+% paragraph test_drive_design (end)
+
+\paragraph{Code Smells} % (fold)
+\label{par:code_smells}
+indicate possible design problems, usually they trigger a refactor.
+
+\textbf{Duplicated Code}:
+\begin{itemize}
+    \item Disadvantages
+    \begin{itemize}
+        \item parallel maintenance - must propagate changes to multiple places
+        \item increases the amount of code to be maintained
+    \end{itemize}
+    \item Advantages
+    \begin{itemize}
+        \item independent development - evolve code in multiple different directions without breaking other's work
+        \item simplify things - clone can be specialized for target use making it complicated to refactor
+        \item increase performance - optimized for specific uses
+        \item no coupling
+    \end{itemize}
+    \item Ways to reduce:
+    \begin{itemize}
+        \item extract method - pullout duplicated code into shared method
+        \item extract class - make new common class to be inherited from
+        \item template method
+    \end{itemize}
+\end{itemize}
+% paragraph code_smells (end)
+
+% section lecture_6 (end)
+
+\section*{Lecture 7} % (fold)
+\label{sec:lecture_7}
+
+\paragraph{Long Method} % (fold)
+\label{par:long_method}
+Methods that are too long should usually be factored out into smaller methods called the compose methods.
+% paragraph long_method (end)
+
+\paragraph{Large Class} % (fold)
+\label{par:large_class}
+A class that has too many methods likely has too many responsibilities. Break it up into smaller classes or push parts of code into attributes. Some exceptions:
+\begin{itemize}
+    \item math utility classes - just a group of functions and not really OOP
+    \item library classes - cater to more usage context
+    \item monitors - needs operations for all controllers
+    \item constructor methods - may need many of these, they don't count to a classes method count
+\end{itemize}
+% paragraph large_class (end)
+
+\paragraph{Comments} % (fold)
+\label{par:comments}
+Comments inside methods imply opaque implementations. You should refactor the code to make it more self-evident.
+% paragraph comments (end)
+
+\paragraph{Switch Statement} % (fold)
+\label{par:switch_statement}
+These should usually be replaced with polymorphism. If you are dealing with data type you can used pattern matching. Anytime a new subtype is added you have to go edit every switch statement where it is used and recompile every subtype.
+% paragraph switch_statement (end)
+
+\paragraph{Primitive Obsession} % (fold)
+\label{par:primitive_obsession}
+This is when a developer tries to manipulate primitives to serve a purpose where a custom class would be better suited. This way we can encapsulate related functions and expand much more easily in the future.
+% paragraph primitive_obsession (end)
+
+\paragraph{Long Parameter List} % (fold)
+\label{par:long_parameter_list}
+This makes it difficult for clients to understand. Can be caused by:
+\begin{itemize}
+    \item a method having too many responsibilities -  break it into subtasks
+    \item method is operating on data that doesn't belong to it - move method to be with data owner
+    \item method takes too many disparate member variables - gather parameters into an object
+\end{itemize}
+% paragraph long_parameter_list (end)
+
+\paragraph{Feature Envy} % (fold)
+\label{par:feature_envy}
+This is where a mthod is more interested in another class and should be moved into that class.
+% paragraph feature_envy (end)
+
+\paragraph{Data Clumps} % (fold)
+\label{par:data_clumps}
+This is where a set of variables hang out together alot (are frequently passed as parameters together, or accessed at the same time), so they should be encapsulated together into an object.
+% paragraph data_clumps (end)
+
+\paragraph{Shotgun Surgery} % (fold)
+\label{par:shotgun_surgery}
+This is when a single change requires tones of changes to other unrelated things. These changes should be localized into one thing.
+% paragraph shotgun_surgery (end)
+
+\paragraph{Direct Constructor Call} % (fold)
+\label{par:direct_constructor_call}
+This often leads to brittleness. Calls to constructor go wonky when subclasses get involved so you should use a factory method instead.
+% paragraph direct_constructor_call (end)
+
+\paragraph{Speculative Generality} % (fold)
+\label{par:speculative_generality}
+This is when code is extended with shit because you might need it someday. This is bad as things will get complex for no reason at all. Instead you should add things when they are needed and evolve the design as required.
+% paragraph speculative_generality (end)
+% section lecture_7 (end)
+
+\section*{Lecture 8} % (fold)
+\label{sec:lecture_8}
+A design patter is a solution to a re-occurring design pattern (used at least 3 different systems). These are ways to package pieces of reusable design knowledge. They usually consist of:
+\begin{itemize}
+    \item design context and problem
+    \item design solution
+    \begin{itemize}
+        \item structural part made of elements and their roles and relationships/interactions
+        \item usually a UML
+    \end{itemize}
+    \item design consequences
+    \begin{itemize}
+        \item impacts on system qualities
+        \item implementation alternatives
+    \end{itemize}
+    \item examples
+\end{itemize}
+
+If a pattern relies of language specific constructs it is called a \textbf{idiom}.
+
+\paragraph{Composite Pattern} % (fold)
+\label{par:composite_pattern}
+Create a common interface for all elements (no matter their place in the hierarchy) so that all elements and their compositions can be treated the same. Basically we want to treat all individual objects and multiple recursively composed objects exactly the same. You want a component class that has operations used by individuals and collections, then you have a leaf class and composite class that inherit from it.
+% paragraph composite_pattern (end)
+
+\paragraph{Decorator Pattern} % (fold)
+\label{par:decorator_pattern}
+This is used when we want the ability to augment object with new responsibilities without creating a subclass. Basically you have an interface with a subclass for core functionality and a decorator subclass that contains an instance, which your concrete object class inherits from. The functions in the decorator class calls the same function on its instance which will then call the correct function from one of its subclasses. This function will add some functionality then call its super class function (defined in core functionalty class).
+% paragraph decorator_pattern (end)
+
+% section lecture_8 (end)
+
+\section*{Lecture 9} % (fold)
+\label{sec:lecture_9}
+\paragraph{Interpreter Pattern} % (fold)
+\label{par:interpreter_pattern}
+This provides a way to translate a language grammar into an object structure so that operations can be implemented. It has a abstract class for an expression (something composed of more specific parts combined) and from that class you have a subclass for terminal expressions and nonterminal expressions. All of these classes have some function for interpreting them that is called down the tree recursively.
+% paragraph interpretor_pattern (end)
+
+\paragraph{Visitor Pattern} % (fold)
+\label{par:visitor_pattern}
+This encapsulates operations on the object structure into object so that you can easily add new operations without disturbing the classes implementing the object structure. A visitor is an object encasing an operation. Visitors visit elements of the structure on which they operate through a common interface. Elements have a accept function that calls the visitors visit function for this element (ie the dog class would call visitor.visitDog(this)).
+% paragraph visitor_pattern (end)
+
+
+\textbf{Other Patterns}
+\begin{itemize}
+    \item Composite
+    \begin{itemize}
+        \item Understand UML composition (black diamond), including its semantics (no sharing, no cycles, nested life span), allowed multiplicities on the diamond, and the shape of the corresponding object diagrams.
+        \item Understand the tradeoff between uniform interface for leaf and composite vs. navigation and editing logic in composite only.
+    \end{itemize}
+    \item Decorator
+    \begin{itemize}
+        \item Be able to apply decorator to extend design generated by composite.
+        \item Understand the issue of split identity.
+    \end{itemize}
+    \item Adapter
+    \begin{itemize}
+        \item Understand the difference between adapter and decorator. Hint: think about what each pattern does to the interface of the wrapee.
+    \end{itemize}
+    \item Interpreter
+    \begin{itemize}
+        \item Understand that interpreter builds on composite.
+    \end{itemize}
+    \item Visitor
+    \begin{itemize}
+        \item Understand how double dispatching occurs.
+        \item Understand the interface of the visit methods.
+        \item Understand how visitors are unnecessary in functional programming (replaced by pattern matching).
+        \item Understand when to use visitor and when interpreter.
+    \end{itemize}
+    \item Singleton
+    \begin{itemize}
+        \item Understand the issue of a singleton being global state and the consequences (potential side effects, concurrent access).
+    \end{itemize}
+    \item Factory
+    \begin{itemize}
+        \item Understand the difference between abstract factory and factory method.
+    \end{itemize}
+    \item Strategy
+    \begin{itemize}
+        \item Understand how strategy supports dynamic reconfiguration thanks to
+        object composition.
+    \end{itemize}
+    \item Template Method
+    \begin{itemize}
+        \item Understand how to vary steps in template method subclass.
+        \item Understand the fragile base class problem and why object composition and interfaces are often a better alternative.
+    \end{itemize}
+    \item Iterator
+    \begin{itemize}
+        \item What does iterator encapsulate?
+        \item What is the difference between iterator vs. visitor? Hint: what is that each pattern encapsulates?
+    \end{itemize}
+    \item Observer
+    \begin{itemize}
+        \item Understand implementation variants to access subject's data: getting full update vs. selective registration and update.
+    \end{itemize}
+\end{itemize}
+% section lecture_9 (end)
+
+\section*{Lecture 10} % (fold)
+\label{sec:lecture_10}
+An architecure pattern is a solution to a re-occuring architectureal problem (same def as design pattern).
+
+It follows the same pattern as design patterns:
+\begin{itemize}
+    \item problem description
+    \item solution
+    \begin{itemize}
+         \item structures
+         \begin{itemize}
+             \item component types
+             \item connector types
+             \item topology - contraints on how things are connected
+         \end{itemize}
+         \item interactions
+     \end{itemize}
+    \item consequences
+\end{itemize}
+
+\subsection*{Layered Architecture} % (fold)
+\label{sub:layered_architecture}
+Each layer is a different level of abstraction. A layer provides for the layer above it an relies on the layer below it. Can be represented as a stack or onion layers.
+
+Structures:
+\begin{itemize}
+    \item components
+    \begin{itemize}
+        \item modules
+        \item interfaces
+    \end{itemize}
+    \item connectors
+    \begin{itemize}
+        \item function calls and callbacks
+        \item messages
+        \item queries
+        \item etc
+    \end{itemize}
+    \item topology
+    \begin{itemize}
+        \item hierarchy
+        \item pure form - communications between adjacent layers only
+    \end{itemize}
+\end{itemize}
+
+A \textbf{hierarchy} topology allows layers to talk up an down a complicated tree of relationships. A \textbf{pure form} allows only adjacent layers to talk to each other.
+
+Advantages of pure style:
+\begin{itemize}
+    \item better abstraction - layers can directly build on each other
+    \item portability - you can swap out lower layers easily
+\end{itemize}
+Disadvantages of pure style:
+\begin{itemize}
+    \item performance - we have to communicate through layers
+    \item limited functionality
+\end{itemize}
+
+We often use a hybrid called \textbf{cross-layer} which allows layers to be oddly shaped to give them access to layers above and blow them in different fashions.
+
+Dependencies should really only run down. Having low layers rely on high layers can make things unstable quickly.
+
+\paragraph{Exception handling} % (fold)
+\label{par:exception_handling}
+Exeptions need to bubble up through the layers when they are not properly handled. Ideally an exception should be handled in the same layer it is raised in (that is where the necessary data is, upper layers may not be expecting it, and passing shit increases coupling).
+% paragraph exception_handling (end)
+
+Consequences:
+\begin{itemize}
+    \item advantages
+    \begin{itemize}
+        \item better understand system by extraction
+        \item insulation from changes in lower levels
+        \item levels can be swapped out
+    \end{itemize}
+    \item disadvantages
+    \begin{itemize}
+        \item performance problems
+        \item not suitable for all systems
+    \end{itemize}
+\end{itemize}
+
+Tiered architectures and interpreters are special forms of layered architecture
+% subsection layered_architecture (end)
+
+\subsection*{Interpreters} % (fold)
+\label{sub:interpreters}
+These are often used when executing computer programs and are subject to similar consequences as layered architectures. A virtual machine is a special kind of interpreter to convert stuff. These have something called a \textbf{hypervisor} that handles the set up and tear down of the VM.
+% subsection interpreters (end)
+
+\subsection*{Tiered Architecture} % (fold)
+\label{sub:tiered_architecture}
+These are layered architectures that are often used in enterprise systems.
+
+Broken up into tier layers:
+\begin{itemize}
+    \item data management
+    \item business logic
+    \item presentation
+\end{itemize}
+
+Often data management and business logic are combined into one tier making it a two tier system. We really like to decouple the UI from basically everything else because it has a difference audience and different triggers
+
+Some design patterns used:
+\begin{itemize}
+    \item domain logic
+    \begin{itemize}
+        \item transaction script
+        \item table module
+        \item domain model
+        \item service layer
+    \end{itemize}
+    \item Data source
+    \begin{itemize}
+        \item table data gateway
+        \item row data gateway
+        \item active record
+        \item data mapper
+    \end{itemize}
+\end{itemize}
+
+You can break things up into as many tier as you want, but shit with similar functionality needs to be coupled and you need a concrete order of tiers.
+% subsection tiered_architecture (end)
+% section lecture_10 (end)
+
+\section*{Lecture 11} % (fold)
+\label{sec:lecture_11}
+\subsection*{Call and Return Architecture} % (fold)
+\label{sub:call_and_return_architecture}
+These are the architectures standard in code (main program, abstract classes, OO, functional).
+
+Main program Architecture:
+\begin{itemize}
+    \item hierarchy - decomposition into subroutines
+    \item components - procedures
+    \item connectors - procedure calls
+\end{itemize}
+
+Abstract classes Architecture:
+\begin{itemize}
+    \item data structures abstracted into set of operations
+    \item components - ADTs
+    \item connectors - function calls and messages
+\end{itemize}
+
+Object Oriented Architecture:
+\begin{itemize}
+    \item ADTs with inheritance and polymorphism
+    \item strengths
+    \begin{itemize}
+        \item domain modeling
+        \item abstract problems are easier to understand
+        \item interfaces and hierarchies
+    \end{itemize}
+    \item weaknesses
+    \begin{itemize}
+        \item high coupling
+        \item side-effects
+        \item complex interactions
+    \end{itemize}
+\end{itemize}
+
+Functional Programming Architecture:
+\begin{itemize}
+    \item Purity = immutable data
+\end{itemize}
+% subsection call_and_return_architecture (end)
+\subsection*{Interacting Processes} % (fold)
+\label{sub:interacting_processes}
+Structure:
+\begin{itemize}
+    \item components
+    \begin{itemize}
+        \item lightweight processes (preemptive threads, cooperative coroutines)
+        \item heavyweight processes (OS processes)
+    \end{itemize}
+    \item connectors
+    \begin{itemize}
+        \item shared variables
+        \item messages
+        \item events
+        \item co-routine 
+    \end{itemize}
+\end{itemize}
+
+\paragraph{OS Processes} % (fold)
+\label{par:os_processes}
+are much more costly than lightweight processes but can be used to build reliable systems as they provide memory protection and can restart other processes selectively.
+% paragraph os_processes (end)
+
+\paragraph{Concurrent State Machines} % (fold)
+\label{par:concurrent_state_machines}
+
+% paragraph concurrent_state_machines (end)
+% subsection interacting_processes (end)
+
+
+
+
+% section lecture_11 (end)
+
+
+
+
+\section*{Lecture 14} % (fold)
+\label{sec:lecture_14}
+\subsection*{Process Control Architectures} % (fold)
+\label{sub:process_control_architectures}
+Process control architecture is used to control physical processes and equipment (usually to maintain certain properties or equilibrium). Feedback is when you pipe the output of a system back into the input to stabalize it (see the entire course you're taking on it).
+
+There are multiple kinds of variables:
+\begin{itemize}
+    \item control variable - basically the output we want to control
+    \item manipulated variable - the input variable that we can fuck with
+    \item input/confounding variable - input variables that we cannot control
+    \item set point - the value we want the output to be
+\end{itemize}
+
+\textbf{Hybrid controllers} model both continuous and discrete behavior by toggling between controllers (usually via a state machine).
+
+\textbf{Multi-variable controllers} have multiple outputs and feedback loops (ahhhhh whyyyy).
+
+\textbf{Model-predicitve controllers} attempt to predict the output to try to increase performance (uber complex caclucations going down here).
+
+% subsection process_control_architectures (end)
+% section lecture_14 (end)
+
+
+
+\end{document}

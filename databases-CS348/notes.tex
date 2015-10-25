@@ -1,0 +1,81 @@
+\documentclass{article}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+
+
+
+\begin{document}
+\subsection{Compotentes}
+\paragraph{Data}
+Logical view and physical view of data. Logical view is what is seen by the programmers of the application and the physical view is what is seen by the system
+
+\paragraph{People}
+The users are the ones who pay for the system, we need to assume that they know nothing about the system (end user).
+
+Administator is the one who charge of the database.
+
+\section{1.4 Procedure}
+We have large complex data models, but we need a way to populate it with data (need to implement).
+
+We want to reduce the dependencies between programs and data. If we change the data it should have minimal effect on the program (UI excepted). Similarly we want very little change to data when the program is changed. This cannot be eliminated, but reduced.
+
+Three levels (external, conceptual, internal) that each have their own schemas, called the three shema approach
+\paragraph{external schema} view for users
+
+\paragraph{conceptual schema} integrates external schema
+
+\paragraph{internal schema} defined physical storage
+Three schema approach: https://en.wikipedia.org/wiki/Three_schema_approach
+
+When we change the application program only the external schema should change to fit it, maybe the conceptual a bit, but not the internal schema
+
+\subsection{Language facilities}
+\paragraph{Data Definition Language (DDL)} - specifies conceptual schema and subschemas and the mappings between them.
+\paragraph{Data dictionary, data directory or system catalog} - result of compilation of DDL statements in a schema; metadata.
+\paragraph{Data manipulation language (DML)} - commands issued in a host program and preprocess or compiler interprets these commands as calls to DBMS. (SQL is default)
+\paragraph{Query language} – a complete language for manipulating data interactively. Should be user friendly but not super powerful (interactive SQL is default)
+
+\subsection{Data Models}
+Value based model requires an attribute that can uniquly identify an object, Object based model does not.
+
+\subsection{Database Design Process}
+Identify functional requirements. From there figure out what data is required for those requirements, called database requirements. Structure this data in a understandable way (make a conceptual schema). This is where we make a entity relationship model. We use entity relationship models in the conceptual and logical (internal) schemas.
+
+\subsection{Entity Relationship Model}
+Invented in 70s and grew in popularity as variations were created, so we have a family of entity relationship models. These can get complicated and hard to read (we use a specific form of notation). An entity is something that has independent existence that is relevant to application. A single value attribute (for example a telephone) has only one value. Multivalue attributes are attributes that might have multiple parts to them (like an address). Some attributes don't belong to anyone and instead describe the relationships between them. Enities in a relationship type model dont have to have a primary key to be used.
+
+\begin{itemize}
+    \item rectangle - entity type
+    \item diamond - relationship type
+    \item circles - attributes
+\end{itemize}
+
+Binary relationship is between two entity types.
+
+\subsection{Aggregation} % (fold)
+\label{sub:aggregation}
+Aggregation is the grouping of entities that have a connected relationship and only one connection outside that group to the rest of the entity map we can redraw the map with those entities grouped into one entity
+% subsection aggregation (end)
+
+\subsection{Clustering} % (fold)
+\label{sub:clustering}
+Store chuncks to data together to make accessing it faster. Try to store a bunch in memory buffer to limit the number of times we need to read.
+% subsection clustering (end)
+
+
+\subsection{Ordered Files} % (fold)
+\label{sub:ordered_files}
+These make searching for specific files much easier (using a binary search since their order is maintained). Whenever you change the main data file all its elements need to be indexed.
+
+\paragraph{B+ tree} store the largest index of a block in its parent. There are three techniques, merging, splitting, and distribution. Everything is based on primary key value. The data block is represented by linked pages. Basically store the min and max values of each block in its parent block and you can just run a binary search (note: data must be sorted).
+% subsection ordered_files (end)
+
+\subsection{Relation Scheme} % (fold)
+\label{sub:relation_scheme}
+See the big ass example in lecture notes, page 85.
+
+
+% subsection relation_scheme (end)
+
+
+\end{document}

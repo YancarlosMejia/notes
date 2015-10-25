@@ -1,0 +1,27 @@
+i)
+No optimization:
+    BUSY: 11.15s user 0.01s system 100% cpu 11.147 total
+    NOBUSY: 13.88s user 0.03s system 100% cpu 13.895 total
+
+Optimization:
+    BUSY: 9.82s user 0.01s system 100% cpu 9.829 total
+    NOBUSY: 11.64s user 0.01s system 100% cpu 11.643 total
+
+ii) As can be expected times decreased with optimization, but contrary to expectations times increased when busy
+    waiting was removed.
+
+ii) When busy waiting was removed from the program times increased. This is probably due to context switching requiring
+    more time than threads spent in the wait loop. Since the insert and remove functions were very simple each producer
+    and consumer cycled in and out very quickly resulting in less time spent busy waiting, and more time spent context
+    switching.
+
+iv)
+    BUSY: 291.54s user 0.41s system 399% cpu 1:12.99 total
+    NOBUSY: 130.42s user 0.09s system 399% cpu 32.653 total
+
+v) Times increased greatly when a multicore environment was introduced.
+
+vi) The multiprocessor time was significantly greater due to the overhead from the creation, destruction, and
+    management of cores. There were threads created for each consumer and producer which greatly surpassed the number
+    of cores on my cpu. The amount of speed up was limited by this and the small size of each thread. This resulted in
+    the speed up from having multiple threads being dwarfed by the overhead from having multiple cores.

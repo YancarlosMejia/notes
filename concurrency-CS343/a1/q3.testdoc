@@ -1,0 +1,161 @@
+-------+---------------------------------------------------------------------------------------------------------------
+Test # | Purpose of Tests
+-------+---------------------------------------------------------------------------------------------------------------
+1     | Tests all possible lengths of valid lines
+------+----------------------------------------------------------------------------------------------------------------
+2     | Tests all possible lengths of invalid lines
+------+----------------------------------------------------------------------------------------------------------------
+3     | Tests empty line
+------+----------------------------------------------------------------------------------------------------------------
+4     | Tests line with too few values
+------+----------------------------------------------------------------------------------------------------------------
+5     | Tests line with too many values
+------+----------------------------------------------------------------------------------------------------------------
+6     | Tests invalid file name
+------+----------------------------------------------------------------------------------------------------------------
+7     | Tests no file given
+------+----------------------------------------------------------------------------------------------------------------
+8     | Tests  multiple files given
+------+----------------------------------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------------------------------------
+TEST 1
+-----------------------------------------------------------------------------------------------------------------------
+Command: utf8 input.txt
+
+Input:
+0x54
+0xc2a3
+0xec8abf
+0xf0908980
+
+Output:
+0x54 : valid 0x54
+0xc2a3 : valid 0xa3
+0xec8abf : valid 0xc2bf
+0xf0908980 : valid 0x10240
+
+
+Description: This test confirms that the program will properly validate lines of each possible length. Different logic
+is used when validating lines of different lengths as loops must run longer, the ranges change, and the first character
+has a different mask.
+
+
+-----------------------------------------------------------------------------------------------------------------------
+TEST 2
+-----------------------------------------------------------------------------------------------------------------------
+Command: utf8 input.txt
+
+Input:
+0xd7
+0xe0e3
+0xe09390
+0xf0899080
+
+Output:
+0xd7 : invalid
+0xe0e3 : invalid
+0xe09390 : invalid
+0xf0899080 : invalid
+
+
+
+Description: This test confirms that the program will properly invalidate lines of each possible length. Different logic
+is used when validating lines of different lengths as loops must run longer, the ranges change, and the first character
+has a different mask.
+
+
+-----------------------------------------------------------------------------------------------------------------------
+TEST 3
+-----------------------------------------------------------------------------------------------------------------------
+Command: utf8 input.txt
+
+Input:
+0xa
+
+Output:
+ : Warning! Blank line.
+
+
+Description: This test confirms that the program will properly warn about empty lines.
+
+
+-----------------------------------------------------------------------------------------------------------------------
+TEST 4
+-----------------------------------------------------------------------------------------------------------------------
+Command: utf8 input.txt
+
+Input:
+0xe0e3
+
+Output:
+0xe0e3 : invalid
+
+
+Description: This test confirms that the program will properly throw an error when the given number of bytes on a line
+is less than the expected length as determined by the first byte.
+
+
+-----------------------------------------------------------------------------------------------------------------------
+TEST 5
+-----------------------------------------------------------------------------------------------------------------------
+Command: utf8 input.txt
+
+Input:
+0xe98080
+0xff
+
+Output:
+0xe98080 : valid 0x9000. Extra characters 0xfff8
+0xff : invalid. Extra characters 0x9a84
+
+
+
+Description: This test confirms that the program will properly print any extra characters.
+
+
+-----------------------------------------------------------------------------------------------------------------------
+TEST 6
+-----------------------------------------------------------------------------------------------------------------------
+Command: utf8 fakefile.txt
+
+Input:
+nonexistent file
+
+Output:
+Error! Could not open input file "fakefile.txt"
+
+
+Description: This test confirms that the program will warn the user then exit properly when a incorrect file name is entered.
+
+
+-----------------------------------------------------------------------------------------------------------------------
+TEST 6
+-----------------------------------------------------------------------------------------------------------------------
+Command: utf8 input.txt fakefile.txt
+
+Input:
+0x23
+
+Output:
+0x23 : valid 0x23
+
+
+Description: This test confirms that the program will ignore any extra arguments passed in.
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+TEST 7
+-----------------------------------------------------------------------------------------------------------------------
+Command: utf8
+
+Input:
+0x23
+
+Output:
+0x23 : valid 0x23
+
+
+Description: This test confirms that the program will run with cin as the input stream if no file is given.

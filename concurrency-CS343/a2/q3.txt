@@ -1,0 +1,36 @@
+a)
+    Uniprocessor
+    shared:20000000
+    shared:20000000
+    shared:20000000
+    shared:20000000
+    shared:20000000
+    shared:20000000
+    shared:20000000
+    shared:20000000
+    shared:20000000
+    shared:20000000
+
+    Multiprocessor
+    shared:10170276
+    shared:10060363
+    shared:10061097
+    shared:10056243
+    shared:10136382
+    shared:10041662
+    shared:10059947
+    shared:10036648
+    shared:10073501
+    shared:10116550
+
+
+b)
+    All ten runs on a uniprocessor system should be the same because nothing can change with the order of execution on each run. The same cannot be said for multiprocessor systems since many tasks are running concurrently and all incrementing the same shared value. This means that the shared value will be incremented by a different amount each time as it is in different tasks at different times and frequently is overwritten.
+
+
+c)
+    The max number is 20000000 since this is the optimal case where each increment action runs to completion before the next one starts. The min number is 5000000 which occurs when every single attempt to iterate increments the value, but gets disrupted by the other thread before it can assign.
+
+
+d)
+    The uniprocessor values are much larger because it run each thread to completion before moving on, so thread one gets all its iteration in and thread two does as well. The multiprocessor values are smaller because both threads are running at the same time allowing one thread overwrite the shared value before the other thread can finish assigning to it.

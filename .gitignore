@@ -1,0 +1,14 @@
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.dvi
+*.fdb_latexmk
+*.synctex.gz
+*.pdfsync
+*.o
+
+cde2015/.meteor/*
+geology-EARTH121/EARTH121.pdf
