@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{parskip}
 \usepackage[margin=.6in]{geometry}
+\usepackage{hyperref}
 
 
 
@@ -25,7 +26,7 @@ Three levels (external, conceptual, internal) that each have their own schemas, 
 \paragraph{conceptual schema} integrates external schema
 
 \paragraph{internal schema} defined physical storage
-Three schema approach: https://en.wikipedia.org/wiki/Three_schema_approach
+Three schema approach: \url{https://en.wikipedia.org/wiki/Three_schema_approach}.
 
 When we change the application program only the external schema should change to fit it, maybe the conceptual a bit, but not the internal schema
 
@@ -73,9 +74,61 @@ These make searching for specific files much easier (using a binary search since
 \subsection{Relation Scheme} % (fold)
 \label{sub:relation_scheme}
 See the big ass example in lecture notes, page 85.
-
-
 % subsection relation_scheme (end)
+
+\section*{Relational Algebra} % (fold)
+\label{sec:relational_algebra}
+Relational tables require all rows to be unique as designated by the primary key (you must have at least one candidate key that is not updated or null). Foreign keys can be used to reference rows in other tables.
+
+\begin{verbatim}
+table_constraint:=
+    [CONSTRAINT name]
+    {UNIQUE (<column name> + ) |
+    PRIMARY KEY (<column name> + ) |
+    FOREIGN KEY (<column name> + )
+    REFERENCES <table name> [ON {UPDATE |
+    DELETE} <effect>]}
+<effect> := SET NULL | NO ACTION
+    (RESTRICT) | CASCADE | SET DEFAULT
+\end{verbatim}
+
+\paragraph{Union operation} % (fold)
+\label{par:union_operation}
+This operation combines two tables if they have the same attributes (all the same columns) and deletes any duplicates. Denoted by $\cup$.
+% paragraph union_operation (end)
+\paragraph{Set Difference} % (fold)
+\label{par:set_difference}
+This operation returns any elements in one table that are not in  the other (tables must have same attributes). R-S results in values that are in R and not in S. Denoted by $-$.
+% paragraph set_difference (end)
+\paragraph{Projection} % (fold)
+\label{par:projection}
+This operation removes or rearranges columns. R(A,B,C) $\rightarrow$ $\pi_{C,A}(R) = R(C,A)$. Denoted by $\pi_{columns}(TABLE)$.
+% paragraph projection (end)
+\paragraph{Selection} % (fold)
+\label{par:selection}
+This operations returns rows in a table that satisfy conditions. Denoted by $\sigma_{conditions}$.
+% paragraph selection (end)
+\paragraph{Cartesian Product} % (fold)
+\label{par:cartesian_product}
+This operation combines two tables by taking their Cartesian product (make all possible combinations of rows). (A, B) X (C D, E F) = (A C D, A E F, B C D, B E F). Denoted by $\times$.
+% paragraph cartesian_product (end)
+\paragraph{Rename} % (fold)
+\label{par:rename}
+This operation renames columns. Denoted $\rho_{table(columns)}(TABLE)$.
+% paragraph rename (end)
+\paragraph{Natural Join} % (fold)
+\label{par:natural_join}
+This joins two tables based on a shared attribute. Think of a cartesian product but only for rows that have matching attributes. Denoted by $*$.
+% paragraph natural_join (end)
+\paragraph{Binary Relational} % (fold)
+\label{par:binary_relational}
+This operation is a sub operation on natural joins that provides a condition to the join to only include rows that satisfy the condition. This is equivalent to running the set operator on a cartesian product. $R*S_{\theta condition} := \sigma(R\times S)$. Denoted $\sigma$.
+% paragraph binary_relational (end)
+\paragraph{Intersection} % (fold)
+\label{par:intersection}
+This operation returns any rows that are in both tables (tables must have matching attributes). Denoted $\cap$.
+% paragraph intersection (end)
+% section relational_algebra (end)
 
 
 \end{document}

@@ -9,8 +9,7 @@
 \includepdf[pages={1}]{page1.pdf}
 \section*{Section 4.1} % (fold)
 \label{sec:section_4_1}
-
-\begin{table}[ht]
+\begin{table}[!htbp]
 \centering
     \begin{tabular}{|c|c|c|c|c|}
         \hline
@@ -21,12 +20,23 @@
     \end{tabular}
     \caption{Response specifications - experimental values}
 \end{table}
-
-\begin{figure}[ht]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=7in]{4_1.jpg}
 \caption{Second order underdamped}
 \end{figure}
+\begin{table}[!htbp]
+\centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        $T_p$(s) & $c_{max}$ (V) & $c_{ss}$(V) & OS(\%) & $\zeta$ & $\omega_n$(rad/s)\\
+        \hline
+        8.22E-003 & 1.48 & 1 & 48 & 0.2275 & 435.68\\
+        \hline
+    \end{tabular}
+    \caption{System identification data and results}
+\end{table}
+\newpage
 
 Calculations for table 2:
 
@@ -53,38 +63,24 @@ Using the formula for peak time
 \end{align*}
 
 
-\begin{table}[ht]
-\centering
-    \begin{tabular}{|c|c|c|c|c|c|}
-        \hline
-        $T_p$(s) & $c_{max}$ (V) & $c_{ss}$(V) & OS(\%) & $\zeta$ & $\omega_n$(rad/s)\\
-        \hline
-        8.22E-003 & 1.48 & 1 & 48 & 0.2275 & 435.68\\
-        \hline
-    \end{tabular}
-    \caption{System identification data and results}
-\end{table}
+\textbf{Discussing Table 2}
 
-\paragraph{Discussing Table 2}
+Prelab values: $\zeta = 0.2462$ $\omega = 406.20$
 
-Prelab values: zeta = 0.2462 omega = 406.20
-
-Experimental values: zeta = 0.2275 omega = 435.68
+Experimental values: $\zeta = 0.2275$ $\omega = 435.68$
 
 The experimental values differed from the theoretical values calculated in the prelab by around 8\%. Errors may have stemmed from inaccurate graph reading when recording experimental values, or by small rounding errors during mathematical calculations for experimental and theoretical values.
 
 % section section_4_1 (end)
-
+\newpage
 \section*{Section 4.2} % (fold)
 \label{sec:section_4_2}
-
-\begin{figure}[ht]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=7in]{4_2.jpg}
 \caption{Open-loop step response with K=1}
 \end{figure}
-
-\begin{table}[ht]
+\begin{table}[!htbp]
 \centering
     \begin{tabular}{|c|c|c|c|c|}
         \hline
@@ -101,8 +97,9 @@ The experimental values differed from the theoretical values calculated in the p
     \end{tabular}
     \caption{Open-loop step response values for Kp=variable}
 \end{table}
+\newpage
 
-\paragraph{Discussing Table 3}
+\textbf{Discussing Table 3}
 
 \textbf{Peak Value}: This increased with Kp. This fits control theory as the peak value is the highest oscillation above the steady state value, since the steady state value is increasing without $\zeta$ changing this value should rise as well.
 
@@ -110,32 +107,30 @@ The experimental values differed from the theoretical values calculated in the p
 
 \textbf{Overshoot and Peak time}: These values did not change much. This fits control theory as the equations for overshoot and peak time are proportional to $\zeta$ and $\omega_n$ which do not vary with with K or Kp in the open-loop system.
 
-
-\begin{figure}[ht]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=7in]{4_2b.jpg}
 \caption{Closed-loop step response with K=1}
 \end{figure}
-TODO: FIGURE OUT STEADY STATE ERROR FOR TABLE 3
-\begin{table}[ht]
+\begin{table}[!htbp]
 \centering
     \begin{tabular}{|c|c|c|c|c|c|}
         \hline
         $K_p$ & $T_p$(s) & $y_{max}$(V) & $y_{ss}$(V) & $e_{ss}$ & OS(\%)\\
         \hline
-        1 & 5.6E-003 & 0.82 & 0.5 & & 64\\
+        1 & 5.6E-003 & 0.82 & 0.5 & 0.5 & 64\\
         \hline
-        1.3 & 5.2E-003 & 0.93 & 0.57 & & 63\\
+        1.3 & 5.2E-003 & 0.93 & 0.57 & 0.565 & 63\\
         \hline
-        1.66 & 4.92E-003 & 1.03 & 0.64 & & 62\\
+        1.66 & 4.92E-003 & 1.03 & 0.64 & 0.615 & 62\\
         \hline
-        2 & 4.5E-003 & 1.12 & 0.68 & & 65\\
+        2 & 4.5E-003 & 1.12 & 0.68 & 0.667 & 65\\
         \hline
     \end{tabular}
     \caption{Closed-loop step response values for Kp=variable}
 \end{table}
 
-\paragraph{Discussing Table 4}
+\textbf{Discussing Table 4}
 
 \textbf{Peak Value and Steady State value}: These values are increasing with Kp. Due to control theory our system output with the increase of Kp from 1 is:
 \begin{align*}
@@ -145,98 +140,121 @@ As Kp increases in the above equation the output will also increase is what caus
 
 \textbf{Overshoot}: The overshoot does not change much. This is due to the steady state and peak value increasing by the same ratio. We can also see that this value will not change because it is related to $\zeta$ which has not changed.
 
-\textbf{Peak Time}: The peak time is decreasing as Kp increases
-TODO: FIGURE THIS OUT LATER
+\textbf{Peak Time}: The peak time is decreasing as Kp increases. This is due to the peak time being inversely proportional to the natural frequency. In this system the natural frequency was proportional to Kp, so when Kp increases the natural frequency increases which causes the peak time to decrease.
+
+\textbf{Zeta and Omega Calculations}
+
+The new transfer function for the system is:
+\begin{align*}
+    H(S) &= \frac{K_ibTKK_p}{s^2 + aTs + K_ibT + K_ibTK_pK}\\
+            & K_p = 1 \tt{ and } K = 1\\
+            &= \frac{K_ibT}{s^2 + aTs + 2K_ibT}\\
+            &= \frac{1}{2} \times \frac{2K_ibT}{s^2 + aTs + 2K_ibT}\\
+\end{align*}
+This is a standard second order system with a coefficient. Since coefficients carry over during a Laplace transform we can use the equations for a standard second order system with the coefficient.
+
+Based on the definition of standard second order system:
+\begin{align*}
+    \omega_n^2 &= 2K_ibTKK_p\\
+    \omega_n &= \sqrt{2K_ibTKK_p}\\
+        &= \sqrt{2 * 330 * 5 * 100}\\
+        &= \sqrt{2 * 330 * 5 * 100}\\
+        &= 574.45
+\end{align*}
+\begin{align*}
+    aT &= 2\zeta\omega_n\\
+    \zeta &= \frac{aT}{2\omega_n}\\
+        &= \frac{2 * 100}{2 * 574.45}\\
+        &= 0.35
+\end{align*}
 
 
-TODO: CHECK THAT THIS IS LEGAL
-CALCULATE ZETA AND OMEGA N FOR OPEN AND CLOSED LOOP AND COMPARE WITH THEORETICAL
 Using the formula for overshoot
 \begin{align*}
-    \zeta &= \sqrt{\frac{\ln^2 {OS}}{\pi^2 +\ln^2 {OS}}} \\
-    \zeta &= \sqrt{\frac{\ln^2 {0.64}}{\pi^2 +\ln^2 {0.64}}} \\
-    \zeta &=  0.14\\
+    OS &= \frac{1}{2} e^{\frac{-\zeta\pi}{\sqrt{1-\zeta^2}}}\\
+    \zeta &= \sqrt{\frac{\ln^2 {\frac{OS}{2}}}{\pi^2 +\ln^2 {\frac{OS}{2}}}} \\
+    \zeta &= \sqrt{\frac{\ln^2 {\frac{0.64}{2}}}{\pi^2 +\ln^2 {\frac{0.64}{2}}}} \\
+    \zeta &=  0.34\\
 \end{align*}
 
+Since the peak time formula is found by taking the sinusoidal function is highest, it is not influenced by the added coefficient so we can use the same function for calculating $\omega_n$.
 Using the formula for peak time
 \begin{align*}
+    T_p &= \frac{\pi}{\omega_n\sqrt{1-\zeta^2}}\\
     \omega_n &= \frac{\pi}{T_p\sqrt{1-\zeta^2}}\\
-    \omega_n &= \frac{\pi}{0.0056\sqrt{1-0.14^2}}\\
-    \omega_n &= 572.21\\
+    \omega_n &= \frac{\pi}{0.0056\sqrt{1-0.34^2}}\\
+    \omega_n &= 596.76\\
 \end{align*}
 
-Open loop values
-Theoretical: zeta = 0.2462 omega = 406.20
 
-Experimental values: zeta = 0.2275 omega = 435.68
+Experimental Open-loop: $\zeta = 0.2275$ $\omega_n = 435.68$
+
+Experimental Closed-loop: $\zeta = 0.34$ $\omega_n = 596.76$
+
+Theoretical Open-loop: $\zeta = 0.2462$ $\omega = 406.20$
+
+Theoretical Closed-loop: $\zeta = 0.35$ $\omega_n = 575.45$
+
+The dampening ratio increased when the loop was closed due to the stabilizing nature of a closed loop. The output is dampened by the subtraction of itself from the input. The transfer function multiplied to natural frequency by 2 which resulted in it increasing by a factor of $\sqrt{2}$.
 
 
 Adjusted value is k=1.04
 
-
-\begin{table}[ht]
+\begin{table}[!htbp]
 \centering
     \begin{tabular}{|c|c|c|c|c|}
         \hline
         & Low-freq gain (dB) & Experimental bw (rad/s) & Theor or sim bw (rad/s) & Error (\%)\\
         \hline
-        Open-loop & 0.5 & 589 & & \\
+        Open-loop & 0.5 & 589 & 603 & 2.4\\
         \hline
-        Closed-loop & -5.8 & 850 & & \\
+        Closed-loop & -5.8 & 850 & 869 & 2.2\\
         \hline
     \end{tabular}
     \caption{Bandwidth (bw) measurement results}
 \end{table}
+Closing the loop dramatically increased the measured bandwidth. Bandwidth is defined as the range of frequencies over which the output is is relatively close to the input. We want to be able to change bandwidth in order to lessen the amount of disturbance.
 
-DISCUSS EFFECTS OF CLOSING THE LOOP ON FREQUENCY RESPONSE
-
-WHY IS IT DESIRABLE TO CHANGE BANDWIDTH
-
-\begin{figure}[ht]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=7in]{4_2c(open).jpg}
 \caption{Open-loop frequency response}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
 \centering
-\includegraphics[width=7in]{4_2c(open)_matlab.jpg}
+\includegraphics[width=7in]{4_2c(open)_matlab.png}
 \caption{Matlab open-loop frequency response}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=7in]{4_2c(closed).jpg}
 \caption{Closed-loop frequency response}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[!htbp]
 \centering
-\includegraphics[width=7in]{4_2c(closed)_matlab.jpg}
+\includegraphics[width=7in]{4_2c(closed)_matlab.png}
 \caption{Matlab closed-loop frequency response}
 \end{figure}
 
-
 % section section_4_2 (end)
-
+\newpage
 \section*{Section 4.3} % (fold)
 \label{sec:section_4_3}
-
-
-\begin{figure}[ht]
+\begin{figure}
 \centering
 \includegraphics[width=7in]{4_3.jpg}
 \caption{Frequency response response with disturbance}
 \end{figure}
-Comment qualitatively on which frequency ranges present better disturbance rejection
+The equation for the system with input at D(S) is:
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=7in]{4_3_matlab.jpg}
-\caption{Frequency response response with disturbance in Matlab}
-\end{figure}
+As shown in Figure 8 frequencies below 336.51 rad/s show little disturbance and frequencies after that show wild changes in response to the disturbances.
 
+In the open-loop system there is no disturbance rejection since nothing is piped back in. The disturbance is directly added to our output. Due to the closed nature of the closed-loop system there is disturbance rejection by subtracting the output from the input.
 % section section_4_3 (end)
+
 
 
 \end{document}

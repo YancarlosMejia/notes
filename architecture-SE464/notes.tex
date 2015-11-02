@@ -487,7 +487,7 @@ Structure:
         \item shared variables
         \item messages
         \item events
-        \item co-routine 
+        \item co-routine
     \end{itemize}
 \end{itemize}
 
@@ -498,23 +498,229 @@ are much more costly than lightweight processes but can be used to build reliabl
 
 \paragraph{Concurrent State Machines} % (fold)
 \label{par:concurrent_state_machines}
-
+\begin{itemize}
+    \item components - state machines executing concurrently
+    \item connectors
+    \begin{itemize}
+        \item message queues
+        \item shared variables
+    \end{itemize}
+\end{itemize}
 % paragraph concurrent_state_machines (end)
 % subsection interacting_processes (end)
 
+\subsection*{Implicit Invocation} % (fold)
+\label{sub:implicit_invocation}
+Instead of the standard invoking a procedure directly, we now call it through events and listeners. Systems built around implicit invocation are called \textbf{Publish-Subscribe Systems}.
+\begin{itemize}
+    \item components - modules with interfaces providing operations and events
+    \item connectors
+    \begin{itemize}
+        \item binding between event broadcast and calls
+        \item direct operation calls
+    \end{itemize}
+\end{itemize}
+A component registers its interest in an event by binding a procedure to it. The announcer of events do not know which component will be affected by the event. Components cannot make assumptions about the order they will be processed in or what will happen as a result of their event (treat events like concurrent threads).
 
+\paragraph{Message Broker} % (fold)
+\label{par:message_broker}
+This is also known as an event bus. It stores messages and forwards them to the correct place allowing persistent and transactional messaging. Often used for enterprise application integration.
+% paragraph message_broker (end)
 
+\paragraph{Data Distribution Service} % (fold)
+\label{par:data_distrubution_service}
+This has direct forwarding with no storage of events. Due to this data sources have metadata describing the quality of the service. This is usually used for real-time information exchange.
+% paragraph data_distrubution_service (end)
+strengths
+\begin{itemize}
+    \item extensibility - add new features by registering them for events
+    \item loose coupling -  add and replace components without affecting each other by registering or unregistering
+\end{itemize}
+Weaknesses:
+\begin{itemize}
+    \item Loss of control - components have no idea what effect they will have by announcing an event, we cannot rely on order of execution, we don't know when things are done executing
+    \item Difficult to debug - same reasons as above
+\end{itemize}
+% subsection implicit_invocation (end)
+An example of this is the MVC structure used often in UI as the model uses implicitly invocation to update the view:
+\begin{itemize}
+    \item Model - contains core functionality of data
+    \item view - interface for displaying data
+    \item controller - handle user input
+\end{itemize}
 
 % section lecture_11 (end)
 
+\section*{Lecture 12} % (fold)
+\label{sec:lecture_12}
+\subsection*{Data Centric Architectures} % (fold)
+\label{sub:data_centric_architectures}
+These are architectures organized around a data repository, so structure of data and data management are very important.
 
+\paragraph{Transactional Database Applications} % (fold)
+\label{par:transactional_database_applications}
+These are the database portion of the three tiered architecture. Concurrency is often used to speed up these systems but this causes some problems. Updates can be lost or reads can get trampled. Liveness is also an issue as things can get deadlocked or starved. First there is a request from the outside world it goes through the session which is basically the long running interaction between the client and server (usually has some form of authentication). From there the transactions are grouped together so that sever similar requests are treated the same for efficiency sake. Transactions can be groups of requests from the user to an application (\textbf{business transaction}) or from an application to the database (\textbf{system transactions}).
+% paragraph transactional_database_applications (end)
+
+\paragraph{Approaches to Concurrency} % (fold)
+\label{par:approaches_to_concurrency}
+The problems caused by concurrency are approached in a few ways. One is \textbf{isolation} where the data is partitioned in such a way that only one agent should access it at a time. Any data that is immutable can be shared without problems, but not all data is immutable. You can use \textbf{pessimistic concurrency control} where you use locks for exclusive access, this reduces liveliness, but is preferred where conflicts are frequent or have sever effects. Finally you can use \textbf{optimistic concurrency control} where you attempt to detect conflicts (bu having a version marker to dtect inconsistent reads) to improve liveliness but may result in complex merges or lost data.
+
+When a deadlock occurs you can pick a victim to detect them, introduce timeouts to try an prevent it. A victim is any thread that acquires a locked resource so you can acquire all locks required at the beginning to prevent deadlocks. You could also use lock ordering to prevent deadlocks by forcing an order. Usually we want to use the simplest deadlock recovery/prevention schemes.
+% paragraph approaches_to_concurrency (end)
+
+\paragraph{Transactions} % (fold)
+\label{par:transactions}
+ACID properties:
+\begin{itemize}
+    \item Atomicity - each step in transition must complete fully or roll back all the way
+    \item Consistency - a system's resource must be in consistent non-corrupt state at start and end of completion
+    \item Isolation - the result of a transaction must not affect any other transactions until concludes successfully
+    \item Durability - any completed transaction must be permanent (must survive a crash)
+\end{itemize}
+% paragraph transactions (end)
+
+Transaction issues:
+\begin{itemize}
+    \item long transaction - spans multiple requests
+    \item request transaction - spans one request, declare a method as transaction
+    \item keep transactions as short as possible - no longer than 1 request so use offline concurrency to handle ones that span multiple
+    \item late transactions - all updates in a short system transaction at end of business transaction
+    \item lock escalation - when a query affects many records in table the DB and it locks rows to the table
+\end{itemize}
+
+\paragraph{Online locking} % (fold)
+\label{par:online_locking}
+Online locking is resource intensive since system transactions are connection oriented and the application needs to keep database connections open to locks. This means that connections are a scarce resource and locking them can make it worse. System transactions are ok to be used as business transactions for up to 10 users, past that you need to keep system transactions short to have higher performance.
+% paragraph online_locking (end)
+\paragraph{Unit of Work} % (fold)
+\label{par:unit_of_work}
+Here we maintain a list of objects affected by a business transaction, coordinates of writing out, and the resolution of concurrency problems. We keep track of objects that were created, changed, read, or deleted during a business transaction. The UoW marks the end of a transaction by calling \textbf{commit} which opens a system transaction, checks for inconsistent reads, writes changes to database, and commits the system transaction. This has to be kept in session state (one per session).
+
+Implementation alternatives for UoW:
+\begin{itemize}
+    \item caller registration - have the caller register that an object was mucked with, this puts burden on the user of objects
+    \item object registration - the receiver object registers itself, so the implementers of persistent classes need to place registration calls (good for OO)
+    \item unit of work controller - takes a copy at read time from database and compares with object at commit time, this allows selective updates on only changed fields
+\end{itemize}
+% paragraph unit_of_work (end)
+
+Advantages of UoW:
+\begin{itemize}
+    \item improve performance by deferring updates to end of business transaction (store cumulative updates)
+    \item batch update optimization - bundle updates into a single unit, single remote call
+    \item updates are ordered for referential integrity
+    \item same sequence of updates reduces chance of deadlock
+\end{itemize}
+
+Alternatives:
+\begin{itemize}
+    \item single system transaction with a save on each update - this has poor performance but may be ok on smaller systems
+    \item defer updates to end by keeping track of changed objects in variables
+    \item keep a dirty flag on each object - basically a ghetto UoW
+\end{itemize}
+
+\paragraph{Optimistic Offline Lock} % (fold)
+\label{par:optimistic_offline_lock}
+Here we allow conflicts to happen and just roll back one of the transactions that caused it. This works well for systems where business transactions span multiple system transactions (so basically all of them). This also prevents lost updates and inconsistent reads as we just let shit collide and fix it later. It works by checking that, since the last time the session loaded a record no other session has changed it (basically looking for threads trampling each other) for each member of the change set during the system transaction update. One way to implement this is to give each record a version number that we compare with the last time we looked here and increment on success. When a fail happens we roll back and try to resolve it by partial discard or merge.
+% paragraph optimistic_offline_lock (end)
+
+\paragraph{Pessimistic Offline Lock} % (fold)
+\label{par:pessimistic_offline_lock}
+Here we prevent conflicts between transactions by allowing only one of them to access data at a time. This works by determining what type of lock is needed (read vs write since write requires no others to enter but read allows it). From this we create a lock manager that has a table mapping locks to owners and an api for business transactions that uses locks. The api operations take a session id and object id, acquire the lock, then do some shit.
+% paragraph pessimistic_offline_lock (end)
+
+We also have \textbf{coarse-grained locks} that locka  set of related objects with a single lock, and \textbf{implicit locks} that are locks implemented by the infrastructure for you.
+
+Offline locking is nice and lighweight when compared to online locking. It is also \textbf{connection-less} so we dont need to keep a database connection for transactions. Offline locking is much more custimizable since we can add status columns or flags and whatnot. This also makes it much easier to filer and use for different resource types.
+% subsection data_centric_architectures (end)
+
+\subsection*{Blackboard Architecture} % (fold)
+\label{sub:blackboard_architecture}
+This is an architecture in which agents collaborate to solve a single problem on a blackboard that stores the current solution state and triggers processing on agents.
+
+Benefits:
+\begin{itemize}
+    \item cooperative problem solving
+    \item dynamic reconfiguratbility
+    \item extensibility
+\end{itemize}
+
+Drawbacks:
+\begin{itemize}
+    \item complex interaction result in unpredictablity
+    \item hard to debug for above reason
+    \item high complexity of blackboard
+\end{itemize}
+% subsection blackboard_architecture (end)
+% section lecture_12 (end)
+\section*{Lecture 13} % (fold)
+\label{sec:lecture_13}
+These are systems where the availability of data controls the computation (not all data is available immediately), the pattern of data flow is explicit, and data flow is the only form of communication between components.
+
+\begin{itemize}
+    \item Components
+    \begin{itemize}
+        \item input ports to read
+        \item output ports to write
+        \item computational model to do shit inbetween
+    \end{itemize}
+    \item connectors: streams
+    \begin{itemize}
+        \item un-directional streams
+        \item synchronous or async
+        \item buffered or unbuffered
+    \end{itemize}
+\end{itemize}
+
+There are three different topologies of data flow:
+\begin{itemize}
+    \item arbitrary graph
+    \item linear data flow
+    \item cyclic patterns (ones with loops)
+\end{itemize}
+
+\subsection*{Batch Control Architectures} % (fold)
+\label{sub:batch_control_architectures}
+Components are independent programs. connectors are some type of storage, and each step runs completely to success before next one can start. Basically data is grouped into batches that go through each component one at a time. This is used when data needs to be analyzed in a batch oriented fashion or when you have discrete transactions that occur at periodic intervals (like a system report every five minutes or so)
+% subsection batch_control_architectures (end)
+
+\subsection*{Pipe and Filter} % (fold)
+\label{sub:pipe_and_filter}
+The components are filters that process data incrementally as it arrives, the connectors are pipes or conduits (many be sync or not, buffered or not). These systems have outputs that begin before the whole input has been consumed (ex, image processing or any sort of streaming). We can either use pull or push architecture to either write data onto the next pipe or read from the previous pipe. Even better we can make pipes concurrent for processing.
+
+\paragraph{Synchronous data flow} % (fold)
+\label{par:synchronous_data_flow}
+Each filter expects a certain amount of input and outputs a certain amount by passing the input through a bunch of filters sequentially (usually a line of a bunch of boxes with cardinalities). This allows for checking for balanced execution for scheduling or deadlock checking. We could also have dynamic data flow by conditional firing or Khan process networks that have actors to execute concurrent read/write tokens.
+% paragraph synchronous_data_flow (end)
+
+Strengths of pipes:
+\begin{itemize}
+    \item easy to understand - explicit process with simple diagrams
+    \item loose coupling - only data coupling
+    \item reuse - order and type doesnt really matter and filters can easily be shared
+    \item extensibility - super easy to add new filters
+    \item amenable to automated analysis - really easy to check for deadlocks and performance analysis as each input and output has expected attributes
+    \item amenable to parallelization - each filter can be its own thread
+\end{itemize}
+
+Weaknesses of pipes:
+\begin{itemize}
+    \item restrictive - not all problems fit, for instance it cannot be repose time oriented or fit interactive applications (data flows one way)
+    \item performance issues - filters that do little analysis still require a full copy of the data (pass by reference)
+    \item implementation may force lowest common denominator data type - more complex data types will get spliced when moving between filters
+    \item error handling - filters crashing can take out the whole pipe
+\end{itemize}
+% subsection pipe_and_filter (end)
+
+% section lecture_13 (end)
 
 
 \section*{Lecture 14} % (fold)
 \label{sec:lecture_14}
 \subsection*{Process Control Architectures} % (fold)
 \label{sub:process_control_architectures}
-Process control architecture is used to control physical processes and equipment (usually to maintain certain properties or equilibrium). Feedback is when you pipe the output of a system back into the input to stabalize it (see the entire course you're taking on it).
+Process control architecture is used to control physical processes and equipment (usually to maintain certain properties or equilibrium). Feedback is when you pipe the output of a system back into the input to stabilize it (see the entire course you're taking on it).
 
 There are multiple kinds of variables:
 \begin{itemize}
@@ -533,6 +739,30 @@ There are multiple kinds of variables:
 % subsection process_control_architectures (end)
 % section lecture_14 (end)
 
+\section*{Lecture 15} % (fold)
+\label{sec:lecture_15}
+\subsection*{Multiple Architectural Views} % (fold)
+\label{sub:multiple_architectural_views}
+Each view focuses on a different perspective (for different stakeholders) and allows answering questions. We can use these for code generation or documentation so that people can get what the fuck you're trying to do. We document architecture to provide sequential reading order and make sharing much easier. Software architecture has four componenets
+\begin{itemize}
+    \item software requirements - what it has to do
+    \item logical software architecture - how to do it
+    \item physical software architecture
+    \item views - link things for system testing
+\end{itemize}
+Uses:
+\begin{itemize}
+    \item  Communication
+    \item Planning
+    \item Requirements elicitation guidance
+    \item Analysis and design guidance
+    \item Reuse support
+    \item Certification
+\end{itemize}
+% subsection multiple_architectural_views (end)
+
+
+% section lecture_15 (end)
 
 
 \end{document}
