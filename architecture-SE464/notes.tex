@@ -764,5 +764,55 @@ Uses:
 
 % section lecture_15 (end)
 
+\section*{Lecture 19} % (fold)
+\label{sec:lecture_19}
+What is performance? The amount of usefull work that can be accomplished by a computer compared to time and resources used.
+
+\begin{itemize}
+    \item Response time - amount of time to process a request from the outside
+    \item responsiveness - how quickly the system acknowledges a request
+    \item Latency - minimum time required to get any form of response
+    \item Throughput - how much stuff you can do in the given time (usually in transactions per second)
+    \item Load - how much stress a system is under
+    \item Load sensistivity - how the response time varies with the load
+    \item Efficiency - performance divided by resources
+    \item Capacity - maximum effective throughput or load
+    \item Scalability - how adding resources affects performance
+    \begin{itemize}
+        \item vertical - adding more power to a single server
+        \item horizontal - adding more servers
+    \end{itemize}
+\end{itemize}
+% section lecture_19 (end)
+
+\section*{Lecture 20} % (fold)
+\label{sec:lecture_20}
+Performance can be a part of the requirements, or even part of the design criteria.
+
+You can evaluate by defining section of the system for a specific scenario:
+\begin{itemize}
+    \item stimulus
+    \item source
+    \item environment
+    \item artifact
+    \item target
+\end{itemize}
+
+When anaylyzing performance we need a goal for the analysis and a subject to analyze (basically whatever the design is at the time, could be just a sketch). We can also analyze it based on the specifications by getting experts to look at it, model it, or simulate it. Further we could straight up look at the code and run performance tests or run static analysis.
+
+\paragraph{Queuing Network Models} % (fold)
+\label{par:queuing_network_models}
+Anywhere in the system that queuing happen we abstract it to this model. This allows us to better understand the analysis of concurrent systems. We use \textbf{Little's Law} which says that the number of users at a node in the queuing network model is equal to the throughput at that node times the response time at that node. The number of concurrent uses is equal to the number of active users times the system response time divided by response time plush think time.
+
+\begin{align*}
+    N_i &= X_i \times R_i\\
+    N_{concurrent} &= N_{active}\times \frac{R}{R+T}
+\end{align*}
+
+% paragraph queuing_network_models (end)
+
+
+% section lecture_20 (end)
+
 
 \end{document}
