@@ -8,8 +8,6 @@ class TallyVotes {
     uOwnerLock mlk;
     uCondLock clk;
     uCondLock workingLk;
-    int picCount = 0;
-    int statCount = 0;
     int groupCount = 0;
     bool working = false;
     Tour results;
@@ -20,6 +18,8 @@ class TallyVotes {
 #else
     #error unsupported voter type
 #endif
+    int picCount = 0;
+    int statCount = 0;
     unsigned int group;
     Printer &printer;
   public:
