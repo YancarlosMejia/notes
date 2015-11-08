@@ -22,17 +22,19 @@ TallyVotes::Tour TallyVotes::vote(unsigned int id, TallyVotes::Tour ballot){
     } else {
         statCount += 1;
     }
+    groupCount += 1;
     if(groupCount < (int)group){
-        printer.print(id, Voter::Block, groupCount++);
+        printer.print(id, Voter::Block, groupCount);
         clk.wait(mlk);
-        printer.print(id, Voter::Unblock, groupCount--);
+        mlk.acquire();
+        groupCount -= 1;
+        printer.print(id, Voter::Unblock, groupCount);
+        mlk.release();
     } else {
         ret = (picCount > statCount) ? Picture : Statue;
         clk.broadcast();
         printer.print(id, Voter::Complete);
         picCount = statCount = 0;
-    }
-    if(groupCount == 0){
         mlk.release();
     }
     return ret;
@@ -104,12 +106,13 @@ void Printer::print(unsigned int id, Voter::States state, TallyVotes::Tour vote)
 
         for(unsigned int i = 0; i < voters; i++){
             if(i == id){
-                cout << state << " " << vote;
+                cout << (char)state << " " << vote;
             } else {
                 cout << "...";
             }
             cout << "\t";
         }
+        cout << endl;
         return;
     }
 
@@ -136,14 +139,19 @@ void Printer::flush() {
     for(int i = 0; i < (int)voters; i++){
         if(data[i]){
             cout << (char)data[i]->state << " ";
-            if(data[i]->value){
-                cout << data[i]->value;
-            }
+            switch(data[i]->state){
+                case Voter::Block:
+                case Voter::Unblock:
+                    cout << data[i]->value;
+                    break;
+                case Voter::Vote:
+                    if(data[i]->vote == TallyVotes::Picture){
+                        cout << "p";
+                    } else if (data[i]->vote == TallyVotes::Statue) {
+                        cout << "s";
+                    }
+                    break;
 
-            if(data[i]->vote == TallyVotes::Picture){
-                cout << "p";
-            } else {
-                cout << "s";
             }
         }
 
