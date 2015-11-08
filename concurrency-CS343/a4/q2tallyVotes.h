@@ -4,9 +4,11 @@ _Monitor Printer;
 class TallyVotes {
     uOwnerLock mlk;
     uCondLock clk;
+    uCondLock workingLk;
     int picCount = 0;
     int statCount = 0;
     int groupCount = 0;
+    bool working = false;
 #elif defined( IMPLTYPE_BAR )
 _Cormonitor TallyVotes : public uBarrier {
 #elif defined( IMPLTYPE_SEM )

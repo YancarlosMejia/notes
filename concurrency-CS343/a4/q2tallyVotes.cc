@@ -16,27 +16,34 @@ Voter::Voter(unsigned int id, TallyVotes &voteTallier, Printer &printer ) :
 #if defined( IMPLTYPE_MC )
 TallyVotes::Tour TallyVotes::vote(unsigned int id, TallyVotes::Tour ballot){
     mlk.acquire();
-    Tour ret;
+    if(working) workingLk.wait(mlk);
+    TallyVotes::Tour ret;
+
     if(ballot == Picture){
         picCount += 1;
     } else {
         statCount += 1;
     }
+    printer.print(id, Voter::Vote, ballot);
+
     groupCount += 1;
-    if(groupCount < (int)group){
+    if(groupCount < (int)group){\
         printer.print(id, Voter::Block, groupCount);
         clk.wait(mlk);
-        mlk.acquire();
-        groupCount -= 1;
-        printer.print(id, Voter::Unblock, groupCount);
-        mlk.release();
+        printer.print(id, Voter::Unblock, groupCount--);
+        if(groupCount == 0) {
+            workingLk.broadcast();
+            working = false;
+        }
     } else {
+        working = true;
         ret = (picCount > statCount) ? Picture : Statue;
-        clk.broadcast();
-        printer.print(id, Voter::Complete);
         picCount = statCount = 0;
-        mlk.release();
+        printer.print(id, Voter::Complete);
+        groupCount -= 1;
+        clk.broadcast();
     }
+    mlk.release();
     return ret;
 }
 
@@ -44,7 +51,6 @@ void Voter::main(){
     printer.print(id, Start);
     yield((*mprng)(0, 19));
     TallyVotes::Tour ballot = static_cast<TallyVotes::Tour>( (*mprng)(0,1));
-    printer.print(id, Vote, ballot);
     TallyVotes::Tour res = voteTallier.vote(id, ballot);
     printer.print(id, Finished, res);
 }
@@ -150,6 +156,8 @@ void Printer::flush() {
                     } else if (data[i]->vote == TallyVotes::Statue) {
                         cout << "s";
                     }
+                    break;
+                default:
                     break;
 
             }
