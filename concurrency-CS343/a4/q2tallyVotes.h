@@ -10,7 +10,6 @@ class TallyVotes {
     uCondLock clk;
     uCondLock workingLk;
     int groupCount = 0;
-    bool working = false;
 #elif defined( IMPLTYPE_BAR )
 _Cormonitor TallyVotes : public uBarrier {
     public:
@@ -19,6 +18,14 @@ _Cormonitor TallyVotes : public uBarrier {
   private:
 #elif defined( IMPLTYPE_SEM )
 class TallyVotes {
+public:
+    enum Tour { Picture, Statue };
+  private:
+    uSemaphore mlk;
+    uSemaphore clk;
+    uSemaphore workingLk;
+    unsigned int group;
+    int groupCount = 0;
 #else
     #error unsupported voter type
 #endif
@@ -26,6 +33,7 @@ class TallyVotes {
     int picCount = 0;
     int statCount = 0;
     Printer &printer;
+    bool working = false;
   public:
     TallyVotes( unsigned int group, Printer &printer );
     Tour vote( unsigned int id, Tour ballot );

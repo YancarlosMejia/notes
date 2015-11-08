@@ -1,5 +1,5 @@
 KIND:=STACK
-TYPE:=BAR
+TYPE:=SEM
 
 UXX=`which u++`
 CXXFLAGS = -g -multi -Wall -Wno-unused-label -MMD -O2 -multi -nodebug -D"${KIND}" -DIMPLTYPE_"${TYPE}"

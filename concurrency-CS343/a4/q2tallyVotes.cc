@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
 
+#include "uSemaphore.h"
 #include "uBarrier.h"
 #include "q2tallyVotes.h"
 #include "MPRNG.h"
@@ -63,7 +64,7 @@ TallyVotes::Tour TallyVotes::vote(unsigned int id, Tour ballot){
     } else {
         printer.print(id, Voter::Complete);
         uBarrier::block();
-    }
+    }//if
     return results;
 }
 
@@ -75,13 +76,45 @@ void TallyVotes::last(){
 
 #endif
 
-/*
 #if defined( IMPLTYPE_SEM )
+
+TallyVotes::TallyVotes(unsigned int group, Printer &printer) :
+    group(group), printer(printer), mlk(1), clk(0), workingLk(0){}
+
 TallyVotes::Tour TallyVotes::vote(unsigned int id, Tour ballot){
+    mlk.P();
+    if(working) {
+        mlk.V();
+        workingLk.P();
+    }//if
+    if(ballot == Picture){
+        picCount += 1;
+    } else {
+        statCount += 1;
+    }//if
+    groupCount += 1;
+    printer.print(id, Voter::Vote, ballot);
+    if(clk.counter() + (int)group !=  1){
+        printer.print(id, Voter::Block, -clk.counter() + 1);
+        mlk.V();
+        clk.P();
+        groupCount -= 1;
+        printer.print(id, Voter::Unblock, groupCount);
+        if(clk.empty()) {
+            workingLk.V(group);
+            working = false;
+        }//if
+    } else {
+        working = true;
+        results = (picCount > statCount) ? Picture : Statue;
+        picCount = statCount = 0;
+        printer.print(id, Voter::Complete);
+        clk.V(group - 1);
+    }//if
+    mlk.V();
+    return results;
 }
-void Voter::main(){
-}
-#endif*/
+#endif
 
 Voter::Voter(unsigned int id, TallyVotes &voteTallier, Printer &printer ) :
     id(id), voteTallier(voteTallier), printer(printer) {};
