@@ -2,6 +2,9 @@ _Monitor Printer;
 
 #if defined( IMPLTYPE_MC )
 class TallyVotes {
+  public:
+    enum Tour { Picture, Statue };
+  private:
     uOwnerLock mlk;
     uCondLock clk;
     uCondLock workingLk;
@@ -9,6 +12,7 @@ class TallyVotes {
     int statCount = 0;
     int groupCount = 0;
     bool working = false;
+    Tour results;
 #elif defined( IMPLTYPE_BAR )
 _Cormonitor TallyVotes : public uBarrier {
 #elif defined( IMPLTYPE_SEM )
@@ -20,7 +24,6 @@ class TallyVotes {
     Printer &printer;
   public:
     TallyVotes( unsigned int group, Printer &printer );
-    enum Tour { Picture, Statue };
     Tour vote( unsigned int id, Tour ballot );
 };
 

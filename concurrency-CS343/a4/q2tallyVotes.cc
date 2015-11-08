@@ -17,7 +17,6 @@ Voter::Voter(unsigned int id, TallyVotes &voteTallier, Printer &printer ) :
 TallyVotes::Tour TallyVotes::vote(unsigned int id, TallyVotes::Tour ballot){
     mlk.acquire();
     if(working) workingLk.wait(mlk);
-    TallyVotes::Tour ret;
 
     if(ballot == Picture){
         picCount += 1;
@@ -27,7 +26,7 @@ TallyVotes::Tour TallyVotes::vote(unsigned int id, TallyVotes::Tour ballot){
     printer.print(id, Voter::Vote, ballot);
 
     groupCount += 1;
-    if(groupCount < (int)group){\
+    if(groupCount < (int)group){
         printer.print(id, Voter::Block, groupCount);
         clk.wait(mlk);
         printer.print(id, Voter::Unblock, groupCount--);
@@ -37,14 +36,14 @@ TallyVotes::Tour TallyVotes::vote(unsigned int id, TallyVotes::Tour ballot){
         }
     } else {
         working = true;
-        ret = (picCount > statCount) ? Picture : Statue;
+        results = (picCount > statCount) ? Picture : Statue;
         picCount = statCount = 0;
         printer.print(id, Voter::Complete);
         groupCount -= 1;
         clk.broadcast();
     }
     mlk.release();
-    return ret;
+    return results;
 }
 
 void Voter::main(){
