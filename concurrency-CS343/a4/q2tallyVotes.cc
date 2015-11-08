@@ -1,15 +1,17 @@
 #include <iostream>
 using namespace std;
 
+#include "uBarrier.h"
 #include "q2tallyVotes.h"
 #include "MPRNG.h"
 
 MPRNG *mprng;                                                                                                           //randomizer
 
+
+#if defined( IMPLTYPE_MC )
 TallyVotes::TallyVotes(unsigned int group, Printer &printer) :
     group(group), printer(printer){}
 
-#if defined( IMPLTYPE_MC )
 TallyVotes::Tour TallyVotes::vote(unsigned int id, TallyVotes::Tour ballot){
     mlk.acquire();
     if(working) {
@@ -44,8 +46,33 @@ TallyVotes::Tour TallyVotes::vote(unsigned int id, TallyVotes::Tour ballot){
 #endif
 
 #if defined( IMPLTYPE_BAR )
-Tour TallyVotes::vote(unsigned int id, Tour ballot){
+TallyVotes::TallyVotes(unsigned int group, Printer &printer) : uBarrier(group), printer(printer){}
+
+TallyVotes::Tour TallyVotes::vote(unsigned int id, Tour ballot){
+    if(ballot == Picture){
+        picCount += 1;
+    } else {
+        statCount += 1;
+    }//if
+
+    printer.print(id, Voter::Vote, ballot);
+    if(waiters() + 1 != total()){
+        printer.print(id, Voter::Block, waiters() + 1);
+        uBarrier::block();
+        printer.print(id, Voter::Unblock, waiters() + 1);
+    } else {
+        printer.print(id, Voter::Complete);
+        uBarrier::block();
+    }
+    return results;
 }
+
+void TallyVotes::last(){
+    results = (picCount > statCount) ? Picture : Statue;
+    picCount = statCount = 0;
+    resume();
+}
+
 #endif
 
 /*

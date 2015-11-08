@@ -18,5 +18,5 @@ q2tallyVotes.o: q2tallyVotes.cc /home/lara/Libraries/u++-6.1.0/inc/uC++.h \
  /home/lara/Libraries/u++-6.1.0/inc/uPIHeap.h \
  /home/lara/Libraries/u++-6.1.0/inc/uHeap.h \
  /home/lara/Libraries/u++-6.1.0/inc/uC++.h \
- /home/lara/Libraries/u++-6.1.0/inc/uBaseSelector.h q2tallyVotes.h \
- MPRNG.h
+ /home/lara/Libraries/u++-6.1.0/inc/uBaseSelector.h \
+ /home/lara/Libraries/u++-6.1.0/inc/uBarrier.h q2tallyVotes.h MPRNG.h

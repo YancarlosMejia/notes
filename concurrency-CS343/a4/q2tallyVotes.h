@@ -5,22 +5,26 @@ class TallyVotes {
   public:
     enum Tour { Picture, Statue };
   private:
+    unsigned int group;
     uOwnerLock mlk;
     uCondLock clk;
     uCondLock workingLk;
     int groupCount = 0;
     bool working = false;
-    Tour results;
 #elif defined( IMPLTYPE_BAR )
 _Cormonitor TallyVotes : public uBarrier {
+    public:
+    enum Tour { Picture, Statue };
+    void last();
+  private:
 #elif defined( IMPLTYPE_SEM )
 class TallyVotes {
 #else
     #error unsupported voter type
 #endif
+    Tour results;
     int picCount = 0;
     int statCount = 0;
-    unsigned int group;
     Printer &printer;
   public:
     TallyVotes( unsigned int group, Printer &printer );
