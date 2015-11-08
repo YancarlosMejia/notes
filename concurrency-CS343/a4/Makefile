@@ -1,59 +1,47 @@
 KIND:=STACK
-TYPE:=SEM
+TYPE:=MC
 
-CXX = u++					# compiler
-CXXFLAGS = -g -multi -Wall -Wno-unused-label -MMD -O2 -D"${KIND}" -DIMPLTYPE_"${TYPE}"
-MAKEFILE_NAME = ${firstword ${MAKEFILE_LIST}}	# makefile name
+UXX=`which u++`
+CXXFLAGS = -g -multi -Wall -Wno-unused-label -MMD -O2 -multi -nodebug -D"${KIND}" -DIMPLTYPE_"${TYPE}"
 
-OBJECTS01 = q1new.o				# optional build of given program
-EXEC01 = new
+q2: tallyVotes
 
-OBJECTS2 = q2tallyVotes${TYPE}.o # list of object files for question 1 prefixed with "q2"
-EXEC2 = vote
 
-OBJECTS = ${OBJECTS2}				# all object files
-DEPENDS = ${OBJECTS:.o=.d}			# substitute ".o" with ".d"
-EXECS = ${EXEC2}				# all executables
+.SUFFIXES:
+.SUFFIXES: .cc .o
 
-#############################################################
+.cc.o:
+	$(UXX) $(CXXFLAGS) -c $< -o $@
 
-.PHONY : all clean
-
-all : ${EXECS}					# build all executables
-
-${EXEC01} : ${OBJECTS01}
-	${CXX} ${CXXFLAGS} $< -o $@
 
 -include ImplType
 
-ifeq (${IMPLTYPE},${TYPE})			# same implementation type as last time ?
-${EXEC2} : ${OBJECTS2}
-	${CXX} ${CXXFLAGS} $^ -o $@
+q2tallyVotes.o: q2tallyVotes.cc q2tallyVotes.h
+ifeq (${IMPLTYPE},${TYPE})
+tallyVotes: q2tallyVotes.o
+	$(UXX) $(CXXFLAGS) $^ -o $@
 else
-ifeq (${TYPE},)					# no implementation type specified ?
-# set type to previous type
+ifeq (${TYPE},)
 TYPE=${IMPLTYPE}
-${EXEC2} : ${OBJECTS2}
-	${CXX} ${CXXFLAGS} $^ -o $@
-else						# implementation type has changed
-.PHONY : ${EXEC2}
-${EXEC2} :
+tallyVotes: q2tallyVotes.o
+	$(UXX) $(CXXFLAGS) $^ -o $@
+else
+.PHONY: tallyVotes
+tallyVotes:
 	rm -f ImplType
 	touch q2tallyVotes.h
 	sleep 1
-	${MAKE} ${EXEC2} TYPE="${TYPE}"
+	${MAKE} TYPE="${TYPE}" SENTINEL="${SENTINEL}"
 endif
 endif
 
-ImplType :
+ImplType:
 	echo "IMPLTYPE=${TYPE}" > ImplType
-	sleep 1
 
-#############################################################
 
-${OBJECTS} : ${MAKEFILE_NAME}			# OPTIONAL : changes to this file => recompile
-
--include ${DEPENDS}				# include *.d files containing program dependences
-
-clean :						# remove files that can be regenerated
-	rm -f *.d *.o ${EXEC01} ${EXECS} ImplType
+clean:
+	rm -f *.d
+	rm -f *.o
+	rm -f ImplKind
+	rm -f ImplType
+	rm -f tallyVotes
