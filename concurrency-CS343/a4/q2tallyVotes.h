@@ -1,3 +1,8 @@
+#ifndef TALLYVOTES_H
+#define TALLYVOTES_H
+
+#include "MPRNG.h"
+
 _Monitor Printer;
 
 #if defined( IMPLTYPE_MC )
@@ -5,18 +10,39 @@ class TallyVotes {
   public:
     enum Tour { Picture, Statue };
   private:
-    unsigned int group;
     uOwnerLock mlk;
     uCondLock clk;
     uCondLock workingLk;
     int groupCount = 0;
+    int picCount = 0;
+    int statCount = 0;
+    bool working = false;
+    Tour results;
+    unsigned int group;
+    Printer &printer;
+  public:
+    TallyVotes( unsigned int group, Printer &printer );
+    Tour vote( unsigned int id, Tour ballot );
+};
+
 #elif defined( IMPLTYPE_BAR )
+#include <uBarrier.h>
 _Cormonitor TallyVotes : public uBarrier {
-    public:
+  public:
     enum Tour { Picture, Statue };
-    void last();
   private:
+    Tour results;
+    int picCount = 0;
+    int statCount = 0;
+    Printer &printer;
+  public:
+    TallyVotes( unsigned int group, Printer &printer );
+    Tour vote( unsigned int id, Tour ballot );
+    void last();
+};
+
 #elif defined( IMPLTYPE_SEM )
+#include <uSemaphore.h>
 class TallyVotes {
 public:
     enum Tour { Picture, Statue };
@@ -24,48 +50,21 @@ public:
     uSemaphore mlk;
     uSemaphore clk;
     uSemaphore workingLk;
-    unsigned int group;
     int groupCount = 0;
-#else
-    #error unsupported voter type
-#endif
-    Tour results;
     int picCount = 0;
     int statCount = 0;
-    Printer &printer;
+    Tour results;
     bool working = false;
+    unsigned int group;
+    Printer &printer;
   public:
     TallyVotes( unsigned int group, Printer &printer );
     Tour vote( unsigned int id, Tour ballot );
 };
 
+#else
+    #error unsupported voter type
+#endif
 
-_Task Voter {
-  unsigned int id;
-  TallyVotes & voteTallier;
-  Printer &printer;
 
-  void main();
-  public:
-    enum States { Start = 'S', Vote = 'V', Block = 'B', Unblock = 'U',
-                   Complete = 'C', Finished = 'F' };
-    Voter( unsigned int id, TallyVotes &voteTallier, Printer &printer );
-};
-
-struct VoterData{
-  Voter::States state;
-  unsigned int value;
-  TallyVotes::Tour vote;
-};
-
-_Monitor Printer {
-  unsigned int voters;
-  VoterData **data;
-  void flush();
-  public:
-    Printer( unsigned int voters );
-    ~Printer();
-    void print( unsigned int id, Voter::States state );
-    void print( unsigned int id, Voter::States state, TallyVotes::Tour vote );
-    void print( unsigned int id, Voter::States state, unsigned int numBlocked );
-};
+#endif
