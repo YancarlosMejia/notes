@@ -15,7 +15,7 @@ Printer::Printer(unsigned int voters) : voters(voters){
         cout << "======= ";
     }//for
     cout << endl;
-    for(unsigned int i = 0; i < voters; i++){                                                                               //set all voters to null
+    for(unsigned int i = 0; i < voters; i++){                                                                           //set all voters to null
         data[i] = NULL;
     }//for
 

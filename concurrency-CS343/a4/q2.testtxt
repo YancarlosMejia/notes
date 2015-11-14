@@ -1,0 +1,93 @@
+-------+---------+----------------------------------------------+------------------------------------------------------
+Test # | Line #s | Key Point of Test                            | Analysis of Test
+-------+---------+----------------------------------------------+------------------------------------------------------
+1      | 1-23    |  Group size of one MC implementation         | Each voter successfully votes and prints the correct
+       |         |                                              | result based on their vote before moving to the next
+       |         |
+-------+---------+----------------------------------------------+------------------------------------------------------
+2      | 1-23    |  Group size of one BAR implementation        | Each voter successfully votes and prints the correct
+       |         |                                              | result based on their vote before moving to the next
+       |         |                                              |
+-------+---------+----------------------------------------------+------------------------------------------------------
+3      | 1-23    |  Group size of one SEM implementation        | Each voter successfully votes and prints the correct
+       |         |                                              | result based on their vote before moving to the next
+       |         |                                              |
+-------+---------+----------------------------------------------+------------------------------------------------------
+4      | 23-24   |  Group size of 3 MC implementation           | Each group successfully gets a result and finishes
+       |         |                                              | its member voters without stalling
+       |         |
+-------+---------+----------------------------------------------+------------------------------------------------------
+5      | 23-50   |  Group size of 3 BAR implementation          | Each group successfully gets a result and finishes
+       |         |                                              | its member voters without stalling
+       |         |                                              |
+-------+---------+----------------------------------------------+------------------------------------------------------
+6      | 23-50   |  Group size of 3 SEM implementation          | Each group successfully gets a result and finishes
+       |         |                                              | its member voters without stalling
+       |         |                                              |
+-------+---------+----------------------------------------------+------------------------------------------------------
+7      | 51-56   |  Invalid input                               | Imvalid input prints a descriptive error message
+       |         |                                              |
+       |         |                                              |
+
+
+0        Voter0 Voter1 Voter2 Voter3 Voter4
+1        ======= ======= ======= ======= =======
+2        S
+3        V p
+4        C
+5        F 0    ...    ...    ...    ...
+6                                    S
+7                                    V s
+8                                    C
+9        ...    ...    ...    ...    F 1
+10                            S
+11                            V p
+12                            C
+13       ...    ...    ...    F 0    ...
+14              S
+15              V s
+16              C
+17       ...    F 1    ...    ...    ...
+18                     S
+19                     V s
+20                     C
+21       ...    ...    F 1    ...    ...
+22       =================
+23       All tours started
+24       Voter0 Voter1 Voter2 Voter3 Voter4 Voter5
+25       ======= ======= ======= ======= ======= =======
+26                     S
+27                     V s
+28                     B 1                  S
+29                                          V p
+30                                   S      B 2
+31                                   V p
+32                                   C
+33       ...    ...    ...    ...    F 0    ...
+34                     U 2
+35       ...    ...    F 0    ...    ...    ...
+36                                          U 1
+37       ...    ...    ...    ...    ...    F 0
+38                            S
+39                            V s
+40              S             B 1
+41              V s
+42       S      B 2
+43       V p
+44       C
+45       F 1    ...    ...    ...    ...    ...
+46                            U 3
+47       ...    ...    ...    F 1    ...    ...
+48              U 2
+49       ...    F 1    ...    ...    ...    ...
+50       =================
+50       All tours started
+51       Error: Tour size must be greater than 0.
+52       Error: Tour size must be an integer.
+53       Error: Tour size must be divisible by group size.
+54       Error: Group size must be greater than 0.
+55       Error: Group size must be an integer.
+56       Error: Group size must be odd.
+
+
+

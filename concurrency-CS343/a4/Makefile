@@ -1,5 +1,5 @@
 KIND := HEAP
-TYPE := MC
+TYPE := SEM
 UXX = `which u++`
 CXXFLAGS = -g -multi -Wall -Wno-unused-label -O2 -DIMPLTYPE_"${TYPE}"
 q2OBJECTS = q2main.o q2printer.o q2tallyVotes.o q2voter.o
