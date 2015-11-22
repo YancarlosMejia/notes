@@ -42,14 +42,18 @@ public class CourseInfo {
             end -= 1900;
 */
             System.out.println("Year " + start);
-            System.out.printf("%-10s %-10s %-10s %-10s %-10s %-10s %-10s\n", "C#", "Name", "Enrollment", "#Section", "Course Ave", "Max Class", "Min Class Ave");
+            System.out.printf("%-10s %-20s %-10s %-10s %-10s %-10s %-10s\n", "C#", "Name", "Enrollment", "#Section", "Course Ave", "Max Class", "Min Class Ave");
 
             try{
                 String query = ""
                 + "SELECT\n"
                     + "class.cno,\n"
                     + "course.cname,\n"
-                    + "SUM(enrollmentData.students) as students\n"
+                    + "SUM(enrollmentData.students) as students,\n"
+                    + "COUNT(class.section) sections\n,"
+                    + "SUM(enrollmentData.total)/SUM(enrollmentData.students) as average,\n"
+                    + "MAX(enrollmentData.average) as maxave,\n"
+                    + "MIN(enrollmentData.average) as minave\n"
                 + "FROM class\n"
                 + "INNER JOIN professor\n"
                 + "ON class.instructor = professor.eid AND professor.dept = ?\n"
@@ -75,6 +79,9 @@ public class CourseInfo {
                     + "class.cno,\n"
                     + "course.cname,\n"
                     + "SUBSTR(class.term, 2)\n"
+                + "ORDER BY\n"
+                    + "SUBSTR(class.term, 2),\n"
+                    + "class.cno\n"
                 ;
                 stmt = con.prepareStatement(query);
                 stmt.setString(1, dept);
@@ -83,7 +90,15 @@ public class CourseInfo {
                 rs = stmt.executeQuery();
 
                 while (rs.next()){
-                     System.out.printf("%-10s %-10s %-20s\n", rs.getString("CNO"), rs.getString("CNAME"), rs.getString("STUDENTS"));
+                    String cno = rs.getString("CNO");
+                    String name = rs.getString("CNAME");
+                    name = (name.length() < 17) ? name : name.substring(0, 17) + "...";
+                    String enrollment = rs.getString("STUDENTS");
+                    String section = rs.getString("SECTIONS");
+                    String average = rs.getString("AVERAGE");
+                    String max = rs.getString("MAXAVE");
+                    String min = rs.getString("MINAVE");
+                    System.out.printf("%-10s %-20s %-10s %-10s %-10s %-10s %-10s\n", cno, name, enrollment, section, average, max, min);
                 }
 
 
