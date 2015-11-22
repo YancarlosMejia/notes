@@ -49,7 +49,7 @@ public class CourseInfo {
                 + "SELECT\n"
                     + "class.cno,\n"
                     + "course.cname,\n"
-                    + "enrollmentData.average\n"
+                    + "SUM(enrollmentData.students) as students\n"
                 + "FROM class\n"
                 + "INNER JOIN professor\n"
                 + "ON class.instructor = professor.eid AND professor.dept = ?\n"
@@ -62,7 +62,8 @@ public class CourseInfo {
                         + "enrollment.section,\n"
                         + "AVG(enrollment.mark) as average,\n"
                         + "SUM(enrollment.mark) as total,\n"
-                        + "COUNT(enrollment.mark) as students from enrollment\n"
+                        + "COUNT(enrollment.mark) as students\n"
+                    + "FROM enrollment\n"
                     + "GROUP BY\n"
                         + "enrollment.cno,\n"
                         + "enrollment.term,\n"
@@ -70,6 +71,10 @@ public class CourseInfo {
                     + "AS enrollmentData\n"
                 + "ON class.cno = enrollmentData.cno AND class.term = enrollmentData.term AND class.section = enrollmentData.section\n"
                 + "WHERE ? <= SUBSTR(class.term, 2) AND ? >= SUBSTR(class.term, 2)\n"
+                + "GROUP BY\n"
+                    + "class.cno,\n"
+                    + "course.cname,\n"
+                    + "SUBSTR(class.term, 2)\n"
                 ;
                 stmt = con.prepareStatement(query);
                 stmt.setString(1, dept);
@@ -78,7 +83,7 @@ public class CourseInfo {
                 rs = stmt.executeQuery();
 
                 while (rs.next()){
-                     System.out.printf("%-10s %-10s %-20s\n", rs.getString("CNO"), rs.getString("CNAME"), rs.getString("AVERAGE"));
+                     System.out.printf("%-10s %-10s %-20s\n", rs.getString("CNO"), rs.getString("CNAME"), rs.getString("STUDENTS"));
                 }
 
 
