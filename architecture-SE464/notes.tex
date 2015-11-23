@@ -774,6 +774,42 @@ No lecture, just one big example.
 
 \section*{Lecture 18} % (fold)
 \label{sec:lecture_18}
+\paragraph{Architectural Notations} % (fold)
+\label{par:architectural_notations}
+These can be informal such as simple lines and boxes as a quick sketch requiring no tool, or can be very formal using precise notation using tools based analysis to generate tests and skeletons.
+% paragraph architectural_notations (end)
+
+\paragraph{UML} % (fold)
+\label{par:uml}
+This is mostly used for architecture modeling. You need case diagrams to represent the context model and functionalities, class diagrams to represent domain models, and sequence/state/activity diagrams to represent behavior. Case diagrams show actors (the various types of users, human or otherwise) and the actions they will take with cardinalities. We can also break it up into use cases representing the series of actions that happen when an actor does something. A class diagram is the standard UML you are used to. A sequence diagram shows the timing of function calls and returns for specific actions. A state diagram shows the transitions between states, their triggers, and timing. An activity diagram show the workflow of actions
+% paragraph uml (end)
+
+\begin{itemize}
+    \item Class diagrams - component types and their connections, shows architecture logical structure
+    \item State diagrams - component states and transitions, show logical behavior
+    \item Activity diagrams - flow of actions in components, show logical behavior
+    \item Sequence diagrams - interactions among components, shows logical behavior
+    \item Component diagrams - rarely used, shows physical structure
+    \item Deployment diagrams - mapping of software artifacts to hardware nodes
+\end{itemize}
+
+
+\paragraph{SysML} % (fold)
+\label{par:sysml}
+This is an extension of UML for systems and software architecture. We try to represent all aspects of the system including hardware. It adds a requirements diagram that shows what components require other components.
+% paragraph sysml (end)
+
+\paragraph{Block Diagrams} % (fold)
+\label{par:block_diagrams}
+Block definition diagrams represent the structural elements and their composition/classification. We use these to show the domain model (basically a UML class diagram). Internal block diagrams show interfaces among parts (nested blocks). We use it to show connections among the Components
+% paragraph block_diagrams (end)
+
+Parametric diagrams are added in SysML to represent constraints on values to support analysis. Package diagrams are also added in UML ti represent model organization and show name spaces
+
+\paragraph{AADL} % (fold)
+\label{par:aadl}
+This stands for architectural analysis and description language. It focuses on modeling software and hardware components and their connections. Components also include behavior components (like state and transitions between them). Lots of quality attributes are included in components like timing and performance information.
+% paragraph aadl (end)
 
 % section lecture_18 (end)
 
@@ -795,7 +831,7 @@ What is performance? The amount of usefull work that can be accomplished by a co
         \item vertical - adding more power to a single server
         \item horizontal - adding more servers
     \end{itemize}
-\end{itemize}
+\end{itemize}464
 % section lecture_19 (end)
 
 \section*{Lecture 20} % (fold)
@@ -837,4 +873,66 @@ Some tricks:
     \item manage resources to reduce response time
 \end{itemize}
 % section lecture_21 (end)
+
+\section*{Lecture 22} % (fold)
+\label{sec:lecture_22}
+\textbf{Reliability} is the ability of a system or component to do its job. Basically not failing in a specific environment. Since failure is a random phenomenon we view reliability as a probability, using statistics as Mean time to failure, failure rate, and probability of success.
+
+\textbf{Availability} is the probability that the system will be available when needed. It is the mean time to failure over the time to failure plus repair time.
+
+\textbf{Safety} is the condition of being protected from harmful conditions or events (ie the software does not cause the harmful conditions). This is not the same as reliability. Unreliable systems can be safe and unsafe systems can be unreliable.
+
+Reliability engineering focuses on the cost of removing all failures verses the cost of dealing with them. Safety engineering is focues on preventing harmful conditions. Reliability is a property of a component and safety is a system level quality.
+
+\textbf{Failure} is when the system no longer delivers its service correctly, A failure is caused by a \textbf{fault} (not all faults cause failures). A fault is in the system and a failure is what you see as a result (sometimes, recovery is possible). An \textbf{error} is a incorrect state due to a fault.
+% section lecture_22 (end)
+
+\section{Lecture 23} % (fold)
+\label{sec:lecture_23}
+We define reliability scenarios such as a function must not be down for more than an hour a week or other aspects such as:
+\begin{itemize}
+    \item stimulus: bad value or timing
+    \item source: external system, component, network, etc
+    \item artifact: system or component
+    \item response: notification, recovery, failure
+    \item metric: availability, MTTF, etc
+\end{itemize}
+
+\textbf{Failure mode and effects analysis} is a method of analysis that works by identifying the failure modes per function or component and their effects and probabilities. This is a bottom up method where we start with components and work up to the full system. This is a more systematic method of analyzing failures, but it falls apart when there are multiple failures.
+
+\textbf{Fault tree analysis} is a top down decomposition of system level failure into events that trigger it.
+
+Reliability relies on multipe methods of verification:
+\begin{itemize}
+    \item testing - cannot prove there are no faults
+    \item static analysis - checks only for certain classes of bugs
+    \item model checking - exhaustive but limited by state explosion
+    \item deductive program verification - generates proof obligations and proves them
+\end{itemize}
+
+Its impossible to get rid of all bugs so we aim for fault tolerance:
+\begin{itemize}
+    \item Error detection
+    \item error handling - prevent propagation
+    \item error recovery - redundancy
+    \item fault prevention and removal - keep things simple and verify everything
+\end{itemize}
+
+
+
+
+% section lecture_23 (end)
+
+
+
+
+
+
+
+
+
+
+
+
+
 \end{document}
