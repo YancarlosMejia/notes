@@ -6,7 +6,7 @@
 using namespace std;
 
 
-#if defined( IMPLTYPE_EXT )
+#if defined( IMPLTYPE_INT )
 TallyVotes::TallyVotes(unsigned int group, Printer &printer) :
     group(group), printer(printer){}
 
@@ -21,13 +21,14 @@ TallyVotes::Tour TallyVotes::vote( unsigned int id, Tour ballot ){
     printer.print(id, Voter::Vote, ballot);                                                                             //print status vote
     if(counter != group){                                                                                       //if not last print blocking messages
         printer.print(id, Voter::Block, counter);
-        _Accept(vote);
+        notFull.wait();
         counter -= 1;
         printer.print(id, Voter::Unblock, counter);
     } else {
         counter -= 1;
         printer.print(id, Voter::Complete);                                                                             //print complete
     }//if
+    notFull.signal();
     TallyVotes::Tour res = (picCount > statCount) ? Picture : Statue;
     picCount = 0;
     statCount = 0;

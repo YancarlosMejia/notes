@@ -6,7 +6,8 @@
 using namespace std;
 
 
-#if defined( IMPLTYPE_EXT )
+#if defined( IMPLTYPE_AUTO )
+
 TallyVotes::TallyVotes(unsigned int group, Printer &printer) :
     group(group), printer(printer){}
 
@@ -19,19 +20,20 @@ TallyVotes::Tour TallyVotes::vote( unsigned int id, Tour ballot ){
     }//if
 
     printer.print(id, Voter::Vote, ballot);                                                                             //print status vote
-    if(counter != group){                                                                                       //if not last print blocking messages
-        printer.print(id, Voter::Block, counter);
-        _Accept(vote);
+    if(counter == group){
+        printer.print(id, Voter::Complete);
+        groupFlag = true;                                                                            //print complete
+        res = (picCount > statCount) ? Picture : Statue;
         counter -= 1;
-        printer.print(id, Voter::Unblock, counter);
     } else {
-        counter -= 1;
-        printer.print(id, Voter::Complete);                                                                             //print complete
+        WAITUNTIL(groupFlag, printer.print(id, Voter::Block, counter), printer.print(id, Voter::Unblock, --counter));
     }//if
-    TallyVotes::Tour res = (picCount > statCount) ? Picture : Statue;
+    if(counter == 0){
+        groupFlag = false;
+    }
     picCount = 0;
     statCount = 0;
-    return res;
+    RETURN(res);
 }
 
 

@@ -19,7 +19,6 @@ _Monitor TallyVotes {
     unsigned int counter = 0;
     unsigned int group;
     Printer &printer;
-    void flush();
   public:
     TallyVotes( unsigned int group, Printer &printer );
     enum Tour { Picture, Statue };
@@ -28,6 +27,12 @@ _Monitor TallyVotes {
 
 #elif defined( IMPLTYPE_INT )
 _Monitor TallyVotes {
+    uCondition notFull;
+    unsigned int picCount = 0;
+    unsigned int statCount = 0;
+    unsigned int counter = 0;
+    unsigned int group;
+    Printer &printer;
   public:
     TallyVotes( unsigned int group, Printer &printer );
     enum Tour { Picture, Statue };
@@ -46,11 +51,22 @@ _Monitor TallyVotes {
 };
 
 #elif defined( IMPLTYPE_AUTO )
+#include "AutomaticSignal.h"
 
 _Monitor TallyVotes {
+  public:
+    enum Tour { Picture, Statue };
+  private:
+    AUTOMATIC_SIGNAL;
+    unsigned int picCount = 0;
+    unsigned int statCount = 0;
+    unsigned int counter = 0;
+    bool groupFlag = false;
+    TallyVotes::Tour res;
+    unsigned int group;
+    Printer &printer;
 public:
     TallyVotes( unsigned int group, Printer &printer );
-    enum Tour { Picture, Statue };
     Tour vote( unsigned int id, Tour ballot );
 };
 
