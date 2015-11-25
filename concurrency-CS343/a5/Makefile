@@ -1,4 +1,4 @@
-TYPE := EXT
+TYPE := INTB
 UXX = `which u++`
 CXXFLAGS = -g -multi -Wall -Wno-unused-label -O2 -DIMPLTYPE_"${TYPE}"
 q3OBJECTS = q3main.o q3printer.o q3tallyVotes.o q3voter.o

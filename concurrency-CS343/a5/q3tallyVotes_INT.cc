@@ -27,9 +27,9 @@ TallyVotes::Tour TallyVotes::vote( unsigned int id, Tour ballot ){
     } else {
         counter -= 1;
         printer.print(id, Voter::Complete);                                                                             //print complete
+        res = (picCount > statCount) ? Picture : Statue;
     }//if
     notFull.signal();
-    TallyVotes::Tour res = (picCount > statCount) ? Picture : Statue;
     picCount = 0;
     statCount = 0;
     return res;

@@ -14,39 +14,53 @@ _Monitor Printer;
 
 #if defined( IMPLTYPE_EXT )
 _Monitor TallyVotes {
+  public:
+    enum Tour { Picture, Statue };
+  private:
     unsigned int picCount = 0;
     unsigned int statCount = 0;
     unsigned int counter = 0;
+    Tour res;
     unsigned int group;
     Printer &printer;
   public:
     TallyVotes( unsigned int group, Printer &printer );
-    enum Tour { Picture, Statue };
     Tour vote( unsigned int id, Tour ballot );
 };
 
 #elif defined( IMPLTYPE_INT )
 _Monitor TallyVotes {
+public:
+    enum Tour { Picture, Statue };
+  private:
     uCondition notFull;
     unsigned int picCount = 0;
     unsigned int statCount = 0;
     unsigned int counter = 0;
     unsigned int group;
+    Tour res;
     Printer &printer;
   public:
     TallyVotes( unsigned int group, Printer &printer );
-    enum Tour { Picture, Statue };
     Tour vote( unsigned int id, Tour ballot );
 };
 
 #elif defined( IMPLTYPE_INTB )
 _Monitor TallyVotes {
+  public:
+    enum Tour { Picture, Statue };
+  private:
     uCondition bench;
+    unsigned int picCount = 0;
+    unsigned int statCount = 0;
+    unsigned int counter = 0;
+    unsigned int group;
+    Tour res;
+    Printer &printer;
     void wait();
     void signalAll();
   public:
     TallyVotes( unsigned int group, Printer &printer );
-    enum Tour { Picture, Statue };
     Tour vote( unsigned int id, Tour ballot );
 };
 
@@ -62,7 +76,7 @@ _Monitor TallyVotes {
     unsigned int statCount = 0;
     unsigned int counter = 0;
     bool groupFlag = false;
-    TallyVotes::Tour res;
+    Tour res;
     unsigned int group;
     Printer &printer;
 public:
