@@ -5,9 +5,6 @@
 #include <iostream>
 using namespace std;
 
-
-#if defined( IMPLTYPE_AUTO )
-
 TallyVotes::TallyVotes(unsigned int group, Printer &printer) :
     group(group), printer(printer){}
 
@@ -35,8 +32,3 @@ TallyVotes::Tour TallyVotes::vote( unsigned int id, Tour ballot ){
     statCount = 0;
     RETURN(res);
 }
-
-
-
-
-#endif

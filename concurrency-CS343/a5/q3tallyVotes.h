@@ -37,8 +37,8 @@ public:
     unsigned int picCount = 0;
     unsigned int statCount = 0;
     unsigned int counter = 0;
-    unsigned int group;
     Tour res;
+    unsigned int group;
     Printer &printer;
   public:
     TallyVotes( unsigned int group, Printer &printer );
@@ -54,8 +54,8 @@ _Monitor TallyVotes {
     unsigned int picCount = 0;
     unsigned int statCount = 0;
     unsigned int counter = 0;
-    unsigned int group;
     Tour res;
+    unsigned int group;
     Printer &printer;
     void wait();
     void signalAll();
@@ -85,10 +85,20 @@ public:
 };
 
 #elif defined( IMPLTYPE_TASK )
-_Monitor TallyVotes {
+_Task TallyVotes {
+  public:
+    enum Tour { Picture, Statue };
+  private:
+    unsigned int picCount = 0;
+    unsigned int statCount = 0;
+    unsigned int id;
+    Tour ballot;
+    Tour res;
+    unsigned int group;
+    Printer &printer;
+    void main();
   public:
     TallyVotes( unsigned int group, Printer &printer );
-    enum Tour { Picture, Statue };
     Tour vote( unsigned int id, Tour ballot );
 };
 #else

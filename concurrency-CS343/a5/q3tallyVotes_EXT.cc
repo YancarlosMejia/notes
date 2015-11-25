@@ -5,8 +5,6 @@
 #include <iostream>
 using namespace std;
 
-
-#if defined( IMPLTYPE_EXT )
 TallyVotes::TallyVotes(unsigned int group, Printer &printer) :
     group(group), printer(printer){}
 
@@ -33,8 +31,3 @@ TallyVotes::Tour TallyVotes::vote( unsigned int id, Tour ballot ){
     statCount = 0;
     return res;
 }
-
-
-
-
-#endif

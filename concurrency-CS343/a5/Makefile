@@ -25,6 +25,7 @@ else
 .PHONY: vote
 vote:
 	rm -f ImplType
+	rm -f q3tallyVotes.cc
 	touch q3tallyVotes.h
 	sleep 1
 	${MAKE} vote TYPE="${TYPE}"
@@ -48,3 +49,4 @@ clean:
 	rm -f ImplType
 	rm -f new
 	rm -f vote
+	rm -f q3tallyVotes.cc

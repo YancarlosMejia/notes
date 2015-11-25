@@ -5,8 +5,6 @@
 #include <iostream>
 using namespace std;
 
-
-#if defined( IMPLTYPE_INTB )
 TallyVotes::TallyVotes(unsigned int group, Printer &printer) :
     group(group), printer(printer){}
 
@@ -46,7 +44,3 @@ void TallyVotes::wait() {
 void TallyVotes::signalAll() {
     while ( ! bench.empty() ) bench.signal(); // drain the condition
 }
-
-
-
-#endif
