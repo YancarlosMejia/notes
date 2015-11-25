@@ -1,0 +1,1 @@
+There is a deadlock. If you liken the angels to threads then they wait for the signal of people not looking to move forward. In the climactic scene all angels are waiting for the signal that no one is looking, but we know that this event will never happen. All angels are looking at each other with percludes the signal ever arriving. This is by definition deadlock.
