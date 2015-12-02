@@ -15,19 +15,18 @@ TallyVotes::Tour TallyVotes::vote( unsigned int id, Tour ballot ){
     } else {
         statCount += 1;
     }//if
-
     printer.print(id, Voter::Vote, ballot);                                                                             //print status vote
-    if(counter != group){                                                                                       //if not last print blocking messages
+    if(counter != group){                                                                                               //if not last print blocking messages
         printer.print(id, Voter::Block, counter);
-        _Accept(vote);
+        _Accept(vote);                                                                                                  //block until next thread
         counter -= 1;
         printer.print(id, Voter::Unblock, counter);
     } else {
         counter -= 1;
         printer.print(id, Voter::Complete);                                                                             //print complete
-        res = (picCount > statCount) ? Picture : Statue;
+        res = (picCount > statCount) ? Picture : Statue;                                                                //calculated results
     }//if
-    picCount = 0;
+    picCount = 0;                                                                                                       //reset counters
     statCount = 0;
     return res;
 }

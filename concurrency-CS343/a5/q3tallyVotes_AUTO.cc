@@ -15,20 +15,19 @@ TallyVotes::Tour TallyVotes::vote( unsigned int id, Tour ballot ){
     } else {
         statCount += 1;
     }//if
-
     printer.print(id, Voter::Vote, ballot);                                                                             //print status vote
     if(counter == group){
         printer.print(id, Voter::Complete);
-        groupFlag = true;                                                                            //print complete
-        res = (picCount > statCount) ? Picture : Statue;
+        groupFlag = true;                                                                                               //signal waiting threads to run
+        res = (picCount > statCount) ? Picture : Statue;                                                                //calculate results
         counter -= 1;
     } else {
-        WAITUNTIL(groupFlag, printer.print(id, Voter::Block, counter), printer.print(id, Voter::Unblock, --counter));
+        WAITUNTIL(groupFlag, printer.print(id, Voter::Block, counter), printer.print(id, Voter::Unblock, --counter));   //wait until the group is full
     }//if
     if(counter == 0){
-        groupFlag = false;
-    }
-    picCount = 0;
+        groupFlag = false;                                                                                              //flip flag to start blocking again
+    }//if
+    picCount = 0;                                                                                                       //reset counters
     statCount = 0;
     RETURN(res);
 }
