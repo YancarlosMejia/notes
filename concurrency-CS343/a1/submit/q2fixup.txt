@@ -1,7 +1,0 @@
-Input of 150 10 10000
-    fixup: 26.60s
-    resumption: 20.70s
-    fixup with optimizations: 11.16s
-    resumption with optimizations: 13.45s
-
-Resumption is initially faster due to its increased number of parameters increasing call cost which is very influential when the functions are called thousands of times.  With compiler optimizations the two times are almost the same this is probably due to the compiler optimizing the fixup routine to require less look up and context switch as part of its execution.

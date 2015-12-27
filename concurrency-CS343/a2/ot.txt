@@ -1,3 +1,0 @@
-Players: 2    Cards: 65
-P0	P1	
-1:64>X	#64#	
