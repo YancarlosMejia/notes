@@ -1,0 +1,5 @@
+catch exec
+r
+symbol-file /usr/local/bin/submit
+break check_forbidden
+c
