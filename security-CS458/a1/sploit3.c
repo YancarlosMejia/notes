@@ -18,7 +18,7 @@ int main(void)
 
   char path[100];
 
-  strcat(path, "/share/bin");
+  strcat(path, "/share/bin:");
   strcat(path, getenv ("PATH"));
 
   mkdir("/share/bin", 0777);

