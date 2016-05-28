@@ -58,6 +58,39 @@ We can use what a user knows (some data they would know), what they have (an obj
 \includepdf[page=33]{Module3.pdf}
 Good security usually looks to have multiple factors of authentication usually from different classes. With physical items we need to watch for them just becoming data. 
 
+\includepdf[page=34-35]{Module3.pdf}
+USE A PASSWORD MANAGER. That is all.
+
+\includepdf[page=36-37]{Module3.pdf}
+We want very long passwords to make brute force attacks much harder.
+
+\includepdf[page=38]{Module3.pdf}
+People use patterns and other methods to remember their passwords which can be leveraged to guess them. Software that does this often looks at common password leaks to spot patterns. You want to be able to tell when there is a breach. The most important thing is the throttle login attempts (don't let the same user try to login a ton of times). The iCloud login attack (that got celebrity pics) happened because an api call was not throttled.
+
+\includepdf[page=40]{Module3.pdf}
+\includepdf[page=42]{Module3.pdf}
+\includepdf[page=44-46]{Module3.pdf}
+We do not what to store our passwords in plain text. We should hash them on the way in. Basically we want to make is so that you cannot figure out the password based on the username. Currently everyone uses sha2 hashing but we are soon going to switch to sha3. There are someplaces that store precomputed lists of hashes to help you attack faster (often called rainbow tables).
+
+\includepdf[page=47]{Module3.pdf}
+We should be salting our hashes. Generate a random string and pad the hash with it. It should be unique for each user, quite long (48-128 bits) and very random. This helps stop people from precomputing them. Frequently hackers will know the salt, but it still stops rainbow table attacks. 
+
+\includepdf[page=48]{Module3.pdf}
+You could also delay a while when calculating the hash so that brute force attacks become way more expensive. Basically you just iterate over hashing the hash a bunch of times. 
+
+\includepdf[page=49]{Module3.pdf}
+MAC is message authentication code (often based on hashes making then HMACs). The key difference is that MACs have keys that are required to create a MAC and to verify data. Hashes are just functions. 
+
+\includepdf[page=50-51]{Module3.pdf}
+You can pepper your password by putting in a special bit of hardware called a hardware security module. This is very hard to get into. This won't ever give out a password, it will MAC something for you and just return that. This will prevent attacks even if they have your code base and know how you hash stuff. Even if they were to get the key to your HSM its still as secure as using an iterative hash. Some laptops have TMPs that can work as very specific HSMs (they have the key burned into them at time of manufacturing). 
+
+\includepdf[page=52-53]{Module3.pdf}
+If a password is the same it will encrypt the same. And it encrypts in chunks so you can figure out what the encryption key is looking at it. Its little more secure than a slightly challenging puzzle.
+
+\includepdf[page=55]{Module3.pdf}
+You password still has to be sent through the network, this can be a vulnerability in itself. You have to encrypt the link between you and the server or anyone who is watching can just see it as it goes through. Another attack is if the server gets compromised. If they get read access thats ok because everything is hashed, but if they get write access they can catch the plaintext password and do what they want with it. You can defend agains this by having the server send a challenge that is different every time, the client uses that to create a one time password, then the server replys with a response. Anyone listening will not know what is going on there. 
+
+There are some cool ideas where you store passwords on your phone (fido and sqrl) where the website shows a QR code which your phone uses as a challenge to log in.
 
 
 

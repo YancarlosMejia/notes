@@ -54,17 +54,26 @@ A very small number of ip packets out there are actually fragments of packets. A
 All fragments preserve the id. The first and second have the more fragment bits set. Once we receive the last packed (where the more fragment bit is 0) we can tell how many packets to expect and see if we have all of them. The order of arrival is not guaranteed.
 
 \includepdf[pages=14]{slides.pdf}
+\includepdf[pages=15]{slides.pdf}
+Start with some variable called check sum which is initialized to 0. Divide header into bytes, add them, handle the carry, and then take the bit compliment.
 
+\includepdf[pages=16]{slides.pdf}
+You can see this iterating through each byte, summing as it goes. The last step is it adding the overflow of 1 back into it.
 
+\includepdf[pages=17]{slides.pdf}
+The checksum of the entire header is computed and then you take its compliment, if this works out to 0 we know that there has been no errors. 
 
+\includepdf[pages=18]{slides.pdf}
+As the packet gets bounced around every router recomputes the checksum because the time to live field has changed each time. Because of this we want this algorithm to be super fast. 
 
+\includepdf[pages=18]{slides.pdf}
+Traceroute will show you how many hops are required to get from your machine to some ipaddress. This is often used to figure out what value the time to live should be set to.
 
+\includepdf[pages=19-24]{slides.pdf}
+We send out the packet with a time to live of 1. It then runsout of time and returns with a special error code saying the time has been exceeded. Then we increment the time to live and try again.
 
-
-
-
-
-
+\includepdf[pages=25]{slides.pdf}
+The answer to this is false since the checksum field has been recomputed by each router. The exception to this is if the two end points are right next to each other.
 
 
 

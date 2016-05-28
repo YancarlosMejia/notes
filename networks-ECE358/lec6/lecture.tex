@@ -1,0 +1,60 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[margin=.6in]{geometry}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\begin{document}
+\includepdf[pages=1]{slides.pdf}
+We really want to be able to maintain our ipaddress as we move around and jump between networks. Currently no one actually does this, but it'd be cool.
+
+\includepdf[pages=2]{slides.pdf}
+Basically we do special routing when an device is on a foreign network.
+
+\includepdf[pages=3]{slides.pdf}
+The RFC for mobile routing makes some assumptions. The big one is the assumption that all routing is destination address based. This is not necissarily true because people will often put values in and use those to take short cuts to speed up internet.
+
+\includepdf[pages=4]{slides.pdf}
+\includepdf[pages=5]{slides.pdf}
+\includepdf[pages=6]{slides.pdf}
+Each device actually get two addresses, the one it has on the home address and the care of address from the foreign network. When the mobile device joins a foreign network it notifies the home agent what its new care of address. The home agent passes packets from the device to corresponding nodes, called \textbf{tunneling}.
+
+\includepdf[pages=7]{slides.pdf}
+A common form of tunneling is encapsulation. This is basically just appending another header with new data onto the packet.
+
+\includepdf[pages=8]{slides.pdf}
+While a mobile address is on a foreign address its legitimate address is its home address, but it can send out a packet saying that the source address is its care of address.
+
+\includepdf[pages=9]{slides.pdf}
+Mobile routing adds a bunch of hops which can slow things down. To optimize this the mobile node passes a bunch of data around to try to notify everyone (its a stupid complicated thing, don't bother learning too much about it).
+
+\includepdf[pages=10]{slides.pdf}
+
+
+
+
+
+\end{document}
