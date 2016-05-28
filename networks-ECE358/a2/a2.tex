@@ -39,38 +39,54 @@ Another counter example can if you always have p = 0 , q = 2, no node between p 
 
 \section{Question 2} % (fold)
 \label{sec:question_2}
+
 \subsection{a)} % (fold)
 \label{sub:a_}
-NO IDEA WHAT TO DO
+We know that you cannot modify more finger tables than actually exists therefore the worst of all cases is n. Because there is no upper limit on m we can have a network that is complete (since m can be essentially infinite). In this case we will have every node in the network containing each other in their finger tables. When we remove any of the nodes in the network every other node will have to update their finger tables. If we were to add that node back into the network all those tables would have to be updated again
 % subsection a_ (end)
-
-
 
 \subsection{b)} % (fold)
 \label{sub:b_}
 When we add a node n into this network only one table will need to be updated. The node right before n will have to update its table to now have n as its successor. Everyone else will remain the same.
-
 % subsection b_ (end)
-
 
 % section question_2 (end)
 
+
 \section{Question 3} % (fold)
 \label{sec:question_3}
+
 \subsection{a)} % (fold)
 \label{sub:a_}
-We know that the expected number of hops for a network is $O(\log n)$. We know that the finger table must have enough entries to accommodate n so $n\le 2^{m-1}$. So we can sub in this value for n and still maintain this worse case relation, so $O(\log 2^{m-1})$ if we simplify this we get that number of expected hops is $O(m)$. Based on this we can assume that there exists some case where the number of hops is less than linear. 
+Based on our current definition of finger tables we know that each time we hop, we will cover at least half the arc length from our current location to the desired end point. The farthest distance we would have to cover is if we are looking for a node a full circle (length n) away from us. The number of hops that we must make will be $\log n$. The value of n must be small enough to avoid collisions in its finger tables so $n < 2^m -1$. From this we know that the number of hops will be less than $\log(2^m)$ which works out to being linear with respect to m. This means that there exists a linear equation with respect to m with some constants that are large enough to be bigger than the number of hops required.
 % subsection a_ (end)
 
 \subsection{b)} % (fold)
 \label{sub:b_}
-NO IDEA WHAT TO DO
+We know that the worst case for the number of hops in a network is for it to be full (a node at every value) and for n to be equal to $2_m-1$.
+
+Base case: In the base case of m being 1 we have at most two nodes so the value you are looking for will be the only entry in the lookup table so the number of hops will be one.
+
+Assumption: Lets assume that the number of hops required will be equal to m
+
+Proof: If we  increase m by one we are doubling the number of nodes in the worst case network. This does not matter because each finger table will update to include another entry that covers twice the distance therefore we will only need one extra hop. With this we will need m+1 hops.
+
+With this we can see that a network will take m hops in the worst case so we can create any function of the form m - c that will be less than the number of hops for the worst case network.
 
 % subsection b_ (end)
 
-
 % section question_3 (end)
 
+\section{Question 4} % (fold)
+\label{sec:question_4}
+
+\begin{enumerate}
+\item 1.2.3.4 is in 1.2.3.0/24 but not in 1.2.3.160/28 since the former covers all IPs from 1.2.3.0 to 1.2.3.255 but the latter only covers some IPs above 1.2.3.160.
+\item 1.2.3.195 is in 1.2.3.0/24 but not in 1.2.3.160/28 since the former covers all IPs from 1.2.3.0 to 1.2.3.255 but the latter only covers some IPs below 1.2.3.175.
+\item 1.2.3.171 is in both 1.2.3.0/24 and 1.2.3.160/28 since the former covers all IPs from 1.2.3.0 to 1.2.3.255 and the latter covers the range from 1.2.3.160 to 1.2.3.175.
+\end{enumerate}
+
+% section question_4 (end)
 
 
 
