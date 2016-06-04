@@ -52,6 +52,32 @@ While a mobile address is on a foreign address its legitimate address is its hom
 Mobile routing adds a bunch of hops which can slow things down. To optimize this the mobile node passes a bunch of data around to try to notify everyone (its a stupid complicated thing, don't bother learning too much about it).
 
 \includepdf[pages=10]{slides.pdf}
+\includepdf[pages=11]{slides.pdf}
+\includepdf[pages=12]{slides.pdf}
+There are two models discussed for problem 1. Strong hosts only look for packets going to a specific interface, and weak hosts look for a packet going to any interface. With weak host models. 
+
+\includepdf[pages=13]{slides.pdf}
+A host B might want to address a packet to the public interface of host A (not to its internal ethernet address) if it is using a domain name service to find it. You could also have an application that only binds itself to the public ipaddress of A. Problems can occur if you mix strong and weak hosts. For instance a weak host cannot sent to a strong host and attackers can spoof a packet to look like it originates from the local network (like its id is 2030.113.2) then the weak host will think its trusted and forward it making it seem more trustworthy than it actually is.
+
+Ipaddress spoofing is when someone lies about their source address. 
+
+\includepdf[pages=13]{slides.pdf}
+\includepdf[pages=14]{slides.pdf}
+\includepdf[pages=15]{slides.pdf}
+What address do we use as the source address when we send something? Basically we just come up with some rules to decide. This is a common problem for load balancing.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

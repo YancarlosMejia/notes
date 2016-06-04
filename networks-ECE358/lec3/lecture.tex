@@ -41,9 +41,9 @@ We can apply a mask to an ipaddress by doing a bitwise and to get prefixes. It c
 We can see they they have a class B (since 128 is 10000000) with two hosts. Their router has to properly route to those two, it must use a mask to do so. Anything that you have to do with software in a network is bad (mainly for performance reasons). With a routing table we have just the destination address (we dont give a shit about the content). Masks make this harder because they have a concrete destination address and match it against a network prefix. There is no good way to do this. What we do is take the network prefix out and see how many destinations there could be and enumerate the possibilities in a table. This makes the lookup ridiculously fast but uses a bunch of memory. The memory is called TCAM which directly influences your speed but is super expensive. 
 
 \includepdf[page=6]{slides.pdf}
-Say we have a refix of length 24. When you do the bitwise and you get then network id. Just do this example. 
+Say we have a prefix of length 24. When you do the bitwise and you get then network id. Just do this example. 
 
-\includepdf[page=7]{slides.pdf}
+\includepdf[page=7]{slides.pdf}/
 What if we want subnets to be different sizes. We want to make the most use of our ipaddresses since they are valuable resources. We can do this by having variable network prefixes. You have to be super careful that nothing collides. 
 
 \includepdf[page=8]{slides.pdf}
@@ -88,7 +88,7 @@ There are some addresses that are special
 We have a dematerialized zone that separates your internal network from the enterprise boarder where you can put your public facing things. 
 
 \includepdf[page=19-20]{slides.pdf}
-This picture is crazy complicated in real life. When you send a packed to a network with multiple providers it applies a best fit algorithm when looking. In this example an packed with desination 12.aksdjfhaskjdfhkjaf it will actually go through isp p2 which isnt fair since isp p1 isnt getting its money worth. A solution is to not advertise that address on isp p2. Another solution is to keep them separate.
+This picture is crazy complicated in real life. When you send a packed to a network with multiple providers it applies a best fit algorithm when looking. In this example an packed with desination 12 it will actually go through isp p2 which isnt fair since isp p1 isnt getting its money worth. A solution is to not advertise that address on isp p2. Another solution is to keep them separate.
 
 
 

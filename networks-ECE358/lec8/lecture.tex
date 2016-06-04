@@ -1,0 +1,56 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[margin=.6in]{geometry}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+
+\begin{document}
+\includepdf[pages=2]{slides.pdf}  
+\includepdf[pages=3]{slides.pdf}  
+You can send out a packet with all 1s for source ip and mac (called DHCP discover) to get a respose from the lan telling you each dchp server's mac address. DHCP sits inside UDP. We then can send a request to this thing whose mac address we know and they will respond with an available ip address. From this we can know that an ipaddress is available and bind to it. Then, for some reason an ARP request is sent to the dhcp server we were talking to just now. We advertise our ip and mac addresses as a bind. Basically the ARP request is you checking that it is ok to attempt to bind that ip address to your mac address (checking for conflicts). 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
