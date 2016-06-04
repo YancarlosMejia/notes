@@ -9,6 +9,7 @@
 *.synctex.gz
 *.pdfsync
 *.o
+*.sublime-workspace
 
 cde2015/.meteor/*
 geology-EARTH121/EARTH121.pdf
