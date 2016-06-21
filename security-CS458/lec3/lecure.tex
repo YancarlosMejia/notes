@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage{parskip}
+\usepackage{listings}
 \usepackage{pdfpages}
 \usepackage[margin=.6in]{geometry}
 
@@ -30,7 +31,7 @@ ACLs are what the UNIX system uses (chmod that shit). These are column wise inte
 \end{itemize}
 
 Looking at these ACLs:
-\begin{itemize}
+\begin{itemizeP}
 	\item we can easily find who is allowed to access an object: its very quick because this data is stored on the object
 	\item we cannot easily find all objects a user can access: we'd have to go through all objects and check if the user can access it
 	\item we can easily revoke access to a single object but stupid for all because you have to go through all of them
@@ -148,6 +149,72 @@ A problem rises with this as over time everyone's integrity lowers until no one 
 
 
 MIDTERM GOES UP TO HERE
+
+
+\includepdf[pages=88-93]{Module3.pdf}
+Missed all of this due to interview go back and read
+
+\includepdf[pages=94]{Module3.pdf}
+\includepdf[pages=95]{Module3.pdf}
+We want to build records of everything that people do to your system. This allows us to track how an attacker potentially got into your system or watch for users doing suspicious things. To prevent people from deleting their tracks we want to make an append only log that stops people from deleting things. A way to do this is to have a second system (a whole other computer) for the log. This will only have one way to interact with this computer other than to append to the log. You could also write a custom printer or use write-only memory. 
+
+We run into problems when the logs get too long. A solution is a ring buffer of some length or to periodically prune things. In networks they often store packets for a while, once they are old enough dump all of it aside from the header. 
+
+\includepdf[pages=96]{Module3.pdf}
+\includepdf[pages=97]{Module3.pdf}
+We should separate out the security related parts of the OS (known as TCP) which should rarely be changed. 
+
+\includepdf[pages=98]{Module3.pdf}
+\includepdf[pages=99]{Module3.pdf}
+The kernel likes to arrange itself in rings so that it can throw alarms if you attempt to access inner parts of the ring that you dont have access to. You have have things running at ring-1 which are called hypervisors to allow vms and such that are managed.
+
+\includepdf[pages=100]{Module3.pdf}
+This is meant to be an ultra small peice of code that no one can change.
+
+\includepdf[pages=101]{Module3.pdf}
+This is awesome so that we can sandbox things in virtual machines. The OS frequently doesn't know or care about vms (called the Blue Pill Effect) which can be problematic if a root kit gets in.
+
+\includepdf[pages=102]{Module3.pdf}
+\includepdf[pages=103]{Module3.pdf}
+\includepdf[pages=104]{Module3.pdf}
+This command creates a new directory to sandbox (jail) a command by making it its root directory. Then you have to change to that directory \texttt{chdir("/")} and then you can run the sketchy command you aren't sure of. All paths are now relative to that chrooted path. So \texttt{chroot("/var/www")} means that \texttt{open("/index.html")} will actually open a file in \texttt{/var/www/index.html} because it thinks this is root. If you try to use .. to go up it will not allow you to, so \texttt{open("../index.html")} will open exactly the same location. When the kernel parses file paths it tokenizes them and for .. it checks if the working directory is root before going up one. Since chroot changes what the root directory is it doesnt allow that walk up.
+
+Chroot is not a security mechanism, its just convenient. Chroot stacks in very unpredictable ways and you can leverage that to break out of jail. If your webserver gets broken into 
+
+\begin{lstlisting}
+	mkdir("foo")
+	chroot("foo") //note we did not change into the chrooted directory 
+	chdir("..")
+\end{lstlisting}
+
+Once this is run the root directory is foo but we try to do .. it will work because technically we are not in the root folder. This allows us to move up and out of the jailed folder to get root access. A solution to this is to drop privileges when you move into the jail folder. 
+
+LXCs are linux containers that frequently people build on. Other people use UMLs called user mode linux. Docker is another container manager thingy that you can use for better security than chroot.
+
+\includepdf[pages=105]{Module3.pdf}
+We want to break up processes so that only parts of them get certain accesses. For instance ssl needs root access to log in but we don't want it to always have that. What we do is break it into a privileged monitor and an unprivileged child. \texttt{UsePrivilegeSeparation} is the option name in ssl, its not what we define as privilege separation though. We want to make the part of the code that needs higher privilege as small and simple as possible so that its easier to find bugs.
+
+\includepdf[pages=106]{Module3.pdf}
+This is a bit to identify if we want to run this file as its owner instead of the current user. We can do a \textbf{confused deputy attack} to confuse the program into giving you rights you don't deserve. 
+
+LOOK MORE INTO THIS LATER
+
+\includepdf[pages=107]{Module3.pdf}
+We want to convince people that your OS is secure. TEST EVERYTHING. You can also hire people to attempt to break in (Scorpion is an example). You can also prove formally that it is secure but this is really hard to do correctly. An example is sel4 where the code is 87,000 lines and the proofs are 200,000 lines. The researchers estimated about \$400 per line of verified code to write it. For other high assurance systems its takes \$1000 per line of code.
+
+\includepdf[pages=108]{Module3.pdf}
+Do the good code practices.
+
+\includepdf[pages=109]{Module3.pdf}
+\includepdf[pages=110]{Module3.pdf}
+Protection profiles are an ISO standard. The EAL ratings from 1-7 (1 being worst). These systems are incredibly strict because they expect a lot. Unfortunately these are often influenced by marketing and such because you have to hire a 3rd party place to do it for you. These companies want to keep their customers so sometimes they inflate the ratings for them. 
+
+
+
+
+
+
+
 
 
 
