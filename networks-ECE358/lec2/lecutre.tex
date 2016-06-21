@@ -49,7 +49,9 @@ Here a the 9 basic socket commands.
 Here is a UDP example:
 You have multiple identities association with ip so you can just chose one or use all of them. 
 
-Checkout \texttt{man 7 ip} for more information. 
+Checkout \texttt{man 7 ip} for more information.
+
+
 \begin{lstlisting}
 struct in_addr // this is a struct for internet addresses, it is just a uint32
 
@@ -107,11 +109,13 @@ for(struct ifaddrs *1 ifa; i != NULL; i = i->ifa_next) {
 
 
 \end{lstlisting}
-We need to watch for big/little endian cause OSs are separate from networks. We have a call in \texttt{in\`'_addr} that will fix its shit for us. 
+
+
+We need to watch for big/little endian cause OSs are separate from networks. We have a call in in\_addr that will fix its shit for us. 
 
 CHECK YOUR RETURN VALUES FUCKER!!! This shit sucks to debug. LARA I'M LOOKING AT YOU, IF YOU FUCK THIS UP I WILL KILL YOU.
 
-You might need to compile with a flag -D_BSD_SOURCE 
+You might need to compile with a flag -D\_BSD\_SOURCE
 
 TCP works very similar to the above UDP example except that it is connection oriented. So instead of just checking how much data was received you must listen, accept, and receive. After you accept it locks the server from accepting more connections. All the same checks and such must happen.  
 % section socket_api (end)
