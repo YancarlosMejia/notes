@@ -11,5 +11,6 @@
 *.o
 *.sublime-workspace
 
-cde2015/.meteor/*
-geology-EARTH121/EARTH121.pdf
+
+adaptive-ECE457A/computational-intelligence-an-introduction.pdf
+networks-ECE358/TCP.IP.Illustrated.pdf
