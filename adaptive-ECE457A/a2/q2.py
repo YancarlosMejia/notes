@@ -11,6 +11,7 @@ UPLEFT 		= "upleft"
 UPRIGHT 	= "upright"
 DOWNLEFT 	= "downleft"
 DOWNRIGHT 	= "downright"
+DIRECTIONS	= [UP, DOWN, LEFT, RIGHT, UPLEFT, UPRIGHT, DOWNLEFT, DOWNRIGHT]
 RATIONAL 	= "rational agent"
 RANDOM 		= "random agent"
 
@@ -42,10 +43,11 @@ def moveY(direction, y, value):
 
 def move(user, direction, board, x, y):
 	stonesLeft = board[y][x].stones
-	temp = deepcopy(board)
+	temp = None
 	newX1 = moveX(direction, x, 1)
 	newY1 = moveY(direction, y, 1)
-	if(0 <= newX1 < BOARD_SIZE and 0 <= newY1 < BOARD_SIZE and temp[newY1][newX1].isAvailable(user)):
+	if(0 <= newX1 < BOARD_SIZE and 0 <= newY1 < BOARD_SIZE and board[newY1][newX1].isAvailable(user)):
+		temp = deepcopy(board)
 		temp[y][x].empty()
 		temp[newY1][newX1].stones += 1
 		temp[newY1][newX1].user = user
@@ -54,7 +56,7 @@ def move(user, direction, board, x, y):
 
 	newX2 = moveX(direction, x, 2)
 	newY2 = moveY(direction, y, 2)
-	if(0 <= newX2 < BOARD_SIZE and 0 <= newY2 < BOARD_SIZE and temp[newY2][newX2].isAvailable(user)):
+	if(0 <= newX2 < BOARD_SIZE and 0 <= newY2 < BOARD_SIZE and board[newY2][newX2].isAvailable(user)):
 		toAdd = min(stonesLeft, 2)
 		temp[newY2][newX2].stones += toAdd
 		temp[newY2][newX2].user = user
@@ -65,7 +67,7 @@ def move(user, direction, board, x, y):
 
 	newX3 = moveX(direction, x, 3)
 	newY3 = moveY(direction, y, 3)
-	if(0 <= newX3 < BOARD_SIZE and 0 <= newY3 < BOARD_SIZE and temp[newY3][newX3].isAvailable(user)):
+	if(0 <= newX3 < BOARD_SIZE and 0 <= newY3 < BOARD_SIZE and board[newY3][newX3].isAvailable(user)):
 		temp[newY3][newX3].stones += stonesLeft
 		temp[newY3][newX3].user = user
 	else:
@@ -78,31 +80,35 @@ def getChildren(board, user):
 	for y in range(0,BOARD_SIZE):
 		for x in range(0,BOARD_SIZE):
 			if(board[y][x].user != user): continue
-			moves.append(move(user, LEFT, board, x, y))
-			moves.append(move(user, UP, board, x, y))
-			moves.append(move(user, RIGHT, board, x, y))
-			moves.append(move(user, DOWN, board, x, y))
-			moves.append(move(user, UPLEFT, board, x, y))
-			moves.append(move(user, UPRIGHT, board, x, y))
-			moves.append(move(user, DOWNLEFT, board, x, y))
-			moves.append(move(user, DOWNRIGHT, board, x, y))
+			for direction in DIRECTIONS:
+				moves.append(move(user, direction, board, x, y))
 
 	ret = [x for x in moves if x is not None]
 
 	shuffle(ret)
 	return ret
 
+def getNumberOfChildren(board, user):
+	total = 0
+	for y in range(0,BOARD_SIZE):
+		for x in range(0,BOARD_SIZE):
+			if(board[y][x].user != user): continue
+			for direction in DIRECTIONS:
+				newX = moveX(direction, x, 1)
+				newY = moveY(direction, y, 1)
+				if(0 <= newX < BOARD_SIZE and 0 <= newY < BOARD_SIZE and board[newY][newX].isAvailable(user)): total += 1
+	return total
 
 def rationalMove(board, isRational, alpha, beta, depth):
-	rationalChildren = getChildren(board, RATIONAL)
-	randomChildren = getChildren(board, RANDOM)
+	rationalChildren = getNumberOfChildren(board, RATIONAL)
+	randomChildren = getNumberOfChildren(board, RANDOM)
 
-	if(isRational and (len(randomChildren) == 0 or depth == DEPTH_LIMIT)): 
-		return len(rationalChildren) - len(randomChildren)
-	if(not isRational and (len(rationalChildren) == 0 or depth == DEPTH_LIMIT)): 
-		return len(rationalChildren) - len(randomChildren)
+	if(isRational and (randomChildren == 0 or depth == DEPTH_LIMIT)): 
+		return rationalChildren - randomChildren
+	if(not isRational and (rationalChildren == 0 or depth == DEPTH_LIMIT)): 
+		return rationalChildren - randomChildren
 
-	children = rationalChildren if isRational else randomChildren
+	children = getChildren(board, RATIONAL) if isRational else getChildren(board, RANDOM)
 
 	for child in children:
 		if(isRational):
