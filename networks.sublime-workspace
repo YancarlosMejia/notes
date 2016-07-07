@@ -7,22 +7,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "networks-ECE358/lec5/lecture.tex",
-			"settings":
-			{
-				"buffer_size": 5599,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "networks-ECE358/lec6/lecture.tex",
-			"settings":
-			{
-				"buffer_size": 2331,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -31,10 +15,26 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 400.0,
-		"last_filter": "",
+		"height": 270.0,
+		"last_filter": "install",
 		"selected_items":
 		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"mini",
+				"View: Toggle Minimap"
+			],
+			[
+				"sdbar",
+				"View: Toggle Side Bar"
+			],
+			[
+				"user",
+				"Preferences: Settings - User"
+			],
 			[
 				"pack",
 				"Package Control: Remove Package"
@@ -48,15 +48,11 @@
 				"Package Control: Install Package"
 			],
 			[
-				"install",
-				"Package Control: Install Package"
-			],
-			[
 				"insta",
 				"Package Control: Install Package"
 			]
 		],
-		"width": 601.0
+		"width": 574.0
 	},
 	"console":
 	{
@@ -77,20 +73,43 @@
 	},
 	"expanded_folders":
 	[
-		"/home/lara/notes/networks-ECE358"
+		"/home/lara/notes/networks-ECE358",
+		"/home/lara/notes/networks-ECE358/a1",
+		"/home/lara/notes/networks-ECE358/a1/ece358-p2p-cm",
+		"/home/lara/notes/networks-ECE358/a1/ece358-p2p-cm/src",
+		"/home/lara/notes/networks-ECE358/a2",
+		"/home/lara/notes/networks-ECE358/a3"
 	],
 	"file_history":
 	[
-		"/home/lara/notes/networks-ECE358/a2/a2.tex",
-		"/home/lara/notes/networks-ECE358/lec4/lecture.tex",
-		"/home/lara/notes/networks-ECE358/lec3/lecture.tex",
 		"/home/lara/notes/networks-ECE358/lec2/lecutre.tex",
+		"/home/lara/notes/networks-ECE358/lec3/lecture.tex",
+		"/home/lara/notes/networks-ECE358/lec4/lecture.tex",
+		"/home/lara/notes/networks-ECE358/lec5/lecture.tex",
+		"/home/lara/notes/networks-ECE358/lec6/lecture.tex",
+		"/home/lara/notes/networks-ECE358/lec7/lecture.tex",
+		"/home/lara/notes/networks-ECE358/lec8/lecture.tex",
+		"/home/lara/notes/networks-ECE358/lec10/lecture.tex",
+		"/home/lara/notes/networks-ECE358/lec9/lecture.tex",
+		"/home/lara/notes/networks-ECE358/lec1/lecture.tex",
+		"/home/lara/notes/networks-ECE358/midterm/lecture.tex",
+		"/home/lara/notes/networks-ECE358/a1/ece358-p2p-cm/src/removepeer.c",
+		"/home/lara/notes/networks-ECE358/a1/ece358-p2p-cm/src/removecontent.c",
+		"/home/lara/notes/networks-ECE358/a1/ece358-p2p-cm/src/Makefile",
 		"/home/lara/notes/networks-ECE358/lec2/tc.c",
+		"/home/lara/notes/networks-ECE358/a1/ece358-p2p-cm/src/mybind.c",
+		"/home/lara/notes/networks-ECE358/a1/ece358-p2p-cm/src/lookupcontent.c",
+		"/home/lara/notes/networks-ECE358/a1/ece358-p2p-cm/src/addpeer.c",
+		"/home/lara/notes/networks-ECE358/a1/ece358-p2p-cm/src/addcontent.c",
+		"/home/lara/notes/networks-ECE358/a1/ece358-p2p-cm/.gitignore",
+		"/home/lara/notes/networks-ECE358/a3/a3.tex",
+		"/home/lara/notes/networks-ECE358/lec7/lecture.aux",
+		"/home/lara/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/lara/notes/networks-ECE358/a2/a2.tex",
 		"/home/lara/notes/networks-ECE358/lec2/uc.c",
 		"/home/lara/Dropbox/DaSTRUCT/kevin-ece457a.tex",
 		"/home/lara/Old-Notes/3a/os-SE350/Ch4/Lecture/lecture.tex",
 		"/home/lara/Old-Notes/3a/os-SE350/Ch1/lecture/lecture.tex",
-		"/home/lara/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
 		"/home/lara/Old-Notes/3b/concurrency-CS343/Lec1/lecture.tex"
 	],
 	"find":
@@ -99,9 +118,10 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 110.0,
 		"where_history":
 		[
+			""
 		]
 	},
 	"find_state":
@@ -109,6 +129,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"IP",
+			"ip",
+			"IP",
+			"fragment",
+			"fragmentation",
 			"section{",
 			"slides",
 			"based",
@@ -135,187 +160,8 @@
 	"groups":
 	[
 		{
-			"selected": 1,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "networks-ECE358/lec5/lecture.tex",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5599,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1608,
-								1608
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content"
-							],
-							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 585.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "networks-ECE358/lec6/lecture.tex",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2331,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								626,
-								626
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content"
-							],
-							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -372,8 +218,92 @@
 		"selected_items":
 		[
 			[
+				"lec10tex",
+				"lec10/lecture.tex"
+			],
+			[
+				"lec9tre",
+				"lec9/lecture.tex"
+			],
+			[
+				"lec8te",
+				"lec8/lecture.tex"
+			],
+			[
+				"lec7te",
+				"lec7/lecture.tex"
+			],
+			[
+				"lec6",
+				"lec6/lecture.tex"
+			],
+			[
+				"lec5te",
+				"lec5/lecture.tex"
+			],
+			[
+				"lec4tex",
+				"lec4/lecture.tex"
+			],
+			[
+				"lec3te",
+				"lec3/lecture.tex"
+			],
+			[
+				"lect2tex",
+				"lec2/lecutre.tex"
+			],
+			[
+				"lec1tex",
+				"lec1/lecture.tex"
+			],
+			[
+				"lec8t",
+				"lec8/lecture.tex"
+			],
+			[
+				"make",
+				"a1/ece358-p2p-cm/src/Makefile"
+			],
+			[
 				"tc",
 				"lec2/tc.c"
+			],
+			[
+				"lec2te",
+				"lec2/lecutre.tex"
+			],
+			[
+				"lec2tex",
+				"lec2/lecutre.tex"
+			],
+			[
+				"7lecture",
+				"lec7/lecture.tex"
+			],
+			[
+				"7lec",
+				"lec7/lecture.aux"
+			],
+			[
+				"4lec",
+				"lec4/lecture.tex"
+			],
+			[
+				"4/lec",
+				"lec4/lecture.tex"
+			],
+			[
+				"3lec",
+				"lec3/lecture.tex"
+			],
+			[
+				"2lectex",
+				"lec2/lecutre.tex"
+			],
+			[
+				"3le",
+				"lec3/lecture.tex"
 			],
 			[
 				"uc.c",
@@ -385,20 +315,28 @@
 	"select_project":
 	{
 		"height": 500.0,
-		"last_filter": "ad",
+		"last_filter": "ada",
 		"selected_items":
 		[
+			[
+				"ada",
+				"~/notes/adaptive.sublime-project"
+			],
 			[
 				"ad",
 				"~/notes/adaptive.sublime-project"
 			],
 			[
-				"sec",
-				"~/notes/security.sublime-project"
+				"",
+				"~/Projects/networksa1.sublime-project"
 			],
 			[
-				"",
+				"a",
 				"~/notes/adaptive.sublime-project"
+			],
+			[
+				"sec",
+				"~/notes/security.sublime-project"
 			]
 		],
 		"width": 380.0
@@ -416,10 +354,10 @@
 	"settings":
 	{
 	},
-	"show_minimap": true,
+	"show_minimap": false,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": true,
+	"side_bar_visible": false,
 	"side_bar_width": 150.0,
 	"status_bar_visible": true,
 	"template_settings":

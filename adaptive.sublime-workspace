@@ -3,23 +3,103 @@
 	{
 		"selected_items":
 		[
+			[
+				"isT",
+				"isRational〔argument〕"
+			],
+			[
+				"pritn",
+				"printBoard〔function〕"
+			],
+			[
+				"rational",
+				"rationalChildren〔variable〕"
+			],
+			[
+				"RA",
+				"RATIONAL〔variable〕"
+			],
+			[
+				"new",
+				"newY1"
+			],
+			[
+				"rationa",
+				"rationalAgent"
+			],
+			[
+				"is",
+				"isRational"
+			],
+			[
+				"newx",
+				"newX2"
+			],
+			[
+				"prit",
+				"printBoard"
+			],
+			[
+				"print",
+				"printBoard"
+			],
+			[
+				"R",
+				"RANDOM"
+			],
+			[
+				"ration",
+				"rationalMove"
+			],
+			[
+				"rand",
+				"random"
+			],
+			[
+				"chld",
+				"childVal"
+			],
+			[
+				"child",
+				"childVal"
+			],
+			[
+				"rando",
+				"randomChildren"
+			],
+			[
+				"ran",
+				"randomChildren"
+			],
+			[
+				"DOWN",
+				"DOWNRIGHT"
+			],
+			[
+				"D",
+				"DOWNLEFT"
+			],
+			[
+				"stones",
+				"stonesLeft"
+			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "adaptive-ECE457A/lec4/lecture.tex",
+			"file": "adaptive-ECE457A/a2/q2.py",
 			"settings":
 			{
-				"buffer_size": 3185,
+				"buffer_size": 5320,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "adaptive-ECE457A/a1/a1.tex",
+			"file": "adaptive-ECE457A/a2/results.txt",
 			"settings":
 			{
-				"buffer_size": 11244,
+				"buffer_size": 559050,
 				"line_ending": "Unix"
 			}
 		}
@@ -32,16 +112,24 @@
 	"command_palette":
 	{
 		"height": 400.0,
-		"last_filter": "map",
+		"last_filter": "preser",
 		"selected_items":
 		[
 			[
-				"map",
-				"View: Toggle Minimap"
+				"preser",
+				"MultiEditUtils: Preserve Case"
 			],
 			[
 				"sdbar",
 				"View: Toggle Side Bar"
+			],
+			[
+				"user",
+				"Preferences: Settings - User"
+			],
+			[
+				"map",
+				"View: Toggle Minimap"
 			],
 			[
 				"sort",
@@ -90,17 +178,29 @@
 	"expanded_folders":
 	[
 		"/home/lara/notes/adaptive-ECE457A",
-		"/home/lara/notes/adaptive-ECE457A/a1",
+		"/home/lara/notes/adaptive-ECE457A/a2",
 		"/home/lara/notes/adaptive-ECE457A/lec3"
 	],
 	"file_history":
 	[
+		"/home/lara/notes/adaptive-ECE457A/a2/q1.py",
+		"/home/lara/notes/adaptive-ECE457A/lec8/lecture.tex",
+		"/home/lara/notes/adaptive-ECE457A/lec4/lecture.tex",
+		"/home/lara/notes/adaptive-ECE457A/lec7/lecture.tex",
+		"/home/lara/notes/adaptive-ECE457A/Midterm review/lecture.tex",
+		"/home/lara/notes/adaptive-ECE457A/Midterm review/study links.tex",
+		"/home/lara/notes/adaptive-ECE457A/lec3/lecture.tex",
+		"/home/lara/notes/adaptive-ECE457A/lec2/lecture.tex",
+		"/home/lara/notes/adaptive-ECE457A/lec1/lecture.tex",
+		"/home/lara/notes/adaptive-ECE457A/Midterm review/alphabeta.tex",
+		"/home/lara/notes/adaptive-ECE457A/lec5/lecture.tex",
+		"/home/lara/notes/adaptive-ECE457A/lec6/lecture.tex",
+		"/home/lara/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/lara/notes/adaptive-ECE457A/a1/a1.fdb_latexmk",
 		"/home/lara/notes/adaptive-ECE457A/a1/a1.tex",
 		"/home/lara/Downloads/uml_shit.txt",
 		"/home/lara/notes/adaptive-ECE457A/a1/parseGarbage.py",
 		"/home/lara/notes/adaptive-ECE457A/a1/garbage.txt",
-		"/home/lara/notes/adaptive-ECE457A/lec2/lecture.tex",
-		"/home/lara/notes/adaptive-ECE457A/lec3/lecture.tex",
 		"/home/lara/Downloads/temp.txt",
 		"/home/lara/temp.txt",
 		"/home/lara/notes/networks-ECE358/lec3/lecture.tex",
@@ -110,7 +210,6 @@
 		"/home/lara/Dropbox/DaSTRUCT/kevin-ece457a.tex",
 		"/home/lara/Old-Notes/3a/os-SE350/Ch4/Lecture/lecture.tex",
 		"/home/lara/Old-Notes/3a/os-SE350/Ch1/lecture/lecture.tex",
-		"/home/lara/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
 		"/home/lara/Old-Notes/3b/concurrency-CS343/Lec1/lecture.tex"
 	],
 	"find":
@@ -129,6 +228,95 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"Depth 1",
+			"Depth 2",
+			"Child Value",
+			"\"Beta\"",
+			"Beta",
+			"Alp",
+			"prune",
+			"print",
+			"stones",
+			"+ self.stones",
+			"printboard",
+			"cell(0",
+			"None",
+			"print",
+			"print ",
+			"print",
+			"printboard",
+			"x*][",
+			"x][",
+			"start",
+			"printboard",
+			"CHILDREN",
+			"player",
+			"rational player",
+			"getchildren",
+			"printboard",
+			"board[",
+			"newY2",
+			"board[newY2",
+			"board[",
+			"board[newY2",
+			"board[",
+			"board",
+			"getChildren",
+			"getchildren",
+			"printBoard",
+			";",
+			"rat",
+			"Rational",
+			"printboard",
+			"BOARD",
+			"board",
+			"printboard",
+			"\",",
+			"printBoard",
+			"printboard",
+			"<",
+			"add(",
+			"add",
+			">",
+			": ",
+			"printboard",
+			"temp",
+			"True",
+			"true",
+			"move(",
+			"move",
+			"\"",
+			"0",
+			"print",
+			"np_array",
+			"temp[",
+			"temp",
+			"not =",
+			"!",
+			"&&",
+			"||",
+			"RATIONAL",
+			"2",
+			"1",
+			"LEFT",
+			"UPRIGHT",
+			"LEFT",
+			"RIGHT",
+			"LEFT",
+			"DOWN",
+			"UP",
+			"y, x",
+			"q",
+			"x",
+			"y",
+			"q",
+			"x",
+			"y",
+			"x",
+			"y",
+			"salary",
+			"name",
+			"#",
 			"B",
 			"hline",
 			"]",
@@ -171,120 +359,156 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "adaptive-ECE457A/lec4/lecture.tex",
+					"file": "adaptive-ECE457A/a2/q2.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3185,
+						"buffer_size": 5320,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3169,
-								3169
+								1874,
+								1874
 							]
 						],
 						"settings":
 						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
+							"auto_complete": false,
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
 							[
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
 								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
-								"bh_tag_content"
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
 							],
-							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"open_with_edit": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 660.0,
+						"translation.y": 720.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
-				},
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
 				{
 					"buffer": 1,
-					"file": "adaptive-ECE457A/a1/a1.tex",
+					"file": "adaptive-ECE457A/a2/results.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 11244,
+						"buffer_size": 559050,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								9736,
-								9736
+								42944,
+								42944
 							]
 						],
 						"settings":
 						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
 							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
@@ -295,21 +519,6 @@
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
@@ -320,33 +529,41 @@
 								"bh_tag_open",
 								"bh_tag_close",
 								"bh_tag_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_round",
 								"bh_round_center",
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
 								"bh_single_quote_close",
 								"bh_single_quote_content"
 							],
-							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 3174.0,
+						"translation.y": 28.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -372,11 +589,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":
@@ -408,6 +632,42 @@
 		"selected_items":
 		[
 			[
+				"midtermre",
+				"Midterm review/lecture.tex"
+			],
+			[
+				"lec7",
+				"lec7/lecture.tex"
+			],
+			[
+				"lec",
+				"lec4/lecture.tex"
+			],
+			[
+				"lec4",
+				"lec4/lecture.tex"
+			],
+			[
+				"lec3tex",
+				"lec3/lecture.tex"
+			],
+			[
+				"lec2",
+				"lec2/lecture.tex"
+			],
+			[
+				"lec1",
+				"lec1/lecture.tex"
+			],
+			[
+				"mide",
+				"Midterm review/lecture.tex"
+			],
+			[
+				"",
+				"a1/a1.fdb_latexmk"
+			],
+			[
 				"a1.te",
 				"a1/a1.tex"
 			],
@@ -429,9 +689,33 @@
 	"select_project":
 	{
 		"height": 500.0,
-		"last_filter": "",
+		"last_filter": "sec",
 		"selected_items":
 		[
+			[
+				"sec",
+				"~/notes/security.sublime-project"
+			],
+			[
+				"se",
+				"~/notes/security.sublime-project"
+			],
+			[
+				"ada",
+				"~/notes/adaptive.sublime-project"
+			],
+			[
+				"",
+				"~/notes/security.sublime-project"
+			],
+			[
+				"net",
+				"~/notes/networks.sublime-project"
+			],
+			[
+				"att",
+				"~/Projects/attendee.sublime-project"
+			],
 			[
 				"we",
 				"~/Projects/website.sublime-project"
@@ -443,14 +727,6 @@
 			[
 				"spec",
 				"~/notes/specs.sublime-project"
-			],
-			[
-				"se",
-				"~/notes/security.sublime-project"
-			],
-			[
-				"",
-				"~/notes/security.sublime-project"
 			]
 		],
 		"width": 380.0
@@ -471,7 +747,7 @@
 	"show_minimap": false,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": false,
+	"side_bar_visible": true,
 	"side_bar_width": 150.0,
 	"status_bar_visible": true,
 	"template_settings":

@@ -20,10 +20,18 @@
 	"buffers":
 	[
 		{
-			"file": "security-CS458/lec3/lecure.tex",
+			"file": "security-CS458/a3/a3.tex",
 			"settings":
 			{
-				"buffer_size": 7291,
+				"buffer_size": 6236,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "security-CS458/lec5/lecture.tex",
+			"settings":
+			{
+				"buffer_size": 25056,
 				"line_ending": "Unix"
 			}
 		}
@@ -35,7 +43,7 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 80.0,
+		"height": 400.0,
 		"last_filter": "",
 		"selected_items":
 		[
@@ -44,8 +52,40 @@
 				"Increment Selection"
 			],
 			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
 				"install",
 				"Package Control: Install Package"
+			],
+			[
+				"increment",
+				"Emmet: Increment Number by 1"
+			],
+			[
+				"sdbar",
+				"View: Toggle Side Bar"
+			],
+			[
+				"mini",
+				"View: Toggle Minimap"
+			],
+			[
+				"remove pac",
+				"Package Control: Remove Package"
+			],
+			[
+				"IN",
+				"View: Toggle Open Files in Side Bar"
+			],
+			[
+				"PR",
+				"Package Control: Remove Repository"
+			],
+			[
+				"",
+				"Package Control: List Packages"
 			],
 			[
 				"insall",
@@ -72,13 +112,14 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 601.0
+		"width": 574.0
 	},
 	"console":
 	{
 		"height": 126.0,
 		"history":
 		[
+			"sublime.log_commands(True)",
 			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
 		]
 	},
@@ -93,10 +134,35 @@
 	},
 	"expanded_folders":
 	[
-		"/home/lara/notes/security-CS458"
+		"/home/lara/notes/security-CS458",
+		"/home/lara/notes/security-CS458/a3"
 	],
 	"file_history":
 	[
+		"/home/lara/notes/security-CS458/lec4/lecture.tex",
+		"/home/lara/notes/security-CS458/lec5/lecture.tex",
+		"/home/lara/notes/security-CS458/a2/db_functions.php",
+		"/home/lara/notes/security-CS458/a2/a2.tex",
+		"/home/lara/notes/security-CS458/a2/sploit ideas.txt",
+		"/home/lara/notes/security-CS458/a2/sploit2.sh",
+		"/home/lara/notes/security-CS458/a2/sploit4.sh",
+		"/home/lara/notes/security-CS458/a2/sploit3.sh",
+		"/home/lara/notes/security-CS458/a2/sploit5.sh",
+		"/home/lara/notes/security-CS458/a2/sploit1.sh",
+		"/home/lara/notes/security-CS458/lec5/lecture.aux",
+		"/home/lara/.tmux.conf",
+		"/home/lara/notes/.gitignore",
+		"/home/lara/.gitignore_global",
+		"/home/lara/notes/security-CS458/lec3/lecure.tex",
+		"/home/lara/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/lara/.config/sublime-text-3/Packages/User/LaTeX.sublime-settings",
+		"/home/lara/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
+		"/home/lara/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/home/lara/notes/security-CS458/lec2/lecture.tex",
+		"/home/lara/notes/security-CS458/lec2/textbook.tex",
+		"/home/lara/Documents/workplaces.txt",
+		"/home/lara/notes/security-CS458/a1/sploit3.c",
+		"/home/lara/Downloads/note to kevin.txt",
 		"/home/lara/notes/securtiy-CS458/a1/a1.tex",
 		"/home/lara/notes/securtiy-CS458/a1/Makefile",
 		"/home/lara/notes/securtiy-CS458/a1/sploit4.c",
@@ -116,7 +182,6 @@
 		"/home/lara/Old-Notes/3b/concurrency-CS343/a3/Makefile",
 		"/home/lara/.ssh/config",
 		"/home/lara/notes/securtiy-CS458/lec3/lecure.tex",
-		"/home/lara/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
 		"/home/lara/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
 		"/home/lara/notes/securtiy-CS458/lec2/lecture.tex",
 		"/home/lara/notes/securtiy-CS458/lec2/lecture.synctex.gz",
@@ -139,6 +204,34 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"84",
+			"\\",
+			"35",
+			"xor",
+			"||",
+			"Delta",
+			"Gamma",
+			"Beta",
+			"Alpha",
+			"section",
+			"\\n",
+			"can_admin",
+			"$_SESSION['id']",
+			"username",
+			"ERR_INVALID_USER",
+			"confirm",
+			"upvote",
+			"C",
+			"-",
+			"}\n",
+			"M-f",
+			"ctrl+shift+p",
+			"ctrl+.",
+			"ctrl+shift+`",
+			"command",
+			"alt+p",
+			"lstings",
+			"page=",
 			"securtiy",
 			"%x",
 			"x",
@@ -232,36 +325,43 @@
 			[
 				{
 					"buffer": 0,
-					"file": "security-CS458/lec3/lecure.tex",
+					"file": "security-CS458/a3/a3.tex",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7291,
+						"buffer_size": 6236,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3785,
-								3785
+								3160,
+								3160
 							]
 						],
 						"settings":
 						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
 							[
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
 								"bh_regex_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
@@ -272,49 +372,160 @@
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
+							],
+							"open_with_edit": true,
+							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 574.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "security-CS458/lec5/lecture.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 25056,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								24997,
+								24997
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+									"1":
+									[
+										25047,
+										25055
+									]
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
 								"bh_single_quote_close",
-								"bh_single_quote_content"
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
 							],
-							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax"
+							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 821.0,
+						"translation.y": 4592.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -353,7 +564,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 98.0
+		"height": 227.0
 	},
 	"output.find_results":
 	{
@@ -373,7 +584,67 @@
 		"selected_items":
 		[
 			[
+				"lecture.tex",
+				"lec5/lecture.tex"
+			],
+			[
+				"lec4",
+				"lec4/lecture.tex"
+			],
+			[
+				"lec5",
+				"lec5/lecture.tex"
+			],
+			[
+				"db",
+				"a2/db_functions.php"
+			],
+			[
+				"sploit4",
+				"a2/sploit4.sh"
+			],
+			[
+				"sploit5",
+				"a2/sploit5.sh"
+			],
+			[
+				"lec5ltex",
+				"lec5/lecture.tex"
+			],
+			[
+				"5lectuer",
+				"lec5/lecture.aux"
+			],
+			[
+				"sploit3",
+				"a2/sploit3.sh"
+			],
+			[
+				"sploit1",
+				"a2/sploit1.sh"
+			],
+			[
+				"a2/sploit2",
+				"a2/sploit2.sh"
+			],
+			[
+				"a2/sploit",
+				"a2/sploit ideas.txt"
+			],
+			[
+				"a2",
+				"a2/a2.tex"
+			],
+			[
 				"3lec",
+				"lec3/lecure.tex"
+			],
+			[
+				"spl",
+				"a1/sploit3.c"
+			],
+			[
+				"3lectu",
 				"lec3/lecure.tex"
 			],
 			[
@@ -405,10 +676,6 @@
 				"a1/sploit4.c"
 			],
 			[
-				"spl",
-				"a1/sploit3.c"
-			],
-			[
 				"1",
 				"a1/sploit1.c"
 			],
@@ -438,28 +705,52 @@
 	"select_project":
 	{
 		"height": 500.0,
-		"last_filter": "se",
+		"last_filter": "ada",
 		"selected_items":
 		[
 			[
-				"se",
+				"ada",
+				"~/notes/adaptive.sublime-project"
+			],
+			[
+				"atte",
+				"~/Projects/attendee-web.sublime-project"
+			],
+			[
+				"netw",
+				"~/notes/networks.sublime-project"
+			],
+			[
+				"sec",
 				"~/notes/security.sublime-project"
 			],
 			[
-				"",
-				"~/notes/adaptive.sublime-project"
-			],
-			[
-				"ad",
-				"~/notes/adaptive.sublime-project"
+				"attend",
+				"~/Projects/attendee-web.sublime-project"
 			],
 			[
 				"net",
 				"~/notes/networks.sublime-project"
 			],
 			[
-				"netw",
+				"",
+				"~/Projects/attendee.sublime-project"
+			],
+			[
+				"se",
+				"~/notes/security.sublime-project"
+			],
+			[
+				"at",
+				"~/Projects/attendee.sublime-project"
+			],
+			[
+				"netwo",
 				"~/notes/networks.sublime-project"
+			],
+			[
+				"ad",
+				"~/notes/adaptive.sublime-project"
 			],
 			[
 				"w",
@@ -481,8 +772,8 @@
 	"settings":
 	{
 	},
-	"show_minimap": true,
-	"show_open_files": false,
+	"show_minimap": false,
+	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
 	"side_bar_width": 150.0,
