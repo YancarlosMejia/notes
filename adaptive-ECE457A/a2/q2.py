@@ -67,7 +67,7 @@ def move(user, direction, board, x, y):
                 
                 newValue1   += 1
                 stonesLeft  -= 1
-                newValue2   +=  min(stonesLeft, 2)
+                newValue2   += min(stonesLeft, 2)
                 stonesLeft  -= min(stonesLeft, 2)
                 newValue3   += stonesLeft
             else:
@@ -81,11 +81,11 @@ def move(user, direction, board, x, y):
 
     temp = [list(i) for i in board]
     temp[y][x] = (0, "")
-    if newValue1 != None:
+    if newValue1 != None and newValue1 != 0:
         temp[newY1][newX1] = (newValue1, user)
-    if newValue2 != None:
+    if newValue2 != None and newValue2 != 0:
         temp[newY2][newX2] = (newValue2, user)
-    if newValue3 != None:
+    if newValue3 != None and newValue3 != 0:
         temp[newY3][newX3] = (newValue3, user)
 
     return tuple(tuple(i) for i in temp) if newValue1 != None else None   
@@ -103,26 +103,12 @@ def getChildren(board, user):
 
     return ret
 
-# def getNumberOfChildren(board, user):
-#     total = 0
-#     for y in range(0,BOARD_SIZE):
-#         for x in range(0,BOARD_SIZE):
-#             if(board[y][x][1] != user): continue
-#             for direction in DIRECTIONS:
-#                 newX = moveX(direction, x, 1)
-#                 newY = moveY(direction, y, 1)
-#                 if(0 <= newX < BOARD_SIZE and 0 <= newY < BOARD_SIZE and cellIsAvailable(board[newY][newX], user)): total += 1
-#     return total
-
-# def evaluate1(board):
-#     return getNumberOfChildren(board, RATIONAL) - getNumberOfChildren(board, RANDOM)
 
 def rationalMove(board, isRational, alpha, beta, depth):
     rationalChildren = getChildren(board, RATIONAL)
     randomChildren = getChildren(board, RANDOM)
 
     if len(rationalChildren) == 0 or len(randomChildren) == 0 or depth == DEPTH_LIMIT:
-        # print("Leaf", len(rationalChildren)- len(randomChildren))
         return (len(rationalChildren)- len(randomChildren), board)
 
     children = getChildren(board, RATIONAL) if isRational else getChildren(board, RANDOM)
@@ -131,10 +117,6 @@ def rationalMove(board, isRational, alpha, beta, depth):
     if isRational:
         maxVal = MIN_INT
         for child in children:
-            # if depth != DEPTH_LIMIT - 1: 
-                # print("CHILD", isRational, depth)
-                # printBoard(child)
-            
             childVal = rationalMove(child, not isRational, alpha, beta, depth + 1)[0]
 
             if childVal > maxVal:
@@ -143,18 +125,12 @@ def rationalMove(board, isRational, alpha, beta, depth):
             maxVal = max(childVal, maxVal)
             alpha = max(alpha, maxVal)    
 
-            # if depth != DEPTH_LIMIT - 1: print("alpha", alpha)
             if(beta < alpha): 
-                # print("prune", alpha, beta)
                 break;
         return (maxVal, bestChild)
     else:
         minVal = MAX_INT
         for child in children:
-            # if depth != DEPTH_LIMIT - 1: 
-                # print("CHILD", isRational, depth)
-                # printBoard(child)
-            
             childVal = rationalMove(child, not isRational, alpha, beta, depth + 1)[0]
 
             if childVal < minVal:
@@ -163,9 +139,7 @@ def rationalMove(board, isRational, alpha, beta, depth):
             minVal = min(childVal, minVal)
             beta = min(beta, minVal)    
 
-            # if depth != DEPTH_LIMIT - 1: print("beta", beta)
             if(beta < alpha): 
-                # print("prune", alpha, beta)
                 break;
         return (minVal, bestChild)        
 
