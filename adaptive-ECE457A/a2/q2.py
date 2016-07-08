@@ -101,25 +101,26 @@ def getChildren(board, user):
     shuffle(ret)
     return ret
 
-def getNumberOfChildren(board, user):
-    total = 0
-    for y in range(0,BOARD_SIZE):
-        for x in range(0,BOARD_SIZE):
-            if(board[y][x][1] != user): continue
-            for direction in DIRECTIONS:
-                newX = moveX(direction, x, 1)
-                newY = moveY(direction, y, 1)
-                if(0 <= newX < BOARD_SIZE and 0 <= newY < BOARD_SIZE and cellIsAvailable(board[newY][newX], user)): total += 1
-    return total
+# def getNumberOfChildren(board, user):
+#     total = 0
+#     for y in range(0,BOARD_SIZE):
+#         for x in range(0,BOARD_SIZE):
+#             if(board[y][x][1] != user): continue
+#             for direction in DIRECTIONS:
+#                 newX = moveX(direction, x, 1)
+#                 newY = moveY(direction, y, 1)
+#                 if(0 <= newX < BOARD_SIZE and 0 <= newY < BOARD_SIZE and cellIsAvailable(board[newY][newX], user)): total += 1
+#     return total
+
+# def evaluate1(board):
+#     return getNumberOfChildren(board, RATIONAL) - getNumberOfChildren(board, RANDOM)
 
 def rationalMove(board, isRational, alpha, beta, depth):
-    rationalChildren = getNumberOfChildren(board, RATIONAL)
-    randomChildren = getNumberOfChildren(board, RANDOM)
+    rationalChildren = getChildren(board, RATIONAL)
+    randomChildren = getChildren(board, RANDOM)
 
-    if(isRational and (randomChildren == 0 or depth == DEPTH_LIMIT)): 
-        return rationalChildren - randomChildren
-    if(not isRational and (rationalChildren == 0 or depth == DEPTH_LIMIT)): 
-        return rationalChildren - randomChildren
+    if len(rationalChildren) == 0 or len(randomChildren) == 0 or depth == DEPTH_LIMIT:
+        return len(rationalChildren)- len(randomChildren)
 
     children = getChildren(board, RATIONAL) if isRational else getChildren(board, RANDOM)
 
@@ -162,10 +163,12 @@ if __name__ == '__main__':
         ((0, ""), (0, ""), (0, ""), (10, RANDOM))
     )
 
+    turns = 0
     for i in range(0,1):
         while True:
+            turns += 1
             if(len(getChildren(board, RATIONAL)) > 0):
-                print("Rational player turn")
+                print("Rational player turn", turns)
                 board = rationalAgent(board)
                 printBoard(board)
             else:
@@ -173,7 +176,7 @@ if __name__ == '__main__':
                 printBoard(board)
                 break
             if(len(getChildren(board, RANDOM)) > 0):
-                print("Random player turn")
+                print("Random player turn", turns)
                 board = randomAgent(board)
                 printBoard(board)
             else:
