@@ -2,7 +2,9 @@ from copy import copy, deepcopy
 from random import randint, shuffle
 
 BOARD_SIZE  = 4
-DEPTH_LIMIT = 3
+DEPTH_LIMIT = 4
+MAX_INT     = float("inf")
+MIN_INT     = float("-inf")
 UP          = "up"
 DOWN        = "down"
 LEFT        = "left"
@@ -90,6 +92,7 @@ def move(user, direction, board, x, y):
     
 def getChildren(board, user):
     moves = []
+    shuffle(DIRECTIONS)
     for y in range(0,BOARD_SIZE):
         for x in range(0,BOARD_SIZE):
             if(board[y][x][1] != user): continue
@@ -98,7 +101,6 @@ def getChildren(board, user):
 
     ret = [x for x in moves if x is not None]
 
-    shuffle(ret)
     return ret
 
 # def getNumberOfChildren(board, user):
@@ -120,39 +122,60 @@ def rationalMove(board, isRational, alpha, beta, depth):
     randomChildren = getChildren(board, RANDOM)
 
     if len(rationalChildren) == 0 or len(randomChildren) == 0 or depth == DEPTH_LIMIT:
-        return len(rationalChildren)- len(randomChildren)
+        # print("Leaf", len(rationalChildren)- len(randomChildren))
+        return (len(rationalChildren)- len(randomChildren), board)
 
     children = getChildren(board, RATIONAL) if isRational else getChildren(board, RANDOM)
 
-    for child in children:
-        if(isRational):
-            childVal = rationalMove(child, not isRational, alpha, beta, depth + 1)
-            if alpha == None: alpha = childVal
-            alpha = max(alpha, childVal) 
-            if(beta != None and childVal > beta): 
-                return alpha
-        else:
-            childVal = rationalMove(child, not isRational, alpha, beta, depth + 1)
-            if beta == None: beta = childVal
-            beta = min(beta, childVal)
-            if(alpha != None and childVal < alpha): 
-                return beta
-    return alpha if isRational else beta
+    bestChild = children[0]
+    if isRational:
+        maxVal = MIN_INT
+        for child in children:
+            # if depth != DEPTH_LIMIT - 1: 
+                # print("CHILD", isRational, depth)
+                # printBoard(child)
+            
+            childVal = rationalMove(child, not isRational, alpha, beta, depth + 1)[0]
+
+            if childVal > maxVal:
+                bestChild = child
+
+            maxVal = max(childVal, maxVal)
+            alpha = max(alpha, maxVal)    
+
+            # if depth != DEPTH_LIMIT - 1: print("alpha", alpha)
+            if(beta < alpha): 
+                # print("prune", alpha, beta)
+                break;
+        return (maxVal, bestChild)
+    else:
+        minVal = MAX_INT
+        for child in children:
+            # if depth != DEPTH_LIMIT - 1: 
+                # print("CHILD", isRational, depth)
+                # printBoard(child)
+            
+            childVal = rationalMove(child, not isRational, alpha, beta, depth + 1)[0]
+
+            if childVal < minVal:
+                bestChild = child
+
+            minVal = min(childVal, minVal)
+            beta = min(beta, minVal)    
+
+            # if depth != DEPTH_LIMIT - 1: print("beta", beta)
+            if(beta < alpha): 
+                # print("prune", alpha, beta)
+                break;
+        return (minVal, bestChild)        
+
 
 def randomAgent(board):
     children = getChildren(board, RANDOM)
     return children[randint(0, len(children) - 1)]
 
 def rationalAgent(board):
-    score = None
-    bestMove = None
-    for child in getChildren(board, RATIONAL):
-        childVal = rationalMove(child, False, None, None, 0)
-        if(score == None or childVal < score):
-            score = childVal
-            bestMove = child
-
-    return bestMove
+    return rationalMove(board, True, MIN_INT, MAX_INT, 0)
 
 
 if __name__ == '__main__':
@@ -163,13 +186,14 @@ if __name__ == '__main__':
         ((0, ""), (0, ""), (0, ""), (10, RANDOM))
     )
 
+    # board = rationalAgent(board)
     turns = 0
     for i in range(0,1):
         while True:
             turns += 1
             if(len(getChildren(board, RATIONAL)) > 0):
                 print("Rational player turn", turns)
-                board = rationalAgent(board)
+                board = rationalAgent(board)[1]
                 printBoard(board)
             else:
                 print("Random player wins")
