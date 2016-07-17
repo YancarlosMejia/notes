@@ -1,5 +1,6 @@
 from copy import copy, deepcopy
 from random import randint, shuffle
+import datetime
 
 BOARD_SIZE  = 4
 DEPTH_LIMIT = 4
@@ -21,16 +22,17 @@ def cellIsAvailable(cell, user):
     return cell[0] == 0 or cell[1] == user
 
 def printBoard(board):
-       print("Board")
-       for y in range(0,BOARD_SIZE):
-               for x in range(0,BOARD_SIZE):
-                    if board[y][x][1] == RATIONAL:
-                        print("A:", board[y][x][0], "  ", end="")
-                    elif board[y][x][1] == RANDOM:
-                        print("B:", board[y][x][0], "  ", end="")
-                    else:   
-                        print("0:", board[y][x][0], "  ", end="")
-               print("")
+    for y in range(0,BOARD_SIZE):
+        for x in range(0,BOARD_SIZE):
+            if board[y][x][1] == RATIONAL:
+                print("A:", board[y][x][0], "  ", end="")
+            elif board[y][x][1] == RANDOM:
+                print("B:", board[y][x][0], "  ", end="")
+            else:   
+                print("0:", board[y][x][0], "  ", end="")
+        print("")
+
+
 
 
 def moveX(direction, x, value):
@@ -103,13 +105,48 @@ def getChildren(board, user):
 
     return ret
 
+def getNumChildren(board, user):
+    total = 0
+    for y in range(0,BOARD_SIZE):
+        for x in range(0,BOARD_SIZE):
+            if(board[y][x][1] != user): continue
+            for direction in DIRECTIONS:
+                    newX1 = moveX(direction, x, 1)
+                    newY1 = moveY(direction, y, 1)
+                    if(0 <= newX1 < BOARD_SIZE and 0 <= newY1 < BOARD_SIZE and cellIsAvailable(board[newY1][newX1], user)):
+                        total += 1
+    return total
+
+def getNumStonesOwned(board, user):
+    total = 0
+    for y in range(0,BOARD_SIZE):
+        for x in range(0,BOARD_SIZE):
+            if(board[y][x][1] == user): 
+                total += 1
+    return total
+
+def getWeightedNumStonesOwned(board, user):
+    total = 0
+    for y in range(0,BOARD_SIZE):
+        for x in range(0,BOARD_SIZE):
+            if(board[y][x][1] != user): 
+                continue
+            if (x == 0 or x == BOARD_SIZE - 1) and (y == 0 or y == BOARD_SIZE - 1):
+                total += 3
+            elif (x == 0 or x == BOARD_SIZE - 1) or (y == 0 or y == BOARD_SIZE - 1):
+                total += 5
+            else:
+                total += 8
+
+    return total
+
 
 def rationalMove(board, isRational, alpha, beta, depth):
-    rationalChildren = getChildren(board, RATIONAL)
-    randomChildren = getChildren(board, RANDOM)
+    rationalChildren = getNumChildren(board, RATIONAL)
+    randomChildren = getNumChildren(board, RANDOM)
 
-    if len(rationalChildren) == 0 or len(randomChildren) == 0 or depth == DEPTH_LIMIT:
-        return (len(rationalChildren)- len(randomChildren), board)
+    if rationalChildren == 0 or randomChildren == 0 or depth == DEPTH_LIMIT:
+        return (rationalChildren- randomChildren, board)
 
     children = getChildren(board, RATIONAL) if isRational else getChildren(board, RANDOM)
 
@@ -153,33 +190,38 @@ def rationalAgent(board):
 
 
 if __name__ == '__main__':
-    board = (
-        ((10, RATIONAL), (0, ""), (0, ""), (0, "")),
-        ((0, ""), (0, ""), (0, ""), (0, "")),
-        ((0, ""), (0, ""), (0, ""), (0, "")),
-        ((0, ""), (0, ""), (0, ""), (10, RANDOM))
-    )
 
     # board = rationalAgent(board)
-    turns = 0
-    for i in range(0,1):
+    rounds = 10
+    rat = 0
+    ran = 0
+    for i in range(0,rounds):
+        turns = 0
+        board = (
+            ((10, RATIONAL), (0, ""), (0, ""), (0, "")),
+            ((0, ""), (0, ""), (0, ""), (0, "")),
+            ((0, ""), (0, ""), (0, ""), (0, "")),
+            ((0, ""), (0, ""), (0, ""), (10, RANDOM))
+        )
         while True:
-            turns += 1
-            if(len(getChildren(board, RATIONAL)) > 0):
-                print("Rational player turn", turns)
+            if turns > 50:
+                print("Draw")
+                rat += 0.5
+                ran += 0.5
+                break
+            turns += 1;
+            if(getNumChildren(board, RATIONAL) > 0):
                 board = rationalAgent(board)[1]
-                printBoard(board)
             else:
-                print("Random player wins")
-                printBoard(board)
+                print("Random player wins ", turns)
+                ran += 1
                 break
-            if(len(getChildren(board, RANDOM)) > 0):
-                print("Random player turn", turns)
+            if(getNumChildren(board, RANDOM) > 0):
                 board = randomAgent(board)
-                printBoard(board)
             else:
-                print("Rational player wins")
-                printBoard(board)
+                print("Rational player wins in", turns)
+                rat +=1
                 break
-
+    print("Rational player won", rat/rounds)
+    print("Random player won", ran/rounds)
 
