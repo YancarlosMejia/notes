@@ -357,13 +357,76 @@ So far encryption doesn't protect the metadata of our data. It doesn't protect w
 \includepdf[pages=101]{Module5}
 TOR works on the transport layer. It has about 2 million users. You can download the TOR broswer bundle (its a version of firefox that uses TOR). The most common number of connections is HTTP. The most traffic over TOR is from bit torrent.
 
+\includepdf[pages=102]{Module5}
+\includepdf[pages=103]{Module5}
+The Tor Browser uses onion encryption (lots of layers). There are nodes scattered around the world. 
 
+\includepdf[pages=104]{Module5}
+\includepdf[pages=105]{Module5}
+\includepdf[pages=106]{Module5}
+The first node that Alice hits is the entry guard. She shares a key with it $k_1$ via the normal TLS key agreement method. She then tells $n_1$ to contact a second node, $n_2$ on my behalf. $n_2$ is a middle node. Alice sends key $k_2$ to $n_2$ and so on. Alice gets to pick all of the nodes that she wants to pass shit along. None of the intermediate nodes can read the messages that she sends to the others. Evnetually (in her example 3 nodes later) she reaches an exit node. After this the packet exits the tor network. Only the nodes along this circuit have her keys.
+
+\includepdf[pages=107]{Module5}
+Say Alice wants to send message M to webserver. She takes this message and encrypts it in reverse order (so encrypt with $k_3$ then $k_2$, and so on). Each node decrypts a single layer as it goes.
+
+\includepdf[pages=108]{Module5}
+Basically it just does the exact same thing in reverse.
+
+\includepdf[pages=109]{Module5}
+It is possible to set up an exit node that can watch all the plaintext exiting the node. Make sure you use https or some other secure form of connection.
+
+\includepdf[pages=110]{Module5}
+\includepdf[pages=111]{Module5}
+\includepdf[pages=112]{Module5}
+
+
+\includepdf[pages=113]{Module5}
+
+\includepdf[pages=115-129]{Module5}
+Alice generates a signature on Bob's public key to say that she totally verified Bob's fingerprint. Bob takes that signature and put it in a public place so that anyone who trusts Alice will now trust Bob,
+
+\includepdf[pages=130]{Module5}
+There are three kinds of keys, Trust, Partially Trusted, and Untrusted. Alice assigns one of these to each key she adds to her key ring. 
+
+\includepdf[pages=131-139]{Module5}
+We want to try to share a key with perfect forward secrecy. The Diffie-Hellman protocol is the best way to do this.
+
+Get a prime number $p$ and a generator $g$ of prime integers. Alice picks a random $a$ that remains private and sends $g^a mod p$ to Bob. Bob picks a random b that remains private and sends $g^b mod p$ to Alice. Alice then generates a key $K = (g^b)^a mod p$ and Bob generates $K = (g^a)^b mod p$ resulting in a shared key. Currently there is no known way for Eve to calculated a or b. So far incalculable. 
+
+\includepdf[pages=140]{Module5}
+To prevent man in the middle attacks we sign the bits getting passed back and forth. We still want deniability though (so that you cannot say for certain which trusts source sent it). So signatures aren't the best. So we use MACs
+
+\includepdf[pages=141]{Module5}
+Bob is assured that only Alice sent the message since no one else had access to the MAC. Here we cannot deny that we have initiated a conversation, but by using the MAC we get deniability on who sent which message.
+
+\includepdf[pages=142]{Module5}
+\includepdf[pages=143]{Module5}
+We like OTR. It gives confidentiality, and perfect forward secrecy. It also uses key rotation. The section of time using the same key is an epoch so if a hacker somehow gets the key, they can only read was was said during that epoch.
+\includepdf[pages=144]{Module5}
+At the end of an epoch the current MAC key is published so that we have deniability (the attacker can forge old transcripts, but not effect the current one). Alice and Bob are already using a new key so the attacker cannot pretend to be them.
+
+\includepdf[pages=145]{Module5}
+Signal doesn't even know what you are talking about. 
+
+\includepdf[pages=146]{Module5}
+Signal uses the triple Diffie-Hellman protocol. Alice has a long term key. She generates an effemeral (short term session) key for her public and private keys
+
+\begin{itemize}
+	\item long term private 	= A
+	\item short term private 	= a
+	\item long term public 		= $g^A$
+	\item short term public 	= $g^a$
+\end{itemize}
+
+Bob also generates these keys using b and B. 
+
+So Alice sends her two public keys to Bob and he sends his back, using this they create keys by hashing a concatenation of three separate keys (hence the triple in the name of this protocol).
+
+Now when we generate the shared key we do $K = h(g^{ab} || g^{Ab} || g^{aB})$
+
+Anyone can forge a conversation using the public keys by generating random private keys for each user and just making stuff up. This will look like a conversation between Alice and Bob. It cannot be used as an attack because you have to make up the private keys for both.
 
 \includepdf[pages=]{Module5}
-
-
-
-
 
 
 
