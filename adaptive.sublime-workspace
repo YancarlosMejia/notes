@@ -4,6 +4,90 @@
 		"selected_items":
 		[
 			[
+				"R",
+				"RANDOM"
+			],
+			[
+				"getChi",
+				"getNumChildren〔function〕"
+			],
+			[
+				"rational",
+				"rationalChildren〔variable〕"
+			],
+			[
+				"random",
+				"randomChildren〔variable〕"
+			],
+			[
+				"min",
+				"minVal〔variable〕"
+			],
+			[
+				"max",
+				"maxVal〔variable〕"
+			],
+			[
+				"chil",
+				"childVal〔variable〕"
+			],
+			[
+				"DE",
+				"DEPTH_LIMIT〔variable〕"
+			],
+			[
+				"child",
+				"childVal"
+			],
+			[
+				"chi",
+				"children"
+			],
+			[
+				"Boar",
+				"BOARD_SIZE"
+			],
+			[
+				"raion",
+				"rationalChildren"
+			],
+			[
+				"new",
+				"newValue1"
+			],
+			[
+				"N",
+				"None"
+			],
+			[
+				"Ra",
+				"RATIONAL"
+			],
+			[
+				"newY",
+				"newY3〔variable〕"
+			],
+			[
+				"newX",
+				"newX1〔variable〕"
+			],
+			[
+				"cell",
+				"cellIsAvailable〔function〕"
+			],
+			[
+				"D",
+				"DIRECTIONS"
+			],
+			[
+				"DOWN",
+				"DOWNRIGHT〔variable〕"
+			],
+			[
+				"cellIs",
+				"cellIsAvailable"
+			],
+			[
 				"isT",
 				"isRational〔argument〕"
 			],
@@ -12,16 +96,8 @@
 				"printBoard〔function〕"
 			],
 			[
-				"rational",
-				"rationalChildren〔variable〕"
-			],
-			[
 				"RA",
 				"RATIONAL〔variable〕"
-			],
-			[
-				"new",
-				"newY1"
 			],
 			[
 				"rationa",
@@ -44,10 +120,6 @@
 				"printBoard"
 			],
 			[
-				"R",
-				"RANDOM"
-			],
-			[
 				"ration",
 				"rationalMove"
 			],
@@ -60,24 +132,12 @@
 				"childVal"
 			],
 			[
-				"child",
-				"childVal"
-			],
-			[
 				"rando",
 				"randomChildren"
 			],
 			[
 				"ran",
 				"randomChildren"
-			],
-			[
-				"DOWN",
-				"DOWNRIGHT"
-			],
-			[
-				"D",
-				"DOWNLEFT"
 			],
 			[
 				"stones",
@@ -88,18 +148,10 @@
 	"buffers":
 	[
 		{
-			"file": "adaptive-ECE457A/a2/q2.py",
+			"file": "adaptive-ECE457A/lec9/lecture.tex",
 			"settings":
 			{
-				"buffer_size": 5320,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "adaptive-ECE457A/a2/results.txt",
-			"settings":
-			{
-				"buffer_size": 559050,
+				"buffer_size": 3991,
 				"line_ending": "Unix"
 			}
 		}
@@ -112,7 +164,7 @@
 	"command_palette":
 	{
 		"height": 400.0,
-		"last_filter": "preser",
+		"last_filter": "",
 		"selected_items":
 		[
 			[
@@ -183,6 +235,10 @@
 	],
 	"file_history":
 	[
+		"/home/lara/notes/adaptive-ECE457A/a2/q2.py",
+		"/home/lara/notes/adaptive-ECE457A/a2/results.txt",
+		"/home/lara/notes/adaptive-ECE457A/a2/a2.tex",
+		"/home/lara/notes/adaptive-ECE457A/a1/a1.tex",
 		"/home/lara/notes/adaptive-ECE457A/a2/q1.py",
 		"/home/lara/notes/adaptive-ECE457A/lec8/lecture.tex",
 		"/home/lara/notes/adaptive-ECE457A/lec4/lecture.tex",
@@ -197,7 +253,6 @@
 		"/home/lara/notes/adaptive-ECE457A/lec6/lecture.tex",
 		"/home/lara/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
 		"/home/lara/notes/adaptive-ECE457A/a1/a1.fdb_latexmk",
-		"/home/lara/notes/adaptive-ECE457A/a1/a1.tex",
 		"/home/lara/Downloads/uml_shit.txt",
 		"/home/lara/notes/adaptive-ECE457A/a1/parseGarbage.py",
 		"/home/lara/notes/adaptive-ECE457A/a1/garbage.txt",
@@ -221,13 +276,97 @@
 		"height": 110.0,
 		"where_history":
 		[
+			"a2.tex",
+			""
 		]
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
+			"x",
+			"Turn \\d*",
+			"& \\\\ \\hline",
+			"wins",
+			"len",
+			"getChildren",
+			"len",
+			"rationalChildren",
+			"getChildren",
+			"depth",
+			"printboard",
+			"print",
+			"prune",
+			"alpha",
+			"maxVal",
+			"true 2",
+			"prune",
+			"print",
+			"CHILD True 4",
+			"false 3",
+			"1",
+			"x ",
+			"y ",
+			"((",
+			"row",
+			"= ()",
+			"=",
+			"+=",
+			"1",
+			"-",
+			"11",
+			"printb",
+			"newValue",
+			"= newValu",
+			"newVa",
+			", user)",
+			"1",
+			"printboard",
+			"None",
+			"NULL",
+			"1",
+			"end",
+			"-",
+			"printbo",
+			".stones",
+			".user",
+			"board",
+			"2",
+			"1",
+			"3",
+			"1",
+			"3",
+			"1",
+			"= mo",
+			"= mov",
+			"2",
+			"1",
+			"isAvailable",
+			"2",
+			"1",
+			"Cell",
+			"+",
+			"board",
+			"len",
+			"p",
+			"isAvailable",
+			"isavailable",
+			")\n",
+			"(0,",
+			"Cell",
+			".stones",
+			"stones",
+			".user",
+			"Cell",
+			"Children",
+			"prune",
+			"childVal",
+			"beta",
+			"randint",
+			"randInt",
+			"print",
+			"return",
 			"Depth 1",
 			"Depth 2",
 			"Child Value",
@@ -273,82 +412,16 @@
 			"printboard",
 			"\",",
 			"printBoard",
-			"printboard",
-			"<",
-			"add(",
-			"add",
-			">",
-			": ",
-			"printboard",
-			"temp",
-			"True",
-			"true",
-			"move(",
-			"move",
-			"\"",
-			"0",
-			"print",
-			"np_array",
-			"temp[",
-			"temp",
-			"not =",
-			"!",
-			"&&",
-			"||",
-			"RATIONAL",
-			"2",
-			"1",
-			"LEFT",
-			"UPRIGHT",
-			"LEFT",
-			"RIGHT",
-			"LEFT",
-			"DOWN",
-			"UP",
-			"y, x",
-			"q",
-			"x",
-			"y",
-			"q",
-			"x",
-			"y",
-			"x",
-			"y",
-			"salary",
-			"name",
-			"#",
-			"B",
-			"hline",
-			"]",
-			"()",
-			"r",
-			"]",
-			"Depth",
-			"centering",
-			"0.50",
-			"0",
-			"ttf",
-			"otf",
-			"/",
-			"futura",
-			"f",
-			"fu",
-			"fut",
-			"slides",
-			"based",
-			"mimicing",
-			"lslisting",
-			"server",
-			"14",
-			"Module2",
-			"Module3"
+			"printboard"
 		],
 		"highlight": true,
 		"in_selection": false,
 		"preserve_case": false,
-		"regex": false,
+		"regex": true,
 		"replace_history":
 		[
+			"",
+			"\\\\ \\hline"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -364,32 +437,49 @@
 			[
 				{
 					"buffer": 0,
-					"file": "adaptive-ECE457A/a2/q2.py",
+					"file": "adaptive-ECE457A/lec9/lecture.tex",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5320,
+						"buffer_size": 3991,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1874,
-								1874
+								3954,
+								3954
 							]
 						],
 						"settings":
 						{
-							"auto_complete": false,
 							"bracket_highlighter.busy": false,
 							"bracket_highlighter.locations":
 							{
 								"close":
 								{
+									"1":
+									[
+										3954,
+										3955
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/square_bracket.png",
+										"brackethighlighter.default"
+									]
 								},
 								"open":
 								{
+									"1":
+									[
+										3942,
+										3943
+									]
 								},
 								"unmatched":
 								{
@@ -397,26 +487,6 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
@@ -427,108 +497,16 @@
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
 								"bh_default",
 								"bh_default_center",
 								"bh_default_open",
 								"bh_default_close",
 								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content"
-							],
-							"open_with_edit": true,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 720.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 0,
-			"sheets":
-			[
-				{
-					"buffer": 1,
-					"file": "adaptive-ECE457A/a2/results.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 559050,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								42944,
-								42944
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-								},
-								"open":
-								{
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
@@ -539,31 +517,36 @@
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content"
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
 							],
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 28.0,
+						"translation.y": 475.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -589,18 +572,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.5,
 			1.0
 		],
 		"rows":
@@ -631,6 +607,18 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"lec8",
+				"lec8/lecture.tex"
+			],
+			[
+				"a1tex",
+				"a1/a1.tex"
+			],
+			[
+				"res",
+				"a2/results.txt"
+			],
 			[
 				"midtermre",
 				"Midterm review/lecture.tex"
@@ -689,12 +677,20 @@
 	"select_project":
 	{
 		"height": 500.0,
-		"last_filter": "sec",
+		"last_filter": "net",
 		"selected_items":
 		[
 			[
+				"net",
+				"~/notes/networks.sublime-project"
+			],
+			[
 				"sec",
 				"~/notes/security.sublime-project"
+			],
+			[
+				"at",
+				"~/Projects/attendee-web.sublime-project"
 			],
 			[
 				"se",
@@ -707,10 +703,6 @@
 			[
 				"",
 				"~/notes/security.sublime-project"
-			],
-			[
-				"net",
-				"~/notes/networks.sublime-project"
 			],
 			[
 				"att",

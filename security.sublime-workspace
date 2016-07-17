@@ -23,7 +23,7 @@
 			"file": "security-CS458/a3/a3.tex",
 			"settings":
 			{
-				"buffer_size": 6236,
+				"buffer_size": 6440,
 				"line_ending": "Unix"
 			}
 		},
@@ -31,8 +31,19 @@
 			"file": "security-CS458/lec5/lecture.tex",
 			"settings":
 			{
-				"buffer_size": 25056,
+				"buffer_size": 29614,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Package Control Messages\n========================\n\nLaTeXTools\n----------\n\n  LaTeXTools Plugin version 3.9.1 (2016-07-16) changelog:\n  \n  Bugfixes:\n  \n  - `jumpto_anywhere` now works for `\\ref` and `\\cite`\n\n  LaTeXTools Plugin version 3.9.0 (2016-07-15) changelog:\n  \n  Features:\n  \n  - Jump to Anywhere\n  - New toggle quick panel\n  - Highlighting of errors, warnings and bad boxes\n  - Setting to control if PDF is opened on build\n  - Subfile support added for ref / cite completions\n  - \\subfile{ now auto-completes file names\n  - Support for a coming revamp of the LaTeX syntax\n  \n  Bugfixes:\n  \n  - Traditional bibliography should support UTF-8 characters (#487)\n  - Traditional bibliography ignores spaces around the keyword (#366)\n",
+			"settings":
+			{
+				"buffer_size": 735,
+				"line_ending": "Unix",
+				"name": "Package Control Messages",
+				"read_only": true,
+				"scratch": true
 			}
 		}
 	],
@@ -139,8 +150,8 @@
 	],
 	"file_history":
 	[
-		"/home/lara/notes/security-CS458/lec4/lecture.tex",
 		"/home/lara/notes/security-CS458/lec5/lecture.tex",
+		"/home/lara/notes/security-CS458/lec4/lecture.tex",
 		"/home/lara/notes/security-CS458/a2/db_functions.php",
 		"/home/lara/notes/security-CS458/a2/a2.tex",
 		"/home/lara/notes/security-CS458/a2/sploit ideas.txt",
@@ -320,7 +331,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -329,15 +340,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6236,
+						"buffer_size": 6440,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3160,
-								3160
+								3786,
+								3786
 							]
 						],
 						"settings":
@@ -346,6 +357,9 @@
 							"bracket_highlighter.locations":
 							{
 								"close":
+								{
+								},
+								"icon":
 								{
 								},
 								"open":
@@ -357,26 +371,6 @@
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
@@ -387,40 +381,60 @@
 								"bh_round_open",
 								"bh_round_close",
 								"bh_round_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
 								"bh_default",
 								"bh_default_center",
 								"bh_default_open",
 								"bh_default_close",
 								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content"
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
 							],
 							"open_with_edit": true,
 							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 574.0,
+						"translation.y": 353.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -429,15 +443,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 25056,
+						"buffer_size": 29614,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								24997,
-								24997
+								0,
+								0
 							]
 						],
 						"settings":
@@ -448,35 +462,58 @@
 								"close":
 								{
 								},
+								"icon":
+								{
+								},
 								"open":
 								{
 								},
 								"unmatched":
 								{
-									"1":
-									[
-										25047,
-										25055
-									]
 								}
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
 								"bh_angle",
 								"bh_angle_center",
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
@@ -487,45 +524,52 @@
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
 								"bh_default",
 								"bh_default_center",
 								"bh_default_open",
 								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content"
+								"bh_default_content"
 							],
 							"syntax": "Packages/LaTeX/LaTeX.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 4592.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 735,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								735,
+								735
+							]
+						],
+						"settings":
+						{
+							"auto_indent": false,
+							"bracket_highlighter.busy": false,
+							"default_dir": "/home/lara/notes/security-CS458",
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_width": 2,
+							"word_wrap": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -705,9 +749,17 @@
 	"select_project":
 	{
 		"height": 500.0,
-		"last_filter": "ada",
+		"last_filter": "netow",
 		"selected_items":
 		[
+			[
+				"netow",
+				"~/notes/networks.sublime-project"
+			],
+			[
+				"net",
+				"~/notes/networks.sublime-project"
+			],
 			[
 				"ada",
 				"~/notes/adaptive.sublime-project"
@@ -727,10 +779,6 @@
 			[
 				"attend",
 				"~/Projects/attendee-web.sublime-project"
-			],
-			[
-				"net",
-				"~/notes/networks.sublime-project"
 			],
 			[
 				"",

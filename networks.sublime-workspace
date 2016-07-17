@@ -3,10 +3,55 @@
 	{
 		"selected_items":
 		[
+			[
+				"ex",
+				"expectedSequenceNumber"
+			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "networks-ECE358/a5/ece358-rcs/rcs.cpp",
+			"settings":
+			{
+				"buffer_size": 1763,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "networks-ECE358/a5/ece358-rcs/rcsapp-client.c",
+			"settings":
+			{
+				"buffer_size": 1942,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "networks-ECE358/a5/ece358-rcs/rcsapp-server.c",
+			"settings":
+			{
+				"buffer_size": 2581,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "networks-ECE358/a5/ece358-rcs/ucp.c",
+			"settings":
+			{
+				"buffer_size": 2677,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "networks-ECE358/a5/ece358-rcs/doodle.cpp",
+			"settings":
+			{
+				"buffer_size": 1242,
+				"line_ending": "Unix",
+				"name": "socket {"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -15,10 +60,14 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 270.0,
-		"last_filter": "install",
+		"height": 156.0,
+		"last_filter": "sdbar",
 		"selected_items":
 		[
+			[
+				"sdbar",
+				"View: Toggle Side Bar"
+			],
 			[
 				"install",
 				"Package Control: Install Package"
@@ -26,10 +75,6 @@
 			[
 				"mini",
 				"View: Toggle Minimap"
-			],
-			[
-				"sdbar",
-				"View: Toggle Side Bar"
 			],
 			[
 				"user",
@@ -76,12 +121,16 @@
 		"/home/lara/notes/networks-ECE358",
 		"/home/lara/notes/networks-ECE358/a1",
 		"/home/lara/notes/networks-ECE358/a1/ece358-p2p-cm",
-		"/home/lara/notes/networks-ECE358/a1/ece358-p2p-cm/src",
-		"/home/lara/notes/networks-ECE358/a2",
-		"/home/lara/notes/networks-ECE358/a3"
+		"/home/lara/notes/networks-ECE358/a5",
+		"/home/lara/notes/networks-ECE358/a5/ece358-rcs"
 	],
 	"file_history":
 	[
+		"/home/lara/notes/networks-ECE358/a5/ece358-rcs/Makefile",
+		"/home/lara/notes/networks-ECE358/a1/ece358-p2p-cm/Makefile",
+		"/home/lara/notes/networks-ECE358/a1/ece358-p2p-cm/src/peer_server/peer.cpp",
+		"/home/lara/notes/networks-ECE358/lec11/lecture.tex",
+		"/home/lara/notes/networks-ECE358/a5/ece358-rcs/rcs_dummy.c",
 		"/home/lara/notes/networks-ECE358/lec2/lecutre.tex",
 		"/home/lara/notes/networks-ECE358/lec3/lecture.tex",
 		"/home/lara/notes/networks-ECE358/lec4/lecture.tex",
@@ -160,8 +209,562 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "networks-ECE358/a5/ece358-rcs/rcs.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1763,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								735,
+								734
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content"
+							],
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 195.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "networks-ECE358/a5/ece358-rcs/rcsapp-client.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1942,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1344,
+								1344
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										1365,
+										1366
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										1276,
+										1277
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
+							],
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 195.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "networks-ECE358/a5/ece358-rcs/rcsapp-server.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2581,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								661,
+								661
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										655,
+										661
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/hash.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										633,
+										636
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
+							],
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 195.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "networks-ECE358/a5/ece358-rcs/ucp.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2677,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								58,
+								58
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
+							],
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 4,
+					"file": "networks-ECE358/a5/ece358-rcs/doodle.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1242,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								172,
+								172
+							]
+						],
+						"settings":
+						{
+							"auto_name": "socket {",
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
+							],
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -182,11 +785,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":
@@ -217,6 +827,18 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"a5/ma",
+				"a5/ece358-rcs/Makefile"
+			],
+			[
+				"make",
+				"a1/ece358-p2p-cm/Makefile"
+			],
+			[
+				"rcs_",
+				"a5/ece358-rcs/rcs_dummy.c"
+			],
 			[
 				"lec10tex",
 				"lec10/lecture.tex"
@@ -260,10 +882,6 @@
 			[
 				"lec8t",
 				"lec8/lecture.tex"
-			],
-			[
-				"make",
-				"a1/ece358-p2p-cm/src/Makefile"
 			],
 			[
 				"tc",
@@ -315,15 +933,19 @@
 	"select_project":
 	{
 		"height": 500.0,
-		"last_filter": "ada",
+		"last_filter": "sec",
 		"selected_items":
 		[
 			[
-				"ada",
-				"~/notes/adaptive.sublime-project"
+				"sec",
+				"~/notes/security.sublime-project"
 			],
 			[
 				"ad",
+				"~/notes/adaptive.sublime-project"
+			],
+			[
+				"ada",
 				"~/notes/adaptive.sublime-project"
 			],
 			[
@@ -333,10 +955,6 @@
 			[
 				"a",
 				"~/notes/adaptive.sublime-project"
-			],
-			[
-				"sec",
-				"~/notes/security.sublime-project"
 			]
 		],
 		"width": 380.0
@@ -357,8 +975,8 @@
 	"show_minimap": false,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": false,
-	"side_bar_width": 150.0,
+	"side_bar_visible": true,
+	"side_bar_width": 197.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
