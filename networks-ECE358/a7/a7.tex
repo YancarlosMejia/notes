@@ -1,0 +1,65 @@
+\documentclass{article}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+\title{ECE 358 - Assignment 7}
+\date{July 26, 2016}
+\author{Lara Janecka, Clarisse Schneider, Kevin Carruthers}
+\maketitle
+
+\section{Question 1} % (fold)
+\label{sec:question_1}
+The main property that ensures correctness in the system used for rdt3.0 is that the sender requires the receiver to acknowledge a packet has been received and is not corrupted. This encompasses the fact that the receiver checks for corrupt properties and the sender resends packets that have not been acknowledged.
+% section question_1 (end)
+
+\section{Question 2} % (fold)
+\label{sec:question_2}
+In this case where x is sent before y, but y is received before x the receiver will send two acknowledges for x (assuming that x is the packet it was expecting). Both of these acks will go the sender causing it to reset the timer both times because y will still not have been acknowledged. If we keep getting packets out of order this will keep resetting the timer past the point at which it should have timed out to cause the sender to resend x. 
+% section question_2 (end)
+
+\section{Question 3} % (fold)
+\label{sec:question_3}
+In the very specific example in these slides GBN would not suffer the same problem because in both cases it is waiting for packet 3 to arrive before it cycles back to waiting for packet 0, so it would just ignore packet 0 entirely and not care if it is a repeat or new packet.
+
+That being said, GBN can suffer from the same dilemma in a different case. For instance sending packets 0-3 and having them arrive properly, but the ack for 0 get lost on the way back to the sender, resulting in it being resent, would be exactly the same as all packets being sent and acknowledged properly and a new packet 0 being sent. The receiver still does not know what is happening on the sender's side. 
+
+% section question_3 (end)
+
+\section{Question 4} % (fold)
+\label{sec:question_4}
+\subsection{a)} % (fold)
+\label{sub:a_}
+We avoid measuring RTT for retransmitted segments because it is possible that the acknowledgment for the first transmission for that segment was merely delayed and will arrive shortly after the retransmission of the segment is sent. This can result in an impossibly small RTT since it didn't actually go all the way out and back. 
+% subsection a_ (end)
+\subsection{b)} % (fold)
+\label{sub:b_}
+Instead of waiting for the full timeout to occur we can see that since the receiver is sending the same ack for every packet it is probably that it has been lost. 
+% subsection b_ (end)
+% section question_4 (end)
+
+\section{Question 5} % (fold)
+\label{sec:question_5}
+The half open connection does not occur because the client does not establish its connection until the server finishes establishing its connection. The resend of the request for a connection would not cause the client to reconnect, only to send an acknowledgment of the request. The server would never send its acknowledgment because it has forgotten the client, so the client would never connect.
+
+% section question_5 (end)
+
+\section{Question 6} % (fold)
+\label{sec:question_6}
+In a given cycle of time between loss events we will send on average $\frac{3}{2}\bigg(\frac{W}{2}\bigg)^2$ packets due to the dynamic nature of the window determined by MSS (found by calculating the interval for one cycle).  We can couple this knowledge with our given probability of losing a packet to say $\frac{1}{L} = \frac{3}{2}\bigg(\frac{W}{2}\bigg)^2$ which leads us to $\sqrt{\frac{8}{3L}} = W$.
+
+Throughput interms of bytes can be found by expanding the first calculation into  $MSS \times \frac{3}{2}\bigg(\frac{W}{2}\bigg)^2$ bytes at every cycle of $RTT \times \frac{W}{2}$. 
+
+When we combine these three equations we get that the throughput is 
+\begin{gather*}
+\frac{MSS \times \frac{3}{2}\bigg(\frac{W}{2}\bigg)^2}{RTT \times \frac{W}{2}}\\
+=\frac{MSS \times \frac{3W}{4}}{RTT}\\
+=\frac{MSS \times \frac{3}{4}\times \sqrt{\frac{8}{3L}}}{RTT}\\
+=\frac{\sqrt{\frac{3}{2}} MSS}{RTT\sqrt{L}}\\
+\end{gather*}
+
+
+
+% section question_6 (end)
+
+\end{document}

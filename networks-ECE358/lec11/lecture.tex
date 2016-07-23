@@ -128,6 +128,88 @@ We have a timeout per packet. When we receive an ACK we check that it is in out 
 When ACK2 arrives we advance the base all the way to 6.
 
 \includepdf[page=50}{slides.pdf}
+From the receiver side it cannot distinguish between the two scenarios. The problem is that in the first scenario the second packet 0 is new content, but in the second scenario it is repeated data so its still old data, The receiver treats the second packet 0 as new content in both cases. This is wrong.
+
+
+\includepdf[page=52}{slides.pdf}
+There are no message boundaries. So when an application opens a TCP connection we don't need to know how much data we want to send. We can leave the connection open forever and send different sized chunks of data, It incorperates elements of selective repeat but its window is dynamic using congesting controls (will cover later). 
+
+The application thinks that things are just byte streams, but TCP is actually packing them into segments and sending them. 
+
+\includepdf[page=53}{slides.pdf}
+The idea for the urgent flag is to say that this data is out of order, don't try to process it into your queue and such and just punt it to the application immediately. The ACK flag just says if you should pay attention to the ACK field (basically it might be garbage). The push flag works fairly similar to the urgent flag, but it doesn't do stuff if its out of order. The receive window is how big the receiver buffer is to prevent it from being overflown.
+
+\includepdf[page=54}{slides.pdf}
+The sequence number is actually the sequence number of the first byte of data and the acknowledgement is the ack of the next sequence number to be sent. So if we send a segment of size 50 it will have sequence numbers of 100-149 and its ack will be 150. There is very little standardization for how we handle out of order packets. Some places use selective ack.
+
+\includepdf[page=55}{slides.pdf}
+Say we have a super boring echo server (just echos shit back to you).
+
+\includepdf[page=56}{slides.pdf}
+Since TCP is a bit like go back n we need to handle timeout values. We want the timeout value to be something close to the round trip time so that we aren't waiting any longer than we have to but things still have enough time to get back. So TCP samples the roundtrip time and keeps updating its timeout values. The RTT is basically just sending a packet and timing how long it takes to get back (usually just a segment that was going to be sent anyway). This packet cannot be a retransmission because you might get the ack of the previously sent segment much faster than you should.
+
+
+\includepdf[page=57}{slides.pdf}
+We can apply an estimating formula to the sampled data you get back.
+
+\includepdf[page=58}{slides.pdf}
+We want to include a safety margin when calculating the estimated RTT. This safety margin wants to consider the previous variations so it looks at the historical deviation when calculating. This is so that what we sent our timeout too isn't so small is ignores all outliers. The 4 is basically a magic number. 
+
+\includepdf[page=60}{slides.pdf}
+The reliability of TCP is basically due to its incorperation of go back n. When TCP receives duplicate acks it infers some stuff before resending which is how it incorperates elements of selective repeat.
+
+\includepdf[page=61}{slides.pdf}
+The only part that is different from go back n is when a duplicate ack is received. We deal with checking for stale data.
+
+\includepdf[page=62}{slides.pdf}
+TCP is fairly high level so it can make some optimization assumptions. The ack is cummulative so were don't have to check for gaps. This should look surprisingly like go back n.
+
+\includepdf[page=63}{slides.pdf}
+If the sender sends two segments that timeout before either gets back we only resend the first one optimistically (we hope that only the first one was lost). We can change this protocol to resend all of them, but we dont watn to do that.
+
+\includepdf[page=64}{slides.pdf}
+The receiver also does some hoping when it receives so it delays a little bit hoping for more packets before it acks so that its ack can cover more.
+
+\includepdf[page=65}{slides.pdf}
+\includepdf[page=66}{slides.pdf}
+If the sender receives duplicate acks for the same data, then it does a retransmit without a timer.
+
+\includepdf[page=67}{slides.pdf}
+
+\includepdf[page=69}{slides.pdf}
+Devices on our network have different "power" levels.
+
+\includepdf[page=70}{slides.pdf}
+You want to buffer these packets to mitigate loss from one of your devices being much smaller than the other. We can use the network pipeline as a buffer and just at that to your receive window value. 
+
+\includepdf[page=72-75}{slides.pdf}
+when the receiver receives a syn they can respond with an ack and a syn of their own. This way the handshake is symmetric and gets around issues. 
+
+\includepdf[page=76}{slides.pdf}
+\includepdf[page=77}{slides.pdf}
+\includepdf[page=78}{slides.pdf}
+\includepdf[page=79}{slides.pdf}
+Closing in a 4 way handshake. We send a fin packet and wait for a response. When the other side is ready (finished sending its shit). And so on.
+
+\includepdf[page=81}{slides.pdf}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \end{document}
 
 %question about udp port numbers
