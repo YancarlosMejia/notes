@@ -9,47 +9,40 @@ URL = 'http://localhost:4555'
 def test(cookie):
 	encode = base64.b64encode(cookie)
 
-	print encode
 	r = requests.get(URL, cookies={'user': encode})
 
 	return r.status_code != 500
 
-def getPlain(padLen, i):	
+def getPlain(padLen, index):
+	i = 16-index-1
 	if i == 0:
 		return padLen
 
 	return i
 
-def printBytes(title, data):	
-	print title, ''.join('{:02x}'.format(x) for x in data)
+		# print ''.join('{:02x}'.format(x) for x in prefix)
 
 def decryptByte(cookie):
-	original = cookie[:16]
-	iv = bytearray(16) #this will be backwards
+	iv = bytearray(16)
 
-	# printBytes("Initial cookie", cookie)
+	for plainTextPlace in range(15, -1, -1):
+		prefix = bytearray(16)
+		print "START: ", plainTextPlace
+		print ''.join('{:02x}'.format(x) for x in iv)
 
-	for place in range(16):
-		print "START:", place
-		prefix = bytearray(16) #this will be backwards
-
-		# printBytes("iv", iv)
-		for i in range(place):
-			# print place, i, getPlain(place, i)
-			prefix[15-i] = iv[15-i] ^ getPlain(place, i)
-
-
-		# printBytes("prefix", prefix)
+		print "Padding"
+		for i in range(plainTextPlace + 1, 16):
+			paddingVal = getPlain(16-plainTextPlace+1, i)
+			print paddingVal
+			prefix[i] = paddingVal ^ iv[i]
 
 		for i in range(256):
-			prefix[15-place] = i
-
+			prefix[plainTextPlace] = i
 			if(test(prefix + cookie)):
 				print "chosen val", i
-				break
+				break;
 
-		iv[15-place] = prefix[15-place] ^ getPlain(place, place)
-
+		iv[plainTextPlace] = prefix[plainTextPlace] ^  getPlain(16-plainTextPlace, plainTextPlace)
 
 	plaintext = [0] * 16
 	for i in range(16):
@@ -63,8 +56,9 @@ def decryptByte(cookie):
 
 def main():
 	dummy = "k0UtzN9gwc1qfe2CMYn3rESGL6mJwyG8Z+ztkAJJBVM="
-	cookie =  base64.b64decode(dummy)
+	cookie =  bytearray(base64.b64encode(dummy))
 
+	print dummy
 	plaintext = decryptByte(cookie)
 	print (bytearray(plaintext))
 
