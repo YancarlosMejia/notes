@@ -13,9 +13,7 @@ def test(cookie):
 
     return r.status_code != 500
 
-def decryptByte(cookie):
-    original = bytearray(cookie[:16])
-    cookie = bytearray(cookie[16:])
+def decryptByte(old_iv, cookie):
     iv = bytearray(16)
 
     for i in range(15, -1, -1):
@@ -31,16 +29,17 @@ def decryptByte(cookie):
         iv[15] = iv[15] ^ (16 - i + 1)
 
 
+    #build intermediate out of iv and padding
     intermediate = bytearray(16)
     for i in range(16):
         intermediate[i] = iv[i] ^ padding[i]
 
 
+    #build plaintext out of cypher text and intermediate
     plaintext = bytearray(16)
     for i in range(16):
-        plaintext[i] = intermediate[i] ^ original[i]
+        plaintext[i] = intermediate[i] ^ old_iv[i]
 
-    print ''.join(chr(x) for x in plaintext)
 
     return plaintext
 
@@ -48,10 +47,17 @@ def decryptByte(cookie):
 
 
 def main():
-    dummy = "k0UtzN9gwc1qfe2CMYn3rESGL6mJwyG8Z+ztkAJJBVM="
-    cookie =  base64.b64decode(dummy)
+    dummy = "O1AyAVAannl/Q0k0jiUsEwtz7aOrJ0CFkNYWC1895ujMZmI4WWym3d4Ij19G0o5k8yPOy8Rx01i5pfgncBPqqA=="
+    cookieFull =  base64.b64decode(dummy)
+    cookies = [bytearray(cookieFull[i:i+16]) for i in range(0, len(cookieFull), 16)]
 
-    plaintext = decryptByte(cookie)
+    plaintext = ""
+    for i in range(len(cookies)-1):
+        decrypted = decryptByte(cookies[i][:16], cookies[i+1][:16])
+        plaintext += ''.join(chr(x) for x in decrypted)
+
+
+    print plaintext
     # print (bytearray(plaintext))
 
 if __name__ == '__main__':
