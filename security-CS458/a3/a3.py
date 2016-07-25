@@ -2,6 +2,7 @@
 
 import requests
 import base64
+import sys
 
 URL = 'http://localhost:4555'
 padding = bytearray([15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 16])
@@ -23,10 +24,11 @@ def decryptByte(old_iv, cookie):
             if iv[i] > 255:
                 print "This should not have happened"
 
-        #undo padding on last byte
-        iv[15] = iv[15] ^ (16 - i)
-        #apply new padding on last byte
-        iv[15] = iv[15] ^ (16 - i + 1)
+        if i > 0:
+            #undo padding on last byte
+            iv[15] = iv[15] ^ (16 - i)
+            #apply new padding on last byte
+            iv[15] = iv[15] ^ (16 - i + 1)
 
 
     #build intermediate out of iv and padding
@@ -43,22 +45,31 @@ def decryptByte(old_iv, cookie):
 
     return plaintext
 
-
+def removePadding(lastByte):
+    paddingStart = 16-lastByte[-1]
+    return lastByte[:paddingStart]
 
 
 def main():
-    dummy = "O1AyAVAannl/Q0k0jiUsEwtz7aOrJ0CFkNYWC1895ujMZmI4WWym3d4Ij19G0o5k8yPOy8Rx01i5pfgncBPqqA=="
-    cookieFull =  base64.b64decode(dummy)
+    if len(sys.argv) < 2:
+        print "Usage: ./decrypt <cookie>"
+        sys.exit(0)
+
+    encrypted =  sys.argv[1]
+
+
+    cookieFull =  base64.b64decode(encrypted)
     cookies = [bytearray(cookieFull[i:i+16]) for i in range(0, len(cookieFull), 16)]
 
     plaintext = ""
     for i in range(len(cookies)-1):
         decrypted = decryptByte(cookies[i][:16], cookies[i+1][:16])
+        if i == len(cookies)-2:
+            decrypted = removePadding(decrypted)
         plaintext += ''.join(chr(x) for x in decrypted)
 
-
     print plaintext
-    # print (bytearray(plaintext))
+
 
 if __name__ == '__main__':
     main()
