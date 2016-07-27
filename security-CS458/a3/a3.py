@@ -45,30 +45,50 @@ def decryptByte(old_iv, cookie):
 
     return plaintext
 
-def removePadding(lastByte):
-    paddingStart = 16-lastByte[-1]
-    return lastByte[:paddingStart]
+def addPadding(lastByte):
+    print lastByte
+    if len(lastByte) == 16:
+        return [lastByte, padding]
+
+    return [lastByte + bytearray(range(16-len(lastByte)-1, -1, -1 ) + [16-len(lastByte)])]
 
 
 def main():
-    if len(sys.argv) < 2:
-        print "Usage: ./decrypt <cookie>"
-        sys.exit(0)
+    # if len(sys.argv) < 2:
+    #     print "Usage: ./encrypt <cookie>"
+    #     sys.exit(0)
 
-    encrypted =  sys.argv[1]
+    # toEncrypt =  sys.argv[1]
+    toEncrypt =  '{"first_seen": 1469478585, "is_admin": false}'
+    answer = '3+KhNSid9GZyRiHeA/3qo+HNHnzVZEqGqs+B9YYUV8VAeYBPf8i9XyfmzY90Rg+uc8LkuyAf8NSgy3K+SKAo8g=='
 
 
-    cookieFull =  base64.b64decode(encrypted)
-    cookies = [bytearray(cookieFull[i:i+16]) for i in range(0, len(cookieFull), 16)]
+    # #add padding
+    # encode to b64 
+    # break into chunks
+    # do something?
 
-    plaintext = ""
-    for i in range(len(cookies)-1):
-        decrypted = decryptByte(cookies[i][:16], cookies[i+1][:16])
-        if i == len(cookies)-2:
-            decrypted = removePadding(decrypted)
-        plaintext += ''.join(chr(x) for x in decrypted)
 
-    print plaintext
+    plaintextFull =  base64.b64encode(toEncrypt)
+    print plaintextFull
+    plainChunks = [bytearray(plaintextFull[i:i+16]) for i in range(0, len(plaintextFull), 16)]
+
+    lastByteIndex = (len(plainChunks) - 1) * 16
+    plainChunks += addPadding(bytearray(plaintextFull[lastByteIndex:]))
+
+    print ''.join('{:02x}'.format(x) for x in plainChunks[-1])
+
+
+    print plainChunks
+
+    # plaintext = ""
+    # for i in range(len(cookies)-1):
+    #     decrypted = decryptByte(cookies[i][:16], cookies[i+1][:16])
+    #     if i == len(cookies)-2:
+    #         decrypted = removePadding(decrypted)
+    #     plaintext += ''.join(chr(x) for x in decrypted)
+
+    # print plaintext
 
 
 if __name__ == '__main__':
