@@ -1,2 +1,0 @@
-Draw
-Rational player wins in 10
