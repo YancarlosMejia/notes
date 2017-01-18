@@ -10,6 +10,7 @@
 *.pdfsync
 *.o
 *.sublime-workspace
+*-textbook.pdf
 
 
 adaptive-ECE457A/computational-intelligence-an-introduction.pdf
