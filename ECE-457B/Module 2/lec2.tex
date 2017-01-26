@@ -2,7 +2,9 @@
 \usepackage{parskip}
 \usepackage{pdfpages}
 \usepackage{hyperref}
+\usepackage{amsmath}
 \usepackage[margin=.6in]{geometry}
+
 \begin{document}
 \includepdf[pages=2-3]{slides}
 Usually we would say that when the car is close to another car we start breaking. We want to pass our ability to determine "too close" to the car so that it can detect it. We can't just have a binary value of break, no break since everything is continuous.
@@ -93,7 +95,7 @@ Dilation is denoted as $A^{\frac{1}{2}}$  gives a more elongated membership func
 
 Contraction is basically the opposite of dilation.
 
-Helpful slides: \href{http://web.cecs.pdx.edu/~mperkows/CLASS_479/LECTURES479/FL001.PDF}
+Helpful slides: \href{http://web.cecs.pdx.edu/~mperkows/CLASS_479/LECTURES479/FL001.PDF}{Helpful slides}
 
 \includepdf[pages=51-55]{slides}
 
@@ -110,7 +112,7 @@ There are many different types of implication operators. They are very similar t
 He kind of defined it as a transition between fuzzy sets. It was a bit unclear.
 
 
-helpful slides: \href{http://www.intelligent-systems.info/classes/ee509/8.pdf}
+helpful slides: \href{http://www.intelligent-systems.info/classes/ee509/8.pdf}{Helpful slides}
 
 \includepdf[pages=57]{slides}
 This is an example of the larsen implication operator where both fuzzy sets have a triangle membership function.
@@ -155,6 +157,87 @@ Where we have multiple x's for the same y we take the maximum of them.
 \includepdf[pages=80]{slides}
 \includepdf[pages=81]{slides}
 Here part of the mapping is bijective and part is not. Weird.
+
+\includepdf[pages=82-86]{slides}
+Given a relation R. We use a projection to eliminate the set Y by projecting it onto X. We go across the whole spectrum of y and project its max value onto x.  The next two slides show such projections.
+
+Usually the total projection is a constant.
+
+We can expand this out to the nth dimension. In this case the first projection would be
+
+\begin{equation}
+	\mu_{R}(x_1 ... x_n) = \vee_{x_n} \max[\mu_{R}(x_1 ... x_{n-1}))]
+\end{equation}
+
+We keep going for the second, third, and so on until you get the total projection.
+
+
+\includepdf[pages=87-89]{slides}
+Say we take the value 0.2 at y=6 x=3, this value is like a a three dimensional modal representing a system with two control variable. When we set them to 6 and 3 we got the value 0.2. So the matrix in this example R represents a three dimensional graph.
+
+So we take the maximum y value for instances where x = 1. Basically going across the top row, so in this case 1.0. Repeat for each row. This is where $R^1$ comes from.
+
+The second projection works the same way but sideways. We just take the max of each column.
+
+These values get projected onto the 3d graph by having $R^1$ on the x axis and $R^2$ on the y axis.
+
+The total projection we take the max of the values in $R^1$ or $R^2$ which in this case is 1.0. This is a single point, one dimensional (well technically 0 dimensional but its easier to think of it as one).
+
+So a projection is a reduction of order in the fuzzy dimensions.
+
+\includepdf[pages=90]{slides}
+The cylindrical expansion is the opposite of projections, it increases order.
+
+We take the elements from the initial projections. In this example $R^1$ and $R^2$ are the same as in the previous example. These are expanded out to match the initial dimensions of the relation by replicating across columns/rows.
+
+The cylindrical expansion does not undo a projection. Once you projection you cannot get back to the initial relation.
+
+\includepdf[pages=91]{slides}
+\includepdf[pages=92]{slides}
+The knowledge base is just the mathematical representation of a system composed of rules. We create a function or descriptive value for each rule our system gives us. Say we have 3 potential temperatures, 3 pressure, and 3 humidities we will have $3 \times 3 \times 3 = 27$ rules for our system. Each of these rules are fuzzy relations. If the temperature is high then the air conditioner is on, and so on. This is an implication operator (T-norm). We want a model that encapsulates all potential input types because we don't know what we will get.
+
+\includepdf[pages=93]{slides}
+\includepdf[pages=94]{slides}
+The context is the current set of input data. The system processes the context and decides what action it needs to do. It keeps repeating this cycle.
+\begin{itemize}
+	\item Context = D (for data)
+	\item Rules = K (for knowledge)
+	\item Relation = I (for inference)
+\end{itemize}
+
+The membership is of the inference is
+\begin{equation}
+	\mu_I = \sup_y\{\min[\mu_D, \mu_K]\}
+\end{equation}
+
+The super min (or max) is the min value tending to the absolute min.
+
+\emph{Look up what the sup min composition operator is}
+
+Another way to compose thins is the sup produce.
+
+\emph{look this up too}
+
+\includepdf[pages=95-96]{slides}
+A process takes input C and outputs A. The output A feeds into a controller that has to make decisions, it takes input A and outputs C. We then define a relation $R=A\implies C$.
+
+We take some measurements and get a context of $A_0$. The controller maps this to R using a composition rule, doing so it decides what to do.
+
+\includepdf[pages=97-99]{slides}
+Now we are trying to compose relations, a relation of relations if you will.
+
+\includepdf[pages=100-106]{slides}
+Remember the projection onto x is the max of all y values for a given x in the relation (max of rows).
+
+\includepdf[pages=107-124]{slides}
+
+
+
+
+
+
+
+
 
 
 
