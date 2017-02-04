@@ -49,6 +49,108 @@ You do exactly the same thing (if you only have one rule) and just take the mini
 \includepdf[pages=13]{slides}
 \includepdf[pages=14]{slides}
 \includepdf[pages=15]{slides}
+Premise one is basically just the context and premise 2 is basically the knowledge base.
+
+For $R_1$ we have the consequence  or $C_1$ and the same for $R_2$
+
+\includepdf[pages=16]{slides}
+Here we have the first rule in green and blue, the second in red and pink, and the end union in light blue and pink
+
+\includepdf[pages=17]{slides}
+\includepdf[pages=18]{slides}
+Here MF means membership function
+
+\includepdf[pages=20]{slides}
+Usually our input is a crisp value. When the input is fuzzy were are good to go, but when its crisp we need to fuzzify it (not lying, thats what its called).
+
+\includepdf[pages=21-32]{slides}
+These were very briefly covered and will not be in the final as much (singleton might be).
+
+\includepdf[pages=32]{slides}
+The centroid method is the most difficult but it makes the most sense. Basically the center of an object best represents it. The maxima method is the mean of the maxes (I think, his accent messed it up).
+\includepdf[pages=33]{slides}
+I think this works by breaking the signal up into chunks, finding the area and weighting it using the local max for that area. We sum up all of these and divide by the sum of the weights (normalize it).
+
+\includepdf[pages=34]{slides}
+You find the interval of the max values and take the mean over that interval. When it is not over some interval we weight each peak value using its membership grades (denoted by $\mu$) and find the average of it.
+
+\includepdf[pages=35-37]{slides}
+This is basically the point at which the area on the left of this line is equal to the area right of the line. Its a value on the x axis. This is the \emph{bisector of area defuzzified}.
+
+The smallest of maximum is the smallest input value for all maximum output values, and vice versa for largest of maximum.
+
+\includepdf[pages=38]{slides}
+Note, the first image is incorrect, only look at second. Also the dots dont mean anything, its only the lines that matter.
+
+For this class we are going to say that all defuzzifiers are equal (there is not mathematical proof for this) so use whichever one you want and be consistent.
+
+\includepdf[pages=39]{slides}
+The mamdani fuzzy model was proposed in 70's but people didnt really use it untill 80's at which point the sugeno model was introduced. Both models are still used today.
+
+\includepdf[pages=40]{slides}
+In this image each column is a variable set (with the final column being the antecedent) and each row is a rule (the the final row being the context).
+
+We map the context onto each of the rules. Here we use the max product operation (though this is a choice where you can use your own function). We get the intersections and use the T-norm on them. The two intersections are represented by the horizontal arrows in the image (they are the max intersections). The T-norm in this case is the min function. In the image they are using the max-min but we are using the max-product so we multiply the antecedent by the T-norm. We repeat this with the second rule. These two rules overlapping are the consequent.
+
+\includepdf[pages=40]{slides}
+Here we have x as the antecedent and y as the consequent. This is a simplistic system. Remember, if you are not told anything about it the compositional rule is max-min. If we are told it is mamdani we use the max-product.
+
+\includepdf[pages=41]{slides}
+\includepdf[pages=42]{slides}
+Here we have three membership functions for small, medium, and large. One for each rule. We then have two graphs one for each of our fuzzy sets x and y.
+
+We are using the mamdani which means we use the max-min inferencing mechanism. The defuzzifier is the centroid of area.
+
+X goes from -10 to 10 and y goes from 0 to 10. Start with the value at -10 for x. The T-norm is equal to 1 at x equals -9.8 (since -10 is on the edge). At -9.8 the medium function has no intersection and neigther does the large function. So these values have a T-norm of 0 at 9.8. Where the T-norm is 1 we take the full membership function (for the small function), for the others you taking nothing. Then you sum these and still get the full membership function for small. Find the centroid of area and that is your output. This is the output for when x is equal to -9.8. You gotta keep going for all values of x. So for $x\in(-10,-6)$ the output is the centroid of the small membership function.
+
+So we get a new x map it onto all three functions to get the intersection point take this intersection point and clip the membership function, sum all membership functions, take the centroid of area and then map that onto our output graph. Rinse and repeat for all unique areas of x.
+
+\includepdf[pages=43]{slides}
+The end result is this funky as shit graph. Its called the input output curve, its what the controller uses. We take our context as x and look it up on the graph. Basically it maps inpt x to output y.
+
+We frequently use the Max-Min where we take the min of the t-norm and aggregate by taking the max. We can also take the Max-Product where we multiply by the T-norm (as described in the previous page) called the \textbf{Larson Produce}
+
+\includepdf[pages=44-45]{slides}
+We can technically go up farther in order but they are very rarely used. We really only use zero and first order systems.
+
+Here we have y as a function of x instead of what we had earlier with rather binary values. The values in these equations are tuned overtime. Usually they are found through other AI procedures, for now we are going to just pretend we are given them. If we aren't given the parameters ask for them.
+
+\includepdf[pages=46]{slides}
+Note: this is just and example, ignore that the large graph is in the wrong location.
+
+The little x is a context value (really should be $x_0$). We map this value to each one of the rules and get the minimum value between the membership function and the context. This then returns the firing strength, denoted $w_i$.
+
+The consequent is the summation of the multiplication of the firing strength multiplied by the membership functions divided by the sum of the firing strengths. Here x is crisp. So the ouput is crisp so we don't need any defuzzification.
+
+\includepdf[pages=47-48]{slides}
+Here we have two antecedents we are dealing with.
+
+\includepdf[pages=49]{slides}
+\includepdf[pages=50]{slides}
+
+\textbf{Fuzzy Associative Memory} - this is not in the slides but it should be so here goes.
+
+If $x$ is $A_1$ and $y$ is $B_1$ then $z$ is $C_1$
+
+If $x$ is $A_2$ and $y$ is $B_2$ then $z$ is $C_2$
+
+If $x$ is $A_5$ and $y$ is $B_3$ then $z$ is $C_15$
+
+This shows that x has five rules and y has 3 rules so we need a knowledge base of 15 rules. The table of rules that can build built out of the combinations of A's and B's and resulting C's is called the FAM (fuzzy associative memory). This can also be thought of as the knowledge of the system. It should be accompanied with a compositional rule of inference (if one is not provided assume that it is max-min). A defuzzifier should be listed as well, if not it is the centroid of area.
+
+\includepdf[pages=54-55]{slides}
+This is an example from the textbook. Here we have two inputs H and T and one output C.
+
+Before entering the controller we need to fuzzify the input data since it is crisp. Similarly the controller has to defuzzify the C value before sending it to the air conditioner.
+
+\includepdf[pages=56-57]{slides}
+Both the inputs have different universes of discourse. Which is important to note, if you forget this it will fuck your day.
+
+\includepdf[pages=58-59]{slides}
+We have two rules for temperature and 2 for humitidiy. From here we build our FAM based on these rules
+
+\includepdf[pages=60]{slides}
+Here we see the mamdani rules using the max min values. We have been given one pair of values to look at.
 
 
 
