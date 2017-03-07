@@ -6,11 +6,34 @@
 \usepackage{pgfplots}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{listings}
+
 \usepackage[margin=.6in]{geometry}
 
 \usepgfplotslibrary{fillbetween}
 
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color
+  basicstyle=\footnotesize,        % size of fonts used for the code
+  breaklines=true,                 % automatic line breaking only at whitespace
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  keywordstyle=\color{blue},       % keyword style
+  stringstyle=\color{mymauve},     % string literal style
+}
+
 \begin{document}
+
+\title{ECE 457B Assignment 2}
+\date{March 7th, 2017}
+\author{Lariesa Janecka, 20460089}
+\maketitle
+
 \section*{Question 1}
 \label{sec:question_1}
 
@@ -323,22 +346,207 @@ f\textbackslash K & $1e+3$ & $1e+4$ & $1e+5$ & $5e+5$ & $1e+6$ & $5e+6$ & $1e+7$
 	M_{800} &= \left\{\frac{0}{SM} + \frac{1}{LG}\right\} \\
 	P_{1.3} &= \left\{\frac{0.2}{FR} + \frac{0.8}{NR}\right\} \\
 \end{align*}
-Finding the pertinent rules:
+
+Rule 1: If $T$ is $LW$ and $P$ is $FR$ then $F$ is $IN$: $\left \{ \frac{0}{LW} + \frac{0.2}{FR}\right\} = \frac{0}{IN}$
+
+Rule 2: If $T$ is $HG$ then $F$ is $RD$: $\left \{ \frac{1}{HG} \right \} = \frac{1}{RD}$
+
+Rule 3: If $M$ is $SM$ and $P$ is $NR$ then $F$ is $MN$: $\left \{ \frac{0}{SM} + \frac{0.8}{NR} \right \} = \frac{0}{MN}$
+
+Rule 4: If $M$ is $LG$ and $P$ is $FR$ then $F$ is $IN$: $\left \{ \frac{1}{LG} + \frac{0.2}{FR} \right \} = \frac{0.2}{IN}$
+
+Rule 5: If $P$ is $NR$ then $F$ is $RD$: $\left \{ \frac{0.8}{NR} \right \} = \frac{0.8}{RD}$
+
+Then $F = \left \{ \frac{1}{RD} + \frac{0.2}{IN}\right \}$
+
+When these is applied you get a membership function of:
+\begin{align}
+	f &= \begin{cases}
+		0.8, \texttt{ if } x \leq 5.4\\
+		(5-x)/2, \texttt{ if } 5.4 < x \leq 7\\
+		0, \texttt{ if } 7 < x \leq 12\\
+		(x-12)/2, \texttt{ if } 12 < x \leq 12.4\\
+		0.2, \texttt{ if } x < 12\\
+	\end{cases}
+\end{align}
+
+Applying the centroid of area gives a value of 6.23
+
+This value seems to make sense as it falls roughly in the middle. Since the temperature is very high you might want to reduce the fuel rate, but the mass is very large so you might want to increase the temperature.
+
+
+\section*{Question 4}
+\label{sec:question_4}
+\subsection*{a)}
+\label{sub:a_}
+
+Input 1:
 \begin{align*}
-	HG\times LG \times NR = \frac{0.8}{RD}\\
-	HG\times LG \times FR = \frac{0.2}{RD}\\
+	r &= \sum_i w_i x_i\\
+	&= (1)(1) + (-2)(-1) + (0)(0) + (-1)(0.5)\\
+	&= 2.5\\
+	\Delta w &= \eta(t_1 - r)x_1\\
+	&= 0.1(-1-2.5)\begin{bmatrix}
+		1 & -2 & 0 & -1
+	\end{bmatrix}\\
+	&= \begin{bmatrix}
+		-0.35 & 0.7 & 0 & -0.35
+	\end{bmatrix}\\
+	w^{(2)} &= w^{(1)} - \Delta w\\
+	&=
+	\begin{bmatrix}
+		1 & -1 & 0.5 & -1
+	\end{bmatrix} -
+	\begin{bmatrix}
+		-0.35 & 0.7 & 0 & -0.35
+	\end{bmatrix}\\
+	&=
+	\begin{bmatrix}
+		1.35 & -1.7 & 0.5 & 1.35
+	\end{bmatrix}\\
+\end{align*}
+Input 2:
+\begin{align*}
+	r &= (1.35)(0) + (-1.7)(1.5) + (0.5)(-0.5) + (1.35)(-1)\\
+	&= -4.15\\
+	\Delta w &= 0.1(-1+4.15)\begin{bmatrix}
+		0 & 1.5 & -0.5 & -1
+	\end{bmatrix}\\
+	&= \begin{bmatrix}
+		0 & 0.47 & -0.16 & -0.315
+	\end{bmatrix}\\
+	w^{(3)} &=
+	\begin{bmatrix}
+		1.35 & -1.7 & 0.5 & 1.35
+	\end{bmatrix} -
+	\begin{bmatrix}
+		0 & 0.47 & -0.16 & -0.315
+	\end{bmatrix}\\
+	&=
+	\begin{bmatrix}
+		1.35 & -2.17 & 0.66 & 1.665
+	\end{bmatrix}\\
+\end{align*}
+Input 3:
+\begin{align*}
+	r &= (1.35)(-1) + (-2.7)(1) + (0.66)(0.5) + (1.665)(-1)\\
+	&= −5.385\\
+	\Delta w &= 0.1(1+5.385)\begin{bmatrix}
+		-1 & 1 & 0.5 & -1
+	\end{bmatrix}\\
+	&= \begin{bmatrix}
+		-0.6385 & 0.6385 & 0.31925 & -0.6385
+	\end{bmatrix}\\
+	w^{(4)} &=
+	\begin{bmatrix}
+		1.35 & -2.17 & 0.66 & 1.665
+	\end{bmatrix} -
+\begin{bmatrix}
+		-0.6385 & 0.6385 & 0.31925 & -0.6385
+	\end{bmatrix}\\
+	&=
+	\begin{bmatrix}
+		1.9885 & −3.3385 & 0.34075 & 2.3035
+	\end{bmatrix}\\
 \end{align*}
 
-NOTE: need to figure out which rule to apply for now assume that both reference the RD value and hope that order is conserved.
+\subsection*{b)}
+\label{sub:b_}
+Code is also attached in q4.py
 
+\begin{lstlisting}[language=python]
+# Training data
+x1 = [1, -2, 0, -1]
+x2 = 0, 1.5, -0.5, -1
+x3 = [-1, 1, 0.5, -1]
+inputs = [x1, x2, x3]
+# Labels for training data
+t1 = -1
+t2 = -1
+t3 = 1
+targets = [t1, t2, t3]
+# Initial weights
+weights = [1, -1, 0, 0.5]
+# Learning rate
+n = 0.1
+# Maximum number of iterations
+maxIterations = 50
+# Thresholds for determining if a steady state has been achieved
+threshold = 0.1
 
+def calcR(i):
+    r = 0
+    for j in range(0, len(inputs[i])):
+            r += inputs[i][j] * weights[j]
+    return r
 
+iters = 0
+while iters < maxIterations: # loop for each epoch
+    output = 0
+    isSteady = True
+    for i in range(0, len(inputs)): #loop for each piece of training data
+        r = calcR(i)
+        for data in range(0, len(weights)):
+            # Calculate delta
+            delta =  n * (targets[i] - r) * inputs[i][data]
+            # Check if delta is close enough to 0
+            isSteady = isSteady and (abs(delta) < threshold)
+            # Update weights
+            weights[data] = weights[data] + delta
+    if isSteady: # stop looping if steady state has been achieved
+        break
+    iters += 1
+if iters == maxIterations - 1:
+    print 'Did not converge'
+else:
+    print 'Converged in {0} epochs'.format(iters)
+    print weights
+\end{lstlisting}
 
+The output for this was that the training data was linearly separable in 6 epochs and weights $\begin{bmatrix}
+	-0.36 & 0.17 & 0.68 & 0.34
+\end{bmatrix}$ (rounded to 2 digits).
 
+\subsection*{c)}
+\label{sub:c_}
+\begin{align*}
+	u &= \begin{bmatrix}
+		-1 & -1 & 0 & 0.5
+	\end{bmatrix}\\
+	w &= \begin{bmatrix}
+		-0.36 & 0.17 & 0.68 & 0.34
+	\end{bmatrix}\\
+	r &= (-1)(-0.6) + (-1)(0.17) + (0)(0.68) + (0.5)(0.34)\\
+	&= 0.6\\
+	signum(r) &= 1\\
+\end{align*}
 
+So u belongs in class C1.
 
+\section*{Question 5}
+\label{sec:question_5}
+For brevity's sake we will abbreviate:
+\begin{align}
+	r^{(k)} &= \sum_i w_ix_i^{(k)}+\theta
+\end{align}
 
+This makes the new error function:
+\begin{align*}
+	E(w) &= \sum_i \left( t^{(k)} - S(r^{(k)}) \right)^2\\
+	&= \sum_i \left( t^{(k)} - \frac{1}{1+e^{r^{(k)}}} \right)^2\\
+\end{align*}
 
+\begin{align*}
+	\nabla_w E(w) &= \frac{\delta E(w)}{\delta w}\\
+	&= \frac{\delta \left( t^{(k)} - \frac{1}{1+e^{r^{(k)}}} \right)^2}{\delta w}\\
+	&= \frac{\delta \left( t^{(k)} - \frac{1}{1+e^{r^{(k)}}} \right)^2}{\delta r^{(k)}} \frac{\delta r^{(k)}}{\delta w}\\
+	&= 2\left( t^{(k)} - \frac{1}{1+e^{r^{(k)}}} \right) \frac{\delta \left( t^{(k)} - \frac{1}{1+e^{r^{(k)}}} \right)}{\delta r^{(k)}} \frac{\delta r^{(k)}}{\delta w}\\
+	&= 2\left( t^{(k)} - \frac{1}{1+e^{r^{(k)}}} \right) \left ( 0 - \frac{\delta \left(\frac{1}{1+e^{r^{(k)}}} \right)}{\delta r^{(k)}} \right) \frac{\delta r^{(k)}}{\delta w}\\
+	&= 2\left( t^{(k)} - \frac{1}{1+e^{r^{(k)}}} \right) \left (\frac{e^{r^{(k)}}}{(1+e^{r^{(k)}})^2} \right) \frac{\delta r^{(k)}}{\delta w}\\
+	&= 2\left( t^{(k)} - \frac{1}{1+e^{r^{(k)}}} \right) \left (\frac{e^{r^{(k)}}}{(1+e^{r^{(k)}})^2} \right)x_i\\
+	\Delta w &= -\eta \nabla_wE(w)\\
+	&= -\eta\left( t^{(k)} - \frac{1}{1+e^{r^{(k)}}} \right) \left (\frac{e^{r^{(k)}}}{(1+e^{r^{(k)}})^2} \right)x_i\\
+\end{align*}
 
 
 
