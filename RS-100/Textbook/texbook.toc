@@ -226,3 +226,8 @@
 \contentsline {subsubsection}{\numberline {6.0.2}Going for Refuge in Buddha}{30}
 \contentsline {paragraph}{Three Body}{30}
 \contentsline {paragraph}{Dukkha}{31}
+\contentsline {paragraph}{Wisdom}{32}
+\contentsline {paragraph}{Moral Conduct}{32}
+\contentsline {paragraph}{Contemplation}{32}
+\contentsline {paragraph}{Meditation}{32}
+\contentsline {paragraph}{Two Paths}{33}
