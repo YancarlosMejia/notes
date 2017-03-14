@@ -121,6 +121,51 @@ Now we look at propagating backwards: $l < L$
 \end{align*}
 These equations areht emost equations used in back propagation.
 
+\includepdf[page=20-21]{slides}
+Momentum helps us from oscillating like crazy, and encourages convergence.
+
+So now we update our weights with the learning curve times the gradient descent plus some constant times the previous value of delta omega. This gives the system a bit of memory. It is now improving on earlier values of weight. The gradient descent is still small when compared to the previous value of omega. This means that delta omega is going to be very close to its previous value.
+
+This method is very commonly used.
+
+Bellow is an example, he chose not to go over it in class. In this example the bias is kept separate from the terms. This way it can be injected at certain areas. Remember that it is not always there. We see here that the output is scalar which is a bit new. Nothing really changes though.
+
+Remember, you refresh the error between epochs. This is called online learning. Online learning has a smaller memory footprint than batch learning.
+
+NOTE: this will likely be an example of a kind of question that could be on the exam. know it.
+\includepdf[pages=22-35]{slides}
+
+
+Now we have a system with three nodes
+\includepdf[pages=36-39]{slides}
+We can accidentally have too many nodes, we say that this causes the system to be \textbf{overtrained}. We do lots of cross validation, data changing, and reconfiguring of the system to see which form converges best. Basically you use a bunch of data to tune the system before you apply the testing data.
+\includepdf[pages=39-41]{slides}
+The more varied your training data the better your system, but the more nodes you have might not improve things.
+
+\includepdf[pages=43{slides}
+\includepdf[pages=44]{slides}
+\includepdf[pages=45]{slides}
+If the system is not converging you have to reshuffle your data or the structure of your network.
+
+NOTE: know how the different configurations and values can effect the system.
+
+Below is another example he didnt go through
+\includepdf[pages=46-51]{slides}
+
+Now lets look at topology
+\includepdf[pages=52-53]{slides}
+The typical activation for an MLP is tanh or sigmoid since they are infinitely differentiable.
+
+We now consider closed/bounded activation functions that start high and get lower (a bit like converging). The best for the following system is the Gausian membership function.
+
+\includepdf[pages=54]{slides}
+Here we have central nodes that have maximum results and the edges less so. Here we only have weights between the hidden layer and the output layers. You can think of this as the weights between the input layer and the hidden layer as one.
+
+
+
+
+
+
 There are some typos:
 \begin{itemize}
 	\item slide 29, lowest line should be $\delta_6 = $ the rest of the line
