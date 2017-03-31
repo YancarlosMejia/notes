@@ -133,6 +133,13 @@ Bellow is an example, he chose not to go over it in class. In this example the b
 Remember, you refresh the error between epochs. This is called online learning. Online learning has a smaller memory footprint than batch learning.
 
 NOTE: this will likely be an example of a kind of question that could be on the exam. know it.
+
+There are some typos:
+\begin{itemize}
+	\item slide 29, lowest line should be $\delta_6 = $ the rest of the line
+\end{itemize}
+
+
 \includepdf[pages=22-35]{slides}
 
 
@@ -161,15 +168,117 @@ We now consider closed/bounded activation functions that start high and get lowe
 \includepdf[pages=54]{slides}
 Here we have central nodes that have maximum results and the edges less so. Here we only have weights between the hidden layer and the output layers. You can think of this as the weights between the input layer and the hidden layer as one.
 
+We dont want a system to pass between all of the points, we want to it interpolate between the points. This is usually the result of \textbf{overfeeding}.
 
+When we get our data set we should separate it into training, validation, and testing sets. Training and validation is used to create a system that will try to predict properly the results of the testing data. We can shuffle the training and validation data around to hone in the right amount of training for the system. The training is the one that tunes up the weights. The validation is used to validate the model that you produced. Do not go to the testing part if the validation is not good.
 
-
-
-
-There are some typos:
+The behavior of the system depends on:
 \begin{itemize}
-	\item slide 29, lowest line should be $\delta_6 = $ the rest of the line
+	\item the number of training data (you can control this)
+	\begin{itemize}
+		\item larger is better
+	\end{itemize}
+	\item architecture of the network, nodes and hidden layers (you can control this)
+	\begin{itemize}
+		\item a medium value is needed, gotta tune this
+	\end{itemize}
+	\item the behavior of the system or its linearity (you cannot control this)
 \end{itemize}
+^this is probably going to be on the exam
+
+The interpolator solution can create a very good approximation of your system even if it is nonlinear.
+
+NOTE: I think his slides are borked again, so this might need syncing with them later
+
+We can perfectly approximate a nonlinear function with an adequate number (that we need to find) if some other functions that we sum.
+
+This is basically linear combination of bayes gaussian network. If you chose which of these functions you use your error can go to 0.
+
+\includepdf[pages=55]{slides}
+Here we are mapping a nonlinear function into higher dimensional domains. We want to extract from the system, all of the representatives of the overall system and cluster it into unique local systems.
+
+\includepdf[pages=56]{slides}
+From the input layer to the middle layer there is the unity value (weights are 1) which is a unique character to radial systems.
+
+\includepdf[pages=57]{slides}
+\includepdf[pages=58]{slides}
+The generation of these functions required unsupervised learning. This is why it is called a hybrid system. One components is supervised and the other is through clustering.
+
+We need the weights, the mean, and the standard deviations.
+
+Weights are through supervised learning. The mean and standard deviation is through unsupervised learning.
+
+\includepdf[pages=59]{slides}
+
+Usually the center of the network has the same number of inputs as outputs.
+
+So its the euclidean distance between the input vector and the center of the radial function, divided by some width parameter all of which fed into the activation function (I think r is the activation, needs to be confirmed).
+
+\includepdf[pages=60]{slides}
+both of these variations of g are used as possible functions. The first is far more common, but some situations use the second with justification.
+
+\includepdf[pages=61]{slides}
+We still consider $\omega$ as the weights between nodes.
+
+The receptive field is another name for the radial function.
+
+\includepdf[pages=62]{slides}
+First we use an unsupervised training to get the center vector (aka mean) and a scalar for the spread (aka standard deviation). Then we do supervised training to get the weights.
+
+\includepdf[pages=63]{slides}
+\includepdf[pages=64]{slides}
+\includepdf[pages=65]{slides}
+For the interpolation problem the number of training data is equal to the hidden layer nodes. If you have 20 nodes you have 20 training data. Remember this, called \textbf{interpolation}.
+
+\includepdf[pages=66]{slides}
+\includepdf[pages=67]{slides}
+D is the desired output and $G^{-1}$, if it exists, gives us the weights.
+
+If $G^{-1}$ doesn't exists, it might be \textbf{illconditioned}. This happens if the determinant is very small resulting in large numbers. If this occurs it we use a non-square matrix.
+
+This happens if the number of training data is not equal to the number of hidden nodes as well.
+\includepdf[pages=69]{slides}
+\includepdf[pages=70]{slides}
+Suppose we have a function. We have 5 radial function, the center for each one at a training data. We have have an interpolation problem because we have the same number of inputs as training data.
+
+\includepdf[pages=71]{slides}
+here are the funcitons we will use.
+
+The one on the right uses a randomly chosen spread of 0.5. This is clearly incorrect.
+
+\includepdf[pages=72]{slides}
+He we tried a different spread with much better results.
+
+\includepdf[pages=73]{slides}
+This one is overreaching on the spread.
+
+It is important to extract this value from unsupervised training.
+\includepdf[pages=74]{slides}
+\includepdf[pages=75]{slides}
+\includepdf[pages=76]{slides}
+
+RBF has been proven to be better than the multilayer perceptron.
+
+Having a single hidden layer is much better and easier to work with. Its more transparent.
+
+Which speed is faster depends on the complexity of the problem. For simple problems MLP is faster but RBF is better for larger systems.
+
+
+\includepdf[pages=77]{slides}
+\includepdf[pages=78]{slides}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
