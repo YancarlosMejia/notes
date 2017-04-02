@@ -1,0 +1,360 @@
+\documentclass[12pt]{article}
+
+\usepackage{algo,fullpage,url,amssymb,epsfig,color,xspace,enumerate}
+\usepackage{amsmath}
+\usepackage{tikz,parskip}
+
+\usepackage[pdftitle={CS 240 Assignment 3},%
+  pdfsubject={University of Waterloo, CS 240, Spring 2014},%
+  pdfauthor={Romain Lebreton}]{hyperref}
+
+\renewcommand{\thesubsection}{Problem \arabic{subsection}}
+
+\begin{document}
+\begin{center}
+  {\Large\bf University of Waterloo}\\
+  \vspace{3mm}
+         {\Large\bf CS240 - Spring 2014}\\
+         \vspace{2mm}
+                {\Large\bf Assignment 3}\\
+                \vspace{3mm}
+                \textbf{Due Date: Wednesday June 18 at 09:15am}
+\end{center}
+
+Please read
+\url{http://www.student.cs.uwaterloo.ca/~cs240/s14/guidelines.pdf}
+for guidelines on submission.
+Problems 1 -- 6 are written
+problems; submit your solutions electronically as a PDF with file name {\tt a03wp.pdf} using MarkUs. We will also accept individual question files named {\tt a01q1w.pdf}, {\tt a01q2w.pdf}$, \dots,$ {\tt a01q6w.pdf} if you wish to submit questions as you complete them.
+
+There are 67 marks available.
+
+\subsection{[5 + 5 marks]}
+
+A \emph{stable} sorting algorithm is one in which the relative order of all
+identical elements (or keys) is the same in the output as it was in the input.
+\begin{enumerate}
+  \item Is Heapsort a stable sorting algorithm~?
+
+  If yes, explain the stability and give a formal proof. Otherwise, provide a
+  counter-example with an explanation.
+
+  \textbf{Answer} Heapsort is not a stable sorting algorithm, because the process of inserting and deleting from a heap removes information about the initial order of the identical elements.
+
+  For example [5, A, B, 2], where A=B=4;
+
+  Heapifying this array results in the heap:
+  \begin{center}\begin{tikzpicture}[
+    level distance=45 pt,
+    every node/.style={circle,draw},
+    level 1/.style={sibling distance=200 pt},
+    level 2/.style={sibling distance=100 pt},
+    level 3/.style={sibling distance=60 pt}
+  ]
+    \node {5}
+      child {node {A}
+          child {node {2}}
+      }
+      child {node {B}
+      };
+
+\end{tikzpicture}\end{center}
+
+If we define the behavior of bubble down to chose the left side in the event of two equal children this results in the array [2, B, A, 5] which is technically sorted, but A is now on the right of B istead of the left as it should be for a stable sort. In order for this to be a stable sort we need to define the behavior take the right child in the case of two equal children.
+
+Now try the array [5, B, A, 2]:\\
+This heaps into:
+  \begin{center}\begin{tikzpicture}[
+    level distance=45 pt,
+    every node/.style={circle,draw},
+    level 1/.style={sibling distance=200 pt},
+    level 2/.style={sibling distance=100 pt},
+    level 3/.style={sibling distance=60 pt}
+  ]
+    \node {5}
+      child {node {B}
+          child {node {2}}
+      }
+      child {node {A}
+      };
+
+\end{tikzpicture}\end{center}
+
+When we finish the sorting we get [2, B, A, 5] which is also broken. So there is no condition under which heapsort can be made to be stable.
+
+
+  \item Consider the Quicksort1 algorithm described in class that uses the
+  partitioning method of slide 5 of module 3 and takes $A [0]$ as pivot. Is
+  Quicksort1 a stable sorting algorithm~?
+
+  If yes, explain the stability and give a formal proof. Otherwise, provide a
+  counter-example with an explanation.
+
+  \textbf{Answer} Quicksort is not stable, in instances of the repeated value being the first element of the array. Since the stopping condition for j in the loop is strictly greater than it will consider a identical element in the wrong place and swap it accordingly.
+
+  For example, the array [A, 7, 4, B, 6, 9] (A = B = 3) will sort to [B, A, 4, 6, 7, 9] which is technically sorted correctly, but now A and B have swapped order.
+
+  This happens in the second itteration.
+  \begin{enumerate}[1)]
+    \item \[A, 7, 4, B, 6, 9\] i stops at 7 as $7 !\leq 3$ and j stops at B as $3 !> 3$
+    \item \[A, B, 4, 7, 6, 9\] i stops at 4 as $4 !\leq 3$ and j stops at B because that is the lowest it can go (B being at position 1), since $j < i$ we swap A and B
+    \item \[B, A, 4, 7, 6, 9\] the process continues from here with more segmentation, but with B and A fixed in their current position by the way that the subdivisions are created, now we have B and A in reversed positions
+  \end{enumerate}
+
+\end{enumerate}
+
+\subsection{[10 marks]}
+
+Given an array $A [0, \ldots, n - 1]$ of numbers with the following property:
+$A [i] \geq A [i - j]$ for all $j \geq \log n$.
+\begin{enumerate}
+  \item Show how to sort the array $A$ in $O (n \log \log n)$ time.
+\end{enumerate}
+\emph{Hint:} Partition $A$ into contiguous blocks of size $(\log n)$,
+i.e., first $(\log n)$ elements are in the first block, next $(\log n)$
+elements are in the second block, and so on. Then, establish a connection
+between the elements within two blocks, which are separated by another block.
+
+\textbf{Answer} First separate the array into contiguous blocks of size $\log n$. With each of these blocks you can say that all elements in the block will be all be greater than the all of the elements of the second preceding block, and larger than some of the elements in the first preceding block. If we insert each element in the last block (containing the largest elements) into a heap this will be between $\log 0$ and $\log\log n$ (since the max size of this heap is $\log n$) which we will say is $O(\log\log n)$ time complexity for each insert.
+
+For the next block we insert it into the heap in a similar fashion, but since this heap now contains $\log n$ elements the time complexity is between $\log\log n$ and $\log(2\log n)$ which is O$(\log\log n)$ time complexity for each element insert.
+
+Before we insert the third block we know that the top $\log n$ elements will be bigger than all of the elements in the third block by the rule surrounding the initial array, so we can delete off the top $\log n$ elements. Since the size of the heaps is currently $\log(2\log n)$ which is $O(\log\log n)$ time complexity for each element deletion. Now we can insert the third block for time complexity $O(\log\log n)$ by the same logic as for block two.
+
+For all remaining blocks the time complexity is that of deleting the top $\log n$ elements and adding the $\log n$ elements to the heap resulting in a time complexity of $O(2\log(2\log n))$ for each insertion. The edge cases of the first and last blocks cancel each other out (the first block as no deletion phase and the last block has an extra deletion phase) and the same logic applies for the second and second to last blocks.
+
+For each element in the array you have a $O(2\log(2\log n))$ sized insertion and deletion time complexity. So we get a time complexity of $O(2n\log(2\log n)) \in O(n\log(\log n))$.
+
+\subsection{[5 + 5 marks]}
+
+A sorting algorithm is said to sort \emph{in place} if only a constant
+number of elements of the input are ever stored outside the array. In class we
+showed that all comparison based sorting algorithms require $\Omega (n \log
+n)$ comparisons to sort an array of length $n$. But suppose are given an array
+$A [0, \ldots, n - 1]$ that contains a permutation of the first $n$
+non-negative integers $0,\dots,n-1$.
+\begin{enumerate}
+  \item Allowing non comparison based algorithms, give an $O (n)$ in place
+  algorithm to sort $A$. For this question, you only have to give the
+  algorithm without justification.
+
+  \textbf{Answer} Iterate through the array. Every time the element at i is equal to i we leave it alone and move i forward one. If the element at i is not equal to i you swap the element at i with the element at the position of the current element (A[A[i]]). This continues through to the end of the array.
+
+\begin{verbatim}
+  A[] = the array to be sorted
+  while(0 <= i < n) {
+    if(A[i] != i)
+      swap(A[A[i]], A[i])
+    i = i+1
+  }
+\end{verbatim}
+
+  \item Analyze the worst-case running time of your method and prove that it
+  is $O (n)$.\\
+\emph{Note:} For simplicity we are assuming $A$ is filled with integer
+keys. Your algorithm must easily extend to work for an array $A$ that is
+filled with (key,element) pairs, each integer key in the range
+$0, \ldots, n - 1$ occurring exactly once.
+
+  \textbf{Answer} The worst case scenario is that no elements are at the correct location, in this case the algorithm will have to make n-1 swaps which is in $O(n)$ times. We know that this is the worst case time because each swap results in a element being at its correct location and the algorithm iterates over any elements that are already in the correct location without touching them, so we will have to perform at most $n-1$ swaps as the last swap will result in two elements going to their correct places.
+
+  We can know that this will continue to work for integer key pairs as data points are only swapped allowing these pairs to remain intact.
+
+  For example:
+
+\begin{tabular}{ c c c c c |c}
+   4 & 2 & 0 & 1 & 3 & the initial array \\
+   \hline
+   0 & 2 & 4 & 1 & 3 & 1 swap\\
+   0 & 1 & 4 & 2 & 3 & 1 swap\\
+   0 & 1 & 2 & 4 & 3 & 1 swap\\
+   0 & 1 & 2 & 3 & 4 & 1 swap\\
+\end{tabular}
+
+
+\end{enumerate}
+
+\subsection{[10 marks]}
+
+You are given an unsorted array $A [0, \ldots, n - 1]$ filled with distinct
+integers. For a given $k$, $1 \leq k \leq n$, we want to rearrange the array
+so that $A [0, \ldots, k - 1]$ contains the $k$ smallest integers in
+increasing order.
+\begin{enumerate}
+  \item Describe an in-place algorithm for this problem. If $k \in O (n / \lg
+  n)$ your algorithm should have running time $O (n)$.
+
+    \textbf{Answer} First we use the quick select with the medians-of-five algorithm for pivot selection to chose the kth largest element, which has the worst time complexity $O(n)$. We use this element to partition the array into the k elements less than or equal to k in one block and the $n-k$ remaining elements in another, which has the time complexity of $O(n)$ . Lastly we use a quick sort to sort this k sized part of the array giving a worst time complexity of $O(k\log k)$ (if we use the medians-of-five method of pivot selection again).
+
+    \begin{align*}
+      &O(n) + O(n) + O(k\log k)\\
+      &O(2n) + O\bigg(\frac{n}{\log n} \log \bigg(\frac{n}{\log n}\bigg)\bigg)\\
+      &O(n) + O\bigg(\frac{n}{\log n} (\log n - \log\log n)\bigg )\\
+      &O(n) + O\bigg(\frac{n\log n}{\log n} - \frac{n\log\log n}{\log n}\bigg )\\
+      &O(n) + O\bigg(n - \frac{n\log\log n}{\log n}\bigg )\\
+      &\log\log n < \log n \implies \frac{\log\log n}{\log n} < 1 \implies \frac{n\log\log n}{\log n} < n\\
+      &O(n) + O(n)\\
+      &O(2n)\\
+      &O(n)
+    \end{align*}
+
+\end{enumerate}
+
+\subsection{[8 + 6 + 6 = 20 marks]}
+
+A tug of war is a contest in which two teams of players pull on a rope in
+opposite directions. The team with the greater combined strength wins (we
+assume that strengths are perfectly additive, and that there is no element of
+chance). For this problem, you are given $n$ players, that are either weak o
+strong. All strong players have exactly the same strength, and all weak
+players similarly have exactly the same strength. We also assume that there is
+at least one weak and one strong player.
+
+The task at hand is to determine which players are strong and which are weak.
+Your tool to determine this is to assign players to teams and have contests.
+The outcome of a single contest can either be a tie, one team winning, or the
+other team winning.
+\begin{enumerate}
+  \item \label{pb5q1}[6 marks] Give a precise (not big-Omega) lower bound for
+  the number of contests required in the worst case to determine which players
+  are strong and which are weak.
+
+  \textbf{Answer} In the worst case scenario would be for the algorithm would be to have to compare each player once except the very last person. This would result in $\omega(n-1)$. This would occur in the instance of having all people on the team at the same strength level except 1. You would have a lot of ties which result in no information, until you find the individual with the different strength level who would determine what each of the tied players are.
+
+  \item \label{pb5q2}[7 marks] Describe an algorithm called
+  \texttt{find-strong} to determine the strong players when $n = 4$. Use the
+  names $P_1, P_2, P_3, P_4$ for the four players, and the function
+  \[ \texttt{contest} \left( \left\{ \textrm{first-team}, \textrm{second-team}
+     \right\} \right), \]
+  which returns either ``first wins'', ``second wins'', or ``tie''. Your
+  function should return a set or list of the strong players.
+
+  Give an exact worst-case analysis of the number of contests required in your
+  algorithm. For full marks, this should match exactly the lower bound from
+  Part \ref{pb5q1} when $n = 4$.
+
+  Take the first element, call it the pivot, and compare it to each succeeding element. In the event of a tie put that compared to element into a Unknown array. If the pivot wins a contest we push all elements in the Unknown array into the strong array, if it loses we delete the unknown array and make the value that one the new pivot. Now we just iterate through the list pushing every element that ties with the pivot into the strong array. At the end of the list return the strong array.
+
+  \begin{verbatim}
+    n = number of players
+    P[] = array of players
+    U[] = array of undecided players
+    S[] = array of strong players
+
+    pivot = P[0]
+    i = 0
+    while (i < n) {
+      results = contest(pivot, P[i])
+      if (results = tie) {
+        U.push(P[i])
+      }
+      if (results == first wins) {
+        Use.push(P[i])
+        S = U
+        break
+      }
+      if (results == second wins) {
+        pivot = P[i]
+        S.push(P[i])
+        break
+      }
+      i = i + 1
+    }
+    while (i < n) {
+      if(contest(pivot, P[i]) == tie) {
+        S.push(P[i])
+      }
+    }
+
+    return S
+
+  \end{verbatim}
+
+  Say that for $P_1, P_2, P_3, P_4$ corresponds to [W, W, W, S].
+
+  We start with the pivot $P_1$ = W, when we compare this to $P_2$ and get a tie, so $P_2$ goes onto the Unknown array. Similarly $P_1$ vs. $P_3$ results in a tie and gets put on Unknown. Now we have $P_1$ vs $P_4$ which results in $P_4$ winning. Now we push $P_4$ onto the strong array and return it. This was done in only n-1 comparisons.
+
+  \item {[}7 marks] Describe an algorithm to determine the strong and weak
+  players, for any $n$. Use the names $P_1, P_2, \ldots, P_n$ and the contest
+  subroutine from Part \ref{pb5q2}. Show that your algorithm is asymptotically
+  optimal, meaning that the big-O cost should match the lower bound from Part
+  \ref{pb5q1}.
+
+  This algorithm works almost exactly the same way as the previous algorithm, but maintains a array of weak players as well
+
+  Take the first element, call it the pivot, and compare it to each succeeding element. In the event of a tie put that compared to element into a Unknown array. If the pivot wins a contest we push all elements in the Unknown array into the Strong array, if it loses we push the Unknown array into the Weak array and make the value that one the new pivot. Now we just iterate through the list pushing every element that ties with the pivot into the Strong array and every element that loses into the Weak array.
+
+  \begin{verbatim}
+    n = number of players
+    P[] = array of players
+    U[] = array of undecided players
+    S[] = array of strong players
+    W[] = array of weak players
+
+    pivot = P[0]
+    i = 0
+    while (i < n) {
+      results = contest(pivot, P[i])
+      if (results = tie) {
+        U.push(P[i])
+      }
+      if (results == first wins) {
+        W.push(P[i])
+        S = U
+        break
+      }
+      if (results == second wins) {
+        pivot = P[i]
+        S.push(P[i])
+        W = U
+        break
+      }
+      i = i + 1
+    }
+    while (i < n) {
+      if(contest(pivot, P[i]) == tie) {
+        S.push(P[i])
+      }
+      else {
+        W.push(P[i])
+      }
+    }
+\end{verbatim}
+
+
+
+
+
+
+
+\end{enumerate}
+
+\subsection{[7 marks]}
+
+Assume that you are given an array $A$ of $n$ integers such that $0 \leq A [i]
+< k$ for all $0 \leq i < n$. We would like to create data structures to answer
+the queries of the following type:
+
+\begin{center}
+  ``How many integers in $A$ are in the range $[a, b]$, given integers $a$ and
+  $b$ with $0 \leq a \leq b < k$?''
+\end{center}
+\begin{enumerate}
+  \item Describe a preprocessing algorithm that runs in time $O (n + k)$ and
+  creates a data structure that allows answering the queries in constant time.
+
+  Create an array of size k, Q. For each element in A increment the value at the value of that element in Q. Once all elements in A have been counted iterate through Q summing as you go so that each value at i is the sum of the preceding values.
+
+  For example: \\
+  A = [2, 2, 4, 7, 1, 3, 0]\\
+  returns Q = [1, 1, 2, 1, 2, 0, 0, 1]\\
+  which then is summed to get Q = [1, 2, 4, 5, 7, 7, 7, 8]\\
+
+  The creation of this is $O(n+ k)$ because we take $O(n)$ time to do the first initial counting of elements into Q, then it takes $O(k)$ time to sum across Q which must be a size K array since the largest element in A is k.
+
+  To return the number of elements between a and b the data structure returns Q[b] - Q[a-1] (in the instance of going off the end of the array assume that it returns zero for negative indexes) which is in constant time. We know that this will return the correct value because Q[b] will return the number of values less than or equal to b by the way that Q is summed, and Q[a] will return all values less than or equal to a. We want to include the values at a in our number so we take the value at Q[a-1]. This we way return the number of values less than or equal to b and greater than or equal to a.
+
+
+\end{enumerate}
+
+\end{document}

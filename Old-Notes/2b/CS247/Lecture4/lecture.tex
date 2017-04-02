@@ -1,0 +1,105 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+\section*{Copy Constructor}
+\begin{verbatim}
+class Base;
+class C;
+class MyClass: public Base {
+    C comp_;
+    C *ptr_;
+    int simple;
+public:
+    MyClass (const MyClass&)
+    MyClass& operator=(const MyClass&)
+\end{verbatim}
+We use a shallow copy for entity object and a deep copy for value object. We can edit things with a deep copy without screwing other things over, shallow not so much. 
+
+\begin{verbatim}
+MyClass::MyClass(const MyCass& m): Base(m), comp_(m.comp_), simple_(m.simple_){
+    if(m.ptr == 0) {
+        ptr = 0;
+    }
+    else {
+        ptr_ = new C(*m.ptr_);
+    }
+}
+MyClass:: MyClass(const MyClass& m): Bas(m), comp_(m.comp_), simple_(m.simple_), ptr_(m.ptr_) {}
+\end{verbatim}
+In the above example we assume that the other data members have correctly implemented copy-constructors. We pass MyClass in by reference because passing by value uses copy-constructor so we'd get infinite recursion. By default copy constructs impliment a shallow copy which is often what we dont want. Asignment must defined as a member function otherwise you would be overloading it or the thing to the right of it resulting in overloading it for ints or other primitive types. 
+\begin{verbatim}
+MyClass& MyClass::operator=(const MyClass& m) {
+    if(&m == this) return *this;
+    simple_ = m.simple_; 
+    comp_ = m.comp_; //C operator=
+    Base.operator = (m); // Base operator=
+    delete ptr_;
+    if(m.ptr_== NULL) ptr_=NULL;
+    else ptr_==new C(*m.ptr_);
+    return *this;
+}
+\end{verbatim}
+
+A copied/assigned object should be == to the original. If you over load this is doesnt have to be member but it can be. Compilers do not generate a default ==, we must do it on our own.
+\begin{verbatim}
+bool operator==(const MyClass& m2) const {
+    if(!Base::operator==(m2)) return false; //for this to work == must be a member operator for Base, we assume this is done correctly
+    if(!(comp_ == m2.comp_)) return false;
+    if(simple != m2.simple_) return false;
+    if(ptr_ == NULL && m2.ptr_ == NULL) return true;
+    if(ptr_ == NULL || m2.ptr_ == NULL) return false;
+    return (ptr_)==(*m2.ptr_);
+}
+\end{verbatim} 
+
+\section*{Private Implementation Idiom}
+Pmpl Idiom is dont to not reveal the implementation to the client so that they cannot fuck it up. We just want them to know that there is a structure, not how it is implemented. 
+\begin{verbatim}
+struct Rational::Impl {
+    int numerator_ ;
+    int denominator_;
+}
+Rational::Rational(int numer, int denom) {
+    if(denom == 0) throw "Panic";
+    rat_->numerator_ = numer;
+    rat_->denominator = denom;
+    reduce();
+}
+
+\end{verbatim}
+
+\section*{Mutable vs. Immutable Objects}
+Entity objects are mutable, there is only one, but we can fuck with it. Value objects are usually immutable, there is just a value and you should manipulate it through creating copies of temprorary values.  it has no mutators (if you can access private data members you can change them) and member function cannot be overridden (not virtual). All copies are deep copies. Data members are private and immutable. If you need to make a data member mutable you can make a copy and dick around with that.
+
+
+\begin{verbatim}
+Person myPerson("David", new Date(1, "may", 1990); //constructor should make a copy of date parameter
+cout<<myPerson.DOB();
+
+Date myDate = myPersion.DOB(); 
+myDate.monthIs(myDate +1);
+cout<<myPerson.DOB(); // accessor should output a copy of DOB
+\end{verbatim}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

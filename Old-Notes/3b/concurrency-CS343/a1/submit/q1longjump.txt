@@ -1,0 +1,7 @@
+Input of 50 50 5 5
+    throw/catch: 87.06s
+    setjmp/longjmp: 6.72s
+    throw/catch with optimizations: 85.13s
+    setjmp/longjmp with optimizations: 5.87s
+
+Using setjmp and longjmp to handle exceptions is much faster than actually raising an exception. This is due to the fact that raising and hanleing an exception requires a context switch while using jumps does not.

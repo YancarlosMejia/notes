@@ -1,0 +1,76 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+\section{Synchronized Views}
+These show objects through time so that we can track them and make sure that they are synchronized.
+
+\subsection{Coupled Design}
+Shows the one class that is incharge of others so that we can see where things are being called in the related classes.
+
+This has asome problems:
+\begin{itemize}
+    \item we have to change code in multiple places to add new things
+    \item all state changing operation have to call it
+    \item cannot change at runtime the set of vies to keep in synch
+\end{itemize}
+\subsection{Aggregation of Abstract Views}
+Data is a collection of abstract views and notifying them means iterating through a colleciton of them
+
+This solves some of the previous problems, we can change the set of views at run time. One class announces changes to data through notify and views that subscribe to it and recieve notifications.
+
+\subsection{Observer Pattern}
+Subject sends updates to a collection of abstract observers which maintain collection of subscibed observers and sents notification to all when its state changes. Theres an abstract subject that all things subscribe to and a notify fuctions. The Concrete subject is the actuall thing that is being monitored. Then there is a Observer which contains the actual update function and the Concrete observer implements that.
+
+We edit the dtat in some way, the state changes, so it calls its notify function. This sends an update message to each of its observers which then update their view.
+
+Another way to implement this pattern is to have the subject push its state information to the objservers (oush). We can also have the observers request only the data that they need instead of getting everything pushed to them (pull).
+
+Now we have an Observer Pattern that minimizes the coupling between Subjects that publish informatin and Observers that recieve notifications
+
+The subject knows that it has a list of observers, it doesnt care how many of of what type, it just publishes its data changes
+
+The observer subscribes to notification service at runtime so they can be added and removed.
+
+\subsection{Model-View ControllerPattern}
+This is complination of design patterns to decouple UI code from application code.
+
+\begin{enumerate}
+    \item user input is sent to controller
+    \item controller translates UI event into a call in application code
+    \item the model notifies the view of the change in its state
+    \item view queries the model for its new state
+    \item views update
+\end{enumerate}
+
+It is comprised of three other design patterns:
+\begin{itemize}
+    \item Composite Pattern: All views use the same base class (a uniform interface)
+    \item Strategy Pattern: View delegates to Controller the strategy that maps UI events to calls to Model
+    \item The Model and View implement the Observer Pattern to notify interested objects (Views) of its state changes
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

@@ -1,0 +1,86 @@
+\documentclass[12pt]{article}
+\usepackage{parskip,amsmath,amssymb,enumerate}
+\usepackage[margin=.6in]{geometry}
+
+\begin{document}
+\subsection*{1}
+\begin{enumerate}[a.]
+    \item This system is unstable because it has a pole with a real part that is positive.
+    \item
+    \begin{align*}
+        y(t) & = \mathcal{L} \bigg \{ \frac{1}{s} * \frac{s+1}{s(s-1)} \bigg\}\\
+        &= \mathcal{L} \bigg \{  -\frac{1}{s^2} + \frac{2}{s-1}  \bigg \}\\
+        &= -t + 2e^t
+    \end{align*}
+    \item Let $H_1(s) = \frac{s+1}{s(s-1)}$
+    \begin{align*}
+        Y(s) &= H(s)[R(s) - KY(s)]\\
+        &= \frac{H(s)R(s)}{1+KH(s)}\\
+        &= \frac{s+1}{s(s-1) + K(s+1)}
+    \end{align*}
+    \item
+    \begin{align*}
+        H(s) & = \frac{s+1}{s(s-1) + s+1}\\
+        &= \frac{s+1}{s^2+1}\\
+        poles &= \pm j
+    \end{align*}
+    This is not stable because the real part of the roots is 0 which is not strictly negative.
+    \begin{align*}
+        y(t)&=\mathcal{L} \bigg\{ \frac{1}{s} * \frac{s+1}{s^2+1} \bigg\}\\
+        &= \mathcal{L} \bigg\{ \frac{1}{s} + \frac{1}{s^2+1} - \frac{s}{s^2+1}\bigg\}\\
+        &= u_{-1}(t) + \sin t - \cos t
+    \end{align*}
+    \item
+    \begin{align*}
+        H(s) &= \frac{s+1}{s(s-1) + 2(s+1)}\\
+        &= \frac{s+1}{s^2 + s + 2}\\
+        poles = -\frac{1}{2} \pm j\sqrt{7}
+    \end{align*}
+        This is stable because $H(s)$ is a proper rational and its poles have real parts that are strictly negative.
+    \item
+    \begin{align*}
+        H(s) &= \frac{s+1}{s^2 + s + 2}\\
+        \omega_n &= \sqrt{2}\\
+        s &= \omega_n\zeta s\\
+        \zeta &= \frac{1}{2\sqrt{2}} = \frac{\sqrt{2}}{4}\\
+    \end{align*}
+    \begin{align*}
+        y(t) &= \mathcal{L} \bigg\{ \frac{s+1}{s^2 + s + 2} * \frac{1}{s}\bigg\}\\
+        &= \frac{1}{2} \mathcal{L} \bigg\{ \frac{2s}{s^2 + s + 2} * \frac{1}{s}\bigg\} + \frac{1}{2}\mathcal{L} \bigg\{ \frac{2}{s^2 + s + 2} * \frac{1}{s}\bigg\}\\
+        &= \frac{1}{2} \mathcal{L} \bigg\{ \frac{2}{s^2 + s + 2}\bigg\} + \frac{1}{2}\mathcal{L} \bigg\{ \frac{2}{s(s^2 + s + 2)}\bigg\}\\
+        &= \frac{1}{2} \frac{\sqrt{2}}{\sqrt{1-\frac{1}{8}}} e^{-0.5t\sin(\sqrt{2-0.25t})}+ \frac{1}{2} - \frac{1}{2}\frac{1}{\sqrt{1-\frac{1}{8}}} e^{-0.5t\sin(\sqrt{2-0.25t}) + \cos^{-1}(\frac{\sqrt{2}}{4})}
+    \end{align*}
+    \item
+    \begin{align*}
+        H(s) &= \frac{s+1}{s(s-1)} * \bigg( 1 + K * \frac{s}{s+0.5} * \frac{s+1}{s(s-1)} \bigg)^{-1} \\
+        &= \frac{(s+0.5)(s+1)}{(s+0.5)(s)(s-1) + K(s)(s+1)}\\
+        \displaystyle\lim_{t \to \infty} y(t) &= \displaystyle\lim_{s \to 0} H(s)\\
+        &= \infty
+    \end{align*}
+    So the function is not stable, which corresponds to the 0 pole.
+    \item
+    \begin{align*}
+        H(s) &= \frac{s+1}{s(s-1)} * \bigg( 1 + 2 * \frac{s}{s+0.5} * \frac{s+1}{s(s-1)} \bigg)^{-1} \\
+        &= \frac{s^2 + 1.5s + 0.5}{s^3 + 1.5s^2 + 1.5s}\\
+        poles &= 0, \frac{-1.5 \pm j\sqrt{3.75}}{2}\\
+        y(t) &= \mathcal{L}^{-1} \bigg\{\frac{s^2 + 1.5s + 0.5}{s^3 + 1.5s^2 + 1.5s} * \frac{1}{s} \bigg\}\\
+        &= \mathcal{L}^{-1} \bigg\{\frac{s^2 + 1.5s + 0.5}{s^2 + 1.5s + 1.5} * \frac{1}{s^2} \bigg\}\\
+        &=\mathcal{L}^{-1} \bigg\{\frac{s^2}{s^2 + 1.5s + 1.5} * \frac{1}{s^2} \bigg\} +\mathcal{L}^{-1} \bigg\{\frac{1.5s}{s^2 + 1.5s + 1.5} * \frac{1}{s^2} \bigg\} + \mathcal{L}^{-1} \bigg\{\frac{0.5}{s^2 + 1.5s + 1.5} * \frac{1}{s^2} \bigg\}\\
+        &=\frac{2}{3} \mathcal{L}^{-1} \bigg\{\frac{1.5}{s^2 + 1.5s + 1.5}\bigg\} +\mathcal{L}^{-1} \bigg\{\frac{1.5}{s(s^2 + 1.5s + 1.5)} \bigg\} + \frac{1}{3}\mathcal{L}^{-1} \bigg\{\frac{1.5}{s(s^2 + 1.5s + 1.5)} * \frac{1}{s} \bigg\}\\
+        \frac{2}{3} \mathcal{L}^{-1} \bigg\{\frac{1.5}{s^2 + 1.5s + 1.5}\bigg\} &\\
+        \omega_n = \sqrt{1.5}&\\
+        \zeta =  \frac{\sqrt{1.5}}{2}&\\
+        \frac{2}{3} \mathcal{L}^{-1} \bigg\{\frac{1.5}{s^2 + 1.5s + 1.5}\bigg\} &= \frac{2}{3} \frac{\sqrt{1.5}}{\sqrt{1-\frac{1.5}{4}}}   e^{-0.75t\sin(\sqrt{1.5}\sqrt{1-\frac{1.5}{4}t})}\\
+        \mathcal{L}^{-1} \bigg\{\frac{1.5}{s(s^2 + 1.5s + 1.5)} \bigg\}&\\
+        \omega_n = \sqrt{1.5}&\\
+        \zeta =  \frac{\sqrt{1.5}}{2}&\\
+        \mathcal{L}^{-1} \bigg\{\frac{1.5}{s(s^2 + 1.5s + 1.5)}\bigg\} &= 1-\frac{1}{\sqrt{1-\frac{1.5}{4}}}   e^{-0.75t\sin(\sqrt{1.5}\sqrt{1-\frac{1.5}{4}t}) + \cos^{-1}(\frac{ \sqrt{1.5}}{2} )}\\
+        \frac{1}{3}\mathcal{L}^{-1} \bigg\{\frac{1.5}{s(s^2 + 1.5s + 1.5)} * \frac{1}{s} \bigg\} &= \frac{1}{3}\mathcal{L}^{-1} \int 1-\frac{1}{\sqrt{1-\frac{1.5}{4}}}   e^{-0.75t\sin(\sqrt{1.5}\sqrt{1-\frac{1.5}{4}t}) + \cos^{-1}(\frac{ \sqrt{1.5}}{2} )} dt\\
+        y(t) &= \frac{2}{3} \frac{\sqrt{1.5}}{\sqrt{1-\frac{1.5}{4}}}   e^{-0.75t\sin(\sqrt{1.5}\sqrt{1-\frac{1.5}{4}t})} +\\
+            &1-\frac{1}{\sqrt{1-\frac{1.5}{4}}}   e^{-0.75t\sin(\sqrt{1.5}\sqrt{1-\frac{1.5}{4}t}) + \cos^{-1}(\frac{ \sqrt{1.5}}{2} )} + \\
+            &\int 1-\frac{1}{\sqrt{1-\frac{1.5}{4}}}   e^{-0.75t\sin(\sqrt{1.5}\sqrt{1-\frac{1.5}{4}t}) + \cos^{-1}(\frac{ \sqrt{1.5}}{2} )}\\
+    \end{align*}
+\end{enumerate}
+
+
+\end{document}

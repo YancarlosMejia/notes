@@ -1,0 +1,40 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\title{Namespaces}
+\begin{document}
+\maketitle
+\subsection*{Namespaces}
+The main reason we use namespaces is so that when there are tones of different people Namespaces are used to package together related classes, function, and types in a common named scope. The best practice is to put related types, classes, and functions together in the same namespace.
+\begin{verbatim}
+namspace RatADT {
+    class Rational {
+    public:
+        Rational (int numer = 0, int denom = 1);
+        ...
+    };
+
+    void reduce ( Rational& );
+}
+\end{verbatim}
+
+\subsection*{Global Namespace}
+the global namespace is implicitly declared in every program and includes all names defined at the global scope. Each file that defines entities at the global scope adds those names to the global namespace. We can call it explicitly with ::member\_name where the global namespace is named the empty string.
+
+\subsection*{Unnammed Namespace}
+This is used to declare a local namespace to block them from getting to the global namespace.
+\begin{verbatim}
+    namespace {
+        void f();
+    }
+\end{verbatim}
+
+\subsection*{Referencing Namespace Members}
+\begin{itemize}
+    \item using declaration - makes one name on par with local names (ex. using std::cout)
+    \item using directive - makes every name within the listed namespace available (using namespace std), but any local variables with the same name will supersede them. This can also cause problems when you use multiple namespaces, the compiler doesnt notice the problem until the doubling named function is called and ambiguity is introduced.
+\end{itemize}
+
+\subsection*{Etiquette}
+Never put a using directive directive inside a header file or before an \#include directive.
+\end{document}

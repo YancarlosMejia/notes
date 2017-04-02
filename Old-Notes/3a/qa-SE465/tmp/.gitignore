@@ -1,0 +1,9 @@
+*.o
+
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.toc
+
+proj_sub.pdf

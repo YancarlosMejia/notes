@@ -1,0 +1,23 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+Procedures commicate by
+\begin{itemize}
+    \item allcoate space into envelope
+    \item write data to envelope
+    \item invoke send message API
+    \item invoke receive mesage by other process
+\end{itemize}
+If there are no messages or process available to read them we store them in a queue. We tie them to the PCB of recieving process.
+
+When you return from an interrupt you dont ahve to return to the same program you left. You can just invoke the scheduler.
+
+Timing service: send a message after a delay which is non blocking. At each tick of a timer we execute a interrupt and look to see if a certain message has been sent and if so it forwards it to the correct process.
+
+
+
+
+\end{document}

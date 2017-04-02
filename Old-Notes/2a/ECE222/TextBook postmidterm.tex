@@ -1,0 +1,83 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\title{Textbook Reading, after Midterm}
+\begin{document}
+\part*{Chapter 8: The Memory System}
+\section*{8.1 Basic Concepts}
+Memory is often accessed in word chunks the length of which is placed in the lower two bits of the instruction. The rest of the bits represent the location.	The processor is attached to memory through data (for transmitting data), address(the address of the data), and control(read or write). Once the memory had finished reading or writing it sends a MFC signal back to the processor that its ready to go again. The memory access time is the length of time from start to finish of a transfer of a word of data. The memory cycle is the minimum time delay between two memory operations. RAM is any memory where the access time is the same for all locations. 
+\paragraph*{Cache and Virtual Memory}
+Cache memory sitts between the main memory and the processor to hold currently active portions of the the program. Virtual memory is storing only the active peices of memory in the main memory and the rest in a secondary storage. Since memory is continuously flipped between main and secondary storage the program can see memory that is more than the computer contains
+\paragraph*{Block Transferes}
+Data gets moved around a lot so its often moved in large blocks especially to high speed devices.
+\section*{8.2 Semiconductor Ram Memories}
+\subsection*{8.2.1 Internal Organization of Memory Chips}
+Bits are arranged in an array called a word, each bit in this word is connected by a word line. The array is connected in a Sense/Write circuit which is then connected to data input/output lines and an address decoder. The S/!W is also connected to a chip select input. Addresses work as a sort of coordinate system with the first chunk being the address and second being the number of bits.
+\subsection*{8.2.2 Static Memories}
+These are memories stored in a circuit that can maintain its setting when the power is off. This can be accomplished through latches connected to transistors under the control of the word line. When the word line drops to 0 the latches freeze and maintain whatever value was in them. 
+\paragraph*{Read Operation} When this is called it closes the latches and checks the values of the bit lines running through the system.
+\paragraph*{Write} The circuit puts the correct values on the bit lines and then flips to the word line to release the latches and allow changes to be made. 
+\paragraph*{CMOS Cell} This cell is much more complicated, but it gets rid of the problem that when power is off the latches engage, but when it is turned back on the cell can settle into any value making SRAM volatile memory.
+\subsection*{8.2.3 Dynamic RAM}
+Static RAM's are very fast, but their cells take  quite a few transistors so they are pretty expensive, a cheaper alternative is Dynamic RAMs. These use very few transistors, but they do not maintain their memory for very long unless they are accessed frequently. Data is stored as a charge on a transistor which can only be maintained for a couple milliseconds. This requires periodic refreshing to get the charge back, done during a read or write command. When data is stored on a transistor it slowly loses charge, to read it the transistor is turned on and attached to a sense amplifier, this will only return the correct value if it reads the transistor before the change drops below some threshold value. If it gets a value below the threshold it drops it straight to the ground to discharge fully. It then recharges and refreshes the data. Often memory is arranged in a gird to make addressing it easier. For instance a 265MB chip is divided into 8 32M chips. These are then broken into 16K X 16K array, each 16K row is broken into bytes. So you need 14 bits to chose a row and 11 to chose a collumn. This is shortened by running the address through a multiplexor. Row is chosen first to refresh all of that data and them the collumn is chosen and acted on. 
+\paragraph*{Fast Page Mode}
+This allows you to access bytes on the same row very quickly without having to refresh the row. This allows you to transfer in blocks called fast page mode.  
+\subsection*{8.2.4 Synchronous DRAMs}
+These are DRAM whose operations are synchronized to the clock signal. This allows a lot more control circuitry which allows a refresh chip that automatically refreshes the row you need making the dynamic nature of DRAMs invisable to the user. You specify that data be passed in a burst mode by writing a command to the mode register. SDRAMs can deliver data very quickly because all of the control signals are generated inside the chip. 
+\paragraph*{Latency and Bandwidth}
+This is the amount of time it takes to transfer the first word of a block transfer. Bandwidth the time it takes to complete a block transfer. It depends on latency and the side of the block.
+\paragraph*{Double-Data-Rate SDRAM}
+In the quest for ever faster memory access they have made SDRAM that transfer memory on both the rising and falling endges of the clock. As they get better they can operate at higher and higher clock frequencies.
+\paragraph*{Rambus Memory}
+This gets a higher rate of memory transfer by providing a high-speed interface between memory and the processor. You can create a wider path for the data to travel on. This does require more space and pins and thus costs more. So the Rambus get a faster interface by increasing the clock speed using a differential-signaling technique. Signals are transmitted using small voltage swings. It competes with DDR SDRAM. Both are good DDR is just cheaper from a licensing standpoint.
+\subsection*{3.2.5 Structure of Larger Memories}
+\paragraph*{Static Memory Systems}
+Most static systems come about from reorganizing the memory onto arrays of smaller chips then connecting them to multiple address lines. Each chip gets a chip select signal that essentially turns it off or on. The first couple address bits go through a encoder to set this chip-select signal and the rest of the address bits go through address lines to all chips (although only the one with a chip select signal will act on it) to determine which byte to transmit.
+\paragraph*{Dynamic Memory System}
+The larger the memory the faster the computer runs because it doesnt need to get memory from secondary storage which takes time. DRAMs are good for this because they are cheeo so you can have lots of them. Multiple memory chipes are arranged on a small board called a module which is then plugged into the motherboard. They can be configured in Single In-line Memory Modules or Dual In-line Memory Modules. 
+\paragraph*{Memory Controller}
+Addresses are divided into two parts. The high-order address bits, which select a row in the cell array, are provided first and latched into the memory chip under control of the RAS signal. Then, the low-order address bits, which select a column, are provided on the same address pins and latched under control of the CAS signal. The processor sends all of the address in one go so the memory controller runs a multiplexor that breaks it up.
+\paragraph*{Refresh Overhead}
+A DRAM cannot do anything while a refresh is happening which causes a delay to happen. Refresh overhead is the time taken for this. The time between two row accesses X amount to be refreshed per cycle / how often it needs to be refreshed.
+\section*{Read-Only Memory}
+We need nonvolitle memory. Its usually read in exactly the same way, but writing takes something new. Since its usually only read from its called Read-Only Memory (ROM).
+\subsection*{8.3.1 ROM}
+Memory can only be written to it once by the manufacture. A one is stored in it and its either connected to the ground or not which determines its value. At power on it gets recharged and maintains that charge.
+\subsection*{8.3.2 PROM}
+This is ROM that allows data to be loaded by the user. This is done by inserting a fuse before it grounds. It starts as all 0's and the user adds 1s by burning out fuses at the desired locations using high-current pulses. It requires a large mask to do this which makes them cost effective only on large scales.
+\subsection*{8.3.3 EPROM}
+The connection to ground is through a special transistor that can be turned on by injecting a charge into ti that become trapped. The chip can be erased by being exposed to UV light and then reprogrammed.
+\subsection*{8.3.4 EEPROM}
+This is an EPROM that can be erased electrically which allows it to be erased without being removed and to erase only one cell at a time. It requires different voltages for reading, erasing and writing which makes the circuitry more complicated. 
+\subsection{8.5.3 Flash Memory}
+These work very much like EEPROM where a transistor is controlled by a trapped charge to be read or erased and rewritten. The difference is that flash memory allows you to work with blocks of cells. This lowers power consumption and leads to higher capacity. They are very common in portable devices due to their low battery consumption. Single flash chips do not contain much memory, so they are usually arranged into modules of cards or drives.
+\paragraph*{Flash Cards}
+This is mounting many flash chips on a card. They have very stadnard interface which makes them usable in lots of things. You just plug them in, ones with USB interfaces are very common as potable memory. 
+\paragraph*{Flash Drives}
+These are often used to replace hard drives for faster access, but lower storage levels and higher cost. They also arent sensitive to vibration like hard disks are.
+\section{8.4 Direct Memory Access}
+Previously we have been moving data one register at a time, this sucks so we want to work with large blocks of memory. We like to transfer blocks data directly from main memory to I/O devices. This is done through a unit called DMA, its often part of the I/O interface and carries out the duties that the processor would normally do when accessing memory. It provides the memory address for each word transfered and generates all of the control signals. This is triggered by the processor sending the DMA the starting address and the number of words required. The DMA as a register for starting address, word count, and status/control (contains IRQ, IE, R/$\overline{W}$ and done bits to communicate with the processor).
+\section*{8.5 Memory Hierarchy}
+Idealy memory would be infinitly large and fast, but that isnt possible to we use lots of different kinds of memory to get as close as posible. 
+\begin{enumerate}
+\item processor
+	\begin{enumerate}
+	\item registers - processor cache, holds instructions and data 
+	\item primary cache (L1) 
+	\item Secondary Cache(L2)
+	\end{enumerate}
+\item main memory - DRAM
+\item secondary storage (magnetic disk) - very large and cheap but slow
+\end{enumerate}
+\section*{8.6: Cache Memories}
+Caches are used to make the main memory appear faster to the processor. It does this using \textbf{locality of refrence}. Many instructions are in a localized area of the program are repeated, it does this in a spacial or temoral manner. Cache memories take advatage of this: memory that has been used will likely be used again so its stored in the cache and data that was near the data recently called will probably be used so it should be fetched in a cache block (aka cache line). When the cache is full and needs to add more data it uses a replacement algorithm to remove some data.
+\paragraph*{Cache Hits}
+When some data is needed the processor first checks if that data is in the cache (hit) or if it needs to be retreived (miss). 
+
+
+
+
+
+
+
+\end{document}

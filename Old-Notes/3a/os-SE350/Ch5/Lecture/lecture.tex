@@ -1,0 +1,339 @@
+ \documentclass[24pt]{article}
+\usepackage{parskip}
+\usepackage{pdfpages}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+Pay super attention here since this is usually the most difficult. Also try implementing this on your own.
+\includepdf[page=1]{05.pdf}
+\includepdf[page=2]{05.pdf}
+Concurrency is just mulitple things running on your system. It leads to multiprogramming (able to execute multiple programs on a single processor) think threads, this is also just a part of the OS structure.
+\includepdf[page=3]{05.pdf}
+KNOW THE FUCK OUT OF THESE!!!!!
+\begin{itemize}
+    \item critical section: part that requires resources and cannot be executed by another processes, ex the operating system is the only thing that can execute some instructions
+    \item deadlocks: processes get stuck waiting on eachother
+    \item liveblock: processes that keep flipping state around eachother with keeps them from getting any work done
+    \item mutual exclusion: enforces the rules around critical section
+    \item race condition: multiple threads or processes that share a data item so timing of execution matters for the end result, you lose transparency
+    \item starvation: a process is ready but the scheduler keeps skipping over it
+\end{itemize}
+\includepdf[page=4]{05.pdf}
+We need to share global resources between the multiple processes so that the processes leave in a consistent state and these resources need to be managed optimally. We cannot predict concurrency related problems (race conditions are the worst). It is possible to check for this using assertions, but we change the timing of things when these are removed outside of debugging mode which can show new race conditions that were hidden previously due to a change in timing.
+\includepdf[page=5]{05.pdf}
+Notice that chin and chout are global variables so they are shared. Lets say we have T1 and T2 that are two threads in this address space. They will be sharing chin and chout. Say T1 gets picked up first if we have only one thread its a given that the input of getchar will be outputted in putchar. This may not be the case here.
+\includepdf[page=6]{05.pdf}
+ The scheduler will try to do both at the same time which may result in getchar being called twice. This means that chin will be overwritten in the call of T2. Now say that both T1 and T2 are picked up so they both save chin to chout at the same time (pretend that this wont cause an issue) both times with the second input value since chin was overwritten then both threads will have the same value for chout and will output the same thing.
+\includepdf[page=7]{05.pdf}
+The OS has to protect all resources managed by the OS this includes allocating and freeing them. The OS needs to ensure that when you access resources the OSs actions will be independent to speed (NO RACE CONDITIONS).
+\includepdf[page=8]{05.pdf}
+The most detached method is having the processes not know about each other.
+\includepdf[page=9]{05.pdf}
+\includepdf[page=10]{05.pdf}
+Mutual exclusion means we need to define critical sections which only one process at a time can access.  Deadlock and starvation are going to be covered later.
+\includepdf[page=11]{05.pdf}
+Only one process at a time is allowed in a critical section. If a process halts outside of the critical section it cannot fuck with shit. No deadlock or starvation. If no process is executing the critical section other processes should not be forced to wait on it. Mutual exclusion should be independant of the order of processes. Set timeouts for the cricitcal section. The easiest way to enforce mutual exclusion is to use disable\_irq for critical section (dont actually do this its really ineeficient).
+\includepdf[page=12]{05.pdf}
+If we were a uniprocessing system disabeling interrupts to protect the critical section is viable but we dont care.
+\includepdf[page=13]{05.pdf}
+Having a specific instruction to access that memory and only allow that one it. Here the processor doesnt know about the critical sections.
+\includepdf[page=14]{05.pdf}
+\includepdf[page=15]{05.pdf}
+The above two examples do pretty much the same thing. Need to look into this, don't really get it.
+\includepdf[page=16]{05.pdf}
+Yeeeeeaaaah really dont get this. It looks like you need some test to check if something is being touched and whether it can be mucked with, but I'm not sure.
+\includepdf[page=17]{05.pdf}
+We like doing this with machine instructions:
+\begin{itemize}
+    \item can be used in tons of different places
+    \item its pretty simple
+    \item can support multiple critical sections
+    \item if this fucks up we dont leave interrupts disabled
+\end{itemize}
+
+Some disadvantages:
+\begin{itemize}
+    \item waiting for critical section to be freed is not handled by the processor so it keeps the processor busy which uses up CPU time
+    \item can cause deadlocks if a low process has a critical section that the high process needs the higher process keeps getting the processor and waits for the critical section to be available but it doesnt happen because the lower process doesnt get called
+    \item starvation if multiple processes are waiting on the same critical section
+    \item pipeline stalls (remember pipelines) happen when be branch multiple times we get stalls as we wait on the critical section which delays the next pipeline
+\end{itemize}
+\includepdf[page=18]{05.pdf}
+\includepdf[page=19]{05.pdf}
+\includepdf[page=20]{05.pdf}
+Every time you wait on a semaphore we decrease a variable and increase it when you signal for it.
+\includepdf[page=21]{05.pdf}
+Think about the semaphore as a handler. Anyone who has access to it can send a signal.
+\includepdf[page=22]{05.pdf}
+Everytime we enfore mutual exclusion we want to do it independant of the process order.
+\includepdf[page=23]{05.pdf}
+These queuing structures need to be manged by the os to be effective and we need to invoke the dispatcher to use it. Thus these are kernel level processes.
+\includepdf[page=24]{05.pdf}
+\includepdf[page=25]{05.pdf}
+\includepdf[page=26]{05.pdf}
+\includepdf[page=27]{05.pdf}
+\includepdf[page=28]{05.pdf}
+\includepdf[page=29]{05.pdf}
+The simplest problem is this one. We have multiple producers that put data in a buffer and multiple consumers that can read off the buffer, but only one can go at a time.
+\includepdf[page=30]{05.pdf}
+Think of it as an array that can infinitly grow.
+\includepdf[page=31]{05.pdf}
+As long as there is data available the consumer pops it off.
+\includepdf[page=32]{05.pdf}
+\includepdf[page=33]{05.pdf}
+To do this we need to watch when pointers lap each other. We still need to ensure that only one process at a time.
+\includepdf[page=34]{05.pdf}
+\includepdf[page=35]{05.pdf}
+\includepdf[page=36]{05.pdf}
+We protect the append with a semWait(). Similar actions for the consumer. The consumer also needs to wait for data to be available (cant consume what is not there). In this consumer function we have a unprotected n when it is checked (if n == 0) which is bad, we should protect it as well.
+
+Semaphores are used to protect a shared resources and for capacity control.
+\includepdf[page=37]{05.pdf}
+Here the book tries to play through all combinations to watch for unprotected values.
+\includepdf[page=38]{05.pdf}
+We can fix this by protecting n or make a copy of it as a local variable that we test against. The producer here can't fuck with m since its local.
+\includepdf[page=39]{05.pdf}
+dWe can use a more general semaphore by taking advantage of the count variable.
+
+Stepping into it:
+\begin{enumerate}
+    \item
+\end{enumerate}
+
+\begin{verbatim)
+    s = 1;
+    n = 0;
+    procedure() {}
+        procedure();
+        append();
+        append();
+        sempaSignal(s);
+        sempaSignal(n);
+    }
+
+    consumer() {\end{verbatim)
+        s = 1;
+        n = 0;
+        procedure()
+        semWait(s);
+        semWait(n);
+        take()
+        semSignal(s)
+        consume
+
+    semWait(n);
+\end{verbatim}
+
+
+1) Can a process be inside a critical section if the semaphore value is negative?
+Yes. All that matters is the initial value.
+
+2) Can a semSignal admit a blocked process inside a critical section if the semaphore value was -2 before semSignal was called?
+The -2 just indicates that there are currecntly 2 blocked processes. We can still wake up a processes from this queue.0
+
+\begin{verbatim}
+    producer()
+        produce()
+        semWait(s)
+        append()
+        semSignal()
+        semSignal()
+        //loop back to start
+
+    consumer()
+        semWait()
+        semWait()
+        take()
+        semSignal(s)
+        consume()
+        //loop back to start
+\end{verbatim}
+
+Say our ready process queue
+\begin{tabular}[|c|c|c|c|]
+Action & s & n & Queue\\
+\hline
+start & 1 & 0 & RPQ[c1, c2, c3]\\
+\hline
+p1 executes three times & 1 & 3 RPQ[c1, c2, c3, p1]\\
+\hline
+c1 exectutes but gets preempted & 0 & 2 RPQ[c2, c3, p1, c1]\\
+\hline
+c2 exectutes & -1 & 1 & RPQ[c3, p1, c1] SEM[c2] is blocked\\
+\hline
+c3 executes & -2 & 0 & RPQ[p1, c1] SEM[c2, c3]\\
+\hline
+p1 executes & -3 & 0 & PRQ[c1] SEM[c2, c3, p1]\\
+\hline
+c1 executes & -2 & 1 & PRQ[c2] SEM[c3, p1]
+\end{tabular}
+
+With semaphores you can implement any concurrency pattern. Woooooo.
+\includepdf[page=40]{05.pdf}
+KNOW THE FUCK OUT OF SEMAPHORES, WILL BE ON QUIZ
+\includepdf[page=41]{05.pdf}
+Think of a container where you store all of your local variables that need to be safe data. In order to enter this procedure you must invoke a procedure and the monitor enforces that that procedure can only have one process running at a time. We use conditional variables to monitor this. We dont use a counter so unused signals are lost.
+\includepdf[page=42]{05.pdf}
+Think of the monitor as a object and that manages processes inside it.
+\includepdf[page=44]{05.pdf}
+We can hide all of the logic behind the monitors procedures to make our code cleaner.
+\includepdf[page=43]{05.pdf}
+Here is the backend logic that is powering the monitor in the above interface.
+
+\begin{verbatim}
+    append(x)
+        if (count = n)
+            cwait(notfull);
+        bugger[nextin] = x;
+        nexin = (nextin + 1) % n
+        count ++
+        signal(notempty)
+    take(x)
+        if (count == 0)
+            cwait(notempty)
+        x = buffer[nextout]
+        nextout = (nextout + 1) % n
+        cout --
+        cisignal(notfull)
+\end{verbatim}
+First iteration:
+\begin{itemize}
+    \item produce an item
+    \item invoke append
+    \item count is 0 so we dont wait
+    \item we increase the count
+    \item signal notempty
+\end{itemize}
+Second iteration
+\begin{itemize}
+    \item produce an item
+    \item invoke append
+    \item count is 1 so we dont wait
+    \item we increase the count
+    \item signal notempty
+\end{itemize}
+Third iteration
+\begin{itemize}
+    \item produce an item
+    \item invoke append
+    \item count is 3 so we dont wait
+    \item we increase the count
+    \item signal notempty
+\end{itemize}
+Fourth Iteration
+\begin{itemize}
+    \item produce an item
+    \item invoke append\end{itemize}
+    \item count == n so we cwait
+    \item put it on the queue
+\end{itemize}
+Consumer first iteration
+\begin{itemize}
+    \item consume an item
+    \item invoke take
+    \item count is 2 so we dont wait
+    \item we decrease the count
+    \item signal notfull
+\end{itemize}
+Keep iterating until we get count == 0
+\begin{itemize}
+    \item cwait notempty
+\end{itemize}
+
+\includepdf[page=45]{05.pdf}
+We replace the if with a while to avoid the count becoming inconsistent over multiple instances of the producer waking up. If you use monitor support this is the implementation that is used to date.
+\includepdf[page=46]{05.pdf}
+This is another method for communication and synchronization. We will have to do this in the project. We have messages and queues to store them in. The often comtain data about he program that sent them (pid mostly).
+\includepdf[page=47]{05.pdf}
+Sender or receiver may be blocking depending on the implementation. Most common is a blocking send and blocking revice called the redezvous patternn.
+\includepdf[page=48]{05.pdf}
+A nonblocking send but blocking recieve. The sender just dumps the message onto the receiver who remains blocked untill it arrives. This is the one we want to do for our project.
+
+We can also just not block at all.
+\includepdf[page=49]{05.pdf}
+We refer to specific process that could be sending or revcieving (processes must be directly aware of each other).
+\includepdf[page=50]{05.pdf}
+Implement a shared data storage where we send the data and another process retrieves it from there. We can make non blocking or send blocking based on this.
+\includepdf[page=51]{05.pdf}
+These are the options for message passing relationships. We currently use this just for synchronization but it is also used for netwroking and socketing. We assume all ports and mailboxes are in one system.
+\includepdf[page=52]{05.pdf}
+We need some housekeeping data on the message. Destination id (if direct addressing), source id (who sent it), message length (how many bytes are valid), control information (data on the state of the message). Our project implementation should look very similar to this.
+\includepdf[page=53]{05.pdf}
+Here is how we use messages to implement mutual exclusion. Uses indirect addressing. The mailbox is a critical resource. Create mailbox, send messae, begin a bunch of processes. Each process receives the message, does it stuff to the critical section, and sends the message along to the next one. This means that all but one process are blocked and waiting for the message always, so only one process can access the mailbox at a time. This is forces synchronization.
+\includepdf[page=54]{05.pdf}
+We can do the same thing to implement the producer consumer pattern. Introduce a mailbox to produce items, another for consuming. To limit the buffer we put the capacity of the buffer number of messages in the queue.
+
+\begin{verbatim}
+    producer()
+        recieve(mayproduce)
+        psmg = produce()
+        send(mayconsume, pmsg)
+        loop bacl
+
+    consumer()
+        reviece(mayproduce, cmsg)
+        consume(cmsg)
+        send(mayproduce, null)
+\end{verbatim}
+
+We have a N item count for our mayproduce queue (say N = 3).
+
+\begin{verbatim}
+1. mayproduce[m1, m2, m3]
+producer executes
+2. mayproduce[m2, m3], produce an item and send it to consumer mayconsume[pmsg1]
+3. mayproduce[m3], mayconsume[pmsg1, psm2]
+4. mayproduce[], mayconsume[pmsg1, psm2, pmsg3]
+5. hit recieve on producer but there is nothing in the queue so producer is blocked
+recieve on consumer, pick up item from queue and consume it and send message back
+6. mayproduce[`null']  mayconsume [pmsg2, pmsg3]
+7. mayproduce['null', `null'] mayconsume[pmsg3]
+7. mayproduce['null', `null', `null'] mayconsume[]
+8. consumer gets blocked
+\end{verbatim}
+There are some assumptions baked into this:
+\begin{itemize}
+    \item there is not mutual exclusion baked into the mailbox, we solve this by making the mailbox part of the operating system. Since it is part of the kernel space we can protect it.
+\end{itemize}
+\includepdf[page=55]{05.pdf}
+This looks a bit similar to producer consumer, but we have a one to many relationship. One writer but many readers are allowed at a time and the writer cannot allow a reader to access it.
+\includepdf[page=56]{05.pdf}
+The reader and writer code executes concurrently so we need to enforce this pattern on them. Make sure writer gets mutual exclusion on the buffer but the readers dont. Writer semaphore is initialized to one so this only allows one writer at a time. The reader needs to watch for the presence of the writer and not enter if so. If we are the first reader we need to make sure there is no writer waiting on the buffer. So first reader waits the writer semaphore and the last reader signals it. We also have a read count that needs to be protected which semaphore x watches.
+
+Problem: While readers have the buffer they dominate the writer which may cause problems when you have many readers and only one writer. This can kill efficiency.
+
+\begin{verbatim}
+    writer()
+        semwait(wsem)
+        write()
+        semsignal(wsem)
+
+    reader()
+        semwait(x)
+            n++
+        if(n == 1)
+            semwait(wsem)
+        semsignal(x)
+        read()
+        semwait(x)
+        n--
+        if(n==0)
+            semsignal(wsem)
+        semsignal(x)
+\end{verbatim}
+
+Stepping through for 2
+\begin{verbatim}
+    writer executes start: wsem = 1, n = 1, Qwsem = [], Qx = []
+                     wsem = 0
+    R1 executes start:     wsem = 1, x = 0, Qwsem = [R1]
+    R2 executes start:     wsem = 1, x = -1, Qwsem = [R1] Qx = [R2]
+    writer executes semsignal: wsem = 0,         Qwsem = [], Qx = [R2]  Qrdy = [R1] //R1 got put on the ready queue because writer signaled it (wsm = 0)
+    R1 executes, read:              x = 0,   Qsem=[],    Qx = [],   Qrdy = [R2]
+\end{verbatim}
+\includepdf[page=57]{05.pdf}
+
+\includepdf[page=58]{05.pdf}
+\includepdf[page=59]{05.pdf}
+
+
+\end{document}

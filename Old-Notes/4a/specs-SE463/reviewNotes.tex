@@ -1,0 +1,200 @@
+% @Author: Lara Janecka
+% @Date:   2016-08-03 11:16:03
+% @Last Modified by:   Lara Janecka
+% @Last Modified time: 2016-08-03 12:51:11
+
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage[margin=.6in]{geometry}
+
+\begin{document}
+\section*{Scoping}
+\label{sec:scoping}
+\paragraph{Project Purpose} 
+\label{par:project_purpose}
+Why the project is wanted
+
+\paragraph{Constraints} 
+\label{par:constraints}	
+Restrictions on the scope or style of the system
+
+\paragraph{Requirements} 
+\label{par:requriements}
+condition or capability that must be achieved in terms of environment
+	
+\paragraph{Work vs System} 
+\label{par:work_vs_system}
+Work is the area under study and the system is what you built to solve the problem
+
+\paragraph{Stakeholders} 
+\label{par:stakeholders}
+\begin{itemize}
+	\item owner, ultimate steakholder
+	\item customer, person who buys it
+	\item users
+	\item domain experts
+	\item technology experts
+	\item inspectors
+	\item market researchers
+	\item laywers
+	\item industry standards
+	\item experts on adjacent systems
+	\item negative steakholder
+\end{itemize}
+
+
+\paragraph{Context Diagram} 
+\label{par:context_diagram}
+A graphical model of the context(environment) in the work exists, phenomena are relevant descriptions of the requirements. Basically a circle containing the work in the middle and connect external effects to it. 
+
+\paragraph{Use Case Diagram} 
+\label{par:use_case_diagram}
+Show some end to end functionality, captures a complete response to a triggering event. 
+
+
+\section*{Elicitation}
+\label{sec:elicitation}
+\paragraph{Challenges of Requirements Elicitation} 
+\label{par:challenges_of_requirements_elicitation}
+
+\paragraph{Techniques} 
+\label{par:techniques}
+\begin{itemize}
+	\item Artifact based (learn what we can before asking anyone): document studies, similar companies, norms, domain analysis, requirements taxonomies
+	\item Model based (reexpress requirements): modelling, analysis patterns, mockups/prototyping, pilots
+	\item Stakeholder based (ask stakeholder): stakeholder analysis, questionnaires, observation, interviews, task demo, ask suppliers, domain workshop, personas
+	\item Creativity based: systematic thinking, brainsorm, workshops
+\end{itemize}
+
+\paragraph{Lightweight Models} 
+\label{par:lightweight_models}
+Mind maps, Scenarios (a full execution path through a use case), Acitivity Diagrams
+
+\paragraph{Quality Requirements} 
+\label{par:quality_requirements}
+desired characteristics of the software
+
+\paragraph{Fit Criteria} 
+\label{par:fit_criteria}
+The extent to which a quality requirement must be met
+
+\paragraph{Rational Behind User Stories} 
+\label{par:rational_behind_user_stories}
+should fit on an index card, have lots of conversation, get confirmation
+\begin{itemize}
+	\item easy for stakeholders
+	\item shift focus to written documentation
+	\item encourages iterative development
+	\item delay the elicitation of requriements until just before development
+	\item support participatory elicitation
+\end{itemize}
+
+\paragraph{Activity Diagram} 
+\label{par:activity_diagram}
+Basicallly a flow chart of interactions between actors
+\begin{itemize}
+	\item dots = entrance, exit (if circle around it)
+	\item diamond = decision, label with conditions
+	\item bar = synchronization/fork
+\end{itemize}
+
+\paragraph{Process Model} 
+\label{par:process_model}
+a functional decompositions of the work
+\begin{itemize}
+	\item squares = actors
+	\item circle = process (actor on either side)
+	\item arrows = flow of data (label tells what data)
+	\item bars = data store
+\end{itemize}
+
+\paragraph{User Stores} 
+\label{par:user_stores}
+light-weight approach to managing requirements
+
+\paragraph{Devise Requirements for System} 
+\label{par:devise_requirements_for_system}
+
+\section*{Requirements Analysis}
+\label{sec:requirements_analysis}
+\paragraph{Benefits/Challenges in prioritizing} 
+\label{par:genefites_challenges_in_prioritizing}
+Challenges
+\begin{itemize}
+	\item all requirements deemed to be essential
+	\item large number of requirements to prioritize
+	\item conflicting priorities
+	\item changing priorities
+	\item stakeholder and developer collaboration
+	\item subjective prioritization
+\end{itemize}
+Benefits
+\begin{itemize}
+	\item improves customer satisfaction
+	\item helps to determine how to prioritize allocation of resources
+	\item encourages stakeholders to consider all requirements0
+\end{itemize}
+
+
+\paragraph{Prioritization Techniques} 
+\label{par:prioritization_techniques}
+\begin{itemize}
+	\item Kano Model: basic, performance, excitement, indifferent, reverse
+	\item 100 Dollar: give users 100 points to assign
+	\item Analytic Hierarchy Process: pariwise comparison
+\end{itemize}
+
+
+\paragraph{Estimation vs Target vs Commitments} 
+\label{par:estimation_vs_target_vs_commitments}
+An estimate is a prediction, a target is a statement of the desirable value, a commitment is a promise to deliver
+
+
+\paragraph{Software Estimation Techniques} 
+\label{par:software_estimation_techniques}
+\begin{itemize}
+	\item Estimation by analogy: use previous values to figure out a ratio (between use case, interfaces, graphs, or reports, etc) and extrapolate project size
+	\item funciton point analysis: estimate number of function points, estimate code size, estimate resources required, can multiply by some value based on type
+	\begin{itemize}
+		\item external inputs
+		\item external outputs
+		\item internal logical files
+		\item external interfaces
+	\end{itemize}
+	\item expert judgment
+	\item estimation tools
+\end{itemize}
+
+
+\paragraph{Influences on Software Size and Cost} 
+\label{par:influences_on_software_size_and_cost}
+
+
+\paragraph{Risk Analysis} 
+\label{par:risk_analysis}
+
+
+\section*{Requirements and Specifications}
+\label{sec:requirements_and_specifications}
+Requirements vs. specification
+The environment of a system vs. interface phenomena
+Atomic requirements, conditions of satisfaction
+The vocabulary used to express requirements vs. the vocabulary
+used to express specifications
+Devising atomic requirements or conditions of satisfaction
+Deriving specifications from requirements
+Identifying assumptions that need to hold in order for a system that meets the specification will also meet the requirements
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

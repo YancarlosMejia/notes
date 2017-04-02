@@ -1,0 +1,364 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\begin{document}
+
+\subsection*{Stl}
+This is a collection of useful typesafe, generic containers that
+\begin{itemize}
+  \item know almost nothing about their elements
+  \item focus mostly on membership (insert, erase)
+  \item know nothing about algorithms
+  \item can define their own iterators
+\end{itemize}
+
+There are lots of algorithms and ways to extend and personalize them to your particular solution.
+
+\subsection*{Overview}
+Most stl algorithms process a sequence of data elements
+\begin{itemize}
+  \item traverse a sequence of elements bounded by two iterators
+  \item access elements through the iterators
+  \item operate on each element during traversal
+\end{itemize}
+
+\subsection*{Non modifying algorithms}
+This is a group of algorithms that read but never wrtie to the elments in their input ranges
+\begin{lstlisting}
+  template<class Input Iterator, class T>
+  InputIterator find (InputIterator first, Input Iterator last, const T& val) {
+    while(first != last) {
+      if(*first = val) {
+        return first;
+      }
+      ++first
+    }
+  }
+\end{lstlisting}
+
+Usage code:
+\begin{lstlisting}
+  #include<algorithm>
+  vector<int> vec;
+  //add stuff into it
+  vector<int>::iterator result = find(vec.begin(), vec.end(), 42);
+  *result == 42 //the find returned a iterator to the 42 element
+  result == vec.end() // the element was not in vec so find retuned the end
+\end{lstlisting}
+
+
+\subsection*{Algorithms over two sequences}
+Algorithms that operaate over two sequences of data specity the full range over the firs swquence and only the start of the second sequance
+
+\begin{lstlisting}
+  tempate <class Iterator1, class Iterator2>
+  bool equal (Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2) {
+    while(first1 != last1) {
+      if(1(*first1==*first2)) {
+        return false
+      }
+      ++first1;
+      ++first2;
+    }
+  }
+\end{lstlisting}
+
+The above algorithm as some problems:
+\begin{itemize}
+  \item sequences are of different length
+  \begin{itemize}
+    \item STL does not catch when it iterates past the end of the container resulting in unpredictable results or an error
+  \end{itemize}
+  \item containers are not the same type
+  \begin{itemize}
+    \item similarly STL does not care about the type of the container (it doesnt know what its being applied to)
+    \item this goes undetected, programmer must spot this
+  \end{itemize}
+  \item elements are not the same type
+  \begin{itemize}
+    \item this will be caught by the compiler
+  \end{itemize}
+  \item first and last do not point to the same container
+  \begin{itemize}
+    \item algorithm will never finish
+  \end{itemize}
+  \item first is after last
+  \begin{itemize}
+    \item another infinite loop
+  \end{itemize}
+\end{itemize}
+
+Moral of the story algorithms dont check shit so be careful when you use them.
+
+EX:
+\begin{lstlisting}
+  #include iostream algorithm vector
+  int main(){
+    int myints[] = shit
+    vector<int> myvector = more shit
+    if(equal ( myvector.begin, myvector.end(), *myints[0], *myints[myints.size()] ))
+    print these are equal
+  }
+\end{lstlisting}
+
+\subsection*{Modifying algorithms}
+Some algorithms overwrite element values in existing containters. We need to make sure that the destination sequence is large enough for the number of elements being written
+
+\begin{lstlisting}
+  tempate <class Iterator1, class Out>
+  bool copy (Iterator1 first1, Iterator1 last1, Out result) {
+    while(first != last) {
+      *result = *first;
+      ++result, ++first;
+    }
+    return results
+  }
+\end{lstlisting}
+For this example the ability to go past the end of the container is a big security breach, watch for it.
+
+\subsection*{Overwriting verses Inserting}
+The default behavior is to write to a destination sequence, overwriting what is there, but you can pass it a inserter destination to tell it to go there.
+\begin{lstlisting}
+//This example will insert the first 5 elements of myints to the start of myvector
+copy(myints + 1, myints + 6, inserter(myvector, myvector.begin()))
+\end{lstlisting}
+
+
+\subsection*{Removing elements}
+Algorithms never directly change the size of the container so instead they rearrange the elements putting the elements to be removed at the end of the container and returning a pointer to the start of those elements.
+
+\begin{lstlisting}
+  template<class Iterator, class T>
+  Iterator remove (Iterator first, Tterator last, const T& val)
+
+  //Usage
+  vector<int>::iterator end = remove(vec.begin(), vec.end(), 42);
+  vec.erase(end, vec.end());
+\end{lstlisting}
+
+\subsection*{Algorithms that apply operations}
+A number of algorithms apply operations to the elements in the input range. Some Stl algorithms accept a predicate which is applied to all elements in the iteration and is used to restrict the set of data elements that are operated on.
+
+\begin{lstlisting}
+  bool gt20(int x) { return 20<x; }
+  bool gt10(int x) { return 10<x; }
+
+  int a[] = {20, 15, 10};
+  int b[10];
+
+  remove_copy_if(a, a+3, b, gt20); //b[] == {25}
+  cout<< count_if(a, a+3, gt10); // Prints 2
+
+\end{lstlisting}
+
+\subsection*{Function Objects}
+If we need a funtion that refers to data other than the iterate elements we need to define a funciton object called a functor. This is a class that
+\begin{itemize}
+  \item overloads the operator() to allow a object to be used with function call syntax
+  \item can be used in other algorithms
+\end{itemize}
+\begin{lstlisting}
+class gt_n {
+  int val;
+public:
+  gt_n(int val) : val_(val){}
+  bool operator()(int n { return n > val_});
+};
+
+int main() {
+  gt_n gt4(4); //constructor
+  cout< gt4(4);//prints 0 for false
+  cout<< gt4(5);  //prints 1 for true
+  cout<<count_if(a, a + size, gt4) //this allows us to count only things greater than 4 through this unary predicate
+}
+\end{lstlisting}
+
+Function objects are declared as classes but override the () operator. They work like a single function, but can be passed like an object.
+
+Another example:
+\begin{lstlisting}
+  class inc {
+  public:
+    inc(int amt) : increment_(amt){}
+    int operator()(int x) { return x + incrememnt_};
+  private:
+    incrememnt_
+  };
+
+transform(v.begin(), v.end(), )
+\end{lstlisting}
+
+
+Recap:
+\begin{itemize}
+  \item processes: transform, search, sort, filter, copy
+  \item data sequences: sequential data structure
+  \item of any type
+  \begin{itemize}
+    \item operates over iterators into data structure
+    \item type of data element is almost irrelevant
+  \end{itemize}
+  \item in a type-safe-manner: compiler type checks, reports errors
+\end{itemize}
+
+There is a second form of transform.
+\begin{lstlisting}
+  transform<first1, last1, first2, result, binaryFuntion>
+
+  class sum_inc{
+    int amt_;
+  public:
+    sum_inc(jnt amt): amt_(amt){}
+    int operator()(int x, int y) { return x + y + amt_; }
+  }
+
+  //usage
+  transform(v.begin(), v.end(), l.begin(), v.begin(), sum_inc(100));
+\end{lstlisting}
+
+\subsection*{Classification of STL Function Objects}
+\begin{itemize}
+  \item Gernerator: a type of function object that takes not arguments and returns a value of an arbitrary type
+  \item unaary function: a type of function object that takes a single argument a of any type and returns a value that may be of a different type or may be void
+  \item binary function: a type of function object that takes 2 parameters of any, possibly distinct types, and returns any type
+  \item unary predicate: unary function that returns a bool
+  \item binary predicate: binary function that returns a bool
+\end{itemize}
+
+\subsection*{Predefined Function Objects}
+The header <functional> provides a number of useful generic function objects (most of the general ones you'd think of). These make using function objects easier since we don't have to instantiate them ourselves.
+
+Ex:
+\begin{lstlisting}
+  #include
+#include
+#include
+#include
+<iostream>
+<algorithm>
+<vector>
+<functional>
+
+
+int op_increase (int i) { return ++i; }
+
+int main () {
+  std::vector<int> foo;
+  std::vector<int> bar;
+  // set some values:
+
+  for (int i=1; i<6; i++)
+    foo.push_back (i*11); // foo: 11 22 33 44 55
+
+  bar.resize(foo.size()); // allocate space
+  std::transform (foo.begin(), foo.end(), bar.begin(), op_increase); // bar: 12 23 34 45 56
+
+  // std::plus adds together its two arguments:
+  std::transform (foo.begin(), foo.end(), bar.begin(), foo.begin(), std::plus<int>());
+
+  // foo: 23 45 66 87 111
+  std::cout << "foo contains:";
+
+  for (std::vector<int>::iterator it=foo.begin(); it!=foo.end(); ++it)
+    std::cout << ' ' << *it;
+  std::cout << '\n';
+
+  return 0;
+}
+\end{lstlisting}
+
+\subsection*{Predefined Funtion Object Adapters}
+\begin{itemize}
+\item <functional> also defines a number of useful generic adaptors to modify the interface of a function object.
+\item bind1st - convert a binary function object to a unary function object (by fixing the value of the first operand)
+\item bind2nd - convert a binary function object to a unary function object (by fixing the value of the second operand)
+\item mem_fun - convert a member function into a function object (when member function is called on pointers to objects)
+\item mem_fun_ref - convert a member function into a function object (when member function is called on objects)
+\item not1 - a function adaptor that reverses the truth value of a unary function object
+\item not2 - a function adaptor that reverses the truth value of a binary function object
+\item ptr_fun - convert a function pointer to a function object so that a generic adaptor can be applied -- otherwise, can simply use function pointer
+\end{itemize}
+
+Example: Convert a binary function object to a unary function object
+
+\begin{lstlisting}
+bind2nd( greater<int>(), 15 ); // x > 15
+bind1st( minus<int>(), 100);
+// 100 – x
+\end{lstlisting}
+Example: Convert a member function into a function object
+\begin{lstlisting}
+vector<string> strings;
+vector<Shape*> shapes;
+transform( strings.begin(), strings.end(), dest,
+mem_fun_ref( &string::length ) );
+transform( shapes.begin(), shapes.end(), dest2,
+mem_fun( &Shape::size ) );
+\end{lstlisting}
+Example:
+\begin{lstlisting}
+  gt15: bool
+
+  furnction object gt_n // gt10(x), gt15(x)
+
+  greater<T>
+
+  count_if(v.begin(), v.end(), bind2nd(greater<int>(), 15));
+\end{lstlisting}
+
+\subsection*{Adaptable Function Objects}
+Tbe adaptable a function object class must provide nested type definitiond for its arguments
+\begin{lstlisting}
+typedef T1 argument_type;
+typedef T2 result_type;
+typedef T3 first_argument_type;
+typedef T4 second_argument_type;
+\end{lstlisting}
+
+The functional header provides a unary_function type and binary_function type that you can inherit from.
+Ex: Creating the greater than function object
+\begin{lstlisting}
+class gt_n : public unary_function<int, bool> {
+  int value;
+public:
+  gt_n(int val) : value(val) {}
+  bool operator()(int n) {
+    return n > value;
+  }
+};
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
+\end{document}

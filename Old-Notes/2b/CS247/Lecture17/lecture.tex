@@ -1,0 +1,205 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\begin{document}
+
+\subsection*{Review object composition}
+A compound object represents a composition of heterogeneous possible recursive component objects. Law of Demeter: client code interact with compound objects. This pattern does break the responsibility because one class does tons of things and the substitutability principle because this overarching class is very finicky.
+
+\subsection{Composite Design Pattern}
+Tries to five the client access to all member types in a compound object via a uniform interface.
+
+Problem: composite object consists of several heterogeneous parts. The client code is complicated by knowlege of object structure and must change if data structure change if the the data structure must change.
+
+Solution: create a uniform interface for the object's components. Interface advertises all operations that components offer. The client deals only with the new uniform interface. The uniform interface is the union of the components' services.
+
+\subsection*{Iterator Pattern}
+Goals:
+\begin{itemize}
+\item To encapsulate the strategy for iterating through a composite (so that it can be changed, at run-time).
+\item Allow the client to iterate through a composite without exposing the composite's representation.
+\end{itemize}
+This tends to be very tightly coupled with the composite pattern. The client deals with a abstract collection which contains functions to create and run a iterator. We create a seperate iterator class which contains operations for iterating through a sequence of this abstract collection type.
+
+Here is an example of a forward iterator class:
+\begin{lstlisting}
+  class BookIterator {
+  public:
+    BookIterator(Book* b) : book_(b), cursor_(0) {}
+    Page* next();
+    bool hasNext() const;
+    void first() { cursor_ = 0; }
+  private:
+    Book* book_;
+    int cursor_;
+  };
+  bool BookIterator::hasNext() const {
+    return cursor_ < book_->size();
+  }
+  Page* BookIterator::next() {
+    if (!hasNext()) {
+      return NULL;
+    }
+    Page* result = book_->getPage(cursor_);
+    cursor_++;
+    return result;
+  }
+\end{lstlisting}
+
+We enable it by adding stuff to the ADT:
+\begin{lstlisting}
+  class BookIterator;
+  class Book {
+  public:
+    void addPage(Page*);
+    Page* getPage(int) const;
+    int size() const;
+    BookIterator* createIterator();
+  private:
+    std::vector<Page*> pages_;
+  };
+  BookIterator* Book::createIterator() {
+    return new BookIterator(this);
+  }
+\end{lstlisting}
+
+\subsection*{Composite Iterator}
+The more interesting case is when the aggregate is a composite object, in which case we need to construct an Iterator that understands and navigates the composite. You create a unique iterator that describes how to iterate through that type.
+
+The leaf nodes in the inheritance tree are pretty straight forward.
+EX: iterator for a a developer
+\begin{lstlisting}
+  class DevIterator : public Iterator {
+  private:
+    Developer* dev_;
+    Developer* cursor_;
+  public:
+    DevIterator(Developer* dev) : dev_(dev), cursor_(dev) {}
+    virtual void first() { cursor_ = dev_; }
+    virtual bool hasNext() { return (cursor_ != 0); }
+    virtual TeamMember* next();
+  };
+
+TeamMember* DevIterator::next() {
+  if ( hasNext() ) {
+    cursor = 0;
+    return dev_;
+  }
+  return 0;
+}
+\end{lstlisting}
+
+
+The tree nodes will be more complicated. The client code only sees the nice abstract data types
+EX: iterator for a team that contains developers or more teams
+\begin{lstlisting}
+class TeamIterator : public Iterator{
+private:
+  TeamMember* members_; //     pointer to composite
+  struct IterNode;//    < node, cursor>
+  std::stack<IterNode*> istack; //    stack of iterators
+public:
+  TeamIterator(TeamMember* m) : members_(m) { first(); }
+  virtual void first(); // initialize Iterator stack
+  virtual bool hasNext();
+  virtual TeamMember* next();
+};
+
+struct TeamIterator::IterNode {
+  TeamMember *node_;
+  int cursor_;  // ranges from -1 .. node_->size()
+
+  IterNode(TeamMember *m) : node_(m), cursor_(-1) {}
+};
+
+void TeamIterator::first() {
+  while ( !istack.empty() ) {
+    istack.pop();
+  }
+  istack.push( new IterNode( members_ ) );
+}
+
+TeamMember* TeamIterator::next() { // preorder iteration
+  if ( hasNext() ) {  // have cursors reached their limit?
+    IterNode* top = istack.top();
+    istack.pop();    // cursor points to node (could be Developer or Team)
+    if (top->cursor_==-1) {
+      top->cursor_ += 1;
+      istack.push(top); // advance cursor to first child
+      return top->node_; // return node
+    }
+
+    // cursor points to one of the node's children
+    TeamMember *elem = top->node_->getChild(top->cursor_);
+    top->cursor_ += 1;
+    istack.push(top);    // advance cursor to next child
+    istack.push(new IterNode(elem)); // push new cursor
+    return next();     // recurse
+  }
+  else return 0;
+}
+
+bool TeamIterator::hasNext() {
+  while ( !istack.empty() ) {
+    Iter *top = istack.top();
+    if ( top->cursor_ < top->node_->size() ) {
+      return true;
+    }
+    istack.pop();
+    delete top;
+  }
+return false;
+}
+
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

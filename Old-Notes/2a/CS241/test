@@ -1,0 +1,26 @@
+rm scan.out
+rm parse.out
+rm gen.out
+
+echo "-- Input --"
+cat test.wlpp
+
+echo ""
+echo "-- Scanner --"
+javac WLPPScan.java
+java WLPPScan < test.wlpp > scan.out
+cat scan.out
+
+echo ""
+echo "-- Parser --"
+javac WLPPParse.java
+java WLPPParse < scan.out > parse.out
+cat parse.out
+
+echo ""
+echo "-- CSA --"
+javac WLPPGen.java
+java WLPPGen < parse.out > gen.out
+cat gen.out
+
+rm *.class

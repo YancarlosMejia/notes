@@ -1,0 +1,80 @@
+ \documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage{pdfpages}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+\includepdf[page=1]{04.pdf}
+\includepdf[page=2]{04.pdf}
+\includepdf[page=3]{04.pdf}
+\includepdf[page=4]{04.pdf}
+\includepdf[page=5]{04.pdf}
+\includepdf[page=6]{04.pdf}
+\includepdf[page=7]{04.pdf}
+We break up threads into individual process blocks and allocate to each a user stack and kernel stack. Wee need to maintain a thread control block in the process image that keeps track of its status.
+\includepdf[page=8]{04.pdf}
+Threads are faster to create than processes. We dont need to allocate resources since we are just using the ones allocated to the process. Similarly we can easily terminate, all we need to do is free any local memory. Also easier to switch between the two (dont even need a system call). Communicate between threads is much easier since they share resources (global variables rock).
+\includepdf[page=9]{04.pdf}
+These are examples of threads in a single users multiprocessing system. Wee can break up threads by the resources that they use to make them more efficient like with foreground to background work. For asynchronous processing we have a computation thread and a communication thread.
+\includepdf[page=10]{04.pdf}
+Since everything in the process resides in the same regieon we need to suspend all threads when the process is suspended, similarly for termination.
+\includepdf[page=11]{04.pdf}
+trhead states:
+\begin{itemize}
+    \item spawning: the creation of threads
+    \item blocking and unblocking: waiting on resources
+    \item finish: free all used memory
+\end{itemize}
+\includepdf[page=12]{04.pdf}
+\includepdf[page=13]{04.pdf}
+We use multithreading to get around network delays when making RPCs from the web.
+\includepdf[page=14]{04.pdf}
+\includepdf[page=15]{04.pdf}
+This is a paradigm that the user should now know about threats to threads.
+\includepdf[page=16]{04.pdf}
+Load a threading library that makes threads and handles their states. We can augment OS's without threading by using threading libraries that manage things for them as programs.
+\includepdf[page=17]{04.pdf}
+The threading library manages the states of threads. When a thread makes a system call (at  b) the threading library doesnt know about that) the process gets blocked, but since the OS doesnt manage threads it doesnt know that the threads are associated with the process the thread is left as running while the process is blocked. There can be confusion between how the threading library and OS see execution. The biggest problem between the threading libraries and OS's is that when the OS doesnt support threading multicores are rendered useless for optimizing the process. We like kernel level threads (ones that the OS knows about). More housekeeping is done by the OS.
+\includepdf[page=18]{04.pdf}
+Now that the OS knows about it we can schedule threads more efficiently (woooo multicores).
+\includepdf[page=19]{04.pdf}
+We have multiple threads in the user space and all of the resource management is done by the process still, the only thing that has chagned is that the thread context and its management has been moved to the kernel stack to be managed by the OS.
+\includepdf[page=20]{04.pdf}
+Know the fuck out of this slide.
+\includepdf[page=21]{04.pdf}
+User level threads are much faster than kernel level threads, but this image is suuuuuuuuper old. Now adays we are much better at managing threads and taking advantage of multicores so kernel level threads are actually faster now.
+\includepdf[page=22]{04.pdf}
+Really this is the best approach. User level knows about all threads, but they are grouped together as kernel threads. This means that the kernel has less threads to manage but still has ones to distribute across all cores (we create x kernel threads where x is the number of cores) while still allowing the user to have as many user level threads as they'd like so that they can make their application as modular and efficient as they can. here we get the best of both worlds yaaay compromise. Note: this requires a compliant OS (doesnt work on all OS's).
+\includepdf[page=23]{04.pdf}
+We can have multiple processes associated with the same thread. And really any many/1 relationship between threads and processors.
+
+HOMEWORK: look at \textbf{pthreads}
+\includepdf[page=24]{04.pdf}
+A microkernel operating sytem wants to keep the core as slim as possible and fork out anything that is hardware specific as individual processes.
+On the L4 system there are less than 10 system calls.
+\includepdf[page=25]{04.pdf}
+In a layered kernel you have a layer for each task all of which are built into a huuuuuuuge kernel, while a microkernel has a micro kernel (duh) that allows each task to have its own access to the kernel. With a layered kernel when porting to new architectures you need a tone of configuration that microkernel doesn't need at all.
+\includepdf[page=26]{04.pdf}
+\includepdf[page=27]{04.pdf}
+\includepdf[page=28]{04.pdf}
+Uniform interface makes implementing device drivers much easier. Adding new extensions doesnt require restarting the kernel. When an feature dies the kernel doesnt (cough cough blue screen of death). We can implement things using OO principals and keep it modular.
+\includepdf[page=29]{04.pdf}
+When the PC reaches a point in virtual memory we need to retrieve that memory and load it into memory. With microkernel systems we don't need the kernel to manage all that loading, it just sends a call out to the extension which does it for the OS.
+\includepdf[page=30]{04.pdf}
+
+\includepdf[page=31]{04.pdf}
+\includepdf[page=32]{04.pdf}
+\includepdf[page=33]{04.pdf}
+\includepdf[page=34]{04.pdf}
+\includepdf[page=35]{04.pdf}
+\includepdf[page=36]{04.pdf}
+\includepdf[page=37]{04.pdf}
+\includepdf[page=38]{04.pdf}
+\includepdf[page=39]{04.pdf}
+\includepdf[page=40]{04.pdf}
+\includepdf[page=41]{04.pdf}
+\includepdf[page=42]{04.pdf}
+\includepdf[page=43]{04.pdf}
+\includepdf[page=44]{04.pdf}
+\includepdf[page=45]{04.pdf}
+
+\end{document}

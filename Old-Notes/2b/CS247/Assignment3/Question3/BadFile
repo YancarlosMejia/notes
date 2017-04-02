@@ -1,0 +1,23 @@
+#!/bin/bash
+red='\e[0;31m'
+green='\e[0;32m'
+none='\e[0m'
+
+
+./compare asdf >> blackbox.txt <<EOF
+EOF
+
+./hangman asdf >> output.txt <<EOF
+EOF
+
+result=$(diff -wIb --side-by-side --suppress-common-lines blackbox.txt output.txt)
+
+if [ $? -eq 0 ]
+then
+        echo -e "${green}PASSED${none}"
+else
+        echo -e "${red}FAILED${none}"
+        echo "$result"
+fi
+
+rm -rf blackbox.txt output.txt

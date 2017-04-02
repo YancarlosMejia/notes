@@ -1,0 +1,105 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
+}
+\begin{document}
+\section{Design Patterns}
+
+\subsection{GoF* Design Patterns}
+These are frequently used patterns in software design. These are good in that many people recognize them and it short cuts the thinking involved in writing and reading code.
+
+\subsection{Template Method Pattern}
+This is an attempt to get rid of duplicate code. It solves this by abstracting duplicate code in to an abstract class that lets to get the common things and just alter the fidddly bits that change and implement them. NEVER CLONE CODE BASES. Most of the time this is done through inheritance. Leave common code in an abstract parent and implement as necessary in its children. With templates, we keep what is common of the function and only change little bits of it instead of having to reimplemement any functions that are different. We pull out primitive operators and make them pure virtual. (You did this all the time, you just didnt have a name for it. )
+
+Say we want to have a display with Units, Label and Value that changes on a setting that is either Time, Speed, or Distance. We could do this through a messy inheritance of a time, speed, and distance class from a display parent class. This results in each of the three subclasses having to have a unique show value function that gets repetitive.
+
+\begin{lstlistings}
+// template method
+void Function::showValue () {
+    display_.setLabel ( theLabel() );
+    display_.setValue ( theValue() );
+    display_.setUnits ( theUnits() );
+}
+
+// primitive operations
+std::string Function::theLabel() = 0;
+std::string Function::theValue() = 0;
+std::string Function::theUnits() = 0;
+
+std::string Distance::theLabel() {
+    return string("D");
+}
+
+std::string Distance::theValue() {
+    return string(dist_);
+}
+
+std::string Distance::theUnits() {
+    return string("km");
+}
+\end{lstlistings}
+In the above example we now have abstracted the entire function minus the very specific niggly bits that vary from each subclass. This is a prime example of the template design pattern which abstracts the shit out of everything.
+
+\subsection{Adapter Pattern Idea}
+If we have interfaces between models that are slightly different. We still want to reuse an existing class but its interface doesn't match what we need. To solve this we define an intermediary class taht links between the two classes.
+
+\subsection{Facade Pattern}
+What if we have a very complex system and we want to interact with complex shit. This gets solved by using a simplified interface for the client to hide the complex shit and an super retarded interface for all the crazy back end things.
+
+\subsection{Strategy Pattern}
+We define one abstract algorithm for numerous ADTs and let the specific bits change based on the data type calling it.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

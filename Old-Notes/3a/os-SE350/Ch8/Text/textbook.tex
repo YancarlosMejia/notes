@@ -1,0 +1,132 @@
+\documentclass[12pt]{article}
+\usepackage{parskip,enumerate,amsmath}
+\usepackage{pdfpages}
+\usepackage[margin=.6in]{geometry}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\begin{document}
+\includepdf[pages={362-400}]{Operating_Systems.pdf}
+\section{Hardware and Control Structures}
+The use of paging and segmentation are the foundation of a fundamental break through in memory management. Key characteristics:
+\begin{itemize}
+  \item all memory in a process are logical addresses and are dynamically translated into physical addresses at run time, this allows processes to be swapped in and out of memory without fucking up variables
+  \item a process can be broken into pieces that dont need to be continuous,
+\end{itemize}
+This means that not all pages of a process need to be in main memory at the same time. When we load a process we actually only load a few peices at a time. We call the peices of a process currently in memory the \textbf{resident set}. Everything runs fine while all memory references are to something in the resident set. If not the process is blcoked until the OS loads the peice that is needed, once that is done a interrupt is raised and the OS continues executing that process. By using this we can have many more processes in main memory and even process that are larger than all of main memory.
+
+Virtual memory can introduce some overhead with all of its switching and whatnot, so the OS has to be intelligent with how it switches things in and out. If we are not we run into \textbf{thrashing} which is when we spend more time swapping peices than exectuing processes. To avoid this we use the principle of locality to try to guess what peices will be used in the future.
+
+A virtual address is made up of a page number and an offset. The page number is used to find the page table entry. This has control bits (P for if the page is in main memory and M for if the page has been modified, among others) and a frame number. Segments work the same way, but their entries must contain a length value indicating the size of the segement. If the P bit is false we need to load the necissary peice before continusing. If the M bit is true we need to write those modifications back to main memory.
+
+Tables are stored in main memory since it is far too large for registers. Often tables are even stored in virtual memory and subject to paging themselves. We endup with layers of page tables. We just keep following the frame look up values and then adding the offset at the very end.
+
+An alternative is to use a inverted page table. Here the page number of a virtual address is hashed into a pointer to a inverted page table. It is made up of one entry per real memory frame rather than virtual. This means that a fixed amount of memory is used to store the table (since we are mapping to real pages of which there is a fixed amount) We call this inverted because we are indexing by real frame number rather than virtual frame number. Each entry in the table contains a page number, process identifier, control bits, and chain pointer (used for hashing).
+
+For every page look up we might have two physical memory access (to fetch the page table, and to load a page if needed) so we might end up doubling memory access time. To fix this we use a \textbf{translation lookaside buffer} which is a high speed cache for page table entries. It contains the page table entries that we most recently used. When we are looking up a virtual address we first check the TLB, if it is there we build the real address and go, if not (page fault) we add a entry to the TLB for it and load it into memory if needed.
+
+The TLB only contains some entries from a page table which means that we cannot index by page number (often a page will not be at the location of its page number because previous missing pages shifted it up), so we have to include the page number and the full page table entry. Now we can use associative mapping (instead of direct mapping like we did with page tables) with the processors ability to look at multiple entries at the same time to determine if there is a match on a page number lookup.
+
+Process for memory referencing
+\begin{verbatim}
+  A = virtual address (made of page number and offset)
+  t = TLB.find(A.pageNumber)
+  if(t){
+    return t.pageAddres + t.offset //Note: frameAddress must be shifted right such that offset is right most digits
+  } else {
+    p = PageTable.find(A.pageNumber)
+    if(p.isInMemory) {
+      add entry for p in TLB
+      return p.frameAddress + p.offset
+    } else {
+      //Page Fault
+      page = readPageFromDisc(p.frameAddress)
+      if(memoryIsFull){
+        memory.removePage();
+      }
+      memory.add(page)
+    }
+  }
+\end{verbatim}
+
+\subsubsection*{Page Size}
+We need to decide what size to make our pages.
+\begin{itemize}
+  \item smaller page $\rightarrow$ less internal fragmentation
+  \item smaller page $\rightarrow$ more pages $\rightarrow$ larger page table $\rightarrow$ only part of page table loaded into memory $\rightarrow$ double page fault if we need to load page table and page
+  \item smaller page $\rightarrow$ stronger use of principle of locality $\rightarrow$ less page faults (unless the page size is that of the entire process, as we approach that we get less page faults)
+  \item more frames allocated to process $\rightarrow$ lower page fault rate
+  \item increased working set size $\rightarrow$ decreased page fault rate
+\end{itemize}
+
+As we increase the memory size of processes we decrease the hit rate of the TLB (due to decreased locality). We can fight this by increasing the TLB size. That does cause some problems as well but its growth rate is much smaller. We could also increase page size so that each TLB entry covers more ground, but this loops back to the initial arguments on the effects of page size.
+
+\subsubsection*{Segmentation}
+Segmentation removes restrictions on the programmer. We can now have data structures of any size and the OS will grow the segment to match it. We can create independently compiled modules of the program instead of building the whole thing every time. Sharing is very easily done by creating a shared segment. Protection is also very easy since we can just wrap stuff in a segment and define its rights.
+
+The management of segments works exactly the same way as page management with accommodating a segment length value.
+
+\subsubsection*{Combined}
+Both paging and segmentation have their advantages and disadvantages. We get around them by combining the two. The programmer defines segments. These are then broken up into fixed size pages for the OS to handle.
+
+Each virtual address has a segment number, page number, and offset. When given a virtual address we use the segment number to look up the page table corresponding to that segment. Within that page table we use the address's page number to get the frame number which we combine with the offset to get the real address.
+
+\subsubsection*{Resident Set Size}
+We can give each process a fixed number of frames in main memory, or allocate a variable number of frames. This is more complex and accrues overhead for the extra calculations needed, but allows us to allocate more frames to a process with high page fault rate (locality is weak) to make things better.
+
+\subsubsection*{Replacement Scope}
+A local scope chooses among resident pages of a process to replace while a global scope will replace any unlocked page to replace regardless of what process owns it. Despite being easier to implement, the global scope actually performs just as well.
+
+\textbf{Fixed Local}
+Its very hard to decide how much to allocate, too small and we get high page fault rate, too large and we cannot load too many programs into memory.
+
+\textbf{Fixed Global} Not possible
+
+\textbf{Variable Global} When a page fault occurs we give the current process an other frame in its resident set. So processes with high page faults will get a larger resident set. There is no good way to optimize which page to replace since we chose from all available regardless of owner.
+
+\textbf{Variable Local} Start by applying a fixed allocation, over time reevaluate and shift the sizes of allocation.
+
+We evaluate things using a \textbf{working set} which is the blocks currently in use over a sliding window. By monitoring the working set we can decide which pages to remove (since they havent been used recently). We also limit processes to not running until its working set is in memory.
+
+We define threasholds for page fault rate. When we have a page fault we note how much it has been since the last page fault for that process, then either add or remove pages accordingly.
+
+When there is a shift to a new context things get a bit wonky. We spike really high when we have a large number of page faults because nothing is right and eventually this levels out but it sucks until then. We get around this by reseting the use bits of every block in the resident sent and running the program over a interval marking used blocks on the way. At the end of the interval we reduce or grow our working set accordingly.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

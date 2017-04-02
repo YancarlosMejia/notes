@@ -1,0 +1,35 @@
+int wain(int a, int b) {
+	int c = 2;
+	int* d = NULL;
+	int* e = NULL;
+	int* f = NULL;
+
+	c = ( d - f );
+	d = d + *e;
+	d = &(c);
+	a = 32 + (c - c) * (13 - 3 * 2 - (6 + 1));
+	b = (10 + (2-2+2-2));
+	d = d + ((c - (12 / a)) % 3);
+	c = *d * 42;
+	if(c > a + b) {
+		c = 2;
+	} else {
+		if(a == a) {
+			a = b;
+		} else {}
+		b = 2;
+	}
+	c = *&c;
+	d = new int[c];
+	*d = 42;
+	*d = *d + *d * 2 + *d;
+
+	println(a);
+	println(d);
+	while(d != NULL) {
+		delete[] d;
+		delete[] &c;
+	}
+
+	return a+b*2 - b;
+}

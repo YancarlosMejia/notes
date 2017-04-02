@@ -1,0 +1,143 @@
+Once
+Node
+We
+Node
+We
+now
+node
+A start
+is S expand
+removed
+is B with
+removed
+has been
+the
+our
+from
+node
+initial
+from
+expanded
+the at
+the
+state
+queue
+the
+queue
+and
+it
+front
+is
+and
+removed
+expand
+and
+of the
+the
+the
+revealed
+queue,
+it...
+revealed
+from the
+node
+node
+nodes
+queue
+(node
+A. Press
+are
+and
+G)
+added
+space
+the
+is added
+revealed
+to
+to the
+continue.
+to queue.
+the
+node
+queue.
+(node
+The The
+queue
+G) is
+queue
+added.
+is then
+is
+again
+The
+sorted
+queue
+sorted
+on is path
+on
+again
+path
+cost.
+sorted
+cost.
+Nodes
+on
+Note,
+path
+with
+we cost.
+cheaper
+have Note,
+now
+path
+found
+node
+cost G
+a have
+now
+goal priority.In
+appears
+state but in do
+this
+the
+not
+case
+queue
+recognise
+the twice,
+queue
+it once
+as
+will
+it is
+as
+be not
+G10
+Node
+at and
+A (1),
+the node
+once
+front
+as G11.
+B of (5),
+the
+As followed
+queue.
+G10 is Node
+at
+by the
+node
+B front
+is C the
+(15).
+of cheaper
+the
+Press
+queue,
+node.
+space.
+we Press
+now proceed
+space. to goal state.

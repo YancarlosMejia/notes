@@ -1,0 +1,84 @@
+ \documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage{tikz}
+\usepackage[margin=.6in]{geometry}
+\usetikzlibrary{arrows,automata,shapes}
+
+
+\begin{document}
+\section*{Question 3}
+\subsection*{3a}
+Using the minimal number of nodes (hint: 11), draw a Control Flow Graph (CFG) for method M.m() and
+include it in your a1 sub.pdf. The CFG should be at the level of basic blocks. See the lecture notes on Structural
+Coverage and CFG for examples.
+
+
+    \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,
+                    semithick,initial text=]
+
+  \node[initial,state]   (1)              {A};
+  \node[state]           (2) [right of=1] {B};
+  \node[state]           (3) [right of=2] {C};
+  \node[state] (4) [above right of=3, above=0.6in] {D};
+  \node[state] (5) [above right of=3] {E};
+  \node[state] (6) [below right of=3] {F};
+  \node[state] (7) [below right of=3, below=0.6in] {G};
+  \node[state] (8) [right of=3, right=0.6in] {H};
+  \node[state] (9) [below right of=8] {I};
+  \node[state] (10) [above right of=8] {J};
+  \node[accepting,state] (11) [right of=8, right=0.6in] {K};
+
+  \path (1) edge              node {} (2)
+        (2) edge              node {} (3)
+        (3) edge              node {} (4)
+        (3) edge              node {} (5)
+        (3) edge              node {} (6)
+        (3) edge              node {} (7)
+        (4) edge              node {} (8)
+        (5) edge              node {} (8)
+        (6) edge              node {} (8)
+        (7) edge              node {} (8)
+        (8) edge              node {} (9)
+        (8) edge              node {} (10)
+        (9) edge              node {} (11)
+        (10) edge              node {} (11);
+
+
+
+\end{tikzpicture}
+
+\subsection*{3b}
+List the sets of Test Requirements (TRs) with respect to the CFG you drew in part (a) for each of the following
+coverages: node coverage; edge coverage; edge-pair coverage; and prime path coverage. In other words, write
+four sets: $TR_{NC}$, $TR_{EC}$, $TR_{EPC}$, and $TR_{PPC}$. If there are infeasible test requirements, list them separately
+and explain why they are infeasible.
+
+
+$T_{NC}$=\{A, B, C, D, E, F, G, H, I, J, K\}
+
+$T_{EC}$ = \{ABC, CDH, CEH, CFH, CGH, HIK, HJK\}
+
+$T_{EPC}$ = \{AB, BC, CD, CE, CF, CG, DH, EH, FH, GH, HI, HJ, IK, JK\}
+
+$T_{PPC}$ = \{ABCDHJK, ABCDHIK, ABCEHJK, ABCEHIK, ABCFHJK, ABCFHIK, ABCDHJK, ABCDHIK, ABCGHJK, ABCGHIK\}
+
+\subsection*{3c}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

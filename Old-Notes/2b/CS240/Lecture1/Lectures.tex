@@ -1,0 +1,235 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+\section*{Intro}
+Computer Science was born during WWII for numerical analysis for ballistic trajectory, cryptography, atomic bomb. Mostly developed in England. 
+
+Random Shit about Prof
+\begin{itemize}
+\item Research scientiss 1st search engine at microsoft
+\item director of research in the largest ISP
+\item chief scientists in another SE
+\item Professor DSI best indesx ever, quick soa
+\end{itemize}
+
+
+\section*{Study of Information}
+\begin{itemize}
+\item What do we do with information
+\begin{itemize}
+\item process it $\rightarrow$ done with a program $\rightarrow$ which requires an algorithm and a language
+\item store it $\rightarrow$ encode it $\rightarrow$ information theory, data structures
+\item transmit it $\rightarrow$ networks $\rightarrow$ coding theory, networks
+\item search for it $\rightarrow$ structures $\rightarrow$ data structures
+\item display it $\rightarrow$ user interface $\rightarrow$ graphics, UI
+\item secure it $\rightarrow$ encryption $\rightarrow$ cryptography
+\item sell it $\rightarrow$ collections $\rightarrow$ machine learning
+\end{itemize}
+\end{itemize}
+
+\section*{Problems}
+\begin{itemize}
+\item Problem: Given a problem instance, carry out a particular computational task.
+\item Problem Instance: Input for the specified problem.
+\item Problem Solution: Output (correct answer) for the specified problem instance.
+\item Size of a problem instance: Size(I ) is a positive integer which is a measure of the size of the instance I.
+\end{itemize}
+
+\section*{Algorithms and Programs}
+\begin{itemize}
+\item Algorithm: An algorithm is a step-by-step process (e.g., described in pseudocode) for carrying out a series of computations, given an arbitrary problem instance I .
+\item Algorithm solving a problem: An Algorithm A solves a problem Π if, for every instance I of Π, A finds (computes) a valid solution for the instance I in finite time.
+\item Program: A program is an implementation of an algorithm using a specified computer language.
+\item Problem $\rightarrow$ many algorithms $\rightarrow$ many implementations
+\end{itemize}
+
+\section*{Efficiency}
+\begin{itemize}
+\item Running time: the amount of time it takes a program to run
+\item Space: the amount of memory the programs requires
+\item Size: The size of the given program
+\end{itemize}
+
+\section*{Running Time}
+\begin{itemize}
+\item experimental studies
+\begin{enumerate}
+\item implement algorithm
+\item run with varying inputs in size and composition
+\item get running time (cannot use wall clock)
+\item compare results
+\end{enumerate}
+\item short comings of experimental studies
+\begin{itemize}
+\item must be implemented which adds variables that will skew data (different languages, different hardware, different OS, different programmer)
+\item cannot test all inputs
+\item cannot easily compare two programs
+\end{itemize}
+\item ideal framework
+\begin{itemize}
+\item no implementing
+\item independent of hard/software environment
+\begin{itemize}
+\item Use pseudocode
+\item count number of primitive operations
+\end{itemize}
+\item accounts for all inputs
+\end{itemize}
+\item simplify that shit bro
+\end{itemize}
+
+\section*{Random Access Machine}
+\begin{itemize}
+\item has a set of memory cells which stores one item of data
+\item accessing any memory location takes a constant amount of time
+\item any primitive operation takes a constant amount of time
+\item thus the running time of a program is computed based on the number of memory accesses and the number of primitive operations
+\item Note: the above are not true and just simplifing assumptions
+\item This doesnt take multi-threading into account
+\end{itemize}
+
+\section*{Running Time Specifications}
+\begin{itemize}
+\item Big O notation, ignore constants (makes cut off points which are arbitrary), also we dont care what is faster at small n, only big
+\item measuring the performance of an algorithm
+\begin{itemize}
+\item create a timing function
+\item $T_{A}(x) =$ time take by A to run on input x 
+\item $T_{A}(n) = maxT(x)$  where $|x|=n$
+\item chose largest possible time for an input size (n)
+\item we plot these values to see how the time taken increases with the size of the input and use the equation of this line without constants
+\end{itemize}
+\item Example:
+\begin{itemize}
+\item $T_{A}(n) = 1000000n + 20000000$ or $T_{B}(n) = 0.1n^2$
+\item Introduce an order in the space of function
+\item Most of the time it is helpful to graph the functions and see how they match up 
+\end{itemize}
+\item q $\rightarrow fuck you kevin$
+\end{itemize}
+
+\section*{Order Notation}
+\begin{itemize}
+\item O-notation: $f(n) \in O(g(n))$ if there exist constants $c > 0$ and $n_{0} > 0$
+such that $0 \ f(n) \leq  cg(n) \enspace \forall  n \geq n 0$.
+\item $\Omega$-notation: $f(n) \in  \Omega(g(n))$ if there exist constants $c < 0$ and $n_{0} > 0$ such that $0 \leq cg(n) \leq f(n) \enspace \forall n \geq n_{0}$ .
+\item $\Theta$-notation: $f(n) \in \Theta(g(n))$ if there exist constants $c_{1} , c_{2} > 0$ and $n_{0} > 0$ such that $0 \leq c _{1}g(n) \leq f(n) \leq c_{2}g(n) \enspace \forall n \geq n_{0}$ .
+\item o-notation: $f(n) \in o(g(n))$ if for all constants $c > 0$, there exists a
+constant $n_{0} > 0$ such that $0 \leq f(n) \leq cg(n) \enspace \forall n \geq n_{0}$ .
+\item $\omega$-notation: $f(n) \in \omega(g(n))$ if for all constants $c > 0$, there exists a constant $n_{0} > 0$ such that $0 \leq cg(n) \leq f(n) \enspace \forall n \geq n_{0}$ .
+\end{itemize}
+
+Examples
+\begin{itemize}
+\item to prove that $2n^2+3n+11 \in O(n^2)$ we need to find c and $n_{0}$ so that $0 \leq 2n^2+3n+11 \leq cn^2 \enspace \forall n \geq n_{0}$
+\end{itemize}
+
+
+\begin{itemize}
+\item Proving that $2010n^2+1388=o(n^3)$ we need to find c and $n_{0}$ so that $2010n^2+1388=o(n^3)$
+\end{itemize}
+\begin{center}
+Proof:
+\end{center}
+$$\forall c>0 \enspace 2010n^2+1388 \leq cn^3$$
+$$n>1388 \Rightarrow 2010n^2+1388 \leq cn^2$$
+$$2011n^2 \leq cn^3 \Leftrightarrow 2011 \leq cn$$
+$$n> \frac{2011}{c} = n_{0}$$
+
+We like to ignore the coefficients (pretend that we never compare two algorithms with same order). 
+
+$f(n)=O(g(n))$ if $\exists$ a real $c>0$ and an integer $n_{0}>0$ such that $\forall n>n_{0} \enspace f(n) \leq c*g(n)$
+
+\begin{align*}
+2n+100 &= O(n)\\
+rtp 20 + 100 &\leq c*n \text{for some} c > 0 \text{for} n > n_{0} \\
+c = 3 &\\
+n + 100 &\leq 3n\\
+100 &\leq 2n\\
+50 &\leq n\\
+\end{align*}
+
+Basically you start a comparison and find the constraints for $n_{0}$ which will show the range of values that satisfy the assumed inequality.
+
+Some helpful rules
+
+Coefficients
+$f(n) = O(af(n))$ where $a>0$\\
+$a'*f(n) = O(f(n))$ where $a' = \frac{1}{a} > 0$  
+
+Transitivity
+If $f(n)=O(g(n))$ and $g(n)=O(h(n))$\\
+then $f(n)=O(h(n))$
+
+%fix this bit based on slides later
+$f(n) = O(g(n)) \rightarrow g(n) \leq c_{1}*g(n)$ for $n \geq n_{0}$\\
+$g(n) = O(h(n)) \rightarrow g(n) \leq c_{2}*h_{0}$ for $n \geq n_{2}$\\
+$f(n) \leq c*h(n) \enspace f(n) \leq c_{1}*g(n) \leq c_{1}*c_{2}*h(n)$\\
+where $n \geq n_{0}$ and $n_{0}$=the max of $n_{1}, n_{2}$ and c:=$c_{1},c_{2}$
+
+$f(n)+g(n) = O($max of f(n) and g(n))
+
+$n^k = O(a^n)$ for $k>0$ and $a>1$
+
+$(log n)^k = O(n^b)$ for $b>0, k>0$
+
+We can use a massive O notation and technically right, but it is not the tightest bind possible. When we mean that this is exactly the tightest bound we use $\Theta$ notation. Bigger than or equal to is $\Omega$ notation.
+
+$1+2+3+...+n = \displaystyle\sum_{i=1}^{n} i = \frac{(n+1)n}{2} = \Theta(n^2)$
+We generalize this to
+$\displaystyle\sum_{i=1}^{n} i = (a*i+d) = \Theta(n^2)$
+
+$\displaystyle\sum_{i=1}^{n} i^2 = \Theta(n^3)$
+Expanding on this pattern we get
+$\displaystyle\sum_{i=1}^{n} i^k = \Theta(n^{k+1})$
+
+Harmonic Series Time
+$H_{n} = \displaystyle\sum_{i=1}^{n} \frac{1}{i} = \Theta(log n)$
+
+$\displaystyle\sum_{i=1}^{n} r^i = \frac{r^n+1}{r-1}$\\
+if $r>1$ you get $\Theta(n+1)$\\
+if $r=1$ you get $\Theta(n)$\\
+if $r<1$ you get $\Theta(1)$
+
+\subsection*{Loop Analysis}
+Use sums to handle the actually looping bits and then get the order of the code within the loops as the bits that are being summed. We then evaluate this.
+
+Ex1:\\
+$\displaystyle\sum_{i=1}^n \displaystyle\sum_{j=1}^n \Theta (1) + \Theta (1) + \Theta (1)$
+We ignore the constants because we dont care about them. 
+\begin{align*}
+\displaystyle\sum_{i=1}^n \displaystyle\sum_{j=1}^n \Theta (1) &= \\ 
+ \Theta (1) \displaystyle\sum_{i=1}^n \displaystyle\sum_{j=1}^n 1 &= \Theta (1) \displaystyle\sum_{i=1}^n (n-i+1)\\
+ &= \Theta (1) \bigg [ \displaystyle\sum_{i=1}^n + \displaystyle\sum_{i=1}^n i + \displaystyle\sum_{i=1}^n 1 \bigg ]\\
+\end{align*}
+
+Ex2:
+\begin{align*}
+\displaystyle\sum_{i=1}^n \displaystyle\sum_{j=i}^n (1 + \displaystyle\sum_{k=i}^n c) &= \displaystyle\sum_{i=1}^n \displaystyle\sum_{j=i}^n c(j-i + n)\\
+&= \displaystyle\sum_{i=1}^n \displaystyle\sum_{j=1}^{n-i+1}j\\
+&= \displaystyle\sum_{i=1}^n \Theta (1(n-i+1)^2)\\
+&= \Theta (n^3)
+\end{align*}
+
+Ex3:
+\begin{align*}
+\displaystyle\sum_{i=1}^n \displaystyle\sum_{j=1}^{\log_2 i} c &= \displaystyle\sum_{i=1}^n c\log_2 i \\
+&= c \bigg [\log 1 + \log 2 + \log 3 + .... + \log n \bigg ]\\
+&= cO(n\log n) \text{this over exstimates the answer by constant}\\
+&= \Omega (\frac{n}{2} \log \frac{n}{2} \text{ because only the last half the terms are big, this under estimates it, but by a constant}\\
+&= \Theta (n\log n) \text{since the over and under estimation are the same}\\
+\end{align*}
+
+Recursion makes algorithm analysis fucking hard
+
+ex MergeSort: (extended from slides)
+\begin{align*}
+T(n) &= 2T(\frac{n}{2}) + cn \text{continuously divide by 2}\\
+&= 2[2T(\frac{2}{4}) +c\frac{n}{2}] + cn\\
+&= 4[2T(\frac{2}{8}) +c\frac{n}{4}] + cn +cn\\
+\end{align*}
+This goes on and you get $ n\log n$\\
+
+\end{document}

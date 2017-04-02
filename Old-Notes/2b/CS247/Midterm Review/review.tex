@@ -1,0 +1,261 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\title{Midterm Review}
+
+\lstset{frame=tb,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
+}
+\begin{document}
+\maketitle
+
+\subsection*{Overview}
+Here is the shit to know:
+\begin{itemize}
+  \item Inheritance
+  \item Exceptions
+  \item Header Conventions
+  \item Make
+  \item Passing by Constant Reference
+  \item ADTs
+  \begin{itemize}
+    \item Enttity Based vs Value Based
+    \item Mutable vs Immutable
+  \end{itemize}
+  \item Design Patterns
+  \item OOP Principles
+\end{itemize}
+
+\subsection*{Inheritance}
+Inheritance allows us to create base and subclasses of certain object. The constructor of a base class is not inherited, instead the subclass has the compiler make one for it. Static methods can also go a bit wonky in inheritance. The destructor for a subclass calls its own destructor and then the destructor for the base class.
+
+\begin{lstlisting}
+#include <iostream>
+using namespace std;
+
+struct Base {
+    Base() { cout << "base created!" << endl; };
+    ~Base() { cout << "base destroyed!" << endl; };
+    virtual int getVal() { return n; }
+    virtual int getVal2() { return m; }
+    virtual int getVal3() { return m; }
+
+    void test() {
+        f();
+        g();
+    }
+    void f() { cout << "Base::f" << endl; }
+    virtual void g() { cout << "Base::g" << endl; }
+
+    static int n;
+    static int m;
+};
+
+struct Derived : public Base {
+    Derived() { cout << "derived created!" << endl; };
+    ~Derived() { cout << "derived destroyed!" << endl; };
+    virtual int getVal() { return n; }
+    virtual int getVal2() { return m; }
+
+    void f() { cout << "Derived::f" << endl; }
+    virtual void g() { cout << "Derived::g" << endl; }
+    static int m;
+
+};
+
+int Base::n = 99;
+int Base::m = 11;
+int Derived::m = 123;
+
+int main() {
+    Base *b = new Base;
+    Base *d = new Derived;
+
+    cout << b->getVal() << endl;
+    cout << b->getVal2() << endl;
+    cout << b->getVal3() << endl;
+    cout << d->getVal() << endl;
+    cout << d->getVal2() << endl;
+    cout << d->getVal3() << endl;
+
+    d->Base::f();
+    d->Base::g();
+    d->f();
+    d->g();
+    d->test();
+
+    delete d;
+    delete b;
+}
+\end{lstlisting}
+
+\subsection*{Exceptions}
+Exceptions allow us to pass objects that will give us more information in the event of shit going sideways. We want exceptions to inherit from the standard c++ exception class which contains a what function that will give a message in the event of an error. This way we can catch exceptions explicitly.
+
+\subsection*{Headers}
+Headers allow us segment compilation and make inheritance cleaner. We use inheritance guards to prevent redundant instantiation. Basically it says to include this only if it hasn't been declared already. We also face a problem with circular dependencies. These can be solved using forward declaration. This just tells the following code that this thing will be used so you don't have to have a full include statement.
+
+You should never have a using declaration in the header file. This makes it so that any file that includes that header file will also now have that using statement in them. This pollutes the shit out of your namespace.
+
+\subsection*{Make}
+This generates executables to allow us to compile only specific portions of code that have been changed.
+
+\begin{lstlisting}
+CXX = g++
+CXXFLAGS = -Wall -MMD
+OBJECTS =
+DEPENDS = ${OBJECTS:.o=.d}
+EXEC =
+
+# This tells it how to create the executable from the .o files
+${EXEC} : ${OBJECTS}
+  ${CXX} ${CXXFLAGS} ${OBJECTS} -o ${EXEC}
+
+# This deletes any file that your make created
+clean :
+  rm -rf ${DEPENDS} ${OBJECTS} ${EXEC}
+
+-include ${DEPENDS}
+\end{lstlisting}
+\begin{itemize}
+  \item CXX is the compiler to be used
+  \item CXXFLAGs - Wall tells it to compile with debugging, MMD tells it generate a dependency graph for user source files
+  \item OBJECTS - all .o files
+  \item DEPENDS - any dependencies that you have
+  \item EXEC - the name of your executable
+\end{itemize}
+
+\subsection*{Passing by Const Reference}
+We like to pass values by reference instead of the entire object for efficiency. References are fantastic because you pass the object by a pointer and they it dereferences it for you, so that you can treat the object like an object in your function rather than having dereferencing shit everywhere. Due to passing things by pointer it means we aren't calling a copy constructor which can pose problems when you don't want to change the object in your code. To fix this list it as const.
+
+\subsection*{Entity Based vs Value Based}
+Entity Based ADT
+\begin{itemize}
+  \item prohibit assignment and copy constructor
+  \item prohibit type conversion
+  \item avoid equality (all entities should be unique even if all of their members match)
+  \item make them mutable (because you cannot copy them, a immutable entity is fairly useless)
+\end{itemize}
+Value Based ADT
+\begin{itemize}
+  \item Lots of comparison operators, like all of them
+  \item Copy constructor and assignment operators are very useful
+  \item Should be immutable (these should be thought of as an abstract concept like an integer that won't be changed)
+\end{itemize}
+
+\section*{Design Patterns}
+
+\subsection*{Singleton}
+We restrict the class to only be able to create one instance of this class.
+
+\subsection*{Template}
+Its a way of reusing code be creating a simple skeleton for an algorithm, then deferring to the subclasses for any parts that should be different. Subclasses will follow this algorithm and only change the pieces that are specific to them.
+
+\subsection*{Facade}
+If you have multiple complicated concrete objects that are all crazy and complicated we create one simple object that handles this crazy back end shit for the client so that they only see a very simple interface for a more complicated thing.
+
+\subsection*{Adapter}
+This is how we allow interfaces to use each other by creating an intermediary interface that sorts that shit out for them.
+
+\subsection*{Strategy}
+The strategy pattern is a way of making algorithms interchangeable at run-time. This is accomplished by providing an abstract base class as an interface for the algorithms and creating concrete derived classes that with different implementations of the algorithm.
+
+Allows us to jump between algorithms. An example of this is the ragequit function in the project. We just wanted to change the way that the two players behave. It would be good to use a strategy pattern that has a human and computer player interface on ragequit instead of deleting the human and creating a new computer. The player class would just delegate tasks to these two.
+
+\subsection*{Observer}
+One object, the subject, maintains a set of dependents, the observers. When the state of the subject changes it notifies the observers usually by calling one of their methods.
+
+We have a class, the Subject, that contains a vector of observers that can be added or removed from. Any time the subject changes it iterates through its vector of observers and notifies all of them that something has changed which lets the observer know to come check this shit out.
+
+\subsection*{Model View Controller}
+Technically not a design pattern but a software architectural pattern (broader scope than a design pattern). MVC is used when designing user interfaces, separating the application into three parts: model, view and controller. The model takes care of the logic of the application, updating the view when it changes. The controller takes user input and sends commands to the model. The view uses the observer pattern to interact with the model, receiving a notification each time the model is updated then requesting information from the model that it uses to generate a representation for the user.
+
+Any time the model changes it notifies the view that shit has changed so that the view comes to checkout the model and alter itself for the user. The controller catches user input and tells the model to change itself to match what has happened.
+
+\section*{OO-Principles}
+\subsection*{Open-Closed Principle}
+A module should be open for extension but closed to modification. This means you provide an abstract base class which gives the interface for the client to interact with and do not modify it, then you still have the freedom to extend the functionality through concrete classes without breaking client code.
+
+Basically we want to be able to change code without breaking the client code.
+
+\subsection*{Composition over Inheritance Principle}
+We choose composition over inheritance because it is possible to modify the component at run-time while we are able to use it in a similar way to inheritance by delegation of methods. We still need inheritance when we need a type hierarchy and it is still useful when using the entire interface of an existing class.
+
+We use inheritance when we want polymorphism and use composition when you are only using parts of the interface. We don't like inheritance because it tends to break the open-closed principle. This helps us implement the strategy pattern.
+
+\subsection*{Single Responsibility Principle}
+Each changeable design decision should be encapsulated in a separate module.
+
+Every time you have something that is managing a whole bunch of things your should split it up into different modules that do each of those things.
+
+\subsection*{Dependency Inversion Principle}
+High level modules and low-level modules should depend on abstractions rather than concrete classes. Abstractions should not depend on details, details should depend on abstractions. Essentially, high level code should only use low level code indirectly.
+
+When we have high level code we shouldn't let it interact with low level code, we put an interface between them to provide some abstraction. This is very similar to the adapter pattern.
+
+\subsection*{Liskov Substitutability Principle}
+\begin{itemize}
+  \item Accept the same messages (Should have all the methods of the base class with matching signatures)
+  \item Require no more and promise no less than the base class in its methods (Weaker or same precondition, stronger or same postcondition). What ever the precondition of the base class is, if an object fits that precondition it should imply that it fills the derived class precondition. Anywhere you can use the base class you can use the derived class.  Something done to the base class will have a similar end effect of the derived class
+  \item Match the observable behavior of the base class (invariants, performance). Shouldn't take up much more space or time than the base class.
+\end{itemize}
+
+Anything of a derived class should be completely substitutable for it base class.
+
+
+\subsection*{Law of Demeter}
+We can call the function calls for:
+\begin{itemize}
+  \item the object
+  \item the objects members
+  \item the parameters of the objects functions
+  \item any object created by functions of the object
+\end{itemize}
+
+Classes shouldn't have to go through a chain of function calls to do something. You should only have  one call at a time.
+
+
+\section{Questions}
+What do we expect from operator=?
+\begin{enumerate}
+  \item Check for self assignments
+  \item Delete old data members
+  \item Copy data members into the object
+  \item Return pointer to object
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

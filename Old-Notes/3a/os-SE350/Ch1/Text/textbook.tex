@@ -1,0 +1,136 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage[margin=.6in]{geometry}
+
+\begin{document}
+\includepdf[pages={29-58}]{Operating_Systems.pdf}
+\section{Basic Elements}
+There are four main structures to a computer:
+\begin{itemize}
+  \item Processor: controls the operation of the computer and process data, if theres one its the central processing unit, CPU
+  \item Main memory: stores the data, volition (when you turn the computer off its wiped)
+  \item I/O modules: interfaces between the computer and an external environment
+  \item System bus: Provides communication between the other three structures
+\end{itemize}
+The CPU uses the Memory Address Register (which contains the address of the next location of a read or write) and the Memory Buffer Register (which contains the data to wbe written) to exchange data with memory. A near identical set up is used for I/O where there is an address register and a buffer register.
+
+\section{Evolution of the Microprocessor}
+Microprocessors are a processor on a single chip. This means that information doesn't need to move as much as with multi-chip processors. These were then broken up into multiple cores to increase the speed of multi-threading.
+
+\section{Instruction Execution}
+The simples process for instruction execution is a fetch then execute two stage cycle, called an instruction cycle. The PC always points to the next instruction to be executed and is usually incremented at the end of a instruction cycle. Fetched instructions are loaded into the instruction register (IR). They start with an opcode that defines what needs to be done.
+\begin{itemize}
+  \item processor-memory: data needs to be transfered between processor and memory
+  \item processor-io: data transfered between processor and op
+  \item data processing: mathy things
+  \item control: mucking about with set registers (like changing the PC to execute a specific line next)
+\end{itemize}
+The rest of the memory block is used for information about the process.
+
+
+\section{Interrupts}
+Interrupts allow the processor to start a slow execution (a IO read for example) and let it tick away on its own while the CPU does it thing. When the IO is done it interrupts the CPU  to continue its process.
+
+Four classes of interrupts
+\begin{itemize}
+  \item program: bad instruction, eg divide by zero
+  \item timer: certain functions that happen on intervals
+  \item IO: io is done its shit
+  \item hardware: a physical issue happened
+\end{itemize}
+
+To handle interrupts we add a interrupt stage to the instruction cycle in which we check if any interrupts have occurred after execution of the current instruction. This is all handled by the OS not the user. When this happens we need to know the nature of th einterrupt to know which handler is to be called.
+
+For example, when an IO device finishes:
+\begin{enumerate}
+  \item device issues interrupt signal
+  \item processor finishes current execution
+  \item processor tests for interrupt request, finds it, and sends an acknowledgment signal to device
+  \item the processor saves information needed to resume the current program when the interrupt is done (minimum is the program status word PSW and PC, which are pushed onto the control stack)
+  \item PC is loaded with the starting address of the interrupt handler, if there are multiple there needs to be a way of determining priority
+  \item The interrupt handler begins by saving the processor registers to the stack, stack pointer SP is moved to reflect the newly added data, finally the PC starts the interrupt service routine
+  \item the handler processes the interrupt
+  \item the register values are popped off the stack and back into place (in reverse order)
+  \item the PSW and PC are restored from the stack and things continue as they were
+\end{enumerate}
+
+It is quite often that an interrupt will happened while another interrupt is being handled. We could just disable interrupts while an interrupt is being handeld and just tell the processor to ignore any new signals. These interrupts remain pending while the processor works and won't be checked until the processor is done. This means that interrupts are handled in strict sequential order. The problem with this is that certain interrupts need a very high priority (ex. data streams where the  data will be lost if it is not processed now). The solution to this is to allow only interrupts of a higher priority to interrupt the handler.
+
+\section{Memory Hierarchy}
+Memory is either fast or cheap, to find a good comprimise we use a memory hierarchy, you know this shit.
+Going down the hierarchy:
+\begin{itemize}
+  \item Decreasing cost per bit
+  \item Increasing capacity
+  \item Increasing access time
+  \item Decreasing frequency of access to the memory by the processor
+\end{itemize}
+
+By increasing the probability of finding the data in a higher memory we can make our average hit time much lower. We call the ability to decrease frequence of hits to lower memory locality of reference. This principle is basically that the processor often works with chunks of data at a time instead of scattered bits, so when we load chunks at a time we can access a higher memory quite a lot until the next chunk is needed.
+
+An example of this is that most harddrives actually have a small cache built into them to aid in moving memory from them to the registers.
+
+\section{Cache Memory}
+This is invisible to the OS but used a lot. We frequently use the same tricks we use for virtual memory on cache memory.
+
+Every execution starts with fetching an instruction from main memory. There is no way to get around this so the speed at which you can execute is dependant on the speed at which you can fetch that memory since memory is much slower than processors. To make this we put a small super fast cache between the processor and main memory.
+
+The cache keeps blocks from main memory right next to the processor for it to read quickly. If the data we are looking for is not in the cache we have to load a new block from memory into it. Because of locality of reference this doesn't happen very often. Sometimes we go even farther and have multiple layers of cache.
+
+Main memory has  $2^n$ addressable words where n is the length of the word. We divide main memory into blocks of K words.  Now memory is made up of M ($M=\frac{2^n}{K}$) blocks. We do the same thing for the cache and call it C slots. Each slot contains a tag indicating which block it is currently containing. This tag usually refers to all memory addresses that start with it (so a the tag length should be $log_2(K)$).
+
+As block size increases so does the hit ratio (bigger block = more relevant data), up to a certain point at which it actually starts to decrease because we are adding data in the cache that has little probability of being used. When we read a block into the cache we use a mapping function to determine which slot it goes in. We want a mapping function that kicks out a slot that will probably not be used in the future but we dont want it to be too complex and costly. We call the function that choses who to boot the replacement algorithm. It basically dumps the least recently used (LRU) block.
+
+When a block in cache is altered we need to save that in main memory before we replace it. We could save it everytime it is updated which is costly or we could save it only when the block is dumped, but that could leave the main memory obsolete for a long while.
+
+\section{Direct Memory Access}
+There are three operations for I/O:
+\begin{itemize}
+  \item programmed IO
+  \item interrupt driven IO
+  \item DMA
+\end{itemize}
+
+In programmed IO, when the processor calls to the IO it does what was asked and sets the status register, but doesn't alert the processor. This means that the processor has to sometimes poll the IO status register to see when its done. This is bad which is why we introduced interrupt driven IO. Which does what programmed IO does, then alerts the processor with an IO interrupt. These are both sucky because they required the processor to manage the data transfer.
+
+The solution to this is the DMA model. When a processor wishes to read or write it sends a command to the DMA module contianing the operation, address of IO, location in memory, and number of words to read. From there on the DMA module handles the transfer of information to the IO and when its done sends a interrupt back to the processor. Since the DMA needs the data bus to do the transfer the processor might have to wait on it to finish, it pauses for one bus cycle.
+
+\section{Multiprocessor and Multi-core Organization}
+
+A SMP (symmetric multiprocessors) is a stand-alone computer that:
+\begin{itemize}
+  \item with multiple processors
+  \item its processors share the same main memory and I/O facilities, are interconnected by a bus, and memory access time is the same for each processor
+  \item its processors share access to I/O devices through the same channels
+  \item its processors can perform the same functions
+  \item its system is controlled by an integrated operating system
+\end{itemize}
+
+SMP systems can have great performance advantages over regular single processor systems. Processor hiccups arent a very big deal because there are multiple. Its easy for the user to improve performance, add more processors. Special allowances have to be made for multiple processors. Memory should be structured to allow multiple simultaneous accesses. Any memory that is processor specific (caches) needs to remain in sync so that changes to one percolate to the others.
+
+
+Multicore systems are similar to SMP, but each core as all of the peices independent to the processor (like registers and such).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

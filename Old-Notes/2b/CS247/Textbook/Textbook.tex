@@ -1,0 +1,1575 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
+}
+
+\begin{document}
+\section*{Chapter 7}
+The idea of function overloading is to have multiple functions with the same name but different signatures. You cannot overload on the return value as it is too subtle for the compiler to decern which function to use. In C++ all functions must be declared, the compiler won't fix it for you. The way that a function is declared provides a type-safe linkage. This basically checks that the passed operands match the function declaration. It does this through name declaration. f(int) becomes f\textunderscore int so when you call f(char) it looks for f\textunderscore char, doesn't find it and calls an error.
+
+\subsection*{Unions}
+The only difference between struct and class is struct defaults to public and class defaults to private. Unions are super mega awesome as they can have constructor, destructor, member functions, and even access control. A union is sort like a union of classes. It allows you to have a variable that can be more than one data type. Below is an example of a union of int and float types. Note that it stores the int and float in the same place, also you cannot inherit from it.
+\begin{lstlisting}
+union U {
+private:
+    int i;
+    float f;
+public:
+    U(int a);
+    U(float b);
+    ~U();
+    int read_int();
+    float read_float();
+};
+U::U(int a) { i = a; }
+U::U(float b) { f = b;}
+U::~U() { cout << "U::~U()\n"; }
+int U::read_int() { return i; }
+float U::read_float() { return f; }
+int main() {
+    U X(12), Y(1.9F);
+    cout << X.read_int() << endl;
+    cout << Y.read_float() << endl;
+}
+\end{listings}
+There is nothing here to prevent you from calling something stupid, like a read\textunderscore float on an int. We can make it safe by encapsulating it in a class.
+\begin{lstlisting}
+//: C07:SuperVar.cpp
+// A super-variable
+#include <iostream>
+using namespace std;
+class SuperVar {
+	enum {
+		character,
+		integer,
+		floating_point
+	} vartype; // Define one
+	union { // Anonymous union
+		char c;
+		int i;
+		float f;
+	};
+public:
+	SuperVar(char ch);
+	SuperVar(int ii);
+	SuperVar(float ff);
+	void print();
+};
+SuperVar::SuperVar(char ch) {
+vartype = character;
+c = ch;
+}
+SuperVar::SuperVar(int ii) {
+	vartype = integer;
+	i = ii;
+}
+SuperVar::SuperVar(float ff) {
+	vartype = floating_point;
+	f = ff;
+}
+void SuperVar::print() {
+	switch (vartype) {
+	case character:
+		cout << "character: " << c << endl;
+		break;
+	case integer:
+		cout << "integer: " << i << endl;
+		break;
+	case floating_point:
+		cout << "float: " << f << endl;
+		break;
+	}
+}
+int main() {
+	SuperVar A('c'), B(12), C(1.44F);
+	A.print();
+	B.print();
+	C.print();
+}
+\end{lstlisting}
+Anonymous unions create space for the union, but don't actually put anything there. So we an assign the variables without variable declarations:
+\begin{lstlisting}
+int main() {
+	union {
+	    int i;
+		float f;
+	};
+// Access members without using qualifiers:
+	i = 12;
+	f = 1.22;
+}
+\end{lstlisting}
+
+\subsection*{Parameters}
+You can define default values in the function definition. If a value is not specified in the function call the default value is used. You can only default trailing values.
+\begin{lstlisting}
+Stash(int size, int initQuantity = 0);
+\end{lstlisting}
+You can also just declare a parameter but not give it a name making it inaccessible.
+\begin{lstlisting}
+void f(intx, int, float flt)
+\end{lstlisting}
+This is used if you might want to change the function definition to use this placeholder later. It can also remove a function argument later without breaking shit.
+
+\section*{Chapter 12: Operator Overloading}
+\subsection*{Overloading}
+Operators are just functions which take two parameters on either side of the operator. The syntax for operator overloading is:
+\begin{lstlisting}
+operator"operatorsymbol"(parameters)
+\end{lstlisting}
+An operator can be unary (one parameter) or binary, but no more. Unary operators have no parameters as member functions and binary have only one.
+\begin{lstlisting}
+class Integer {
+int i;
+public:
+Integer(int ii) : i(ii) {}
+const Integer
+operator+(const Integer& rv) const {
+cout << "operator+" << endl;
+return Integer(i + rv.i);
+}
+\end{lstlisting}
+Its very helpful to always return the result of the operation and have it be the same type so that you can chain operators. In C you cannot change the precedence of overloaded operators and you cannot create new operators out of old ones.
+
+The incrementation operators are a little bit difficult to overload because you want them to apply to the object behind of them and not the object in front of them. ++a becomes operator++(a) and a++ becomes operator++(a,Int). If the ++ operator is a member function a++ goes to a::operator++(Int) and ++a goes to a::operator++().
+
+Possible operators:
+\begin{lstlisting}
+-, *, /, %, ^, &, |, <<, >>, +=, -=, *=, /=, %=, ^=, &=, |=, >>=, <<=, <, >, ==, !=, <=, >=, &&, ||
+\end{lstlisting}
+You can override =, but it must be a member function. For a lot of these it is important to check for self assignment. Most of the time this is just good coding, but with the =  operator this is SUPER important cause when large complex ADTs shit can go crazy.
+
+Textbook Chapter 12 page 541 has a good example of operation overloading (too lazy to put it in the notes, its huge)
+
+Some guidelines"
+\begin{itemize}
+\item default to passing const arguments unless you know that you are going to want to change it.
+\item watch your return values, often these operators will be chained together and a rogue data type may fuck that up. Also watch if its modifying an existing value or making a new one, this actually matters in c++
+\item any modifying operators only change the left operand, assignment operators should return non const reference to the lvalue
+\item logical operators should return an int or a bool (bool is preferable) NO STRINGS!
+\end{itemize}
+
+The in/decrement operators need to watch the value that they return (remember the location of the single operand is important to this). Usually we have these return const values, but like most things you can force it to go either way.
+
+\subsection*{Return Values}
+Some operations return temporary values (ones that are not asigned to a variable and will be lost when the compilers focus moves on. Temporary values are always consts.
+
+Often functions return a value like:
+\begin{lstlisting}
+Integer(blah + meh)
+\end{lstlisting}
+This looks like a constructor of a new integer, but it actually creates a temporary object that is forced into an Integer. This doesnt actually call an constructors or destructors. Alternatively:
+\begin{lstlisting}
+Integer tmp(blah + meh)
+\end{lstlisting}
+calls a constructor, copies the valye outside the return value, then calls the destructor for tmp. Tmp is still a temporary value of sorts in that it no longer exists when the compiler focus is lost, but its birth is much different. The first method is way more efficient and should be used when possible. This is called \textbf{return value optimization}.
+\subsection*{Weird Operators}
+We can actually overload the [ ] operator as well. Since it usually implies that the obect its being called for acts like an array you should return a reference. This assists with it being used as an lvalue. new and delete are often overloaded with this.
+
+\subsubsection*{Commas}
+So, Lara, I know you're shit with commas, turns out you can overload them. Get ready for craziness. The comma operator is called only when it appears next to a type for which it is defined. Weirdly enough it isnt called for lists, which is the main place it is used. Its not really used much and only included for completeness. Heres an example of calling different things for before and after the comma:
+\begin{lstlisting}
+Class After {
+public:
+    const After& operator,(const After&) const {
+        cout << "After::operator,()" << endl;
+        return this;
+    }
+};
+Class Before {};
+Before& operator,(int, Before& b){ //note this is not a member class and has a placeholder parameter, this allows us to act only on the thing after the comma
+    cout << "Before::operator,()" << endl;
+    return b;
+};
+int main() {
+    Aftet a, b;
+    a, b; //Comma operator for After called
+    Before c;
+    758, b;  //Comma operator for Before called
+}
+\end{lstlisting}
+Really don't other fucking with commas, they're far to obscure to ever warrant it.
+
+\subsubsection*{Pointer Derefrence(Arrow) Operator}
+In c this is usually used to make an object appear to be a pointer. We like to call them smart pointer since objects tend to have more cleverness built into them than regular pointers. Often this is used to wrap a class around a pointer to make them safer. Iterators and collections like this because it allows you to select items one at a time without getting access to the implementation of the structure. This must be a member operator and must return an object (or reference to it) that has a pointer p[erator, or it must reutrn a pointer that can be used to select what -$>$ is point at.
+\begin{lstlisting}
+class Obj {
+    static int i, j;
+    public:
+        void f() const {cout << i++ << endl; }
+        void g() const {cout << j++ << endl; }
+};
+
+int Obj::i = 47;
+int Obj::j = 11;
+
+class ObjContainer {
+    vector<Obj*> a;
+    public:
+        void add(Obj* obj) { a.push_back(obj);}
+        friend class SmartPointer;
+};
+
+class SmartPointer {
+    ObjContainer& oc;
+    int index;
+public:
+    SmartPointer(ObjContainer& objc) : oc(objc) {
+        index = 0;
+    }
+    bool operator++(int) { return operator++() } //this tells the postfix operator to call the prefix operator
+    bool operator++() {
+        if(index >= oc.a.size()) return false;
+        if(oc.a[++index] == 0) return false;
+        return true;
+    }
+    Obj* operator->() const {
+        require(oc.a[index] != 0, "Zero value returned by SmartPointer::operator->()");
+        return oc.a[index];
+    }
+};
+
+int main() {
+    const int sz = 10;
+    Obj o[sz];
+    ObjContainer oc;
+    for(int i = 0; i < sz; i++)
+        oc.add(&o[i]); //filling an array
+    SmartPointer sp(oc) //creating an interator
+    do {
+        sp->f();
+        sp->g();
+    } while (sp++);
+}
+\end{lstlisting}
+
+In this example the ObjContainer looks like an array of pointers, but we cannot get the pointers back out of the array. Basically we just created an intelligent pointer, it moves forward with ++ and won't go past the end of the container and returns the value of the thing its pointing to (this is handed by the $->$ which derefrences as the name implies). Unfortunately we cannot create a general SmartPointer and are required to give it a container.
+
+The SmartPointer/Iterator stuff tends to be nested in larger more complex classes. We can rewrite the ObjContainer class to take advantage of this.
+\begin{lstlisting}
+class ObjContainer {
+    vector<Obj*> a;
+public:
+    void add(Obj* obj) { a.push_back(obj); }
+    class SmartPointer;
+    friend SmartPointer;
+    class SmartPointer {
+            ObjContainer& oc;
+            unsigned int index;
+        public:
+        SmartPointer(ObjContainer& objc) : oc(objc) {
+            index = 0;
+        }
+    // Return value indicates end of list:
+        bool operator++() { // Prefix
+            if(index >= oc.a.size()) return false;
+            if(oc.a[++index] == 0) return false;
+            return true;
+        }
+        bool operator++(int) { // Postfix
+            return operator++(); // Use prefix version
+        }
+        Obj* operator->() const {
+            require(oc.a[index] != 0, "Zero value "
+            "returned by SmartPointer::operator->()");
+            return oc.a[index];
+        }
+    };
+    // Function to produce a smart pointer that
+    // points to the beginning of the ObjContainer:
+    SmartPointer begin() {
+        return SmartPointer(*this);
+    }
+};
+\end{lstlisting}
+Notice we declare the class SmartPointer so that we can make it a friend. We do this so that the compiler knows that the class exists. We also gave ObjContainer the begin function which creates a SmartPointer to the being of the sequence, its a good idea to have one of these for every linked list type structure.
+
+\subsubsection*{The Function Call Operator}
+This must me a member function and allows any number of arguments. It makes your object read like a function which is cool if you're into that. This is the only operator that can be overloaded since it can have multiple different signatures with different numbers of parameters. Its used for objects that can only have a single operation.
+
+\subsubsection*{The -$>$* Operator}
+This exists to mimic the behavior of the built-in pointer-to-member syntax. This derefrences an object and is often used on smart pointers. Basically gets a pointer to member of a class. The trick to making this guy work is to have it return an object that operator() can be called with the arguments for the member function you're calling. To create a operator-$>$* you first create a class with an operator() of the type of object the operator-$>$* will return that derefrences the object when operator() is called.
+\begin{lstlisting}
+//: C12:PointerToMemberOperator.cpp
+#include <iostream>
+using namespace std;
+class Dog {
+public:
+    int run(int i) const {
+        cout << "run\n";
+        return i;
+    }
+
+    int eat(int i) const {
+        cout << "eat\n";
+        return i;
+    }
+
+    int sleep(int i) const {
+        cout << "ZZZ\n";
+        return i;
+    }
+
+    //PMF (Pointer-to-Member Function) is a typedef (data type alias) to simplify defining a pointer-to-member to Dog's member functions
+    typedef int (Dog::*PMF)(int) const; // Creates PMF, a member of Dog of type &int (?, not sure)
+
+    // operator->* must return an object that has an operator():
+    class FunctionObject {
+        Dog* ptr;
+        PMF pmem;
+
+    public:
+
+        // Save the object pointer and member pointer
+        FunctionObject(Dog* wp, PMF pmf): ptr(wp), pmem(pmf) {
+            cout << "FunctionObject constructor\n";
+        }
+
+        // Make the call using the object pointer and member pointer
+        int operator()(int i) const {
+            cout << "FunctionObject::operator()\n";
+            return (ptr->*pmem)(i); // Make the call
+        }
+    };
+
+    FunctionObject operator->*(PMF pmf) {
+        cout << "operator->*" << endl;
+        return FunctionObject(this, pmf);
+    }
+};
+int main() {
+    Dog w;
+    Dog::PMF pmf = &Dog::run;
+    cout << (w->*pmf)(1) << endl;
+    pmf = &Dog::sleep;
+    cout << (w->*pmf)(2) << endl;
+    pmf = &Dog::eat;
+    cout << (w->*pmf)(3) << endl;
+} ///:~
+\end{lstlisting}
+I still don't understand this example, hopefully you, my future self, understands this.
+
+\subsection*{No Overloading Operators}
+The member selection operator. cannot be overridden it would make accessing memers in a normal way impossible, we'd have to use operator-$>$. Similarly we cannot overload operator.* for pretty much the same reason. We also cannot overload operators that do not exist (that would be making a new operator) so operator** is out. Users cannot create their own operators and they cannot change the precedence.
+
+\subsection*{Nonmember Operators}
+Some operators require certain operands to be in specific positions of the operator, this will determine whether or not they must be member operators. In the case of wanting the left operand to be a member of another class the operator cannot be a member class. The most common example is the streaming operators:
+\begin{lstlisting}
+//: C12:IostreamOperatorOverloading.cpp
+// Example of non-member overloaded operators
+#include "../require.h"
+#include <iostream>
+#include <sstream> // "String streams"
+#include <cstring>
+using namespace std;
+
+class IntArray {
+    enum { sz = 5 };
+    int i[sz];
+public:
+    IntArray() { memset(i, 0, sz* sizeof(*i)); }
+    int& operator[](int x) {
+        require(x >= 0 && x < sz, "IntArray::operator[] out of range");
+        return i[x];
+    }
+friend ostream&
+    operator<<(ostream& os, const IntArray& ia);
+friend istream&
+    operator>>(istream& is, IntArray& ia);
+};
+
+ostream& operator<<(ostream& os, const IntArray& ia) {
+    for(int j = 0; j < ia.sz; j++) {
+        os << ia.i[j];
+        if(j != ia.sz -1)
+            os << ", ";
+    }
+    os << endl;
+    return os;
+}
+istream& operator>>(istream& is, IntArray& ia){
+    for(int j = 0; j < ia.sz; j++)
+        is >> ia.i[j];
+    return is;
+}
+int main() {
+    stringstream input("47 34 56 92 103");
+    IntArray I;
+    input >> I;  //looks like an operator for stringstream input, but is a friend of IntArray, cool shit
+    I[4] = -1; // Use overloaded operator[]
+    cout << I;
+} ///:~
+\end{lstlisting}
+
+\subsection*{Recommended Guidelines}
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{c | c}
+\hline
+\textbf{Operator} & \textbf{Recommended Use}\\ \hline
+All unary operators & member\\ \hline
+\verb!+= –= /= *= ^= &= |= \%= >>= <<=! & member\\ \hline
+\verb!= () [ ] $-> ->*! & \textit{must} be a member \\ \hline
+All other binary operators & non-member\\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\subsection*{Overloading Assignment}
+AAAHHHHHH WHY IN GODS NAME WOULD YOU DO THIS!!!!
+
+Well this is usually just a call to the copy-constructor function which may differ for new ADTs resulting in overriding the = operator.
+
+\begin{lstlisting}
+MyType b;
+MyType a = b;
+a = b;
+\end{lstlisting}
+In the above example's second line a is being created from b through a copy-constructor. Even though we used an equals sign the constructor must get called, C doesnt allow you to create an object without calling its constructor, so we need to call its constructor then copy b's values into it. In the third line the MyType::operator= is called because now a exists so we don't need to call its constructor. We can have overloaded operator= for different data types. Operator= will always be a member operator.
+
+General rule: if the object hasnt been created yet, operator= will not be called, the constructor will instead.
+
+The operator= must copy all necessary info from right object into current object (left one that this is being called on). Heres a quick example:
+\begin{lstlisting}
+#include <iostream>
+using namespace std;
+class Value {
+    int a, b;
+    float c;
+public:
+    Value(int aa = 0, int bb = 0, float cc = 0.0): a(aa), b(bb), c(cc) {} //this is a constructor
+    Value& operator=(const Value& rv) {
+        a = rv.a;
+        b = rv.b;
+        c = rv.c;
+        return *this;
+    }
+friend ostream&
+    operator<<(ostream& os, const Value& rv) {
+        return os << "a = " << rv.a << ", b = "
+        << rv.b << ", c = " << rv.c;
+    }
+};
+\end{lstlisting}
+The above example does not contain a check for self assignment which is suuuuuuper bad.
+
+Pointers can fuck shit up here, if we just copy them over we'll have two objects manipulating the same data and going crazy. We can fix this by copy over the value that the pointer refers to. Whenever your class has pointers you need: all the constructors, the copy-constructor, operator= and a destructor.
+\begin{lstlisting}
+class Dog {
+    string nm;
+public:
+    Dog(const string& name) : nm(name) { //constructor
+        cout << "Creating Dog: " << *this << endl;
+    }
+
+// Synthesized copy-constructor & operator= are correct.
+// Create a Dog from a Dog pointer:
+    Dog(const Dog* dp, const string& msg): nm(dp->nm + msg) {
+        cout << "Copied dog " << *this << " from " << *dp << endl;
+    }
+    ~Dog() { //destructor
+        cout << "Deleting Dog: " << *this << endl;
+    }
+    void rename(const string& newName) {
+        nm = newName;
+        cout << "Dog renamed to: " << *this << endl;
+    }
+    friend ostream&
+        operator<<(ostream& os, const Dog& d) {
+            return os << "[" << d.nm << "]";
+        }
+}
+;
+class DogHouse {
+    Dog* p;
+    string houseName;
+public:
+    DogHouse(Dog* dog, const string& house): p(dog), houseName(house) {}
+    DogHouse(const DogHouse& dh): p(new Dog(dh.p, " copy-constructed")), houseName(dh.houseName + " copy-constructed") {}
+    DogHouse& operator=(const DogHouse& dh) {
+        // Check for self-assignment:
+        if(&dh != this) {
+            p = new Dog(dh.p, " assigned"); //this may be costly if there is a large object
+            houseName = dh.houseName + " assigned";
+        }
+        return *this;
+    }
+    void renameHouse(const string& newName) {
+        houseName = newName;
+    }
+    Dog* getDog() const { return p; }
+    ~DogHouse() { delete p; }
+    friend ostream&
+        operator<<(ostream& os, const DogHouse& dh) {
+            return os << "[" << dh.houseName << "] contains " << *dh.p;
+    }
+};
+\end{lstlisting}
+
+In the above example the operator= and the copy-constructor create new copies of what the pointer is pointing at which can be costly if you are dealing with large objects. We can get around this with \textit{reference counting}. This is done by giving the object the ability to tell how many objects are pointing to it. Now the copy constructor and operator= just adds another pointer to the list of pointer that are referencing this object, the destructor removes that reference from this list. This causes a problem if you allow writing to this object as you might not want to change the object that multiple pointers are referencing, may cause craziness to happen. This is solved through \textit{copy-on-write} aliasing. Before you write to a block of memory you check that there is only one pointer to it, if the reference count is greater than 1 you make a copy and write to that. Heres an example:
+\begin{lstlisting}
+class Dog {
+    string nm;
+    int refcount;
+    Dog(const string& name): nm(name), refcount(1) {
+        cout << "Creating Dog: " << *this << endl;
+    }
+    // Prevent assignment:
+    Dog& operator=(const Dog& rv);
+public:
+    // Dogs can only be created on the heap:
+    static Dog* make(const string& name) {
+        return new Dog(name);
+    }
+    Dog(const Dog& d): nm(d.nm + " copy"), refcount(1) {
+        cout << "Dog copy-constructor: " << *this << endl;
+    }
+    ~Dog() {
+        cout << "Deleting Dog: " << *this << endl;
+    }
+    void attach() {
+        ++refcount;
+        cout << "Attached Dog: " << *this << endl;
+    }
+    void detach() {
+        require(refcount != 0);
+        cout << "Detaching Dog: " << *this << endl;
+        // Destroy object if no one is using it:
+        if(--refcount == 0) delete this;
+    }
+    // Conditionally copy this Dog.
+    // Call before modifying the Dog, assign resulting pointer to your Dog*.
+    Dog* unalias() {
+        cout << "Unaliasing Dog: " << *this << endl;
+        // Don't duplicate if not aliased:
+        if(refcount == 1) return this;
+        --refcount;
+        // Use copy-constructor to duplicate:
+        return new Dog(*this);
+    }
+    void rename(const string& newName) {
+        nm = newName;
+        cout << "Dog renamed to: " << *this << endl;
+    }
+    friend ostream&
+        operator<<(ostream& os, const Dog& d) {
+        return os << "[" << d.nm << "], rc = " << d.refcount;
+    }
+};
+
+class DogHouse {
+    Dog* p;
+    string houseName;
+public:
+    DogHouse(Dog* dog, const string& house) :p(dog), houseName(house) {
+        cout << "Created DogHouse: "<< *this << endl;
+    }
+    DogHouse(const DogHouse& dh) : p(dh.p), houseName("copy-constructed " + dh.houseName) {
+        p->attach();
+        cout << "DogHouse copy-constructor: " << *this << endl;
+    }
+    DogHouse& operator=(const DogHouse& dh) {
+        // Check for self-assignment:
+        if(&dh != this) {
+            houseName = dh.houseName + " assigned";
+            // Clean up what you're using first:
+            p->detach();
+            p = dh.p; // Like copy-constructor
+            p->attach();
+        }
+        cout << "DogHouse operator= : "<< *this << endl;
+        return *this;
+    }
+    // Decrement refcount, conditionally destroy
+    ~DogHouse() {
+        cout << "DogHouse destructor: " << *this << endl;
+        p->detach();
+    }
+    void renameHouse(const string& newName) {
+        houseName = newName;
+    }
+    void unalias() { p = p->unalias(); }
+    // Copy-on-write. Anytime you modify the contents of the pointer you must first unalias it:
+    void renameDog(const string& newName) {
+        unalias();
+        p->rename(newName);
+    }
+// ... or when you allow someone else access:
+    Dog* getDog() {
+        unalias();
+        return p;
+    }
+    friend ostream&
+        operator<<(ostream& os, const DogHouse& dh) {
+            return os << "[" << dh.houseName] << "] contains " << *dh.p;
+        }
+};
+
+int main() {
+DogHouse
+fidos(Dog::make("Fido"), "FidoHouse"),
+spots(Dog::make("Spot"), "SpotHouse");
+cout << "Entering copy-construction" << endl;
+DogHouse bobs(fidos);
+cout << "After copy-constructing bobs" << endl;
+cout << "fidos:" << fidos << endl;
+cout << "spots:" << spots << endl;
+cout << "bobs:" << bobs << endl;
+cout << "Entering spots = fidos" << endl;
+spots = fidos;
+cout << "After spots = fidos" << endl;
+cout << "spots:" << spots << endl;
+cout << "Entering self-assignment" << endl;
+bobs = bobs;
+cout << "After self-assignment" << endl;
+cout << "bobs:" << bobs << endl;
+// Comment out the following lines:
+cout << "Entering rename(\"Bob\")" << endl;
+bobs.getDog()->rename("Bob");
+cout << "After rename(\"Bob\")" << endl;
+} ///:~
+
+
+OUTPUT
+Creating Dog: [Fido], rc = 1
+Created DogHouse: [FidoHouse]
+contains [Fido], rc = 1
+Creating Dog: [Spot], rc = 1
+Created DogHouse: [SpotHouse]
+contains [Spot], rc = 1
+Entering copy-construction
+Attached Dog: [Fido], rc = 2
+DogHouse copy-constructor:
+[copy-constructed FidoHouse]
+contains [Fido], rc = 2
+After copy-constructing bobs
+fidos:[FidoHouse] contains [Fido], rc = 2
+spots:[SpotHouse] contains [Spot], rc = 1
+bobs:[copy-constructed FidoHouse]
+contains [Fido], rc = 2
+Entering spots = fidos
+Detaching Dog: [Spot], rc = 1
+Deleting Dog: [Spot], rc = 0
+Attached Dog: [Fido], rc = 3
+DogHouse operator= : [FidoHouse assigned]
+contains [Fido], rc = 3
+After spots = fidos
+spots:[FidoHouse assigned] contains [Fido],rc = 3
+Entering self-assignment
+DogHouse operator= : [copy-constructed FidoHouse]
+contains [Fido], rc = 3
+After self-assignment
+bobs:[copy-constructed FidoHouse]
+contains [Fido], rc = 3
+Entering rename("Bob")
+After rename("Bob")
+DogHouse destructor: [copy-constructed FidoHouse]
+contains [Fido], rc = 3
+Detaching Dog: [Fido], rc = 3
+DogHouse destructor: [FidoHouse assigned]
+contains [Fido], rc = 2
+Detaching Dog: [Fido], rc = 2
+DogHouse destructor: [FidoHouse]
+contains [Fido], rc = 1
+Detaching Dog: [Fido], rc = 1
+Deleting Dog: [Fido], rc = 0
+\end{lstlisting}
+
+Compilers will often create operator= for same type assignment if you don't define one yourself.  It basically mimics the copy constructor. If that class contains objects or is inherited the compiler calls that shit recursively. This is called \textit{memberwise assignment}.
+\begin{lstlisting}
+class Cargo {
+public:
+    Cargo& operator=(const Cargo&) {
+        cout << "inside Cargo::operator=()" << endl;
+        return *this;
+    }
+};
+
+class Truck {
+    Cargo b;
+};
+
+int main() {
+    Truck a, b;
+    a = b; // Prints: "inside Cargo::operator=()"
+};
+\end{lstlisting}
+TADAaaaa the cargo::operator= is called even though all data types in main are Trucks. We tend to not like the compiler doing shit on its own so you kinda have to explicitly create operator=. You don't even really have to implement it and you can make it private if you want no one else assigning without your say so.
+
+\subsection*{Data Conversion}
+For predfined C data types the compiler attempts to convert an incorrect data type to the correct one for a function call. Its not always successful, but it tries hard. We can get it to do this with our ADTs by defining type conversion functions. These are a specific type of constructor, or an over loaded constructor.
+\begin{lstlisting}
+class One {
+public:
+    One() {}
+};
+class Two {
+public:
+    Two(const One&) {}
+};
+void f(Two) {}
+int main() {
+    One one;
+    f(one); // Wants a Two, has a One
+}
+\end{lstlisting}
+The compiler notices that f() has the wrong parameter passed in and looks for a way to convert it to the right kind. It finds the Two::Two(One) constructor and calls it, clever bastard. If you want to stop type conversion you can add \textbf{explicit} to the constructor function
+\begin{lstlisting}
+class One {
+public:
+    One() {}
+};
+class Two {
+public:
+    explicit Two(const One&) {} //stops it from being called implicitly8
+};
+void f(Two) {}
+int main() {
+    One one;
+    //! f(one); // No auto conversion allowed to make it work call f(Two(one))
+    f(Two(one)); // OK -- user performs conversion
+} ///:~
+\end{lstlisting}
+
+Another way to create automatic type conversion is to overload the operator
+\begin{lstlisting}
+class Three {
+    int i;
+public:
+    Three(int ii = 0, int = 0) : i(ii) {}
+};
+class Four {
+    int x;
+public:
+    Four(int xx) : x(xx) {}
+    operator Three() const { return Three(x); } //overloaded constructor for Three allows Four to call it and return itself as a Three
+};
+void g(Three) {}
+int main() {
+    Four four(1);
+    g(four);
+    g(1); // Calls Three(1,0)
+} ///:~
+\end{lstlisting}
+
+We like these overloaded operators to be global because they can then be called on with one of the operators instead of just the one that it is a member of. Ex:
+\begin{lstlisting}
+class Number {
+    int i;
+public:
+    Number(int ii = 0) : i(ii) {}
+    const Number
+    operator+(const Number& n) const {
+        return Number(i + n.i);
+    }
+    friend const Number
+        operator-(const Number&, const Number&);
+};
+
+const Number
+    operator-(const Number& n1, const Number& n2) {
+        return Number(n1.i - n2.i);
+    }
+
+int main() {
+    Number a(47), b(11);
+    a + b; // OK
+    a + 1; // 2nd arg converted to Number by Number constructor called in operator+
+    //! 1 + a; // Wrong! 1st arg not of type Number the operator+ is a member operator so it cannot do the right conversion shitola
+    a - b; // OK
+    a - 1; // 2nd arg converted to Number
+    1 - a; // 1st arg converted to Number this works because the operator- is global and doesnt need the left operand to be a Number so it can take it and cast is appropriately
+} ///:~
+\end{lstlisting}
+
+Automatic type conversion can be helpful when you want to ecapsulate other data types without implimenting all of their functions.
+\begin{lstlisting}
+class Stringc {
+    string s;
+public:
+    Stringc(const string& str = "") : s(str) {}
+    int strcmp(const Stringc& S) const {
+        return ::strcmp(s.c_str(), S.s.c_str()); //c_str() is a function that returns a char*
+    }
+    // ... etc., for every function in string.h
+};
+\end{lstlisting}
+We can get around this problem by providing a type conversion which would just flip the stringc to a char* and give it access to all of the fucntions that char* has.
+\begin{lstlisting}
+class Stringc {
+    string s;
+public:
+    Stringc(const string& str = "") : s(str) {}
+    operator const char*() const {
+        return s.c_str();
+    }
+};
+\end{lstlisting}
+We need to watchout for accidentally creating two ways to convert between types, the compiler won't now which one to use and will throw an ambiguity error.
+\begin{lstlisting}
+class Orange; // Class declaration
+class Apple {
+public:
+    operator Orange() const; // Convert Apple to Orange
+};
+class Orange {
+public:
+    Orange(Apple); // Convert Apple to Orange
+};
+void f(Orange) {}
+int main() {
+    Apple a;
+    //! f(a); // Error: ambiguous conversion
+} ///:~
+\end{lstlisting}
+Luckily this is easy to fix by not being stupid and redundant. A harder to spot problem is when automatic conversion to more than one type is implimented (called \textit{fan-out}).
+\begin{lstlisting}
+class Orange {};
+class Pear {};
+
+class Apple { // converts to orange or pear
+public:
+    operator Orange() const;
+    operator Pear() const;
+};
+// Overloaded eat():
+void eat(Orange);
+void eat(Pear);
+int main() {
+    Apple c;
+    //! eat(c); // Error: Apple -> Orange or Apple -> Pear ???
+} ///:~
+\end{lstlisting}
+Have multiple types to convert to isnt actually a problem until someone creates a situation where either of them is required (in this case the overloaded eat function). The compiler has no way of knowing which conversion to do. The best solution is to create explicit functions with different names.
+
+
+\section*{Chapter 11: References and the Copy-Constructor}
+\subsection*{Strength of Typing}
+C++ is a more strongly typed language. In C we can assign a pointer of one type to another through a void pointer.
+\begin{lstlisting}
+bird* b;
+rock* r;
+void* v;
+v = r;
+b = v;
+\end{lstlisting}
+Now we have a bird* == a rock* which is weird. C++ stops this from happening (the compiler throws a bitch fit). If you must cast between pointer data types you must do so explicitly with a cast.
+\subsection*{References}
+Denoted by \& its basically a constant pointer that is automatically dereferenced. Its mostly used for argument lists and return values. We can also us it just free standing.\\
+Ex: const int\& p = v this allocates a peice of storage and sets its value to whatever v is. If we were to incriment q it would actually incriment v (it is automatically dereferenced).\\
+Basically references are facy as pointers that get the compiler to enforce shit for it. The compiler forces proper initialization and dereferences it for you.
+
+Some rules:
+\begin{itemize}
+\item references must be initialized when they are created
+\item references cannot change the object they point at
+\item no NULL references
+\end{itemize}
+
+References are most commonly used in argument lists for functions. The function uses the passing by reference to be able to make changes to the object that are visible outside the scope of the function (you can do this with a pointer, but references are nicer looking). You can also return a reference but, as with pointers, make sure that the object that the references is pointing to exists outside the scope of the function.
+\begin{lstlisting}
+Pointer Implementation
+int* f(int* x) {
+    (*x)++;
+    return x; // Safe, x is outside this scope
+}
+Reference Implementation
+int& g(int& x) { //Note: This will fail if x is const
+    x++; // Same effect as in f()
+    return x; // Safe, outside this scope
+}
+int& h() {
+    int q;
+    //! return q; // Error
+    static int x;
+    return x; // Safe, x lives outside this scope
+}
+int main() {
+    int a = 0;
+    f(&a); // Ugly (but explicit)
+    g(a); // Clean (but hidden)
+} ///:~
+\end{lstlisting}
+
+Note that the reference only works for a nonconst object. If possible we want to use const references to prevent the functions from changing something it shouldnt. Many functions are passed temporary values which are always const. Also it makes the compiler tell you when you are changing something.
+
+If you want to modify the contents of a pointer you use double asterix or *\& for references.
+\begin{lstlisting}
+void increment(int*& i) { i++; }
+int main() {
+    int* i = 0;
+    cout << "i = " << i << endl;
+    increment(i);
+    cout << "i = " << i << endl;
+}
+\end{lstlisting}
+This will increment the value of the pointer not the pointer itself.
+
+If at all possible you should pass by const reference for efficiency and to avoid the use of a copy constructor.
+
+
+\subsection*{Copy-Constructor}
+This is often referred to as X of X ref of X(X\&). This function is called implicitly all over the place including when you pass by value. When you don't explicitly create a copy constructor the compiler will make one for you. When creating a copy constructor for a class that uses composition and inheritance the compiler recursively calls the copy constructors for each of those class members, this process is called memberwise initialization. If the class you created is only ever passed by reference it doesnt need a copy constructor in which case you can declare a private copy constructor to prevent the compiler from creating one, but prevent the user from using it. Best practice is to pass everything as a const reference.
+
+\subsection*{Pointers to Members}
+As the name implies this is a pointer to a member of a class. This can cause a problem as the members of classes don't really have addresses inside a class. The syntax sort of fixes this by having you select the object at the same time you dereference the pointer.
+\begin{lstlisting}
+struct Simple {int a;};
+int main() {
+    simple so, *sp = &so;
+    sp->a;
+    so.a;
+}
+\end{lstlisting}
+This example is sort of how it is done. In general:
+\begin{lstlisting}
+objectPointer->*pointerToMember = 47;
+object.*pointerToMemeber = 47;
+\end{lstlisting}
+When defining a pointer to member we must give what data type that member is for the compiler, it looks a lot like a function declaration.
+\begin{lstlisting}
+memberType ObjectClass::*pointerToMember;
+\end{lstlisting}
+Here is more complete example:
+\begin{lstlisting}
+class Data {
+public:
+    int a, b, c;
+    void print() const {
+        cout << "a = " << a << ", b = " << b
+        << ", c = " << c << endl;
+    }
+};
+int main() {
+    Data d, *dp = &d;
+    int Data::*pmInt = &Data::a;
+    dp->*pmInt = 47;
+    pmInt = &Data::b;
+    d.*pmInt = 48;
+    pmInt = &Data::c;
+    dp->*pmInt = 49;
+    dp->print();
+} ///:~
+\end{lstlisting}
+Pointer to members are super awkward to use and tend to only really be used in special cases which is how they like it. They cannot be incremented or compared, only accessed.
+
+\subsection*{Pointers to Functions}
+These behave very similarly to pointer to members. We declare them like thi:
+\begin{lstlisting}
+returnType (ClassName::*functionName)(parameterType) const;
+\end{lstlisting}
+
+
+\section*{Chapter 5: Hiding the Implementation}
+Lots of this course will basically be building libraries for client programmers to use. Because of this we need to be good at hiding the stuff we don't want the clever bastards to touch.
+
+\subsection*{Access Control}
+We controll access to members and functions through public, private and protected in the structure declaration, which means that they really only apply to members.
+\begin{itemize}
+\item public - this means that these members and function are totally accessible, the user can do with them as they wish
+\item private - this means that these members are completely hidden from the user and can only be accessed from within the class
+\item protected - just like private except that inherited classes can access their parents private member (*snigger*)
+\end{itemize}
+
+\subsection*{Friends}
+You can grant access to a function that isnt a member of the class by making it a friend in the structure definition. One of the things you need to watch for when inheriting functions is that all parameters are passed by reference and not value to dodge the craziness that goes on in type conversion and copy constructors. Also the order of declaration matters, a function cannot inherit from a function that had not been declared yet. You can just declare the function at the top and fully initialize it later.
+
+Making structures nested doesnt actually give them private access, instead you have to declare it and then add it as a friend.
+\begin{lstlisting}
+struct Holder {
+private:
+    int a[sz];
+public:
+    void initialize();
+    struct Pointer;
+    friend Pointer;
+    struct Pointer {
+    private:
+        Holder* h;
+        int* p;
+    public:
+        void initialize(Holder* h);
+        void next();
+        void previous();
+        int read();
+        void set(int i);
+    };
+};
+\end{lstlisting}
+
+\subsection*{Object Layout}
+This refers to the location of where memory is allocated for the members of a structure. Different machines place private, public, and protected members in different locations based on how they are designed so this is not standardized by the compiler.
+
+\subsection*{The Class}
+We often call access control implementation hiding. We do this to stop the client from touching things they shouldnt and to separate the interface from the implementation. We want the client to know what it can do, not how it does it. Basically classes are just clusters of these things and their access rights. The only difference between classes and structs is that classes default to private and structs to public. The ultimate goal is to be able to completely rewrite your implementation, but so long as the interface is the same the client won't know the difference.
+
+Changing classes makes the compiler recompile them and the header files associated (this is called the fragile base class problem) which can be costly in large projects, so we want to have the client not recompile the entire class every time we change it. So we store the the struct in a handler class or Cheshire cat as they are often called. This is a class that contains the struct and all its shitola, but is represented by only a pointer. This way the client only recompiles when the interface has been changed.
+\begin{lstlisting}
+// Handle classes
+#ifndef HANDLE_H
+#define HANDLE_H
+class Handle {
+    struct Cheshire; // Class declaration only
+    Cheshire* smile;
+public:
+    void initialize();
+    void cleanup();
+    int read();
+    void change(int);
+};
+#endif // HANDLE_H ///:~
+\end{lstlisting}
+
+This allows us to fuck around with the cheshire struct all we want since it is hidden away in an implementation file.
+
+\section*{Chapter 15: Polymorphism and Virtual Functions}
+\subsection*{Upcasting}
+This is taking the address of an object and treating it as the address of the base type. The name comes from base classes being at the top of the inheritance tree so you cast up to it.
+\begin{lstlisting}
+class Instrument {
+public:
+    void play(note) const {
+        cout << "Instrument::play" << endl;
+    }
+};
+// Wind objects are Instruments because they have the same interface:
+class Wind : public Instrument {
+public:
+    // Redefine interface function:
+    void play(note) const {
+        cout << "Wind::play" << endl;
+    }
+};
+void tune(Instrument& i) {
+    i.play(middleC);
+}
+int main() {
+Wind flute;
+tune(flute); // Upcasting
+\end{lstlisting}
+We can see that the function tune will take an Instrument and any of its base classes. This is because although upcasting narrows the object it is fine because that is all that is needed by the function. There is a problem with the above example because the upcasting line calls Instruments play function and not Winds. This is due to binding.
+
+\subsection*{Binding}
+Binding is basically a call to a function body and the process of determining which to use. Some binding is called by the compiler and linker before the program is run called early binding. C only ever uses early binding, most other languages don't use it at all. In the above example it uses early binding so the compiler only knows to call the Instrument play.
+
+We fix this with late binding, forcing it to happen at runtime, also called dynamic binding. The compiler puts code to find the correct function call in it instead of a call to the function itself, this way the function call is determined at runtime allowing it to make the right decision.
+
+\subsection*{Virtual Functions}
+The way to force dynamic binding is to declare functions as virtual.  This is done using the virutal key word before a member declaration. If we declare a function virtual in the base class it will be derived in its derived classes. It is here that we override them. Virtual basically tells the compiler to postpone binding it untill it has initialized everything, the practical upshoot isnt that the compiler will pick the most specific virtual function with a matching signature to use.
+
+When the compiler comes across a virtual function it doesnt bind anything and instead installs the mechanisms necessary to perform late binding. It does this by creating a VTABLE for each class containing the virtual functions and places addresses for the virtual functions of the class in it. When you make a polymorphic cal it fetches the VPTR (pointer to the virtual function) and looks up the function at that address and deals with it.
+
+\subsection*{Storing Type Information}
+Information about objects is hidden and only established at run time. For instance the size of the object just stealths about untill it is called on. Note: each class gets one VPTR to a table of function addresses (which is often called its size so virtual functions have size one). If objects have no members the compiler forces them to a nonzero size. This is a dummy member because an object must have a size to have an address. When a function has virtual members it fills that dummy slot with type information
+
+For classes with virtual functions they have a VPTR so that the compiler knows to grab their specific functions instead of using the functions of the base class. It will also contain pointers to any virtual functions of the parent class that arent overridden. When the compiler comes across a pointer for a base class that actually points to a derived class that class still points to the correct vtable so it still uses the correct functions.
+
+\subsection*{Function Execution}
+When a function is called the object it is called on is pushed onto the stack first followed by its arguments in the order that they are declared. Then the compiler checks the this object and uses its VPTR to find the correct function to call on it. The compiler maintains the function order in the vtable so that it always calls the right one despite the order that you declare functions.
+
+The setting of the vptr happens during the default constructor. Usually the compiler hands this shit, so just don't fuck it up.
+
+\subsection*{Objects}
+Upcasting only shifts the address. If the compiler has an object it is happy because it knows all that it needs to and doesnt use late binding for any functions. For efficiencty most compilers use early binding wherever possible. When the compiler comes across a function call on a dereferenced pointer for a base class it doesnt know what to do unless the virtual call is used.
+
+The gains in efficiency from making functions nonvirtual is negligible.
+
+\subsection*{Abstract Stuff}
+Sometime the base class will contain functions that it doesnt actually implement and relies solely on its derived classes to define. We make these classes abstract so that users cannot declare an instance of it, only upcast to it from a derived class. Then we make the function pure virtual (virtual and equal to it) which forces any derived class to define that function. Ususally these abstract classes or interfaces are there to just define the things that are common between derived classes. Any class with a pure virtual function is abstract.
+
+Pure virtual functions tell the compiler to reserve a slot for that function to be defined in later on. These also prevent an abstract class from being passed by value which would result in object slicing. Inline virtual definition are not allowed.
+\begin{lstlisting}
+    virtual void sleep() const = 0 {} //BAD
+\end{lstlisting}
+
+\subsection*{Inheritance}
+When you create a derived class with some overriding the compiler creates a new vtable and inserts your new function addresses with pointers to the inherited base class functions. When the derived class declares new functions it tacks those on to the vtable below those of the inherited functions. This is so that the offset for all of the base class functions will always be the same.
+
+\subsection*{Run-Time Type Identification}
+This happens with casting base clases down to derived classes. Unlike up casting this requires a bit more force because it is unsafe. This is because there is not compile time information about types so you must state them explicitly.
+
+\subsection*{Object Slicing}
+We almost always pass objects by reference rather than by value. This is because addresses almost always have the same size so passing an object of a derived type is the same as passing a base class object despite the two objects actually taking up vastly different space. No information is lost in the pass. When you must upcast the object being passed in to its base class the object is sliced. This basically cuts of anything of the derived class that does not exist in the class it is being cast to. This is done by the copy constructor. This is suuuuuuuper bad as it loses data and should usually be avoided. If your code requires upcasting you done goofed.
+
+\subsection*{Overloading and Overriding}
+\begin{lstlisting}
+class Base {
+public:
+    virtual int f() const {
+        cout << "Base::f()\n";
+        return 1;
+    }
+    virtual void f(string) const {}
+    virtual void g() const {}
+};
+
+class Derived1 : public Base {
+public:
+    void g() const {}
+};
+
+class Derived2 : public Base {
+public:
+    // Overriding a virtual function:
+    int f() const {
+        cout << "Derived2::f()\n";
+        return 2;
+    }
+};
+
+class Derived3 : public Base {
+public:
+    // Cannot change return type:
+    //! void f() const{ cout << "Derived3::f()\n";}
+};
+
+class Derived4 : public Base {
+public:
+    // Change argument list:
+    int f(int) const {
+        cout << "Derived4::f()\n";
+        return 4;
+    }
+};
+\end{lstlisting}
+
+In the above example you can see that derived classes cannot override a virtual function, but change its return type (this would be allowed for nonvirtual functions). This is so that they compiler can guarantee that the base class can call the derived funtion and get the same data type back. If you really need to modify the return type of a overridden virtual function you can return a pointer to a base class which hides the data type.
+
+\subsection*{Constructors}
+It is the constructors job to create the vtable correctly when a object is created. This is almost always done in stealth by the compiler. This really only matters when you trying to optimize you code and the compiler is secretly adding more code to your constructor. Usually you want to try to remove inline constructors. The constructor for a derived class must call the constructor for its base class to correctly initialize the inherited members. The compiler will do this even if you explicity state all constructors for a base class, the compiler just adds a bit more code to call the base constructor. Also it must call the base constructor first to make sure that the object is valid.
+
+If you call a virtual function within a constructor it will only use the local one. Basically, within a constructor the virtual keyword does nothing. This is because inside the constructor the object is only partially formed. Preventing calls to virtual function prevents them from manipulating members that do not exist yet. Some compilers try to implement ways to correctly call virutal function in constructors, but they often result in unexpected behavior.
+
+\subsection*{Destructors}
+Constructors cannot be virtual but destructors can and usually are. Destructors tend to work in exactly the opposite order from constructors (which must work from the base class down). Destructor starts with the most derived class and destroys its way up the inheritance tree. This means that it is safe to call an inherited function within the destructor. These know what they are derived from, but not what derives from them. You gotta be careful with destructors, if you don't make them virtual and it calls the base class one you can introduce a ninja memory leak.
+
+Only destructors and constructors chain together calls to base classes, all other functions just deal with their own version unless you explicitly call others.
+
+You can make pure virtual functions, but you need to provide the function body for it. This is a bit weird since you have to provide a function body in the base class which is sort of what pure virtuals are defined to not do. This is really used to prevent the user from creating instances of the base class when the destructor is the only function in it. This also means that inheriting a pure virtual destructor doesnt mean you need to make your own.
+
+\begin{lstlisting}
+class AbstractBase {
+public:
+    virtual ~AbstractBase() = 0;
+};
+
+AbstractBase::~AbstractBase() {}
+
+class Derived : public AbstractBase {};
+\end{lstlisting}
+
+Here we see that although AbstractBase::~AbstractBase is pure virtual it has a function body defined and Derived does not have a destructor defined. Derived doesnt actually inherit ~AbstractBase, the compiler actually auto generates a destructor for it and that overrides ~AbstractBase.
+
+Within destructor only the local version of functions are called, it ignores the virtual keyword. It does this for much the same reason as constructors, manipulating members that no longer exist.
+
+\subsection*{Creating a Hierarchy}
+We often run into problems surrounding the ownership of classes so we force all subclasses to inherit from one base class in a process called object based hierarchy (because the root class is name Object). Many languages use this layout for their default data types, C++ doesnt do this to avoid the overhead it causes.
+
+\begin{lstlisting}
+class Object {
+public:
+    virtual ~Object() = 0;
+};
+
+// Required definition:
+inline Object::~Object() {}
+
+class Stack {
+        struct Link {
+            Object* data;
+            Link* next;
+            Link(Object* dat, Link* nxt) :
+            data(dat), next(nxt) {}
+        }* head;
+    public:
+        Stack() : head(0) {}
+        ~Stack(){
+            while(head)
+            delete pop();
+        }
+        void push(Object* dat) {
+        head = new Link(dat, head);
+    }
+
+    Object* peek() const {
+        return head ? head->data : 0;
+    }
+
+    Object* pop() {
+        if(head == 0) return 0;
+        Object* result = head->data;
+        Link* oldHead = head;
+        head = head->next;
+        delete oldHead;
+        return result;
+    }
+};
+\end{lstlisting}
+
+This does present some problems when dealing with objects that arent custom defined as they would have to inherit from Object any anything else that is defined for them (called multiple inheritance).
+
+Heres an example to get the above code to work for strings:
+\begin{lstlisting}
+class MyString: public string, public Object {
+public:
+    ~MyString() {
+        cout << "deleting string: " << *this << endl;
+    }
+    MyString(string s) : string(s) {}
+};
+\end{lstlisting}
+
+Usually multiple inheritance makes shit go crazy, but its ok here because Object is a super simple class.
+
+\subsection*{Operator Overloading}
+We can make operators virtual if we want, but its generally complicated because a virtual function is only capable of making a single dispatch (detmining the type of an unknown object). Its very complicated to make it do two.
+
+\subsection*{Downcasting}
+Downcasting is much harder than upcasting because we are moving to a data type with more members. Its also hard to know which of the derived classes that the base class should downcast to. Usually we just avoid the problem all together and try to make it happen using polymorphism rather than explicit type casting. If you absolutley must down case there is a command for type-safe downcasting.
+\begin{lstlisting}
+    dynamic_cast
+\end{lstlisting}
+This returns a pointer to the desired type if it was successfull or a 0 if it wasnt. Dynamic\_cast uses data in the vtable to decide things so it only works for classes that have virutal fucntions. So always check for a 0 result from a downcast. Dynamic casting has a small amount of overhead, so if we known for sure the type that we are dealing with we can use a static cast instead.
+\begin{lstlisting}
+    static_cast
+\end{lstlisting}
+This call eliminates the overhead, but assumes you know what you are doing and can result in some crazy. Casting often results in retreiving data lost in upcasting.
+
+
+\section*{Chapter 2}
+\subsection*{The Process of Language Translation}
+Programs start as something easy to read called source code, and is translated into something that the computer can use called machine instructions.
+\subsubsection*{Interpreters}
+This translate source code into activities and executes those. BASIC translate and execute one line at a time and then forgets that line has been translated. This makes them suuuuper slow. Most interpreters translate the entire program into an intermediate language to be executed by a faster interpreter.
+
+Interpreters translate from source code to executing very quickly and the source code is available so error messages are much more specific. They have some limitations for large programs. The interpreter must be in memory to execute the code and may introduce speed restrictions. They also require the entire program be brought into it at once which eats up space and can make some weird bugs.
+
+\subsubsection*{Compilers}
+A compiler turns the source code directly into assembly code files that must then be executed. The direct translation takes much longer but takes much less space to run. Some languages are designed to allow peices to be compiled seperately and then combined by a linker in a process called separate compilation.
+
+\textbf{The Compilation Process}
+\begin{itemize}
+    \item \textbf{Preprocessor} A preprocessor is run on the source code which replaces patterns in source code with those the programmer has defined through preprocessor directives. These directives are used to make code much more readable.
+    \item \textbf{Parser} The compiler parses the preprocessed code into small units and organizes them into a tree.
+    \item \textbf{Optimizer} a global optimizer may run here to make the code smaller and faster, not always included
+    \item \textbf{Code Generator} the code generator runs through parse tree creating assembly or machine code.
+    \item \textbf{Assembler} if the code generator outputs assembly code this parses it into machine code, should now have .o files
+    \item \textbf{Peephole Optimizer} May be used here to remove redundancies in machine code
+    \item \textbf{Linker} Combines the files into an executable program. This includes internal references to other files and external references to libraries.
+\end{itemize}
+
+The compiler checks the types of data being passed into functions during the initial parsing of the code. This is called static type checking since it doesnt happen at runtime. Some languages also have dynamic type checking at runtime. This is more powerfull, but has a larger overhead.
+
+
+\section*{Chapter 3}
+\subsection*{Make: Managing Separate Compilation}
+For efficiency we like to break code into chunks so that we don't need to recompile the entire thing everytime we change any of it. Because of this we also need to define how that code is rejoined together in to an executable. This is usually handled by the compiler, it just doesnt always do the best job of this. It usually recompiles everything instead of what is needed. We can customize this process through the use of a program called make.
+
+Anytime you edit something in the program type make into the command so that the compiler doesnt get called. The make file will have the compiler defined and point it only to those files that need it as you've defined. Make is also used to install programs on Linux/Unix boxes.
+
+\begin{lstlisting}
+# A comment
+hello.exe: hello.cpp
+    mycompiler hello.cpp
+\end{lstlisting}
+This example shows a comment starts with \#. It says that the target hello.exe depends on hello.cpp so when that file is changed (its timestamp is newer than the exe) this file gets remade. The target is remade through the rule defining which command to use to compile it.
+
+This can be cumbersome for large projects and we like to shorten things using macros (strings basically, we can add compiler tags to it and all that jazz). This would turn the above example into:
+\begin{lstlisting}
+CPP = mycompiler
+hello.exe: hello.cpp
+    $(CPP) hello.cpp
+\end{lstlisting}
+
+This can also be irriting to define the compiler for each file in the program so we can define which compiler to use based on the suffix.
+\begin{lstlisting}
+CPP = mycompiler
+.SUFFIXES: .exe .cpp
+.cpp.exe:
+    $(CPP) $<
+\end{lstlisting}
+
+Basically this says that to turn a cpp file into an exe file invoke the following command. The .SUFFIXES defines which suffixes the make needs to watch for.  .cpp.exe basically says call the following rule for this conversion. The \$<  is used in suffix rules and it basically means the prerequisite file that started this process (in this case the cpp file).
+
+If we want to define the target files assign them all to a dummy target for similicity instead of defining all of them.
+\begin{lstlisting}
+CPP = mycompiler
+.SUFFIXES: .exe .cpp
+.cpp.exe:
+    $(CPP) $<
+all: target1.exe target2.exe
+\end{lstlisting}
+
+This makes it so that all is the default target, it sees that this doesnt exist so it builds its dependencies which are the files listed after it.
+
+
+\section*{Chapter 10: Name Control}
+\subsection*{Static Elements from C}
+The word static has two meaning in C++. The first is that an object is creation in the static data area instead of the stack each time a function is called on it. This is \textbf{Static Storage}. The second meaning is the visibility of a name and what locality it belongs to. A static name cannot be seen from outside its locality.
+
+When a function is called the compiler allocates storage for each variable created in the function. When you want to retain a variable between functions you can create a global variable, unfortunately this doesnt put that variable under the control of the function. The solution is to create static objects, these are not stored on the stack so they don't get dumped between functions instead they are in the program's static data area. This object is created only once in the function call and retains its value all the way through.
+\begin{lstlisting}
+char oneChar(const char* charArray = 0) {
+    static const char* s;
+    if(charArray) {
+        s = charArray;
+        return *s;
+    }
+    else
+        require(s, "un-initialized s");
+    if(*s == '\0')
+        return 0;
+    return *s++;
+}
+
+char* a = "abcdefghijklmnopqrstuvwxyz";
+
+int main() {
+    // oneChar(); // require() fails
+    oneChar(a); // Initializes s to a
+    char c;
+    while((c = oneChar()) != 0)
+    cout << c << endl;
+};
+\end{lstlisting}
+Since s is a static char* it holds its value through out the calls to oneChar. Basically the above oneChar function iterates through an array and it does this by moving s down through it. If we do not initialize the static value the compiler will set it to zero. Note: When using static variables watch out for multithreading issues.
+
+Because the compiler always wants the have a static variable initialized, for user defined ADT's the compiler will call the object's default constructor. Problems do begin to arise when the program ends. When the main funciton finishes it calls a destructor for all of the things it. Most of the time it calls ext\(\) . So you really shouldnt call exit\(\) inside a destructor or you will get infinite recursion. Static objects are the exception and do not get exit called on them.
+
+Destructors are called in the reverse order of the construction of the objects at the end of the function.
+
+\subsection*{Controlling Linkage}
+Any object name at file scope (not nested in another class) can be seen through out the program in something called \textbf{external linkage}. C++ tends to define namespaces by file, so you can have the header file's namespace overlap with the current file's with no problems.
+
+All global objects implicitly have static storage class so they are always stored in the static data area and their initialization happens before the main program runs. This means that
+\begin{lstlisting}
+    int a = 0; // at a global level
+    //is the same as
+    extern int a =0;
+\end{lstlisting}
+If we were to add a static keyword to the a's initial declaration it would make a have internal linkage. It would still be stored in static data area, but it would have changed visibility. Static only alters the storage location for local variables. If you declare a local variable external it says that variable exists somewhere else and makes a global variable. For functions the static and extern keywords only alter the visibility. So extern f\(\) is the same as f\(\) and static f\(\) is visible only within this translation unit. Another storage class specifier is \textbf{auto}, but it is never used since it just tells the compiler to do what it would have done automatically anyway. \textbf{Register} tells the compiler that this local variable will be used a long so it would probably keep it in a register if at all possible. This is also usually not used as the computer usually does a better job of optimizing its registers than you can.
+
+\subsection*{Namespace}
+Namespace refers to the names that are available for use at a given scope. If you have a function or variable with a repeated name at a given scope weird shit happens. We really have little control over the global namespace which can be problematic in large projects. Often this is solved by long complicated names which suck to type. What would be best is diving the global namespace into pieces.
+
+Creating a namespace looks exactly the same as defining a class. Basically it creates a enclosed area for those declarations. Namespaces must be at the global scope or nested within another namespace, namespaces do not need semicolons at the end of the declaration, and namespaces can be expanded on in multiple files. Namespaces can be aliased to another name for convenience and we cannot create a namespace within a class. We can inject friends into a namespace by declaring it in an enclosed set.
+\begin{lstlisting}
+namespace Me {
+    class Us {
+        //...
+        friend void you();
+    };
+}
+\end{lstlisting}
+
+There are three ways to refer to a name in a namespace:
+\begin{itemize}
+    \item specifying the name using the scope resolution operator\\
+    It looks a bit like referring to a name within a class
+    \begin{lstlisting}
+        namespace X {
+            class Y {
+                static int i;
+                public:
+                void f();
+            };
+            class Z;
+            void func();
+        }
+        int X::Y::i = 9;
+        class X::Z {
+            int u, v, w;
+        public:
+            Z(int i);
+            int g();
+        };
+        X::Z::Z(int i) { u = v = w = i; }
+        int X::Z::g() { return u = v = w = 0; }
+        void X::func() {
+            X::Z a(1);
+            a.g();
+        }
+    \end{lstlisting}
+    \item with a using directive to introduce all name in the namespace\\
+    The using keyword allows you to import an entire namespace. This makes it seem like the names in the namespace belong to the nearest enclosing scope.
+    \begin{lstlisting}
+        #ifndef NAMESPACEINT_H
+        #define NAMESPACEINT_H
+        namespace Int {
+            enum sign { positive, negative };
+            class Integer {
+                int i;
+                sign s;
+            public:
+                Integer(int ii = 0)
+                : i(ii),
+                s(i >= 0 ? positive : negative)
+                {}
+                sign getSign() const { return s; }
+                void setSign(sign sgn) { s = sgn; }
+                // ...
+            };
+        }
+    #endif // NAMESPACEINT_H
+
+    #ifndef NAMESPACEMATH_H
+    #define NAMESPACEMATH_H
+    #include "NamespaceInt.h"
+    namespace Math {
+        using namespace Int;
+        Integer a, b;
+        Integer divide(Integer, Integer);
+        // ...
+    }
+    #endif // NAMESPACEMATH_H
+    \end{lstlisting}
+    Now the namespace math contains the names in the namespace int. We can also do this within a function. If we use them in the main function they are visible at the global scope. Using more than one namespace can cause conflicts, but only when you call that name that is in both.
+    \item with a using declaration to introduce names on at a time\\
+    The using declaration will override names from a using directive that brings in all of the names in a namespace
+    \begin{lstlisting}
+        using namsepaceName::nameYouWant
+    \end{lstlisting}
+    These fuckers can be used anywhere.
+\end{itemize}
+
+\section*{Volume2: Chapter 7: Exception Handling}
+Usually people just ignore errors and only deal with them when they crop up, but really we should write code to handle any errors and continue on so that they user actually knows what the fuck broke.
+
+In C++ asset() is often used for debugging. Error handling is fairly straight forward when you have enough information and context, but when you don't shit goes sideways. Heres how you handle it:
+\begin{itemize}
+    \item Return error information, if the return value is wonky set a global error condition flag.
+    \item C contains signal and raise functions (in a standard C library) that triggers an event in response to another event.
+    \item use a goto function (setjmp and longjmp) to create a safe place to jump to in case of a problem. \\
+    Setjmp and longjmp do not call destructors, so using them is pretty useless as it leaves shit just chilling there. Doesnt work for c++, ignore it
+\end{itemize}
+
+Usually when you hit an exceptional situation without enough information you just through an exception. These safely exit the scope (calling destructos and such) and you can make them return a value.
+
+\subsection*{Catching an Exception}
+Catching exceptions come in the good ol' try catch blocks. Try contains risky code that may splutter and die, catch is all of the crazy shit it might do and how to handle it.
+
+There are two basic models in exception handling:
+\begin{itemize}
+    \item termination: assume that the error is critical and will break everything.
+    \item resumption: the handler does something that fixes or bandaids the situation and allows the program to carry on
+\end{itemize}
+
+Not sure this is still a thing: exception specification allows you to tell the user what types of exceptions a function might throw
+\begin{lstlisting}
+    void f() throw(toobig, toosmall, divzero);
+\end{lstlisting}
+The function unexpected() is called when you throw something not in the exception specification. It contains a pointer to a function called set\_unexpected() which does something you define to fix shit (point it at one of your handlers).
+
+If no exception specification is provided then it just means that there may or maynot be exceptions, not that there won't be any.
+
+If you have a catch with no error type specified it is a catch all, put this at the end of your catch block or you will have a ton of unreachable code underneath it. If you want to throw the error you just caught you can just say throw in the catch block.
+\begin{lstlisting}
+     catch(...) {
+        cout << "an exception was thrown" << endl;
+        throw;
+    }
+ \end{lstlisting}
+Should your catch block not contain a default catch all and an uncaught exception goes through it moves to the next higher block of catching and so. Should an exception remain uncaught on all levels the terminate() function is called. The default value for this is abort() which exits the program with no clean up. Uncaught exceptions should always be the result of program error and not a lazy programmer.
+
+Should you wan to use your own terminate you can pass the set\_terminate() function the function you want called for uncaught exceptions. When a program enters exception handling it ensures that it leaves it scope calling all necessary destructors.
+
+When an error occurs during a constructor come crazines can happen. How do you clean up an object that isnt fully created. The somution is to make everything an object that way each allocation is that of an object and if it fails the other objects are cleaned up and the one that failed isnt created. Templates are a great way of doing this.
+
+C comes with some standard exceptions:
+\begin{itemize}
+    \item  exception - the base class for all exceptions, comes with a what() that is a printable result
+    \item logic\_error
+    \begin{itemize}
+        \item domain\_error - violations of a precondition
+        \item invalid\_argument - invalid argument to the function that throws it
+        \item length\_error - attempt to produce an object whose length is greater than or equal to the largest representable value of type size\_t
+        \item out\_of\_range
+        \item bad\_cast - executing an invalid dynamic\_cast expression
+        \item bad\_typeid - a null pointer p in expression type(*p)
+    \end{itemize}
+    \item runtime\_error
+    \begin{itemize}
+        \item range\_error - violation of postcondition
+        \item overflow\_error - arithmetic overflow
+        \item bad\_alloc - failure to allocate storage
+    \end{itemize}
+\end{itemize}
+
+There are some cases where exceptions are not warrented:
+\begin{itemize}
+    \item for asynchronous events\\
+    This has to do with how asynchronous events are executed, to handle them you must use code that is not part of the normal program flow. These fuckers may still throw exceptions, just at random ass times
+    \item for ordinary error conditions\\
+    if you have enough information of handle an error, its not an exception
+    \item for flow-of-control\\
+    do not use try catch block as return statements
+\end{itemize}
+
+When to use exceptions:
+\begin{itemize}
+    \item Fix the problem and call the function (which caused the exception) again.
+    \item Patch things up and continue without retrying the function.
+    \item Calculate some alternative result instead of what the function was supposed to produce.
+    \item Do whatever you can in the current context and rethrow the same exception to a higher context.
+    \item Do whatever you can in the current context and throw a different exception to a higher context.
+    \item Terminate the program.
+    \item Wrap functions (especially C library functions) that use ordinary error schemes so they produce exceptions instead.
+    \item Simplify. If your exception scheme makes things more complicated, then it is painful and annoying to use.
+    \item Make your library and program safer. This is a short-term investment (for debugging) and a long-term investment (for application robustness).
+\end{itemize}
+
+Some tips:
+\begin{itemize}
+    \item start with standard exceptions there might be one for what you're doing
+    \item nest your own exceptions (put the an explicit exception within the class of the object it effects to make it clear to the user what's going down)
+    \item use exception hierarchies (inheritance is useful)
+    \item multiple inheritance (this is much easier since all exceptions inherit from the same base class)
+    \item catch by reference not value
+\end{itemize}
+
+To throw exceptions in constructors:
+\begin{itemize}
+    \item set a nonlocal flag and hope the user checks it
+    \item return an incompletely created object and hope the user checks it
+\end{itemize}
+
+\section*{Volume2 Chapter 3: Templates in Depth}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

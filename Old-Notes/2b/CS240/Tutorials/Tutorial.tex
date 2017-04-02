@@ -1,0 +1,113 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackgpe{amsmath}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+Algorithm is a step by step process for carrying out a computation. 
+we want efficient algorithms to minimize time, space usage, and number of steps/operations
+
+problem: wide variety of machines/hardware making it hard to determine runtime consistently
+
+instead of time we use the number of primitive operations
+
+still a wide variety of hardware 
+
+what is a primitive operation - + - += > <<, etc
+
+what is the cost of each - depends on the machine
+
+BigO notation 
+\begin{itemize}
+\item ignore the relitive costs
+\item every primitive operation is 1 unit cost
+\item not ture in real life, but helpful and good enough
+\item only worry about behavior for large inputs (asymptotic analysis)
+\item only focus on fowth rate
+\end{itemize}
+
+Formally: $\exists c > 0 : 0 \leq f(n) \leq g(n) \leq cg(n) \enspace \forall n \geq n_{0}$
+
+ex:
+$5n^2+4n \enspace \exists \enspace O(n^2)$ make this look like $cn^2$
+$4n \leq 4n^2 \enspace \forall n \geq 1$
+$fn^2+4n \leq 5n^2 + 4n^2 = 9n^2 \enspace \forall n \geq 1$
+So c = 9 and $n_{0}$ = 1
+
+ex:
+Prove that ${ n \choose 2} \in O(n^2)$
+${n \chose 2} = \frac{n(n+1)}{2} = \frac{n^2}{2} - \frac{n}{2} \enspace \forall n \geq 2$
+$\frac{-n}{2} <0 \enspace n \geq 2$
+$\frac{n^2}{2} - \frac{n}{2} \leq \frac{n^2}{2} \enspace \forall n \geq 2$
+$c = \frac{1}{2} \enspace n_{0} = 2$
+
+ex:
+Prove that ${n \choose 2) \in \Omega (n^2)\\
+{n \choose 2) = \frac{n^2}{2} - \frac{n}{2}\\
+- \frac{n^2}{2} = - \frac{n}{2} \enspace \forall n \geq 2\\
+\frac{n^2}{2} - \frac{n}{2} \geq \frac{n^2}{2} - \frac{n^2}{2} = 0$ BAD, we dont like 0s
+
+\begin{align*}
+n &> 2\\
+n^2 &> 2n\\
+\frac{n^2}{4} &> \frac{n}{2}\\
+-\frac{n^2}{4} & \leq - \frac{n}{2}\\
+\frac{n^2}{2} - \frac{n}{2} &> \frac{n^2}{2} - \frac{n^2}{4} = \frac{n^2}{4}\\
+c = \frac{1}{4}  &\\
+n_{0} = 2 &\\
+\end{align*}
+
+A combination of O and \Omega is \Theta
+$\exists n_{0} > 0, c_{1}>0, c_{2}>0 : 0 \leq c_{1}g(n) \leq f(n) \leq c_2{0}g(n)$\\
+$if \enspace f(n) \in O(g(n))\\
+and \enspace f(n) \in \Omega (g(n))\\
+then \enspace f(n) \in \Theta (g(n))$\\
+
+Intuition
+\begin{align*}
+f(n) \in O(g(n)) &\longrightarrow f(n) \leq g(n)\\
+f(n) \in \Omega (g(n)) &\longrightarrow f(n) = g(n)\\
+f(n) \in \Theta (g(n)) &\longrightarrow f(n) \geq g(n)\\
+\end{align*}
+
+Little o\\
+$\forall c > 0 \enspace \exists n_{0} > 0  0 \leq f(n) \leq g(n) \enspace \forall n \geq n_{0}$\\
+$f(n) \enspace \in o(g(n))\\
+yr < g(n)$ This strictly excludes \Theta (g(n))
+
+ex:
+Show that $n^2 \enspace \in o(n^2)$\\
+\begin{align*}
+n^2 &= n * n < n *n *n ...\\
+n^n &\leq cn^n \enspace \forall c > 0\\
+c &= 0,1 \enspace FAIL\\
+&\\
+n^2 &= n*n \leq n*n*n = n^n \enspace \forall n \geq 3\\
+n^{n-1} &\leq cn^n \enspace \forall c > 0\\
+\frac{1}{n} &\leq c\\
+n_{0} = max{\frac{1}{c}, 3}\\
+\end{align*}
+
+Little w
+$\forall c > 0 \enspace \exists n_0 >0 : 0 \leq cg(n) \leq cf(n) \enspace \forall n > n_0$\\
+$f(n) \in \omega (g(n))$\\
+$yr > g(n)$ note that this is similar to \Omega
+L = $\displaystyle\lim_{n\rightarrow \infinity} \frac{f(n)}{g(n)} $
+    
+
+Hospital's Rule
+if $\displaystyle\lim_{n\rightarrow \infinity} \frac{f(n)}{g(n)} $ is detrminable
+$\displaystyle\lim_{n\rightarrow \infinity} \frac{f(n)}{g(n)} \displaystyle\lim_{n\rightarrow \infinity} \frac{f'(n)}{g'(n)}$
+
+
+
+
+
+\end{document}
+
+
+
+
+
+
+
+

@@ -1,0 +1,207 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amssymb,bookmark,parskip}
+\usepackage[margin=.8in]{geometry}
+\allowdisplaybreaks
+\hypersetup{colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+\setcounter{secnumdepth}{5}
+
+\newcommand{\code}[1]{\ttfamily{#1}\rmfamily{}}
+
+\begin{document}
+
+\title{SE 465-001 --- Project}
+\author{
+  Kevin Carruthers (20463098)\\
+  \texttt{kcarruth@uwaterloo.ca}
+  \and
+  Lara Janecka (xxxxxxxx)\\
+  \texttt{lajaneck@uwaterloo.ca}
+  \and
+  Laura Stericker (20460230)\\
+  \texttt{lsterick@uwaterloo.ca}
+}
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+\section{Part I}
+\subsection{Finding and Explaining False Positives}
+\subsection{Inter-Procedural Analysis}
+
+\section{Part II}
+\subsection{Resolving Bugs in Apache Commons}
+\subsubsection{10022 (Kevin)}
+Classification: False Positive
+
+Calling the super class's \code{keySet()} implementation is not a requirement of this function; though it is sometimes done elsewhere, it is not necessary to call super class methods in corresponding derived class functions. In this case, the derived class simply needs to construct a \code{KeySetView} from itself.
+
+\subsubsection{10023 (Kevin)}
+Classification: False Positive
+
+Calling the super class's \code{keySet()} implementation is not a requirement of this function; though it is sometimes done elsewhere, it is not necessary to call super class methods in corresponding derived class functions. In this case, the derived class simply needs to cast \code{map.keySet()} as an \code{UnmodifiableSet}.
+
+\subsubsection{10024 (Kevin)}
+Classification: False Positive
+
+Calling the super class's \code{keySet()} implementation is not a requirement of this function; though it is sometimes done elsewhere, it is not necessary to call super class methods in corresponding derived class functions. In this case, the derived class simply needs to cast \code{map.keySet()} as an \code{UnmodifiableSet}.
+
+\subsubsection{10025}
+Classification: Bug
+
+If \code{currentIterator} and the result of \code{transformer.transform(root)} are both null, \code{findNextByIterator} will call \code{hasNext()} on a null iterator.
+
+Faulty Line: \code{/src/java/org/apache/commons/collections/iterators/ObjectGraphIterator.java} line 186:
+\begin{verbatim}
+while (currentIterator.hasNext() && hasNext == false) {
+\end{verbatim}
+Recommended Fix: check that \code{currentIterator} is not null before calling \code{hasNext()}.
+
+\subsubsection{10026}
+Classification: False Positive
+
+All the other cases where the lock is held while accessing \code{last} are part of a larger change to the list, including the value of \code{last}. This is a brief read-only access, so the lock is not needed.
+
+\subsubsection{10027}
+Classification: False Positive
+
+Although it is not recognized as such by Coverity, the if statement on lines 881 and 882 guarantees that \code{nextGreater()} will not return null.
+
+\subsubsection{10028}
+Classification: Bug
+
+Based on the comment on line 158 of \code{SynchronizedList.java}, the lock should be held before making changes to the list.
+
+Faulty Line: \code{/src/java/org/apache/commons/collections/FastArrayList.java} line 1241:
+\begin{verbatim}
+last++;
+\end{verbatim}
+Recommended Fix: acquire lock just before line 1241 and release it after line 1242.
+
+\subsubsection{10029}
+Classification: Bug
+
+Under a specific ordering of threads, it is possible for the \code{lastReturned} to become null between the point where it is checked and the point where a lock is aquired to use it.
+
+Faulty Lines: \code{/src/java/org/apache/commons/collections/FastHashMap.java} lines 656 and 660:
+\begin{verbatim}
+656 if (lastReturned == null) {
+...
+660 synchronized (FastHashMap.this) {
+\end{verbatim}
+Recommended Fix: Acquire the lock before line 656 and keep it until the current point where it is released (on line 667).
+
+\subsubsection{10030}
+Classification: Intentional
+
+Although there is a risk of a deadlock, this code should be left as-is. Both of the methods should have locks to prevent races and there is no good way to acquire \code{SynchronizedCollection.lock} from the file \code{FastHashMap.java}.
+
+\subsubsection{10031}
+Classification: Bug
+
+If \code{rotateLeft()} is called on a node that doesn't have a right subtree, the program will attempt to call a method on null.
+
+Faulty Line: \code{/src/java/org/apache/commons/collections/list/TreeList.java} line 656:
+\begin{verbatim}
+AVLNode movedNode = getRightSubTree().getLeftSubTree();
+\end{verbatim}
+Recommended Fix: Use a temporary variable to store the result from \code{getRightSubTree()} and check if it is null before calling \code{getLeftSubTree()}.
+
+\subsubsection{10032}
+Classification: Bug
+
+It is possible for two threads to be in a while loop modifying a variable at the same time because the lock is only acquired within the loop.
+
+Faulty Lines: \code{/src/java/org/apache/commons/collections/map/StaticBucketMap.java} lines 506 and 507:
+\begin{verbatim}
+while (bucket < buckets.length) {
+    synchronized (locks[bucket]) {
+\end{verbatim}
+Recommended Fix: Acquire the lock before line 506 and keep it until after the while loop (release after line 515).
+
+\subsubsection{10033}
+Classification: False Positive
+
+The \code{key()} and \code{value()} calls were switched relative to their ordering in the constructor because this code is to be called in the case that an inverted map entry is desired, as indicated by the previous line.
+
+\subsubsection{10034}
+Classification: Bug
+
+It is possible for two threads to be in a while loop modifying a variable at the same time because the lock is only acquired within the loop.
+
+Faulty Lines: \code{/src/java/org/apache/commons/collections/StaticBucketMap.java} lines 515 and 516:
+\begin{verbatim}
+while (bucket < m_buckets.length) {
+    synchronized (m_locks[bucket]) {
+\end{verbatim}
+Recommended Fix: Acquire the lock before line 515 and keep it until after the while loop (release after line 524).
+
+\subsubsection{10035}
+Classification: Bug
+
+TODO: COMMENT
+
+Faulty Line: \code{/src/java/org/apache/commons/collections/FastArrayList.java} line 1221:
+\begin{verbatim}
+last--;
+\end{verbatim}
+Recommended Fix: acquire lock before line 1221, release it after line 1222.
+
+\subsubsection{10036}
+Classification: Bug
+
+Under a specific ordering of threads, it is possible for \code{lastReturned} to become null between the point where it is checked and the point where a lock is aquired to use it.
+
+Faulty Lines: \code{/src/java/org/apache/commons/collections/FastTreeMap.java} lines 759 and 763:
+\begin{verbatim}
+759 if (lastReturned == null) {
+...
+763 synchronized (FastTreeMap.this) {
+\end{verbatim}
+Recommended Fix: Acquire the lock before line 759 and keep it until the current point where it is released (on line 770).
+
+\subsubsection{10037}
+Classification: Bug
+
+If \code{rotateRight()} is called on a node that doesn't have a left subtree, the program will attempt to call a method on null.
+
+Faulty Line: \code{/src/java/org/apache/commons/collections/list/TreeList.java} line 673:
+\begin{verbatim}
+AVLNode movedNode = getLeftSubTree().getRightSubTree();
+\end{verbatim}
+Recommended Fix: Use a temporary variable to store the result from \code{getLeftSubTree()}. Check if it is null before calling \code{getRightSubTree()}.
+
+\subsubsection{10038}
+Classification: Intentional
+
+Although there is a risk of a deadlock, this code should be left as-is. Both of the methods should have locks to prevent races and there is no good way to acquire \code{SynchronizedCollection.lock} from the file \code{FastArrayList.java}.
+
+\subsubsection{10039}
+Classification: False Positive
+
+Although it is not recognized as such by Coverity, the if statement on line 1018 guarantees that \code{nextGreater()} will not return null.
+
+\subsubsection{10040 (Lara)}
+Classification:
+
+\subsubsection{10041}
+Classification: Bug
+
+The modCount value is used to keep track of the number of times that a map has been modified, but since it is not manipulated within a lock two processes manipulating the map could attempt to access this variable at the same time resulting in an incorrect value.
+
+
+\subsubsection{10042}
+Classification:Bug
+
+The modCount value is used to keep track of the number of times that a map has been modified, but since it is not manipulated within a lock two processes manipulating the map could attempt to access this variable at the same time resulting in an incorrect value. This bug is a bug for the same reason as 10041 but in the remove function instead of the put function.
+
+
+\subsection{Analyzing Your Own Code}
+
+\end{document}

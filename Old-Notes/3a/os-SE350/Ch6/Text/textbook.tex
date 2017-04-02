@@ -1,0 +1,282 @@
+\documentclass[12pt]{article}
+\usepackage{parskip,enumerate,amsmath}
+\usepackage{pdfpages}
+\usepackage[margin=.6in]{geometry}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\begin{document}
+\includepdf[pages={280-303}]{Operating_Systems.pdf}
+\section{Principles of Deadlock}
+ A deadlock is the permanent blockig of a set of process that are competing for a resource or communicating with each other. Basically processes are all waiting on each other and can never continue execution. We tend to depict deadlocks using a joint progress diagram.
+
+In a joint progress diagram we show potential paths of execution (turning 90 degress to depict wait times). By filling in sections where both processes need the same resource we can narrow down the possible execution paths. If there exists an area where there is no exits (blocked by forbidden regions) any process that enters it will be deadlocked. We call the region of execution the fatal region. If there is no fatal region a deadlock is impossible.
+
+Joint process diagrams only apply in the case of reusable resources. When a resource is consumable the process that gets to it first removes it (consumes it) so another process cannot have it until it has been added to.
+
+Reusable resources are held by processes for periods of time which is what causes deadlocks. One such example is two processes with multiple requests for memory and no frees. A deadlock is reached when we run out of memory and neither process can release any because it is blocked.
+
+Consumable resources are produced and consumed so we can get blocked when we need to consume a resource and there is none. A deadlock occurs when two processes both consume a resource and then produce it. This means that both are blocked and waiting on the other to produce the needed resource.
+
+Approaches to dealing with deadlocks:
+\begin{itemize}
+  \item Prevention: under commits resources
+  \begin{itemize}
+    \item request all resources at start
+    \begin{itemize}
+      \item works well for small processes and preemption is not neccissary
+      \item inefficient, we dont always know resources needed, delays initialization
+    \end{itemize}
+    \item preemption
+    \begin{itemize}
+      \item convenient when used on something whose stat is easily saved
+      \item preempts too often
+    \end{itemize}
+    \item resource ordering
+    \begin{itemize}
+      \item easy to enforce with compile time checks, no runtime overhead
+      \item doesnt allow incremental resource allocation
+    \end{itemize}
+  \end{itemize}
+  \item Avoidance
+  \begin{itemize}
+    \item manipulate to find a safe path of execution
+    \begin{itemize}
+      \item no preemption needed
+      \item future resource requests must be known, processes can be blocked for a while
+    \end{itemize}
+  \end{itemize}
+  \item Detection: allocated resources wherever possible
+  \begin{itemize}
+    \item invoke periodically to test for deadlocks
+    \begin{itemize}
+      \item never delays initialization and allows online handling
+      \item preemption losses
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\subsection{Resource Allocation Graphs}
+A directed graph showing the state of the system's resources and processes. Circle nodes are processes and square nodes are resources. When the edge points at the resource its a request and when it points at the process its a held. Dots are used to denote multiple instances of a resource. These make it easy to spot deadlocks since we know immediately which process are blocked and what they are blocked on.
+
+
+\subsection{Conditions for Deadlocks}
+In order to have a deadlock you need:
+\begin{itemize}
+  \item mutual exclusion: if no resource is blocking we can all access it and never get locked
+  \item hold and wait: if processes can only have one resource at a time they must release before another process runs, so no one gets blocked
+  \item no preemption: if we can forcibly take a resource from another process we would be able to break any deadlocks
+  \item circular wait (this is the one that actually causes the deadlock): we have to have a circle of processes waiting on each other to have a deadlock
+\end{itemize}
+
+The first three conditions make the fourth one unresolvable which is what makes a deadlock. Prevention is the policy of breaking one of the above conditions to stop deadlocks.
+
+\section{Deadlock Prevention}
+This is a system where we design everything such that there is no possibility of deadlocks. Usually done excluding one of the conditions required for deadlocks. The direct method is to remove all circular waits.
+
+Mutual exclusion: this is for the most part necessary for nearly all programs so we cannot exclude it.
+
+Hold and Wait: we can prevent this by requiring that a process request all of its resources one at a time and block the process until all requests can be fulfilled at the same time. This is inefficient because we must wait on all resources when we could proceed with some of them, and resources may remain unused for large periods of time but are considered held so other processes cannot use them. We also run into problems when we can't know what resources will be needed at the start of a process and when threads come into play.
+
+No Preemption: we can prevent this by requiring that if a process is holding certain resources it is denied a further request until it releases those or allow a second process to preempt and force the first process to dump its resources (only works for distinct priorities). Only really works for resources where we can save and restore the state easily.
+
+Circular Wait: we can prevent this by defining a linear ordering of resources.
+
+\section{Deadlock Avoidance}
+This doesnt have the inherent inefficiencies and restrictions as Deadlock Prevention. The trade off is here we need to now about the future executions of each process in order to make the bes decision to maintain concurrency.
+
+\subsection{Process Initiation Denial}
+Say we have n processes and m resources. We defined a:
+\begin{itemize}
+  \item R = resource vector = total amount of each resource in the system
+  \item V = available vecotr = free amount of each resource
+  \item C = claim matrix = requirement of process for resource
+  \item A = allocation matrix = current allocation to process of resource
+\end{itemize}
+
+The claim matrix is the max requirement of a process which we would need to know at the start which doesnt always happen.
+
+From this arises some relationships:
+\begin{itemize}
+  \item $R_j = V_j + \sum_{i=1}^n A_{ij}$ all resources are either available or allocated
+  \item $C_{ij} \leq R_j$ no process can claim more resource than there exists
+  \item $A_{ij} \leq C_{ij}$ no process can be allocated more memory that it claimed
+\end{itemize}
+
+From these we can say that you may only start a process $P_{n+1}$ if:
+\begin{align*}
+  R_j \geq C_{(n+1)j} + \sum_{i=1}^n C_{ij} \text{ for all j}
+\end{align*}
+Which basically means that there must be enough available resources left after all other claims have been filled to fulfill the claims made by this process. This is called \textbf{the banker's algorithm}.
+
+A \textbf{safe state} is when a there is at least one sequence of resource allocation to a process that does not result in a deadlock.
+
+Running through the algorithm:
+\begin{enumerate}
+  \item Get your claim and allocation matrix, subtract them to get the current needs
+  \item find a process where there is enough resources in the available vector to satisfy its current needs
+  \item remove those resources
+  \item run to completion
+  \item set its row in the claim matrix to zero (its done and doesnt need anything) and add those removed resources to the available vector
+\end{enumerate}
+If ever you reach a point where no process can run you have hit a deadlock.
+
+We can do a similar process for only a few actions at a time and not run the process to completion. Here we just take from the available queue and dont return any unless specified. This only identifies the possibility of a deadlock since we cannot predict what the next lines of execution will be (they could free resources we need).
+
+Deadlock avoidance does have some restrictions:
+\begin{itemize}
+  \item The maximum resource requirement for each process must be stated in advance.
+  \item The processes under consideration must be independent; that is, the order in which they execute must be unconstrained by any synchronization requirements.
+  \item There must be a fixed number of resources to allocate.
+  \item No process may exit while holding resources.
+\end{itemize}
+
+\section{Deadlock Detection}
+Here we grant resources whenever we can and once in a while the OS runs a detections algorithm that kills any circular waits. The interval between checks varies based on implementation.
+
+The most common detection algorithm uses the allocation matrix and available vector from the banker's algorithm and it adds a Q matrix representing the amount of resources requested by a process at that moment. As it runs it:
+\begin{enumerate}
+  \item mark each process that whose row in the allocation matrix of zeros (this is basically marking processes that have already run to completion)
+  \item initialize a temporary vector W equal to the available vector
+  \item find a process that is not marked and whose row in Q fits in the available vector, if no such vector is found terminate
+  \item mark the first process whose Q row fits in V and add its allocation row to W
+  \item loop back to three
+\end{enumerate}
+Here a deadlock exists if there are unmarked processes at the end of the algorithm. We work by finding a process that can run, simulating its run to completion and releasing of resources, very similar to banker's algorithm
+
+Once we find a deadlock there are a few ways to fix it:
+\begin{itemize}
+  \item kill all deadlocked processes (most common method)
+  \item back up each deadlocked process to some checkpoint and restart them all (may get the deadlock again, but nondeterminancy of concurrent processing can ensure that doesnt happen)
+  \item abort deadlocked processes one at a time until the deadlock is broken, go in order of minimal cost.
+  \item keep preempting resources until the deadlock is broken in order of minimal cost
+\end{itemize}
+Two of the above methods require you to chose a process to minimize cost, this can be by:
+\begin{itemize}
+  \item least processor time consumed
+  \item least output produced
+  \item most estimated time remaining
+  \item least total resources allocated
+  \item lowest priority
+\end{itemize}
+Basically we want to kill the restart the process that has done the least work so far.
+
+\section{An Integrated Deadlock Strategy}
+We want to mix and match design strategies for dealing with deadlocks to achieve the most optimal OS.
+\begin{itemize}
+  \item group resources into classes
+  \item linearly order classes
+  \item within each class apply the most appropriate algorithm
+\end{itemize}
+
+Some example groups:
+\begin{itemize}
+  \item \textbf{swappable space}: blocks of memory for swapping processes
+  \begin{itemize}
+    \item Prevention of hold and wait: require all required resources to be allocated at the start since the maximum requirements is known
+  \end{itemize}
+  \item \textbf{process resources}
+  \begin{itemize}
+    \item Avoidance: it is reasonable to expect processes to declare ahead of time what devices they will be using
+  \end{itemize}
+  \item \textbf{main memory}
+  \begin{itemize}
+    \item Prevention by preemption: when a process is preempted it is just swapped for main memory which frees space to solve deadlock
+  \end{itemize}
+  \item \textbf{internal resources}: I/O channels and such
+  \begin{itemize}
+    \item Prevention by resource ordering
+  \end{itemize}
+\end{itemize}
+
+\section{Dining Philosopher Problem}
+We have five philosopher each want to eat spaghetti with two forks, but there is one fork between each philosopher.
+
+We could solve this using semaphores: each philosopher picks up the fork on their left and waits for the fork on their right to be available. This would lead to a deadlock if all philosophers wanted to eat at the same time. We add a semaphore that only allows four philosophers in the dinning room at the same time this way at least one philosopher can eat.
+
+\begin{lstlisting}
+semaphore fork [5] = {1};
+int i;
+void philosopher (int i){
+  while (true) {
+    think();
+    wait (room);
+    wait (fork[i]);
+    wait (fork [(i+1) mod 5]);
+    eat();
+    signal (fork [(i+1) mod 5]);
+    signal (fork[i]);
+    signal (room);
+  }
+}
+\end{lstlisting}
+
+We could use a monitor: we have one condition variable for each fork and have a get forks functions that only allows you to pick up forks if two are available
+
+\begin{lstlisting}
+cond ForkReady[5];
+/* condition variable for synchronization */
+boolean fork[5] = {true}; /* availability status of each fork */
+void get_forks(int pid) /* pid is the philosopher id number
+{
+  int left = pid;
+  int right = (++pid) % 5;
+  /*grant the left fork*/
+  if (!fork(left)
+    cwait(ForkReady[left]); /* queue on condition variable */
+  fork(left) = false;
+  /*grant the right fork*/
+  if (!fork(right)
+    cwait(ForkReady(right); /* queue on condition variable */
+  fork(right) = false:
+}
+void release_forks(int pid)
+{
+  int left = pid;
+  int right = (++pid) % 5;
+  /*release the left fork*/
+  if (empty(ForkReady[left])/*no one is waiting for this fork */
+    fork(left) = true;
+  else
+    /* awaken a process waiting on this fork
+    csignal(ForkReady[left]);
+  /*release the right fork*/
+  if (empty(ForkReady[right])/*no one is waiting for this fork */
+    fork(right) = true;
+  else
+    /* awaken a process waiting on this fork */
+    csignal(ForkReady[right]);
+}
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
+\end{document}

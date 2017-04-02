@@ -1,0 +1,132 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage[margin=.6in]{geometry}
+
+%Note to future lara: These will be really shitty notes, I was rushing to get through them, when exams come around expand on them
+
+\begin{document}
+\includepdf[pages={68-123}]{Operating_Systems.pdf}
+\section{Operating System Objectives and Functions}
+An OS has three jobs:
+\begin{itemize}
+    \item making useing a computer convienent
+    \item allowing the computer resources to be used efficiently
+    \item growing to accomodate new functions
+\end{itemize}
+
+If we had to write out every program in machine instructions it would suck balls, so we implement a OS to do the translation for us.
+
+The OS works just like a regular program, but it uses it to direct it in the use of the other system resources. To do this the OS sets everything up then relinquishes control.
+
+\section{Evolution of Operating Systems}
+Serial processing was the basics form where errors were indicated by a light flickering. People had to schedule time on the computer which was very inefficient and each job required loading the compiler plus the program into memory and saving the compiled program, then loading and linking the two before any work could be done.
+
+Batch systems introduced a monitor which accessed the processor for the user so the user just had to submit jobs to the operator who batched them together and put it all on a input device for the monitor to read. Bits of the monitor were always in main memory called the resident monitor and the rest were helper funtions for programs. Since jobs are all queued up the processor is always processing a job which makes things move much more quickly. To help protect the OS and other critical code from the user fucking them up a user mode was introduced which had limitation on what the processor was allowed to access during that time.
+
+Batch systems evolved to have multiple programs running at the same time and use interrupts to flip between the them. CPU utilization is the percentage of runtime spent using the CPU.
+
+Time sharing systems allowed multiple interactive jobs (multiple people could work on the same machine). Basically every set time interval the timer would trip an interrupt and access would pass to another user (after writing it to memory).
+
+\section{Major Achievements}
+Three lines of developement caused problems: multiprogramming, time sharing, and real-time operations.
+
+Four main causes for errors:
+\begin{itemize}
+    \item improper synchronization: if a return signal is lost or duplicated shit gets fubar'd
+    \item failed mutual exclusion: two programs try to access the same resource
+    \item nondeterminate program operation: programs overwriting eachother's memory
+    \item deadlocks: two programs are waiting for eachother
+\end{itemize}
+
+The key to solving this is having the processes set their process state when they finish. The process list contains a pointer to the start of each address and part of its state (rest is saved with the process). When the processor needs to switch between programs it checks their saved state (which should contain all of the information needed).
+
+The OS has five responsibilties when manageing memory:
+\begin{itemize}
+     \item process isolation: processes cant fuck with eachothers memory
+     \item automatic allocation and management: distributing memory throughout the heirarchy to be efficient and not bother the programmer with it
+     \item support of modular programming: programmers can manipulate programs
+     \item protection and access control: determine which bits of memory a certain program can access
+     \item long-term storage: storage after the computer is powered off
+ \end{itemize}
+
+OS's do this with virtual memory and file systems. File systems are just means of long term storage. Virtual memory tricks the program into thinking there is more main memory than there is by addressing it logically ignoring constraints. It does this so that it can store many process in main memory. We divide memory into a number of fixed size blocks and each program gets a virtual address (page number and offset). This is just a new way to map the programs address in memory. The trick is that not all pages need to reside in main memory at the same time if a page is needed that isnt in main memory its snagged from disk. This allows us to give virtual memory specific to each program and not let other programs muck with it.
+
+Security of OS catagories:
+\begin{itemize}
+    \item availability: system protection against interruption
+    \item confidentiality: only authorized users can access data
+    \item integrity: no unauthorized modification
+    \item authenticity: proper verification of users
+\end{itemize}
+
+Scheduler factors:
+\begin{itemize}
+    \item fairness: processes are each given a fair amount of time
+    \item differential responsiveness: choosing what to execute to maximize use
+    \item efficiency: be efficient
+\end{itemize}
+
+The OS attempts this with multiple queues. The short term queue is the processes that are in main memory and ready to run. The short term scheduler choses which of these to run when the processor frees itself. A common strategy is round robin which gives each process some time on the processor. Another is to use priorities. The long term queue has the jobs that are waiting to be loaded into memory and join the short term queue. There is an IO queue for each IO device so that the processor doesnt try to run two programs that need the same device at the same time.
+
+
+\subsection{Developments Leading to Modern Operation Systems}
+Microkernel architechture takes the huge kernel and only assigns a few essential functions to it. This decouples the kernel and servers to make developement easier (the microkernel interacts with local and remote processes the same way).
+
+Multithreading is when a process is divided into threads to run the program concurrently. Its good because switching between threads easier than switching processes so there is less overhead.
+
+Symmetric multiprocessing over uniprocessing is a huge leap.
+\begin{itemize}
+    \item performance: this compounds when used with multiple processors
+    \item availability: when one processor dies the others can compensate
+    \item incremental growth: you can always add more processors
+    \item scaling: companies can have tiers of products
+\end{itemize}
+
+A distrubuted operating system is used to make a system everything appear to be just one thing instead of multiple processors and many tiers of memory.
+
+\section{Virtual Machines}
+We can use virtualization to run multiple OS one a machine. A virtual machine monitor runs on top of the host OS which manages multiple OSs and how they interact with the host OS. The first way to implement a virtual machine is to expose an application binary interface to the process and translate a set of OS and user programs from one platform to another. This is called a process VM and exists only for the execution of one program. An other method of implementing a VM is called a system VM. In this the virtual OS doesnt have access to the hardware at all and all of its commands must go through the virtualizing software
+
+\section{Design Considerations for Muliprocessor and Multicore Systems}
+SMP:
+\begin{itemize}
+    \item simultaneous concurrent processes or threads: need to able to execute the same kernel code simultaneously, all kernel tables and structures must be kept in sync
+    \item scheduling: each processor may do its own scheduling so enforcing a scheduling scheme is harder, also dont corrupt any scheduling structures
+    \item synchronization: some processors may be accessing shared data or IO's and we need to make sure that all data is kept up to date and things dont collide
+    \item memory management: making the best use of its resources and and paging systems must be kept current
+    \item reliability and fault tolerence: dont flip shit when a processor dies
+\end{itemize}
+
+Multicore systems need to watch for the above but also look out for their own scaleability. Parallelism gets much more complicated with multiple cores. Parallelism exists at three levels:
+\begin{itemize}
+    \item hardware/istruction
+    \item multithreading/multiprogram execution within each processor
+    \item multithreading within an application
+\end{itemize}
+
+
+\section{Microsoft Windows Overview}
+no notes taken for this due to time constraints
+
+
+\section{Traditional Unix Systems}
+no notes taken for this due to time constraints
+
+\section{Modern Unix Systems}
+no notes taken for this due to time constraints
+
+\section{Linux Systems}
+no notes taken for this due to time constraints
+
+\section{Linux Server Virtual Machine Architecture}
+no notes taken for this due to time constraints
+
+
+
+
+
+
+
+\end{document}

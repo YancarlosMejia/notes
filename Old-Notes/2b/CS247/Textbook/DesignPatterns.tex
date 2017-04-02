@@ -1,0 +1,153 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
+}
+
+\begin{document}
+\section*{Template Method}
+Define the skeleton of an algorithm in a operation that deffers some steps to the subclasses. The template method allows us to redefine certain steps of the algorithm based on which subclass is being called without changing the algorithm. It also helps to prevent code duplication.
+
+We define the algorithm in terms of abstract operations of the base class that the subclasses override to provide concrete behavior.
+
+This is used:
+\begin{itemize}
+    \item to implement invariant parts of an algorithm once and never have to redefine it
+    \item when classes have common behavior that can be abstracted to avoid code duplication
+    \item to control subclass extensions, don't worry about this, wasnt covered
+\end{itemize}
+
+We have an AbstractClass that defines the abstract algorithm, a ConcreteClass(es) inherits from this and implement the class specific elements of the algorithm.
+
+\section*{Facade}
+We use this to simplify overly complicated interfaces into one subsystem hidden from the client. If you have many classes with lots of inner connections you can route some of them through a common interface that simplifies things from the client's point of view.
+
+This is used when:
+\begin{itemize}
+    \item we want to provide a simple interface for a complex subsystem (most other patterns result in lots of small classes which can get cluttered)
+    \item there are lots of dependencies between clients and implementation classes, the facade decouples this promoting subsystem independence and portability
+    \item we want to layer subsystems simply, the facade defines an entry point to the subsystem
+\end{itemize}
+
+
+\section*{Adapter}
+When we want to convert the interface of a class into another interface. It allows us to make classes work together that wouldn't normally be able to due to incompatible interfaces.
+
+Say we have a large base class Base and and a subclass Derived which needs to use client class External, but this was not designed with our code in mind and Base and External are not interchangeable. There are two good ways to do this:
+\begin{enumerate}
+    \item having Derived inherit Base's interface and External's implementation
+    \item composing a External instance in Derived class and implement it in terms of External's interface
+ \end{enumerate}
+
+We want to use an Adapter pattern when:
+\begin{itemize}
+    \item we need to use an existing class but its interface does not match the one we need
+    \item we want to create a reusable class that works with unrelated or unpredictable classes, basically any class that might not have a compatible interface
+    \item you need sever existing subclasses but we dont want to have to adapt their interfaces by subclassing each one.
+\end{itemize}
+
+\subsection*{Class Adapter}
+Say there is a Target class with a Request function and an Adaptee class that has a SpecificRequest function. We want these two to be able to work together, but their interfaces are incompatible due to their request functions having different names. This is solved by creating an Adapter class that is a subclass of Target and inherits the implementation of Adaptee. This class has a Request function that can be called just like Target's Request function, but this function secretly calls Adaptee's SpecificRequest function. Now we have a way for Target to use Adaptee's functions.
+
+\subsection*{Object Adapter}
+The situation is the same as it was for Class Adapter, we have a Target that needs to calls Adaptee's SpecificRequest function, but it is named differently. The way we can fix this is to have an Adapter class that inherits from the Target class with a correctly named Request function, but this Adapter class contains a Adaptee member whose SpecificRequest function is called all stealth like.
+
+Consequences:
+
+\begin{tabular}{| p{9cm} | p{9cm} |}
+\hline
+\textbf{Class Adapter} & \textbf{Object Adapter}\\
+\hline
+can only adapt to one concrete Adapter class and so we can't adapt a class and all of its subclasses & a single Adapter can work with many Adaptees (Adaptee and all of its subclasses) and it can add functionality to all of these at once\\
+\hline
+Lets the Adapter override some of the Adaptee's behavior since its a subclass of it & its very hard to override Adaptee's behaviour because you are just dealing with an instance of it, requires you to subclass the Adaptee and make the Adapter refer to the subclass rather than the Adaptee\\
+\hline
+introduces only one object and no additional pointer indirection is needed to get to the adaptee&\\
+\hline
+\end{tabular}
+
+\section*{Strategy}
+This is used to define a family of algorithms, encapsulate each one and make them interchangeable. This lets the algorithms used vary independently from the clients that use them. When we need to implement many algorithms (called strategies) that do the same thing, but in different situations we encapsulate them in subclasses.
+
+Used when:
+\begin{itemize}
+    \item you have many classes that differ in only their behavior
+    \item we need different variants of the same algorithm
+    \item an algorithm uses data that you need to hide from the client
+    \item a class defines many behaviors
+\end{itemize}
+
+You have a Context class that has a ConcreteStrategy object which implements the algorithm using the Strategy interface. Then you have multiple ConcreteStrategy objects inherit from the same abstract Strategy class which defines a common interface for all ConcreteStrategies. Now when we instantiate a Context object we define what subclass of Strategy to use. Now we can change shit at runtime base on how we instantiate the Context class.
+
+\section*{Observer}
+This is used to define a one-to-many dependency between objects so that when one object changes state all of its dependents are notified and updated automatically.
+
+Used when:
+\begin{itemize}
+    \item when an abstraction has two aspects dependent on each other which we want to encapsulate
+    \item when a change to one object needs to trigger a change in others, the amount of which you dont know
+    \item when an object needs to be able to notify other objects of its state, but you dont want to make assumptions on what those objects are
+\end{itemize}
+
+This is done through a abstract Subject that knows its Observers (can by any numbers of them) and provides an interface for adding more Observers. From this we have a ConcreteSubject that has a state and ability to notify its observers when that state changes. The Observer contains an updating interface which is inherited by the ConcreteObservers that actually implement the update function.
+
+\section*{MCV}
+This is a three part deign pattern used primarily for web applications comprised of:
+\begin{itemize}
+    \item Model: does the logic and processing
+        \begin{itemize}
+            \item Encapsulates application state
+            \item Responds to queries about the application's state
+            \item Notifies the view of changes to the application
+        \end{itemize}
+    \item View: user interface
+        \begin{itemize}
+            \item Renders the model
+            \item Requests updates from models
+            \item Sends user input to the controller
+        \end{itemize}
+    \item Controller: message dispatcher
+        \begin{itemize}
+            \item Defines the application behavior
+            \item maps user input to model updates
+        \end{itemize}
+\end{itemize}
+
+It is often implemented in a series of steps
+\begin{enumerate}
+    \item user input is sent to controller
+    \item controller translates UI event into a call in application code
+    \item the model notifies the view of the change in its state
+    \item view queries the model for its new state
+    \item views update
+\end{enumerate}
+
+It is comprised of three other design patterns:
+\begin{itemize}
+    \item Composite Pattern: All views use the same base class (a uniform interface)
+    \item Strategy Pattern: View delegates to Controller the strategy that maps UI events to calls to Model
+    \item The Model and View implement the Observer Pattern to notify interested objects (Views) of its state changes
+\end{itemize}
+
+\end{document}

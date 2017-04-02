@@ -1,0 +1,99 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage[margin=.6in]{geometry}
+
+\begin{document}
+\includepdf[pages={172-180}]{M3_Guide.pdf}
+\section*{9: Interrupt Behavior}
+\subsection*{9.1: Interrupt/Exception}
+\subsubsection*{9.1.1: Stacking}
+When an exception takes place registers are pushed to the stack
+\begin{itemize}
+    \item R0-R3
+    \item R12
+    \item LR (Link Register)
+    \item PC (Program Counter)
+    \item PSR (Prgram Status Register)
+\end{itemize}
+The stack to which these will be pushed will depend on the stack pointer that the program was using (Process Stack Pointer goes to process stack and Main Stack Pointer goes to main stack). Interrupts always use the main stack.
+
+The block of eight words (the eight registers pushed at the start of an interrupt) is called a stack frame.
+
+We stack the PC and PSR are stacked first so that we can start the instruction fetch early for efficiency. This also allows us to to update the Interrupt Program Status Register early. Once we finish stacking all of the new data the Program Stack is updated to its new position at the top of the new data.
+
+Registers R0-R3, R12, LR, PC, PSR are all stacked to abide by C standards so that the interrupt handler can be a C function (any registers that would be changed by the exception handler are already saved).
+
+\subsubsection*{9.1.2: Vector Fetches}
+While the data bus is stacking registers the instruction bus fetches the exception vector from the vector table. Since these are done on separate buses they can be done concurrently.
+
+\subsubsection*{9.1.3: Register Updates}
+When we enter the exception handler we update registers:
+\begin{itemize}
+    \item the SP (either main stack pointer or program stack pointer) is moved the new location after stacking all necessary registers
+    \item the PSR's lowest part the IPSR is updated to the new exception number
+    \item PC changes to the vector handler and starts fetching exception instructions
+    \item LR is updated to a value EXC\_RETURN which drives the interrupt operation, its last 4 bits prove exception return information
+\end{itemize}
+
+\subsection*{9.2: Exception Exits}
+When the exception handler is done an exit (or interrupt return) is required to return to the regular program. There are three ways to trigger this all of which use the special value stored in LR:
+\begin{itemize}
+    \item If LR still has EXC\_RETURN in it we can use BX LR to link back the the program
+    \item If the LR has been pushed to the stack after entering the handler we can use a series of pops to put it on the PC
+    \item We can use a LDR to load the correct address into the PC
+\end{itemize}
+After this the registers are unstacked (pop in the same order as pushing) and the NVIC register is updated (this checks if the interrupt is done running if it is not cleared the program will reenter).
+
+\subsection*{9.3: Nested Interrupt}
+The ability to support nested interrupts is build into the processor core that we will be using, we don't need to do anything apart from setting up the appropriate priority level for each interrupt source. While an exception is running all ones of lower priority will be ignored. Since the hardware automatically stacks and unstacks for us we can do this with no risk of data loss.
+
+We do need to make sure that there is enough space in the main stack for several nested interrupts. This also means that we cannot reenter an exception since the priority level would be the same and this make it ignored.
+
+\subsection*{9.4: Tail-Chaining Interrupts}
+This is a method to improve interrupt latency. If an exception takes place but the processor is busy with one of a higher priority it enters a pending state. This won't be processed until the processor is done with its current exception. When it does, the processor doesn't bother unstacking and restacking the registers since the program data hast changed.
+
+\subsection*{9.5: Late arrivals}
+If exceptions happen during the stacking process and it is interrupted by one with a higher priority the processor will jump straight to that one instead of starting the lower priority one and then going to the higher one.
+
+\subsection*{9.6: More on the Exception Return Value}
+When we enter an exception we set the LR to EXC\_RETURN (upper 28 bits set to 1). This value is then loaded into the PC at the end of the handler which tells the processor to execute the return sequence. This can be triggered by:
+\begin{itemize}
+    \item POP/LDM from the stack
+    \item LDR the PC
+    \item BX with a register
+\end{itemize}
+
+The EXC\_RETURN's bottom 4 bits provide information required by the operation used to execute it (this updates the LR manually so we don't have to generate these values). The last bit of EXC\_RETURN indicates the process state being used after the exception returns.
+\begin{itemize}
+    \item 0xffffff1: return to handler mode (if a nested exception was entered)
+    \item 0xffffff9: return to thread mode and on return use the main stack (if the thread was using MSP)
+    \item 0xffffffD: return to thread mode and on return use the process stack (if the thread was using PSP)
+\end{itemize}
+
+This means that you cannot have a interrupt return to an address in the range 0xffffff0-0xffffffff, but these addresses are in a non-executable region anyway.
+
+\subsection*{9.7: Interrupt Latency}
+Latency is the delay fro the start of an interrupt request to start of handler execution. The lowest possible latency for our processor is 12 cycles (if the memory system has no latency, and the bus system lets us fetch the vector while the memory bus does stacking). If we are executing tail-chaining interrupts (where stacking isnt required) this can be as low as 6 cycles. For instructions that are multicycle we could abandon it and restart it when the handler is done. The processor allows exceptions during multiple load and multiple store operations, the current memory access is completed and the next register number is stored in the xPSR, once its done the operation picks up where it left off. If this happens in a IF/THEN, the LDM/STM  is killed and restarted, this is because the if/then status is saved in the same place as the ICS(the next memory to be accessed by the operation).
+
+When there is an outstanding transfer on the bus interface it is allowed to finish to ensure that th bus fault handler overrides the current process.
+
+\subsection*{9.8: Faults Related to Interrupts}
+Faults can be caused by exception handling.
+\subsubsection*{9.8.1: Stacking}
+A bus fault can happen during stacking which will result in the stacking sequence dying and the bus fault bing triggered. The is called a stacking error, indicated by the STKERR (4th bit in the Bus Fault Status Register 0xE000ED29).
+
+If the stacking error is caused by a memory protection unit violation the memory management handler will be exectued and the MSTKERR (bit 4 of the Memory Management Fault Status register 0xE000ED28).
+
+\subsubsection*{9.8.2: Unstacking}
+If a bus fault takes place during unstacking the exact thing happens but you set the 3rd bits of the Bus Fault Status or Memory Management Fault Status register.
+
+\subsubsection*{9.8.3: Vector Fetches}
+If a bus fault or memory management fault takes place during a vector fetch the hard fault handler is executed, indicated by VECTTBL(bit i in Hard Fault Status register, 0xE0000ED2C)
+
+\subsubsection*{9.8.4: Invalid Returns}
+If the EXC\_RETURN is invalid or doesnt match the state of the processor it triggers the usage fault, the INVPC bit 2 or INVSTATE bit 1 in the Usage Faulted Status register 0xE000ED2A is set.
+
+
+\end{document}

@@ -1,0 +1,22 @@
+1a)
+vector<Card> deck; //deck of cards to be created
+
+int suit = 0;
+int rank = 0;
+int GenCard () {
+    return Card(suit++ % 4, rank++ % 13); //This will result with all cards being created due to 13 % 4 = 1
+}
+
+generate_n (deck, 52, GenCard);
+
+1b)
+vector<Card> hand //hand of cards to be searched
+Table PlayedCards // a table of cards that has already been played
+
+find_if(hand.begin(), hand.end(), bind1st(isLegal, PlayedCards))
+
+1c)
+
+vector<Players*> players // a container of the players
+
+for_each(players.begin(), players.end(), mem_fun_ref(&Player::incScore))

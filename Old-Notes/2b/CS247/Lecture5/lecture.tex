@@ -1,0 +1,49 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+\section*{Polymorphism}
+\subsection*{Static vs Nonstatic Types}
+Static types is the pointer or reference and the dynamic type is the referent (object). This usually comes up in type converison between a subclass and its parent. First the compiler checks that a call to a static binding is legal as determined by the static type of the object or pointer that is being invoked. If the type of the static type is correct to what it is being bound. Then the compiler determines which method to invoke. A static binding is called for non-virtual methods based on the static type of the pointer or object.  A dynamic binding is called on virtual methods determined by the type of the referent. 
+
+\subsection*{Runtime memory model}
+Dynamic memory is the stuff with scopes that come and go and the static part is the actual code, static variables, anything that remains the same throughout execution.
+
+\subsection*{VTables}
+Think of an object as having a pointer to all of its functions (this isnt necessarily true, but pretend that it is). The compiler creates a table for each class contining pointers to all of the virtual functions of that class.
+\begin{verbatim}
+class Base {
+public:
+...
+void func();
+virtual void vfunc();
+virtual void vfunc2();
+};
+class Derived : public Base {
+public:
+...
+void func();
+virtual void vfunc();
+virtual void vfunc3();
+private:
+float attr3_;
+};
+\end{verbatim}
+vfunc is overridden, vfunc2 is inherited, vfunc3 is created in the derived class. Using this the compiler creates vTable for Base with func and func2 and one for Derived with func, func2 and fucn3.
+
+See slides for a good example of how this is executed
+
+There are some efficiency issues caused by a 20\% overhead in a call to a virtual function, it is very small especially for functions with multiple variables, so we tend to ignore it.
+\subsection*{Object Slicing}
+When the derived class has more members than the parent class so operators must copy over only the bits that are interesting. This allows you to check if the two are equal despite having different number of members, you just compare the members that both have.ew
+
+\subsection*{Which to make Virtual}
+We tend to make all public functions virtual or non (this is not a rule, just what tends to happen). Destructors should be virtual if there us a virtual method (the class is polymorphic) and of not the compiler will make a nonvirtual one. The print method is often virtual as well. Nonmember functions are not polymorphic so they cannot be virtual so we make a virtual print member function that the nonmember streaming operator calls.
+
+in the virtual print function if we could pass in a const Student it would have object slicing beause it would try to copy a student in to a person and would lose data in the process which is why we require it to be passed by reference.
+
+Also in virtual functions we should almost always pass everything as consts to prevent crazy shit from happening.
+
+
+
+\end{document}

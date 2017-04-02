@@ -1,0 +1,72 @@
+\documentclass[12pt]{article}
+\usepackage{parskip,enumerate,amsmath}
+\usepackage{pdfpages}
+\usepackage[margin=.6in]{geometry}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\begin{document}
+\includepdf[pages={417-444}]{Operating_Systems.pdf}
+We start off with three different types of scheduling
+\begin{itemize}
+  \item long term - which processes are queued to execute
+  \item medium term - what portion of those processes are loaded into memory
+  \item short term - what process to execute next
+\end{itemize}
+\section*{Types of Processor Scheduling}
+Newly submitted jobs are held on a batch queue. The long term scheduler decides when the OS can take another process and which of these jobs to turn into processes.
+
+We base our decision for when to add a new process on the level of multiprogramming that we want. This decision is made whenever a process terminates or if the processor has been idle for too long.
+
+Which process to admit could be just first come first serve for simplicity or based on some priority scheme.
+
+Middle term scheduling is covered pretty well in the virtual memory chapter.
+
+Short term scheduling occurs the most often, whenever a opportunity to preempt happens.
+
+\section*{Scheduling Algorithms}
+Short term scheduling is used to allocate processor time efficiently, where efficeiency is evaluated base on some criteria. User oriented criteria relate to the behavior of the system as seen by the user, response time is usually the most important. System oriented criteria focuses on efficient use of the processor, throughput is the most important. On single user systems the system oriented criteria are of less importance
+
+The selection function determines which process among the ready processes is selected next for execution. We tend to evaluate based on $w$ = time spent in the system so far, $e$ = time spent executing so far, and $s$ = total time needed by the process.
+
+
+RAN OUT OF TIME. WILL COMPLETE NOTES LATER
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

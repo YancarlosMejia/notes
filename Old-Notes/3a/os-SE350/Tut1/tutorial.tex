@@ -1,0 +1,99 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+\section{Interrupts}
+An interrupt is a mechanism by which other modules may interrupt the normal sequencing of the processor
+Classes
+\begin{itemize}
+    \item program
+    \item timer
+    \item I/O
+    \item hardware failure
+\end{itemize}
+An interrupt improves processor utilization by allowing the processor to jump between threads when one of them is moving slowly
+
+
+\section{Handling Multiple Interrupts}
+Two approaches to handle multiple interrupts
+\begin{itemize}
+    \item disable interrupts within an interrupt (sequential)
+    \begin{itemize}
+        \item ignore interrupt request signal
+        \item interrupt remains pending until checked by processor
+    \end{itemize}
+    \item define priorities for interrupts (nested)
+    \begin{itemize}
+        \item allow interrupt handled to be interrupted by higher one
+        \item always execute higher priority it order
+    \end{itemize}
+\end{itemize}
+
+
+\section{Chapter 1 Problems}
+\subsection{Problem 1.2}
+Based on a hypothetical machine from slide 22 of lecture 2. Expand the description of the program execution in figure 1.4 to show the use of MAR and MBR.
+Fetch: MAR = 300 (PC) and MBR = 1940 (IR)
+Execute: MAR = 940, MBR = 003
+
+Fetch: MAR = 301, MBR = 5941
+Execute: MAR = 941, MBR = 002
+the opcode is  5(add) so the MBR + AC => AC == 002 + 003 = 005
+
+Fetch: MAR = 302 =, MBR = 2941
+Execute: MAR = 941 (where we want to store it), MBR = 005 (value we want to store)
+
+\subsection*{Problem 1.3}
+In a hypothetical 32-bit processor having 32-bit instruction composed of two fields: First byte contains opcode, remainder for immediate operand or an operand address
+
+\begin{itemize}
+    \item what's maximum directly accessible memory capacity
+    \begin{itemize}
+        \item the data address is 3 bytes so 24 bits so 16 MB
+    \end{itemize}
+    \item discuss impact on the system speed if microprocessor bus as
+    \begin{itemize}
+        \item 32-bit local address bus and 16-bit local data buss
+        \begin{itemize}
+            \item we will have two cycles to access the data since you can only move 16-buts to the local data bus at a time
+        \end{itemize}
+        \item 16-bit local address bus and 16-bit local data bus
+        \begin{itemize}
+            \item this will also take 2 cycles since you still need to have a 32-bit address (since its a 32-bit system), this is just done in two separate loads (think matrix)
+        \end{itemize}
+    \end{itemize}
+    \item how many bits needed for PC and IR, whats an opcode register
+    \begin{itemize}
+        \item usually the PC will be 32-bit, but it must be at least 24 bits (1 byte for opcode)
+        \item the IR(opcode register) will be 32 bits
+    \end{itemize}
+\end{itemize}
+
+\subsection(Problem 1.7)
+why DMA access to main memory is given higher priority than processor access to main memory
+\begin{itemize}
+    \item DMA is stream data so it cannot stop (its an external stream) so if main memory has priority it might make the DMA stop and you would lose data which is baaaaad.
+\end{itemize}
+
+\subsection{Problem 1.8}
+DMA module transferring characters to main memory from external device transmitting at 9300 bps. The processor can fetch instruction at rate of 1 million instructions per second. By how much will the processor be slowed down due to DMA activity (ignore read/write operations).
+\begin{itemize}
+    \item character means an interrupt every 1 byte, so 9600 bps (1200 bytes per second)
+    \item this means that a character/byte per 838 microsecond
+    \item since the DMA has priority it will cause this interrupt every 838 microseconds
+    \item assuming the processor as an access every microsecond the slow down would be \frac{1}{838} = 0.12 percent
+\end{itemize}
+
+\section{Lab Tutorial}
+\subsection{Memory management}
+We will be implementing static and heap allocations.
+
+The simplest way to implement heap memory is through a linked list.
+
+An atomic operation is one that cannot be divided (not fully sure what he means here). We want this when mucking about with memory to not lose anything. We also want to check that the memory blocks that we need are free.
+
+Similar rules apply for releasing memory blocks. we
+
+\end{document}

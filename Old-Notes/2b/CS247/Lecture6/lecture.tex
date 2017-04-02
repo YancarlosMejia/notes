@@ -1,0 +1,50 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+\section*{Program Decomposition}	
+We can always have our program contain declarations for things defined in other places. This is a poor mans solution, not desirable. The way we really want to do this is to put all of the declarations needed by other moduels in a header file. This makes it so that any module can just include our shit at the top and refer to whatever they want. The preprocessor replaces the inclue with the contents of the multiple specified header file. <> means its a library, ``'' means to look for a local file. We do run into a problem with multiple header files in that some of the headers might include each other. This presents a problem as you will have multiple classes with the same name causing the program to not compile.
+
+The standard solution to this is to wrap the header file in a preproccessor directive. 
+\begin{verbatim}
+#ifndef RATIONAL_H
+#define RATIONAL_H
+your file
+#endif 	
+\end{verbatim} 
+This says to only do this if RATIONAL\_H is not already defined. ifdef means to do conditional compiling.
+
+We can accidentally have circular dependencies between header files. We really dont like this so we want to pull out anything that is common to try to avoid circular dependencies. We can also try to use forward declarations which says that the class exists but is defined later.
+
+\section*{Build Process}
+\begin{enumerate}
+	\item that source code and header files cpp
+	\item  preprocess them with cpp into full code
+	\item cc1plus turns them into assembly
+	\item as turns it into object code
+	\item linker takes in libraries and other object code files
+	\item executable
+\end{enumerate}
+
+Having the linking be seperate allows us to only recompile objects that have been changed instead of all of them and then just relinking that. Unfortunatly anything that is dependant on a changed file must be recompiled. 
+
+Ideally we have a fully automated build system that
+\begin{itemize}
+	\item is sure to incorporate all updated source files into executable
+	\item is incremental and rebuilds only what has changed
+	\item automatically derives the dependency relationships among files
+\end{itemize}
+
+We will be using a the UNIX make command. it uses build instructions and file dependecies to make a MakeFile and will check file timestamps in order to determine what to recompile.
+\begin{verbatim}
+# A comment
+program.exe: main.o ADT1.o ADT2.o # dependency graph
+    g++ main.o ADT1.o ADT2.o -o program.exe # build rule
+\end{verbatim}
+
+\subsection{Version Control}
+For c++ programs you dont want to include the .o files because they will make no sense to anyone else. Be carefull of header files and dependencies because others might not have them. Also teams are fun, git lets you have them, and therefore more fun.
+
+
+
+\end{document}

@@ -1,0 +1,173 @@
+\documentclass[12pt]{article}
+\usepackage{parskip,enumerate}
+\usepackage{pdfpages}
+\usepackage[margin=.6in]{geometry}
+
+%Note to future lara: These will be really shitty notes, I was rushing to get through them, when exams come around expand on them
+
+\begin{document}
+\includepdf[pages={128-164}]{Operating_Systems.pdf}
+
+\section{What is a Process}
+A program is made of the program code and data associated with the program. A process control block contains data about the program:
+\begin{itemize}
+    \item identifier
+    \item state
+    \item priority
+    \item program container
+    \item memory pointer
+    \item context data
+    \item IO status
+    \item accounting information
+\end{itemize}
+
+This block is what allows an interrupt to stop and resume the program without the loss of data. When an interrupt happens the PC and context data are saved here and the status is changed to blocked or ready.
+
+\section{Process States}
+We characterize the behavior of a process through a trace which is a list of the instructions that went into it. We can monitor a processor the same way.
+
+In a two stage system you have processes that are either running or not and every timeout the OS switches to a not running process.
+
+When a process is created it is loaded into main memory, this is caused by:
+\begin{itemize}
+    \item A new batch job
+    \item Interactvie log on: a new user logs in
+    \item Created by OS to do something so the user doesnt have to wait
+    \item Spawned by existing processes
+\end{itemize}
+
+All jobs should have a halt operation that the OS calls to terminate it. This sends an interrupt to the processor the let it know that shit's done. Can be caused by a lot of things.
+
+We want to expand our two state cycle to include more things, like waiting for an IO. We now have 5 stages:
+\begin{itemize}
+    \item new: the process wants to be run but isnt loaded
+    \item ready: the process has been laoded into memory
+    \item running: process us currently being executed
+    \item blocked: process cannot continue until some even ocurrs
+    \item exit: the process is done and cleaning up
+\end{itemize}
+
+The ready queue is a pretty standard queue, but might be organized by priority. The blocked queue tends to multiple queues, one for each IO so that the processor know which queue to pull from when the interrupt comes from the IO.
+
+Due to memory constraints we add two more stages for programs that are swapped into secondary storage. Ready/Suspended for programs that are ready but not in main memory and Blocked/Suspended for programs that are blocked but not in main memory
+
+A suspended process:
+\begin{itemize}
+    \item The process cannot immediately execute
+    \item May or may not be waiting for an event suspended != blocked
+    \item something put it in the suspended state (parent program or OS)
+    \item the parent agent must be the one to remove it from this state
+\end{itemize}
+
+Causes for suspension
+\begin{itemize}
+    \item OS needs memory to bring in a ready process
+    \item Other OS reason
+    \item User request (like at a break point)
+    \item A process is executed periodically and suspends while waiting
+    \item Parent process request
+\end{itemize}
+
+\section{Process Description}
+The OS stores the infornation it needs to manage its resources in tables. These tables are created on start up and can reference each other.
+
+The memory tables include:
+\begin{itemize}
+    \item allocation of main memory to process
+    \item allocation of secondary (virtual memory) to process
+    \item any protection attributes (which processes may access it)
+    \item any information needed
+\end{itemize}
+
+I/O tables keep track of I/O decices and channels. More importantly the OS needs to know if the I/O is currently in use and where in memory it access.
+
+The file tables have information about files, their location in secondary memory, their status, and other attrubutes. Often this information is used by the file management system and not the OS.
+
+Process tables are the really important ones. It manages processes, duh. We store information about processes in the associated process control block which is grouped with any user data, the program itself and its stack in a process image. This process image doesnt have to be in main memory. Often just the PCB is on the stack while the image must be called from memory when its time to run.
+
+OSs (especially complex multicore systems) require a lot of information in the PCB:
+\begin{itemize}
+    \item identification
+    \begin{itemize}
+        \item PID
+        \item parent PID
+        \item user identification
+    \end{itemize}
+    \item state information, this often found in the program status register
+    \begin{itemize}
+        \item user visible registers (any register that may be accessed in user mode)
+        \item control and status registers (PC, condition codes (results from arithmentic and logic operations), status (interrupt enables, execution mode, etc))
+        \item stack pointers
+    \end{itemize}
+    \item control information
+    \begin{itemize}
+        \item scheduling and state
+        \begin{itemize}
+            \item process state (think of the 7 state diagram)
+            \item priority
+            \item other scheduling related information (depends on the algorithm used)
+            \item event (if the process is waiting for an event)
+        \end{itemize}
+        \item data structuring (if the process is linked to any other structure ex. a parent)
+        \item interprocess communication
+        \item process privileges
+        \item memory management
+        \item resource ownership and utilization
+    \end{itemize}
+\end{itemize}
+
+PCB are really important, so much so that often multiple routines will need to access the PCB frequently. We need to make it so that direct access to these blocks is easy and fast. We do this by having a table that associates every PID with a pointer to its PCB. Two possible problems arise, a bug in a routine might fuck with the PCB which would fubar everything, and design changes to the structure or content of the PCB will effect eeeeeverthing. We solve these by having every routine go through a handler whose only job is to protect the PCBs (this does have overhead, but is necessary).
+
+\section{Process Control}
+Most OSs have at lease two modes of execution, user and kernel. This allows us to protect the OS and system tables from malicious or stupid user programs (hence a less privileged user mode). We keep track of what mode we are in using a bit in the PSW which is changed during switches between modes.
+
+Process Creation:
+\begin{enumerate}
+    \item \textbf{assign PID}: this is usually a sequentially assigned number
+    \item \textbf{allocate space}: this is everything in the process image, can be set by the type of process or by user/parent process request
+    \item \textbf{make PCB}: be careful with default values here
+    \item \textbf{set linkages}: update any ready, blocked, etc scheduling queues
+    \item \textbf{update data structures}: any statistics or structures that track running or created processes need to be updated
+\end{enumerate}
+
+We can switch between processes anytime the OS gains control over the currently running process. There are three ways to interrupt an execution of a process:
+\begin{itemize}
+    \item \textbf{Interrupt}: caused by external event, used to react to asynchronous execution, examples include:
+    \begin{itemize}
+        \item clock interrupt: when the OS decides that this process has had enough time on the processor (called time slice)
+        \item I/O interrupt: an I/O has been freed and needs to do stuff now
+        \item memory fault: need to access a virtual memory address that is not in main memory
+    \end{itemize}
+    \item \textbf{Trap}: caused by an error or exception of sorts, used to handle errors and such
+        \begin{itemize}
+            \item if the error is fatal terminiate the running process
+            \item else it depends on the error, but a recovery might be attempted
+        \end{itemize}
+    \item \textbf{Supervisor call}: explicitly requested by OS, used to return control OS
+\end{itemize}
+
+When we handle interrupts we must switch to kernel mode so that the interrupt handler has privileged access. When we do interrupt a program the portion of the PCB for the program state must be saved to stack so that it can be resumed at the same place later.
+
+When a process changes state:
+\begin{enumerate}
+    \item save the context of the processor
+    \item update the PCB
+    \item move the PCB to the correct queue
+    \item select new process to start running
+    \item update the PCB of the newly running process
+    \item update memory management structures (this depends on how its implemented)
+    \item restore context of processor to the state it was in when the newly running program last stopped
+\end{enumerate}
+
+This is all rather complicated so we prefer when we can switch modes without changing states.
+
+\section{Execution of the OS}
+There are a couple of ways to implement a kernel.
+
+\textbf{Nonprocess kernel}: kernel executes outside of any process. Basically the OS can do whatever the fuck it wants since its not a process. Here the OS can save the environment of the process and handle scheduling or really anything else it needs to to keep things running smoothly.
+
+\textbf{User Processes}: here we execute most of the OS software as user processes so the OS is just a bunch of routines that the user calls to. Here a process image contains PCB, user stack, private user space (program and data), and a kernel stack. Here a mode switch is done by saving the mode context and switching to an OS routine, the process is still technically running so a full state switch is not required. Here is where user and kernel modes really come into play.
+
+\textbf{Process-based OS}: the OS is a collection of system processes. Major kernel function are organized as sparate processes, there will be a small amount of process switching code to handle these. This forces an OS with minimal, clean interfaces and makes scalability of it much easier. This also allows some functions that would have previously been OS calls to be run like regular processes with all the advantages those have.
+
+\end{document}

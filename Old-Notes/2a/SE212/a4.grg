@@ -1,0 +1,141 @@
+ #u lajaneck kcarruth
+
+#a 04
+
+#q 01
+
+#check ST
+
+A x . E y . !P(f(y), g(x)), (A a,b . !Q(b,a) v P(a, g(b))) |= A c . E z . !Q(c,z)
+
+1) A x . E y . !P(f(y), g(x))
+2) A a,b . !Q(b,a) v P(a, g(b))
+3)!(A c . E z . !Q(c,z))
+by not_forall_nb on 3
+{
+	5)E c . !(E z . !Q(c,z))
+	by exists_nb on 5
+	{
+		6)!(E z . !Q(s, z))
+		by not_exists_nb on 6
+		{
+			7)A z . !!Q(s, z)
+			by forall_nb on 1
+			{
+				8)E y . !P(f(y), g(s))
+				by exists_nb on 8
+				{
+					9)!P(f(n), g(s))
+					by forall_nb on 7
+					{
+						10)!!Q(s, f(n))
+						by not_not_nb on 10
+						{
+							11)Q(s, f(n))
+							by forall_nb on 2
+							{
+								12)A b . !Q(b,f(n)) v P(f(n), g(b))
+								by forall_nb on 12
+								{
+									13)!Q(s, f(n)) v P(f(n), g(s))
+									by or_br on 13
+									{
+										14)!Q(s, f(n))
+										closed on 11, 14
+									}
+									{
+										15)P(f(n), g(s))
+											closed on 9, 15
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+
+#q 2b
+
+#check ND
+A x. A y.  with(x, y) => x != y, A x. A c1. A c2. wears(x, c1) & wears(x, c2) => c1 == c2, A x. A i1. A i2. brings(x, i1) & brings(x, i2) => i1 == i2, A x. wears(x, O) v wear(x, R) v wears(x, G), A x. brings(x, F) v brings(x, W) v brings(x, Q), A x. A y. wears(x, O) & wears(y, O) => x == y, A x. wears(x, G) => !brings(x, F) & !brings (x, W), A x. brings (x, Q) v (E y . with(x, y) & brings(y, Q)) => !lost(x), F != W , Y != J |= brings(M, Q) & wears(Y, R) & (lost(J) => !brings(J, Q) & !with (J, M)) 
+
+a1)A x. A y .  with(x, y) => x != y premise
+a2)A x. A c1. A c2. wears(x, c1) & wears(x, c2) => c1 == c2 premise
+a3)A x. A i1. A i2. brings(x, i1) & brings(x, i2) => i1 == i2 premise
+a4)A x. wears(x, O) v wears(x, R) v wears(x, G) premise
+a5)A x. brings(x, F) v brings(x, W) v brings(x, Q) premise
+a6)A x. A y. wears(x, O) & wears(y, O) => x == y premise
+a7)A x. wears(x, G) => !brings(x, F) & !brings (x, W) premise
+a8)A x. brings (x, Q) v (E y . with(x, y) & brings(y, Q)) => !lost(x) premise
+h1)!(F == W) premise
+h2)!(Y == J) premise
+1)wears(J, O) premise
+2)brings(Y, W) premise
+3)wears(M, G) premise
+a7Mario)wears(M, G) => !brings(M, F) & !brings(M, W) by forall_e on a7
+4)!brings(M, F) & !brings(M, W) by imp_e on a7Mario , 3
+5)!brings(M, F) by and_e on 4
+6)!brings(M, W) by and_e on 4
+a5Mario)brings(M, F) v brings(M, W) v brings(M, Q) by forall_e on a5
+7)brings(M, W) v brings(M, Q) by or_e on 5, a5Mario
+8)brings(M, Q) by or_e on 7, 6
+9)disprove wears(Y, O) {
+	q9p1)wears(Y, O) & wears(J, O) by and_i on 1,9
+	a6p1)A y . wears(Y, O) & wears(y, O) => Y == y by forall_e on a6
+	a6p2)wears(Y, O) & wears(J, O) => Y == J by forall_e on a6p1
+	q9p2)Y == J by imp_e on q9p1, a6p2
+	q9p3)false by not_e on q9p2, h2
+}
+10)!wears(Y, O) by raa on 9-q9p3
+11)disprove !brings(Y, W) & !brings(Y, F) {
+	q11p1)!brings(Y, W) by and_e on 11
+	q11p2)false by not_e on q11p1 , 2
+}
+12)!(!brings(Y, W) & !brings(Y, F)) by raa on 11-q11p2
+a7Yan)wears(Y, G) => !brings(Y, F) & !brings(Y, W) by forall_e on a7
+13)!wears(Y, G) by imp_e on 12, a7Yan
+a2Yan)wears(Y, O) v wears(Y, R) v wears(Y, G) by forall_e on a4
+14)wears(Y, O) v wears(Y, R) by or_e on 13, a2Yan
+15)wears(Y, R) by or_e on 14, 10
+16)assume lost(J){
+	sub16p1)disprove brings(J, Q){
+		sub16p1p1)brings(J, Q) v (E y . with(J, y) & brings(y, Q)) by or_i on sub16p1
+		a8Jack)brings(J, Q) v (E y . with(J, y) & brings(y, Q)) => !lost(J) by forall_e on a8
+		sub16p1p2)!lost(J) by imp_e on sub16p1p1 , a8Jack
+		sub16p1p3)false by not_e on 16, sub16p1p2
+	}
+	sub16p2)!brings(J, Q) by raa on sub16p1-sub16p1p3
+	sub16p3)disprove with(J, M){
+		sub16p3p1)with(J, M) & brings(M, Q) by and_i on sub16p3, 8 
+		sub16p3p2)brings(J, Q) v with(J, M) & brings (M, Q) by or_i on sub16p3p1
+		sub16p3p3)assume E y . with(J, y) & brings(y, Q) {
+			aardvark1)brings(J, Q) v (E y . with(J, y) & brings(y, Q)) by or_i on sub16p3p3
+			aardvark2)!lost(J) by imp_e on aardvark1, a8Jack
+		}
+		sub16p3p4)E y . with(J, y) & brings(y, Q) => !lost(J) by imp_i on sub16p3p3-aardvark2
+		sub16p3p5)for some M (with(J, M) & brings(M, Q)) => !lost(J) {
+			startcase)brings(J, Q) v ((with(J, M) & brings(M, Q)) => !lost(J)) by or_i on sub16p3p5
+ 			c1)case brings(J, Q){
+ 				c1p1)disprove lost(J){
+ 					c1p1p1)false by not_e on sub16p2, c1
+ 				}
+ 				c1p2)!lost(J) by raa on c1p1-c1p1p1
+			}
+			c2)case with(J, M) & brings(M, Q) => !lost(J){
+ 				c2p1)!lost(J) by imp_e on sub16p3p1, c2
+			}
+			endcase)!lost(J) by cases on startcase, c1-c1p2, c2-c2p1
+		}
+		sub16p3p6)!lost(J) by exists_e on sub16p3p4, sub16p3p5-endcase
+		sub16p3p7)false by not_e on 16, sub16p3p6
+	}
+	sub16p4)!with(J, M) by raa on sub16p3-sub16p3p7
+	sub16p5)!brings(J, Q) & !with(J, M) by and_i on sub16p2, sub16p4
+}
+17)lost(J) => !brings(J, Q) & !with(J, M) by imp_i on 16-sub16p5
+18)brings(M, Q) & wears(Y, R) by and_i on 8, 15
+19)brings(M, Q) & wears(Y, R) & (lost(J) => !brings(J, Q) & !with (J, M)) by and_i on 17, 18 

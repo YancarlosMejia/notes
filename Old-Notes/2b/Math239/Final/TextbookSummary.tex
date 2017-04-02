@@ -1,0 +1,383 @@
+\documentclass[12pt]{article}
+\usepackage{parskip,amsmath}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+
+\section*{TextBook}
+
+Two graphs $G_1$ and $G_2$ are \textbf{isomorphic} if there exists a bijection f : V($G_1$) $\rightarrow$ V($G_2$) such that vertexes f(u) and f(v) are adjacent in$G_2$ if and only if u and v are adjacent in $G_1$ . (We might say that f preserves adjacency.)
+
+\textbf{Handshake Theorem}\\
+$\displaystyle\sum_{v\in V(G)} \deg(v) = 2|E(G)| \implies$ The number of vertexes of odd degree in a graph is even.
+
+A graph in which every vertex has degree k, for some fixed k, is called a \textbf{k-regular} graph
+
+A \textbf{complete} graph is one in which all pairs of distinct vertexes are adjacent, denoted $K_p$ where p is the number of vertexes.
+
+A graph in which the vertexes can be partitioned into two sets A and B , so that all edges join a vertex in A to a vertex in B , is called a \textbf{bipartite} graph, with bipartition (A, B )
+
+A \textbf{subgraph} of a graph G is a graph whose vertex set is a subset U of V (G) and whose edge set is a subset of those edges of G that have both vertexes in U.
+
+If a subgraph of G contains all vertexes in G it is a \textbf{spanning subgraph}.
+
+A \textbf{walk} in a graph G from v0 to vn, is an alternating sequence of vertexes and edges of G
+
+The \textbf{length} of a walk is the number of edges in it.
+
+A \textbf{path} is a walk in which all the vertexes are distinct.
+
+\textbf{Theorem:} If there is a walk from vertex x to vertex y in G, then there is a path from x to y in G.
+
+\textbf{Corollary:} Let x, y, z be vertexes of G. If there is a path from x to y in G and a path from y to z in G, then there is a path from x to z in G.
+
+A \textbf{cycle} in a graph G is a subgraph with n distinct vertexes and n distinct edges such that deleting an edge forms a spanning path. A cycle is a connected graph that is regular of degree two. Length is number of edges.
+
+The \textbf{girth} of a graph G is the length of the shortest cycle in G, and is denoted by g (G)
+
+A spanning cycle in a graph is known as a \textbf{Hamilton cycle}.
+
+A graph G is \textbf{connected} if, for each two vertexes x and y, there is a path from x to y.
+
+\textbf{Theorem:} Let G be a graph and let v be a vertex in G. If for each vertex w
+in G there is a path from v to w in G, then G is connected
+
+A \textbf{component} of G is subgraph C of G such that C is connected and no subgraph of G that properly contains C is connected
+
+\textbf{Theorem:} A graph G is not connected if and only if there exists a proper nonempty subset X of V (G) such that the cut induced by X is empty.
+
+An \textbf{edge} e of G is a bridge if G−e has more components thanG.
+
+\textbf{Lemma:} If e = {x, y} is a bridge of a connected graph G, then G−e has precisely two components; furthermore, x and y are in different components.
+
+\textbf{Theorem:} An edge e is a bridge of a graph G if and only if it is not contained in any cycle of G
+
+\textbf{Corollary:} If there are two distinct paths from vertex u to vertex v in G, then G contains a cycle.
+
+A \textbf{tree} is a connected graph with no cycles.
+
+\textbf{Lemma:} There is a unique path between every pair of vertexes u and v in a tree T
+
+\textbf{Lemma:} Every edge of a tree T is a bridge.
+
+\textbf{Theorem:} A tree with at least two vertexes has at least two vertexes of degree one.
+
+\textbf{Theorem:} If T is a tree, then $|E (T )| = |V (T )| − 1$
+
+A spanning subgraph which is also a tree is called a \textbf{spanning tree}.
+
+\textbf{Theorem:} A graph G is connected if and only if it has a spanning tree.
+
+\textbf{Corollary:} If G is connected, with p vertexes and q = p - 1 edges, then G is a tree.
+
+\textbf{Theorem:} A graph is bipartite if and only if it has no odd cycles
+
+\textbf{Lemma:} Let T be a spanning tree in a connected graph G. If G is not bipartite, then there is an odd cycle in G that uses exactly one edge not from T .
+
+A graph G is \textbf{planar} if it has a drawing in the plane so that its edges intersect only at their ends, and so that no two vertexes coincide. The actual drawing is called a \textbf{planar embedding} of G.
+
+The subgraph formed by the vertexes and edges in a face is called the \textbf{boundary} of the face. We say that two faces are \textbf{adjacent} if they are incident with a common edge.
+
+A closed walk along all edges of a face is its \textbf{boundary walk}.
+
+\textbf{Handshake Theorem for Faces}\\
+$\displaystyle\sum_{f\in F(G)} \deg(f) = 2|E(G)| \implies$
+
+\textbf{Euler’s Formula}\\
+Let G be a connected graph with p vertexes and q edges. If G has a planar embedding with f faces, then p − q + f = 2.
+
+Graphs in which the faces have the same degree and the vertexes have the same degree are called \textbf{platonic solids}.
+
+\textbf{Theorem:} There are exactly five platonic graphs
+
+\textbf{Lemma:} If G is is connected and not a tree, then in a planar embedding of G, the boundary of each face contains a cycle.
+
+\textbf{Theorem:} In a connected planar graph with p ≥ 3 vertexes and q edges, we have $q \leq 3p − 6$.
+
+\textbf{Corollary:} $K_5$ is a not planar.
+
+\textbf{Lemma:} $K_{3,3}$ is not planar.
+
+\textbf{Corollary:} A planar graph has a vertex of degree at most five.
+
+\textbf{Kuratowski’s Theorem}\\
+A graph is not planar if and only if it has a subgraph that is anedge subdivision of $K_5$  or $K_{3,3}$
+
+
+A \textbf{k-colouring} of a graph G is a function from V (G) to a set of size k (whose elements are called colours), so that adjacent vertexes always have different colours. A graph with a k-colouring is called a k-colourable graph.
+
+\textbf{Theorem:} A graph is 2-colourable if and only if it is bipartite.
+
+\textbf{Theorem:} K n is n-colourable, and not k-colourable for any k $<$ n
+
+\textbf{Theorem:} Every planar graph is 4-colourable.
+
+The \textbf{planar dual} of a graph is found by:
+\begin{enumerate}
+    \item placing a vertex in each face including outer face
+    \item connecting all vertexes in adjacent faces (all edges must be crossed)
+\end{enumerate}
+
+A \textbf{matching} in a graph G is a set M of edges of G such that no two edges in M have a common end
+
+A vertex v of G is \textbf{saturated} by M, if v is incident with an edge in M .
+
+A matching that that saturates every vertex is called a perfect matching
+
+We say that a path is an \textbf{alternating path} with respect to M if one of the following is true:
+$\{v_i , v_{i +1} \} \in M$ if i is even and $\{v_i , v_{i +1} \} \notin M$ if i is odd
+$\{v_i , v_{i +1} \} \in M$ if i is odd and $\{v_i , v_{i +1} \} \notin M$ if i is even
+
+An \textbf{augmenting path} with respect to M is an alternating path joining two distinct vertexes neither of which is saturated by M .
+
+\textbf{Lemma:} If M has an augmenting path, it is not a maximum matching
+
+A \textbf{cover} of a graph G is a set C of vertexes such that every edge of G has at least one end in C
+
+\textbf{Lemma:} If M is a matching of G and C is a cover of G, then $|M| \leq |C|$.
+
+\textbf{Lemma:} If M is matching and C is a cover and $|M| = |C|$, then M is a maximum matching and C is a minimum cover.
+
+\textbf{Konig's Theorem}
+In a bipartite graph the maximum size of a matching is the minimum size of a cover.
+
+\textbf{X-Y Construction}
+G is an AB bipartite graph with matching M
+\begin{itemize}
+    \item $X_0$ is the set of vertexes in A not saturated by M
+    \item Z is the set of vertexes in G that are joined by to a vertex in $X_0$ by an alternating path
+    \item $X = A \cap Z$
+    \item $Y = B \cap Z$
+\end{itemize}
+
+\textbf{Lemma:} Let M be a matching of bipartite graph G with bipartition A, B, and let X and Y be as defined above. Then:
+\begin{itemize}
+    \item There is no edge of G from X to  $B \backslash Y$ ;
+    \item $C = Y \cup (A \ X )$ is a cover of G;
+    \item There is no edge of M from Y to $A \backslash X$ ;
+    \item $|M | = |C|-|U |$ where U is the set of unsaturated vertexes in Y;
+    \item There is an augmenting path to each vertex in U .
+\end{itemize}
+
+\textbf{Bipartite matching algorithm}
+\begin{enumerate}
+    \item Let M be any matching of G.
+    \item Set X' = {v $\in$ A : v is unsaturated }, set Y' = $\epsilon$, and set pr(v) to be undefined for all v $\in$ V (G).
+    \item For each vertex v $\in B \backslash Y'$ such that there is an edge {u, v} with u $\in$ X' , add v to Y' and set pr(v) = u.
+    \item If Step 2 added no vertex to Y' , return the maximum matching M and the minimum cover $C = Y' \cup (A \backslash X' )$, and stop.
+\end{enumerate}
+
+\textbf{Hall's Theorem}
+A bipartite graph G with bipartition A, B has a matching saturating every vertex in A, if and only if every subset D of A satisfies $|N (D)| \geq |D|$.
+
+\textbf{Corollary}. A bipartite graph G with bipartition A, B that satisfies Hall's Theorem has a perfect matching iff $|A| = |B |$.
+
+\section*{Notes}
+Graphs are isomorphic if you can map vertexes through each other and maintain adjacency.
+
+The handshake theorem says the the sum of the degrees of all vertexes is equal to two times the number of edges.
+
+Every graph with $\geq$ 2 vertexes has 2 vertexes of the same degree.
+
+Every graph has an even number of odd degree vertexes.
+
+A graph is regular if all of its verices have the same degree.
+
+A bipartite graph is one who can partition its vertex set into two distinct subsets where edges in the graph only go between the two sets.
+
+A cycle is a graph where every edge is between two distinct vertexes and connects into a long loop. Denoted $C_n$ where n is the length (number of edges) in the cycle.
+
+A complete graph is one in which every vertex is connected to all others. Denoted $K_n$ where n is the number of vertexes.
+
+A n-cube has $2^n$ vertexes and $n2^{n-1}$ edges.
+
+A subgraph is a graph where its vertex set and edge sets are subsets of another graph (adjacency is maintained).
+
+A walk is a sequence of vertexes and connecting edges
+
+A path is a walk in which no vertexes are visited twice
+
+A cycle is a walk that starts and ends on the same vertex
+
+If there is a walk between vertexes then there is a path between them
+
+If there is a path uw and a path wv then there is a path uv
+
+If every vertex has degree $\geq$ 2 then the graph has a cycle
+
+\textbf{Dirac's Theorem} If a graph has $n\geq 3$ vertexes where ever vertex has degree $\frac{n}{2}$ then the graph has a spanning cycle
+
+A graph is connected it there exists a path between every possible pair of vertexes
+
+If you can connect a vertex u to every other vertex in the graph via a path, then the graph is connected
+
+A component of a graph is a maximal connected subgraph
+
+A Hamilton Cycle is a cycle containing every vertex
+
+A graph is k-connected if there are k internal disjoint paths between any pair of vertexes
+
+Every 4-connected planer graph is Hamiltonian
+
+A closed walk that hits every edge is an Euler Tour
+
+A graph with a Euler tour is Eulerian
+
+Every connected graph with all even degree vertexes is Eulerian
+
+A bridge is an edge where removing it increases the number of components by 1
+
+A graph is k-edge connected if removing $\leq$ k-1 edges leaves a connected graph
+
+\textbf{Menger's Theorem} If a graoh is k-edge-connected then there are k-edge disjoint paths between any pair of vertexes
+
+A tree is a connected graph with no cycles
+
+Every edge of a tree is a bridge
+
+There is only one unique path between two points in a tree
+
+Every tree on $\geq$ 2 vertexes has $\geq$ 2 leaves (vertexes of degree one)
+
+Trees have n-1 edges where n is the number of vertexes
+
+A spanning tree is a subgraph of G that is a tree and contains every vertex in G
+
+A graph has a spanning tree iff it is connected
+
+Every tree is bipartite. If two points are in different bipartitions the walk between them will be odd length and even length if they are in the same parititon
+
+A graph is bipartite iff it has no odd cycles
+
+\textbf{Prim's Algorithm}
+Start with a random vertex, always take the lightest possible edge to an untouched neighbor out of the set of all adjacent edges to all vertexes in the existing tree. This will result in a minimal spanning tree for a weighted graph
+
+A graph is planar if can be drawn (drawing is called planar embedding) in a plane without its edges crossing
+
+\textbf{Jordan Curve Theorem} A closed loop that does not cross itself divides the plane into two faces (in and out)
+
+A graph is planar iff it has a spherical embedding
+
+A planar graph has faces that are defined by boundary walks, their degree is the length of these cycles
+
+The sum of the degree of all faces in a graph is equal to two times the number of edges (handshake for edges)
+
+Faces are adjacent if they share an edge
+
+Every graph has a planar dual found by putting a vertex in each face and connecting any vertexes in adjacent faces
+
+\textbf{Euler's Formula}\textbf{Bipartite matching algorithm}
+\begin{enumerate}
+    \item Let M be any matching of G.
+    \item Set X' = {v $\in$ A : v is unsaturated }, set Y' = $\epsilon$, and set pr(v) to be undefined for all v $\in$ V (G).
+    \item For each vertex v $\in B \backslash Y'$ such that there is an edge {u, v} with u $\in$ X' , add v to Y' and set pr(v) = u.
+    \item If Step 2 added no vertex to Y' , return the maximum matching M and the minimum cover $C = Y' \cup (A \backslash X' )$, and stop.
+\end{enumerate}
+$|V| - |E| + |F| = 2$
+For any planar embedding of a connected graph
+
+A platonic graph is a connected graph with a planar embedding in which each vertex has the same degree and each face has the same degree
+
+There are only 5 platonic graphs: tetrahedron, cube, octahedron, dodecahedron, icosahedron
+
+Every face has degree $\geq$ 3
+
+If a graph is planar $|E| \leq 3|V| - 6$
+
+$K_5$ and $K_{3,3}$ are non planar
+
+If a graph is planar and every cycle has $\geq$ g and $|E| \geq \frac{g}{2}$ then $|E| \leq \frac{g}{g-2}(|V|-2)$
+
+\textbf{Kuratowski's Theorem}
+A graph is planar iff it does not contain a edge subdivision of $K_5$ or $K_{3,3}$
+
+A graph is k-colorable when you can assign one of k colors to each vertex such that no vertex is adjacent to any same color vertexes
+
+Every planar graph is 4 colorable
+
+A matching of a graph is a subset of edges in which no two edges share an end
+
+A matching saturates a vertex if it is an end to one of the edges in the matching
+
+A matching that saturates all vertexes is a perfect matching
+
+A M alternating path is a path where every other edge in the path is in the matching
+
+A M alternating path is an augmenting path if it joins M to unsaturated vertexes
+
+If a graph has an M alternating path, then M was not maximal
+
+A cover is a subset of vertexes such that every edge is incident to a vertex in the subset
+
+The size of matching is less than or equal to the size of covers
+
+If the size of the  matching is equal to the size of the cover then it was a max matching and a min cover
+
+\textbf{Konig's Theorem}
+If a graph is bipartite the size of the max matching is equal to that of the min cover
+\textbf{Bipartite matching algorithm}
+\begin{enumerate}
+    \item Let M be any matching of G.
+    \item Set X' = {v $\in$ A : v is unsaturated }, set Y' = $\epsilon$, and set pr(v) to be undefined for all v $\in$ V (G).
+    \item For each vertex v $\in B \backslash Y'$ such that there is an edge {u, v} with u $\in$ X' , add v to Y' and set pr(v) = u.
+    \item If Step 2 added no vertex to Y' , return the maximum matching M and the minimum cover $C = Y' \cup (A \backslash X' )$, and stop.
+\end{enumerate}
+An essential vertex is one that is saturated by every max matching
+
+\textbf{XY Construction}
+\begin{itemize}
+    \item $X_0$ is the set of unsaturated vertexes in bipartition A
+    \item Z is the set of vertexes that from which a M alternating path to a vertex in $X_0$ exists
+    \item $X=A\cap Z$
+    \item $Y =B\cap Z$
+\end{itemize}
+
+ Let M be a matching of bipartite graph G with bipartition A, B, and let X and Y be as defined above. Then:
+\begin{itemize}
+    \item There is no edge of G from X to  $B \backslash Y$ ;
+    \item $C = Y \cup (A \ X )$ is a cover of G;
+    \item There is no edge of M from Y to $A \backslash X$ ;
+    \item $|M | = |C|-|U |$ where U is the set of unsaturated vertexes in Y;
+    \item There is an augmenting path to each vertex in U .
+\end{itemize}
+
+\textbf{Bipartite matching algorithm}
+\begin{enumerate}
+    \item Let M be any matching of G.
+    \item Set X' = {v $\in$ A : v is unsaturated }, set Y' = $\epsilon$, and set pr(v) to be undefined for all v $\in$ V (G).
+    \item For each vertex v $\in B \backslash Y'$ such that there is an edge {u, v} with u $\in$ X' , add v to Y' and set pr(v) = u.
+    \item If Step 2 added no vertex to Y' , return the maximum matching M and the minimum cover $C = Y' \cup (A \backslash X' )$, and stop.
+\end{enumerate}
+
+\textbf{Hall's Theorem} An AB bipartition graph has a matching that saturates A iff for every subset of A the size of the subset is less than the size of all neighbors of that subset
+
+An AB bipartite graph has a perfect matching iff $|A| = |B|$. So if a bipartite graph is regular it has a perfect matching
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

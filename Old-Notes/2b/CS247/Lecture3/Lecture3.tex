@@ -1,0 +1,48 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+\title{Entity Values}
+Entity objects and value objects are two different kinds of ADTs. An entity object is an ADT that represent a real world entity (duh). For these entities that have all of the same values are still different objects despite being identical. For entities you dont want copies of them. Each one is distinct.
+
+Value objects are objects for which the value matters. If all of their fields are equal the objects are the same. You can have many identical objects.
+
+The main difference is how the == operator handles them.  
+
+\subsection*{Entities}
+We tend to focus a lot on how these are created (usually to avoid duplicates). Copy operations dont really make sense for these. Same thing really goes for assignments. We dont want to be able to assign one entity to another, thats just crazy. Type conversions, dont event try it, unless you are modelling Ditto, he's boss. We can try equality, but it often goes kind of crazy, all entities should be different for == making it always return false. Entites often closely ties to pointers. You want them to be immutable so you point at them and manipulate that. Computations on these fuckers are rare, you can, but its usually not useful. 
+
+\subsection*{Values}
+These are basically the opposite to entities. We dont really care about creation, and duplicates are super welcome. These focus a ton on computations and operations. These usually dont deal with inheritance, they dont take shit from no one.  
+
+\subsection*{Example}
+License Plates
+
+Criteria
+\begin{itemize}
+\item 2-8 characters
+\item uppercase, numbers, spaces
+\item - - - 99 - - - is the same as 9 - - 9 - - - - so order doesnt matter for spaces
+\item default new unused value
+\item all plates must be unique
+\end{itemize}
+
+\begin{verbatim}
+class License {
+    License();
+    License(string);
+    ~License(); //destructor
+    static bool exists(const string);
+    private:
+        static set<string> used_;
+        string plate_;
+        //we want to prevent the compiler from creating these for us
+        LicensePlate& (const LicensePlate&) //copy constructor
+        LicensePlate& operator=(LicensePlate&) //assignment operator
+\end{verbatim}
+
+\section*{Singleton Design}
+This is how we enforce unique entities. We make the constructor private and only allow the creation of references to it. Kinda. See example in slides.
+
+
+\end{document}

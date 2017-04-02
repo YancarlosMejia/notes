@@ -1,0 +1,102 @@
+a)
+	UserAccount:
+		The UserAccout ADT is entity based. This is because it represents a real world item (an account on a system) and each one has a unique username. Should you be able to compare user accounts even ones with the same password would be different because the account has a unique username. 
+
+		Since UserAccounts are entity based I had to make sure that each would have a distinct identity (UserId) by maintaining a global list of taken UserIds. Due to this being an entity ADT there was not copy constructor since there would be no point to trying to create two identical accounts (this would throw an error for having duplicate UserIds). Similarly there was no need for an assignment or equality operator. 
+	
+
+	UserId:
+		The UserId ADT is value based because two UserIds can be considered equal if they have equal member values (in this case the contained string UserId). These are just a single value point to be used by the UserAccount ADT. Although no comparison operators were implemented the equality operator is used in spirit during the checks for a duplicate UserId in the UserId constructor. 
+
+		Since UserId is a value based ADT there was no need to maintain a single entity or worry about copying it.
+
+
+	Password:
+		The Password ADT is a value based ADT because it can have multiple identical version. Any Password with the same nested string will be considered the equal. 
+
+		Since this is a value based ADT there was no need to maintain uniqueness or worry about copying it.
+
+
+b)
+	UserAccount:
+		The UserAccont ADT is mutable. This is mainly due to the real world object this represents. In the real world an users are allowed to alter their passwords.
+		Because UserAccounts are immutable there were no mutators implemented and all member values were private. There was also no assignment operator implemented and no member functions could changes the member values of the UserAccount.
+
+
+	UserId:
+		The UserId ADT is immutable because it serves as the unique identifier for the UserAccounts ADT, if one could change the UserId there would be no way to maintain the uniqueness of UserAccounts. Although the boolean contained inside the UserId ADT is mutable the value that it represents (the userid string) is not so we can say that it is immutable.
+
+		Since UserId ADT is immutable there was no mutator implemented for it (once again the related boolean value is mutable, but the string is not).
+	
+
+	Password:	
+		The Password ADT is immutable because the password for an account shouldn't really be changed. When an account is reactivated the password is changed, but it is done through creating a new Password and assigning that to the accounts passwd_ pointer.
+
+		Since Passwords are immutable no mutators were needed and the constructor handled all checks.
+
+
+c)
+	UserAccount:
+		default constructor:
+			I chose to implement my own version to allow the user to set the UserId and Password for the account. The default constructor would not prompt them for these values.
+
+		destructor:
+			I chose to use the compiler made destructor since this would appropriately call the destructor for the member values, and since the member values are auto_ptrs this destructor would handle the destroying of data appropriately. 
+
+		copy constructor:
+			I chose to prohibit the copy constructor because UserAccounts are entities and should never be equal to eachother. Also the constructor should always prompt the user for data which would make a copy constructor useless. Lastly all UserAccounts should be passed by reference and not value.
+
+		assignment:
+			I chose to prohibit the assignment operator because UserAccounts are entities and should never be equal to eachother.
+
+		equality:
+			I chose to use the default equality operator because two UserAccounts should never really be equal (the only way you could do this is with the copy constructor, which is prohibited, or by setting the UserId to be the same which is explicitly check for) and we should only be concerned with this if they point to the same UserId or Password which the default equality operator does. 
+
+	UserId:
+		default constructor:
+			I chose to make the default constructor prohibited so that the user could not create an empty UserId and would be forced to use the constructor that prompted for information.
+
+		destructor:
+			I chose to implement my own destructor to ensure that the global set of take Usernames would be updated with the removal of the associated Username of the UserId that was destroyed.
+
+		copy constructor:
+			I chose to prohibit the copy constructor since two UserIds should not be equal. A copy constructor would bypass the check for uniqueness and allow the user to create two UserAccounts with the same UserId.
+
+		assignment:
+			I chose to prohibit the assignment operator for much the same reason as the copy constructor. We do not want the users to be able to create two UserAccounts with the same UserId.
+
+		equality:	
+			I chose to use the compiler's version of the equality operator because it merely checks the internal string and boolean for their equality. Although two UserId's should never have their equality checked, should the user chose to do so this is the process that should be used.
+
+	Password:
+		default constructor:
+			I chose to prohibit the empty constructor because it would allow the user to create an empty password and we want them to be prompted for data that is then check for its strength.
+			
+		destructor:
+			I chose to use the compiler's destructor since it would just destroy the string inside the Password which is all that is required of it.
+
+		copy constructor:
+			I chose to use the compiler's copy constructor since it would just create a Password with the same internal string which is all that would be required. It is allowable for two accounts to have identical Passwords.
+
+		assignment:
+			I chose to compiler's assignment operator for much the same reason as I did for the copy constructor. It is alright to have two identical Passwords which would be formed through copying the internal members.
+
+		equality:	
+			I chose to use the compiler's equality operator because it would correctly evaluate the equality of the internal members which is how the equality of two Passwords should be evaluated.
+
+
+d)
+	UserAccount:
+		authenticate:
+			This is a member function because it must have access to the private userid_ value to call its isActive function. This is also a member function because it it very tightly coupled with the UserAccount. There are currently no other related classes that would need to be authenticated, and if there were they could just inherit the class.
+
+		deactivate and reactivate:
+			Similarly to authenticate these functions are tightly coupled with the UserAccount ADT. Nothing else would want to call it and those that would, would be subclasses of a UserAccount and can do so through inheritance. Also like authenticate deactivate and reactivate need access to the private userid_ member to call its reactivate and deactivate functions. 
+
+	UserId:
+		activate and deactivate:
+			These are member functions because they are closely tied to the UserId class, only UserId and its subclass should use these functions, and they needs access to the UserIds private activated member.
+
+	Password:
+		validate:
+			This is a member function because it needs access to Password's private password member. Also it is a coupled function only to be used by Passwords.

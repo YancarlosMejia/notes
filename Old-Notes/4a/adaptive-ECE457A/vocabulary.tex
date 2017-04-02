@@ -1,0 +1,286 @@
+% @Author: Lara Janecka
+% @Date:   2016-08-01 21:32:57
+% @Last Modified by:   Lara Janecka
+% @Last Modified time: 2016-08-03 11:14:15
+
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage[margin=.6in]{geometry}
+
+\begin{document}
+\section*{GA}
+\paragraph{Bernoulli's Principle of Insufficient Reason} 
+if we don't know anything about our problem space, all events have equal probability
+
+\paragraph{Phenotypic Traits} 
+the physical or behavioral features observed by the environment
+
+\paragraph{Genotypic Traits} 
+the features observed by the algorithm
+
+\paragraph{Termination Criteria} 
+\begin{itemize}
+	\item number of generations
+	\item minimum threashold reached
+	\item no improvement
+	\item memory/time constraints
+\end{itemize}
+
+\paragraph{Crossover} 
+is explorative
+
+\paragraph{Mutation} 
+is exploitative
+
+
+\paragraph{Population Models} 
+Generational model (GGA) is each individual survives for only one generation, and steady-state model (SSGA) is that only part of the population is replaced
+
+\subsection*{Survivor Selection}
+Which of a parents and offspring go into the next generation (what part of current population carries over)
+
+\paragraph{Age-Based Selection} 
+Delete a random element or use FIFO
+
+\paragraph{Fitness-Based Selection} 
+delete or replace based on fitness
+
+\paragraph{Elitism} 
+Always keep the best individuals
+
+\paragraph{Genitor} 
+Always kill the worst individuals
+
+\subsection*{Parent Selection}
+Which parents will get to produce offspring
+
+\paragraph{Fitness Proportionate} 
+A parent is selected using probability based on its fitness over the total fitness of all parents
+
+\paragraph{Roulette Wheel Algorithm} 
+Spin a one armed roulette wheel n times to chose n parents, a different version of FPS
+
+\paragraph{Baker's Stochastic Universal Sampling} 
+Spin a roulette wheel with n evenly spaced arms, different version of FPS
+
+\paragraph{Rank Based Selection} 
+Sort parents by fitness then make probability based on rank, deals with the fact that a very fit parent can take over in FPS
+
+\paragraph{Tournament Selection} 
+pick k parents at random and select the best of these, deals with the overhead of needing global knowledge of other parents
+
+\subsection*{Where GAs are Useful}
+\begin{itemize}
+	\item hightly multimodal functions
+	\item discrete or discontinuous functions
+	\item high-dimensionality functions
+	\item non-linear dependencies between parameters
+\end{itemize}
+
+\subsection*{Difficulties with GA}
+\begin{itemize}
+	\item premature convergence
+	\item unable to overcome deception
+	\item need more evaluations than time permits
+	\item bad match of representation making operators destructive
+	\item diased or incomplete representation
+	\item problem too hard/easy
+\end{itemize}
+
+\subsection*{Adaptation}
+\paragraph{Parameter Tuning} 
+finding suitable parameters before the algorithm is run
+
+\paragraph{Deterministic Parameter Control} 
+replace any parameter p with a function p(t) where t is the generation number, this does not take into account the progress of the search. For example changing $\sigma$ to $\sigma(t) = 1-\frac{0.9t}{T}$ where t is the generation number and T is the maximum generation number.
+
+\paragraph{Adaptive Parameter Control} 
+take in feedback from the current state and use some heuristic to control the parameters. For example, Rechenberg's success rule. If we have too many successful children multiply $\sigma$ by c and if we have too few divide $\sigma$ by c, where c is some constant. Moves that are not successful are moving too much and should get closed to what was a good state. Moves that are very successful should try larger steps to increase efficiency of search.
+
+\textbf{Rechenberg's 1/5 Success Rule} We want to have roughly 1/5 of our mutations result in successful offspring (produces an individual better than its parent). 
+
+\paragraph{Self Adaptive Parameter Control} 
+incorporate the parameter values into the chromosomes so that their control with be driven through GA, see ES for more examples
+
+\paragraph{Adaptive Crossover} 
+Change the operation being used for crossover, or change the probability of crossover, or change the parameter used by the crossover function (for instance, the point of swapping)
+
+\section*{ACO}
+\paragraph{Stigmergy} 
+indirect agent interaction and modification of environment, use environmental modification as external memory, work continued by any individual
+
+\paragraph{Binary Bridge Experiment} 
+Two routes to a food source, ants converged to using only one bridge (converged on shortest if lengths were unequal or random one if equal) 
+
+\paragraph{Ant Density Model} 
+Ants apply constant Q to edges
+
+\paragraph{Ant Quantity Model} 
+Ants apply Q/d to edge where d is lenght of edge
+
+\subsection*{Ant System}
+ACO, but add online delayed update where ants update edges with Q/L where L is the total length of their path once they have finished the path
+
+\subsection*{Max-Min Ant System}
+AS, but only the very best ant gets to update pheromones (either in the current iteration or the best solution overall). Values of pheromone are restricted between a max and min to allow high exploration at the beginning, near max, and high exploitation later, near min. The max and min are chosen experimentally or they can be calculated if the optimal solution is already known
+
+\subsection*{Ant Colony System}
+Based on AS, but uses elitist strategy. Adds constant q0 to give us a probability of just selecting the best possible edge, else we just chose a random edge with fitness in mind. Ants use only best solution when updating and incorporate an offline update for each ants last traversed edge.
+
+\subsection*{Where ACO is Useful}
+\begin{itemize}
+	\item combinatorial problems
+	\item not solvable with classical optimization methods
+	\item discrete optimization problems
+	\item some variants of ACO can handle continuous 
+\end{itemize}
+
+\subsection*{Advantages}
+\begin{itemize}
+	\item stocahstic, population based (like GA)
+	\item retains memory of entire colony instead of just previous generation
+	\item less affected by poor initial soluitons due to combinations of random path selection
+	\item proved successful in many applications
+	\item can handle dynamic environments
+\end{itemize}
+
+\subsection*{Disadvantages}
+\begin{itemize}
+	\item mostly experimental, proofs are hard
+	\item lots of parameters
+	\item make take a while to converge
+\end{itemize}
+
+\subsection*{Adaptation}
+\paragraph{ACSGA} 
+\label{par:acsga}
+Have GA running on top of ACS to optimize its parameter values. Encode $q_0, \alpha, \beta$ in chromosome and run GA.
+
+\paragraph{Near Parameter Free} 
+\label{par:near_parameter_free}
+Each ant can select the suitable values for its parameters $q_0, \alpha, \beta, \rho$. Keep a separate pheromone matrix for learning parameters. We have to discretize parameter values to store them in matrix (break up parameter range into chunks and chose one). Also have to keep upper and lower bounds in mind.
+
+\subsection*{Cooperation}
+\label{sub:cooperation}
+\paragraph{Heterogeneous} 
+\label{par:heterogeneous}
+Ants in colonies have different behaviors (optimizing different criteria)
+
+\paragraph{Homogeneous} 
+\label{par:homogeneous}
+Ants in colonies have the same behavior
+
+\subsection*{PSO}
+\label{sub:pso}
+\paragraph{Properties} 
+\label{par:properties}
+\begin{itemize}
+	\item Flexibility - system performance is adaptive with respect to internal or external changes
+	\item robustness - system always performs even if some individuals fail
+	\item decentralization - control is distributed among individuals
+	\item self-organization - global behaviors appear out of local individual interactions
+\end{itemize}
+
+\paragraph{Flocking} 
+\label{par:flocking}
+\begin{itemize}
+	\item homogenity - all the entities are similar, the flock moves without a leader
+	\item locality - any entitiy communicates with nearby entities only
+	\item velocity matching - attempt to match velocity of nearby entities
+	\item collisoin avoidance - avoid colliding with nearby entities
+	\item flock centering - attempt to stay close to nearby entities
+\end{itemize}
+
+\paragraph{Principles} 
+\label{par:principles}
+\begin{itemize}
+	\item proximity - the swarm should be able to carry out simple space and time computations
+	\item quality - the swarm should be able to respond to quality factors in the environment
+	\item diverse response = the swarm should not commit its activities along excessively narrow channels
+	\item stability - the swarm should not change its mode of behavior every time the environment changes
+	\item adaptability - the swarm must be able to change behavior mode when it is worth the computational price
+\end{itemize}
+
+\paragraph{Behaviors} 
+\label{par:behaviors}
+\begin{itemize}
+	\item separation - each agent tries to move away from its nearby mates if they are too close (collision avoidance)
+	\item alignment - each agent steers towards the average heading of its nearby mates (velocity matching)
+	\item cohesion - each agent tries to go towards the average position of its nearby mates (centering)
+\end{itemize}
+
+\paragraph{Termination Criteria} 
+\label{par:termination_criteria}
+\begin{itemize}
+	\item max number of iterations
+	\item max number of function evaluations
+	\item acceptable solution has been found
+	\item no improvement over some iterations
+\end{itemize}
+
+\paragraph{Neighborhood topologies} 
+\label{par:neighborhood_topologies}
+\begin{itemize}
+	\item Star - use global best, fast propagation of data, gets stuck in local optima
+	\item Ring - use local best, slow propagation, more exploration
+\end{itemize}
+
+\paragraph{Neighbor Selection} 
+\label{par:neighbor_selection}
+Can calculate distance to all neighbors and take the closest (\textbf{Physical Neighbors}). This is expensive to calculate. Can instead chose neighbors based on data structure you are storing your particles in (\textbf{Social Neighbors}). A common form of this is to store particles in grid and just grab the four in cardinal directions, called \textbf{square topology}.
+
+\paragraph{Parameters} 
+\label{par:parameters}
+Most of the time $c_1 = c_2$. Small values will result in smooth curves and large values will result in more acceleration. W is used to balance exploration (large vales) and exploitation (small values). 
+
+\paragraph{Convergence} 
+\label{par:convergence}
+Study replaced random numbers with expected value of 1/2. To get convergence you need:
+\begin{align*}
+	w &< 1 \\
+	2 > c_1 + c_2 & > 0\\
+\end{align*}
+Usually use w = 0.8, cs = 1.5 
+
+\paragraph{Adaptation} 
+\label{par:adaptation}
+Create tribes of particles with something in common, good tribes (as defined by the ratio of good particles to total particles) will delete their worst particle and bad tribes will spawn a new random particle, these new particles come together to form a new tribe connected to their parents.
+
+\subsection*{Cooperation}
+\label{sub:cooperation}
+\paragraph{Concurrent PSO} 
+\label{par:concurrent_pso}
+Multiple swarms are updated in parallel using different algorithms, these swap their gbest values every few iterations
+
+\paragraph{Cooperative PSO} 
+\label{par:cooperative_pso}
+Multiple swarms are optimizing different values of the solution so fitness of a particle is dependent on the gbest of other swarms. Combine these into a context vector
+
+\paragraph{Hybrid PSO} 
+\label{par:hybrid_pso}
+One swarm doing regular PSO and one swarm doing cooperative PSO they swap gbest and context vector, CPSO uses gbest to update random particles of its swarms, PSO uses context vector to replace a randomly chosen particle
+
+\section*{Evolutionary Strategies}
+\label{sec:evolutionary_strategies}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

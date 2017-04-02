@@ -1,0 +1,124 @@
+Slides
+
+Uses of Network Protocols
+	Over the years the IETF have outlined different standards for the monitoring of data on a network
+	Configure devices to send pertinent data for specific events
+	Poll data from a specific machine
+	network management refers to the activities, methods, procedures, and tools that pertain to the operation, administration, maintenance, and provisioning of networked systems
+
+
+ What is SNMP?
+ 	Simple Network Management Protocol
+ 	Standards based protocol that allows for external monitoring through an agent 
+ 	most popular in existance
+
+ Pros and Cons
+ 	Pros:
+ 		Newer version have increased security measures and encryption
+ 		Very standardized , bVery well documented (MIBs)
+ 		Can set traps to prevent the need for constant monitoring (fault handling)
+ 		configuration is done through a simple config file, can be ported to many devices
+ 		Accessed through command line, but many GUIs are built on it
+		simplistic commands and data formatting
+	Cons:
+		only version 3 has good security, v1&2 rely on shared secret encryption
+		hard to find data and MIBs can be hidden anywhere
+		not all devices are supported
+		Data is for an instance, so not good for long running processes
+		Uses UDP so device can ignore it
+		Configuration can be difficult to manage (dont know what data points are configuration)
+		require specific devices management, not network wide 
+
+
+ What is CLI?
+ 	Command Line Interface
+ 	Overarching term for the numerous proprietary tools run from the command line 
+ 	Used for low power machines that cannot support a gui
+
+ Pros and Cons
+ 	Pros:
+ 		Provides a large vocabulary of commands and queried, wide range of options
+ 		entered quickly through command line rather than GIU
+ 		Easy to understand (commands are more user friendly) text based, designed for humans
+ 		Device cannot ignore CLI requests
+ 		Lots of different tools and softwares
+ 		Can make network wide transactions 
+ 	Cons:
+ 		Not as easy to automate	
+ 		Wider range of data
+ 		Commands can vary between manufacturers (not as standardized)
+ 		Commands can vary between the tool used (really not standardized)
+ 		unpredictable output (result of nonstandardization) makes scripting hard
+ 		no error management or version control
+ 		little access control
+
+
+ 
+ What is Netconf?
+ 	operations onto of a Remote Procedure Call (allows a program to cause a subroutine or procedure to execute on another computer) layer using XML encoding
+ 	The client and the server communicate through secure transfers of xml
+ 		each has a set schema that describes the syntax constraints
+
+ Pros and Cons
+ 	Pros:
+ 		XML makes it easy for a computer to read
+ 		XML has a short learning curve for humans 
+ 		Can describe a data structure of arbitrary complexity
+ 		Allows for transactions (ssuuuuper big deal)
+ 		Easily deals with partial configurations
+ 		allows the functionality of the management protocol to closely mirror the native functionality of the device
+ 		client can discover the protocol extensions supported by the server to adjust its behaviour accordingly
+ 		can be used wtih XML transformation technologies to automate full and partial configurations
+
+ 	Cons:
+ 		XML is large and can bog down a system
+ 		lack of standardization of xml schemas
+ 		not all devices can 
+
+
+
+ What is Netflow/IPFix?
+ 	Routers and switches collect IP traffic statistics on all interfaces and export those statistics as records, to a server that does the actual traffic analysis.
+ 		does this through use defined flows (unidirectional stream of packets, identified by source and destination IP addresses, IP protocol, source and destination ports , and Type of Service)
+ 	Implemented on a interface by interface basis to lessen the load
+ 	created by cisco (ipfix is the attempt to standardize this for all vendors)
+ 	Ipfix extends netflow to use templates, adds security, allows for sampling to lessen load
+ 	uses SNMP base
+
+ Pros and Cons
+ 	Pros:
+ 		Easy to use and implement
+ 		data is consolidated on an easy to read report
+ 			can take only samples to lessen load
+		IPFix adds security in data transfer
+
+
+ 	Cons:
+ 		not available on most products
+ 		cannot configure devices 
+ 
+ Which is better?
+ 	Like most technology it all depends on the situation
+ 		SNMP: good for polling efficient and can gain a lot of data, but difficult to use and data is scattered, good to build GIU's for
+ 		CLI: more readable syntax for humans, not standardized and tonnes of different ones, good for advanced network admins who want to check on network wide things, use if Netconf isnt avaliable
+ 		Netconf: very easy to configure on a network, but gets super bogged down with large xml files, good for configuring devices on a network
+ 		Netflow: good at gathering easy to read data, not always available, good for collecting performance data
+
+ Wrap up
+ 	These are just four of the protocols used to monitor networks, there are many more existing ones are always evolving 
+
+
+
+
+Notes:
+SNMP and CLI have scalability issues
+
+
+http://tools.ietf.org/html/rfc3535
+http://tools.ietf.org/html/rfc5101
+http://tools.ietf.org/html/rfc4701
+http://www.tail-f.com/education/what-is-netconf/!
+http://www.startnetworks.info/2011/05/ipfix-and-netflow.html
+
+ 
+A DNS Resource Record (RR) for Encoding Dynamic Host Configuration Protocol (DHCP) Information (DHCID RR)

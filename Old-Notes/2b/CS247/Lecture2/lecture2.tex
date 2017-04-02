@@ -1,0 +1,140 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+ADT is a user defined data type
+\begin{itemize}
+\item range of legal values
+\item functions on variables of that type
+\end{itemize}
+Motivation
+\begin{itemize}
+\item safety of client code
+\item evolve-ability
+\item scalability
+\end{itemize}
+We use outside-in development method of design
+\begin{enumerate}
+\item what does the user want out of it
+\item ADT interface design
+\item ADT implementation
+\item repeat
+\end{enumerate}
+Rational Numbers
+\begin{itemize}
+\item numerators over denominators
+\item denominator cannot be 0
+\item constructors (default and copy)
+\item arithmetic (+, -, *, /)
+\item reduction
+\item comparison ($<$, $>$, =, !=)
+\item streaming operators ($<<$, $>>$)
+\item rounding
+\item assignment
+\end{itemize}
+\subsection*{Constructors (not the Vogon kind)}
+\begin{itemize}
+\item need default values if you want to allow empty constructors
+\item make empty constructor private to force client to use it correctly
+\end{itemize}
+Accessors and Mutators
+\begin{itemize}
+\item these allow you to access the encapsulated data values (think get and set)
+\begin{itemize}
+\item prof doesnt like get/set naming, uses the name of the variable for get and blahIs for set
+\end{itemize}
+\item accessor = get
+\begin{itemize}
+\item pass things through const reference so that nothing gets changed and since the ADT might be large
+\end{itemize}
+\item mutator = set
+\begin{itemize}
+\item need to check for valid values here
+\end{itemize}
+\item 
+\end{itemize}
+
+\subsection*{Overloading}
+Multiple functions with same name, but different signatures. You cannot have the functions differ by return type, only different passed values.
+
+You can also account for varying constructors by having default values in the funciton definition. This will use the default value only if no value is passed for this.
+
+You can even overload already existing operators. If you overload an operator you should try to  make it have the same signature. We cannot create new operators, and if you do overload an operator the new function must take the same number of parameters as the already existing on.
+
+\subsection*{Nonmember Functions}
+These are functions that are used for the ADT, but not implemented in the class description of the ADT. This can help with data encapsulation, and make it more flexible for namespace and packaging reasons. Some functions cannot be member functions, like the streaming operators. This is so that the first operand is a refrence to a streaming object. For member functions the first operand is a member of the ADT. 
+
+Example:
+\begin{verbatim}
+ostream\& operator<< (ostream &sout, Rational &r) {
+    sout << r.numerator() << '/' << r.denominator();
+    return sout;
+}
+
+istream& operator>> (istream &sin, Rational &r) {
+    sin >> r.numerator_ >> '/' >> r.denominator_;
+    return sin;
+}
+\end{verbatim}
+
+Some functions that must be member functions are:
+\begin{itemize}
+\item constructors, destructors
+\item virtual functions
+\item operator=, operator[]
+\end{itemize}
+Some functions that cannot be member functions are:
+\begin{itemize}
+\item operators where the first operand is not an object of the ADT (eg. streaming operators)
+\item operators where we want the compiler to preform type conversion on the first operand (eg. the + operator)
+\end{itemize}
+Best practice is to implement others and nonmember functions
+
+\subsection*{Type Conversion}
+Compilers can work explicit type conversion magic through the use of the magic word 'explicit'. Basically it attempts to turn weird operands into the correct data type. Its cool like that.
+
+\subsection*{Private Data Representation}
+If at all possible make all data members private. This makes it easier to evolve data in the future (if a subclass changes it, shit doesnt get fucked). You can make data members private, but we have no control over derived types, the client could make some crazy shit happen without our knowledge which is not good. We like friends (not the show) instead.
+
+\subsection*{Friends}
+These are classes that are allowed to access eachother's private variables. This allows us to control access.
+
+\subsection*{Helper Functions}
+We use these to get rid of redundant code. Their location is odd, not part of interface, and we dont want to advertise them as global function as they would mess up the namespace. We should try to keep them as private or hiding them in local namespaces. 
+
+\section*{Date Example}
+Criteria
+\begin{itemize}
+\item represent dates between 1/1/1900 and 12/31/2100
+\end{itemize}
+
+\begin{verbatim}
+class Date {
+    Date(int day, int month, int year);
+    Date (int day, String month, int year = today().year());
+    static Date today() const;
+    int year() const;
+    int monthInt() const;
+    string monthStr() const;
+    int day() const;
+    
+}
+Nonmember function
+    bool operator== (const Date&. const Date&)
+    bool operator!= (const Date&. const Date&)
+    bool operator< (const Date&. const Date&)
+    bool operator> (const Date&. const Date&)
+    bool operator<= (const Date&. const Date&)
+    bool operator>= (const Date&. const Date&)
+    istream& operator>> (istream&, Date&)
+    ostream& operator<< (ostream&, const Date&)
+BLARGALARGALRG MORE OPERATIONS AND SHIT
+\end{verbatim}
+
+
+
+
+
+\end{document}

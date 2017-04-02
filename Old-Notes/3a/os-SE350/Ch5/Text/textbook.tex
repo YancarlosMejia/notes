@@ -1,0 +1,400 @@
+\documentclass[12pt]{article}
+\usepackage{parskip,enumerate}
+\usepackage{pdfpages}
+\usepackage[margin=.6in]{geometry}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\begin{document}
+\includepdf[pages={220-265}]{Operating_Systems.pdf}
+Concurrency ariss in three contexts:
+\begin{itemize}
+    \item multiple applications: this is what multiprogramming was invented for
+    \item structured applications: to maintain a logical structure applications can be structured as a series of concurrent processes
+    \item OS structure: operating systems are often implemented as a series of threads
+\end{itemize}
+
+The most basic requirement for supporting concurrent processes is that of mutual exclusion. This is the ability to enforce allowing only one process access at a time. This is done with semaphores, monitors, and messages. The two main problems with concurrency are demonstrated by the producer/consumer problem and the readers/writers problem.
+
+Some key terms:
+\begin{itemize}
+    \item \textbf{atomic operation:} a series of actions that no other process can see an intermediate state, we guarantee that these will execute as a group or not at all, ensures isolation form concurrent processes
+    \item \textbf{critical section:} a section of code that requires access to a shared resource that only one process may execute at a time
+    \item \textbf{deadlock:} a situation where multiple processes are waiting on each other to do something (think a concurrency infinite wait)
+    \item \textbf{livelock:} a situation where multiple processes keep switching their states in response to each other and never get anything done
+    \item \textbf{mutual exclusion:} the requirement that when a process is in a critical section no other process can access it
+    \item \textbf{race condition:} a situation where multiple threads effect the same resource so the result depends on the order of execution (nondeterministic)
+    \item \textbf{starvation:} a runnable process is infinitely overlooked by the scheduler
+\end{itemize}
+
+\section{Principles of Concurrency}
+In single processor systems we fake concurrency by quickly jumping between processes at set intervals called \textbf{interleaving}. We do this as well on multiprocessor systems, but here we can \textbf{overlap} processes as well. This raises problems since the speed of execution of processes relative to each other cannot be know since it all depends on how often the OS decides to schedule it and what activities it requires and a bunch of other things including the context of its execution.
+
+Difficulties arise:
+\begin{itemize}
+    \item sharing global resources gets scary as fuck since two processes can edit the same resource but in different orders depending on the order of execution
+    \item OS have a hard time managing allocation of resources optimally since locking things can get us stuck in deadlocks
+    \item program errors are damn near impossible to find since the results are nondeterministic
+\end{itemize}
+
+A race condition is really bad. When two concurrent processes access the same memory the outcome of their actions can vary depending on the order of execution. Bascially shit is fubar and really hard to track down the source.
+
+Process interaction comes in four forms:
+\begin{itemize}
+    \item Unaware of each other
+    \begin{itemize}
+        \item processes are competing for resources
+        \item process results cannot interfere with others, but they can change the timing of it
+        \item problems with mutual exclusion, deadlocks, and starvation
+    \end{itemize}
+    \item Indirection aware of eachother
+    \begin{itemize}
+        \item cooperation through sharing
+        \item process results can alter each other, timing gets mucked
+        \item problems arise with mutual exclusion, deadlocks, starvation, and data coherence
+    \end{itemize}
+    \item Directly away of each other
+    \begin{itemize}
+        \item cooperation by communication
+        \item process results can alter each other, timing gets mucked
+        \item problems arise with deadlocks and starvation
+    \end{itemize}
+\end{itemize}
+
+When processes are competing for resources we face three main control issues. The first is that of \textbf{mutual exclusion}, this enforces that only one process has access to a critical resource at a time which we do by blocking the critical section containing the code that access that resource. Doing this can introduce deadlocks though. Suppose we have two processes that both need access to two resources, we can accidentally end up with both processes waiting for the other's resource to continue. Simiarly we can cause starvation as well when we have mutliple processes waiting for the same resource, one of them could be continually skipped over depending on the implementation of the OS (priorities would have to come into play).
+
+Mutual exclusion is usually implemented by creating a locking mechanism around the critical section of code. When processes are cooperating indirectly we also need to ensure the integrity of the data in the critical section called data coherence. Quick note: only write operations need to be mutually exclusive.
+
+Data coherence is the maintaining of relationships between resources. Suppose we had two variables that were equal to each other, we would neeed to ensure that that relationship is maintained with every update from every process. We need to make sure that both variables are updated atomically by a process so that another process doesnt interrupt and alter one of them which would break this relationship. This is also solved by locking mechanisms.
+
+When processes can communicate things change a bit. Here we now have messages of a sort to move between processes. These messages mean that mutual exclusion is no longer an issue since the only thing shared by processes is the message and only one process will attempt to access it at a time. Deadlock and starvation are still a thing because processes can get stuck waiting on a message.
+
+Mutual exclusion requirements:
+\begin{itemize}
+    \item it must be enforced
+    \item a process that halts in a noncritical section must do so without fucking the other processes
+    \item we cannot leave a process waiting for a critical section indefinitly (no deadlocks or starvation)
+    \item if no process need access to a critical section the next to come along should have no delay
+    \item no assumptions made about the speed or number of processors
+    \item processes get only a finite amount of time in a critical section
+\end{itemize}
+
+
+\section{Mutual Exclusion Hardware Support}
+We could enforce mutual exclusion through disabling interrupts during the critical section. This murders efficiency though. It also doesnt work with multiple processors, any processes running before the disabling of interrupts could do stuff.
+
+When we have multiple processors there is no domination and they all interact as peers so there are no interrupts we can use to enforce mutual exclusion. Due to processors have several machine instructions that carry out two actions atomically (like read/write) on a single memory location with one instruction fetch cycle. During their execution access to that memory location is blocked.
+
+\textbf{Compare\&Swap Instruction} - checks a memory location against a test value and if it is equal it replaces it with a new value and returns the old value. This doesnt allow interruption since the interrupts wont have the right test value to gain access to the location. You can also use a form of counter that only allows a certain number of processes into the section at a time (usually     1). Anytime we have a process waiting because it does not have permission to access something it needs it is called \textbf{spin waiting}.
+
+\textbf{Exchange Instruction} - exchanges the contents of a register with that of a memory location. This also uses a bolt variable initialized to 0 that flips to one when a process enters and back to 0 when it leaves.
+
+The machine instruction approach advantages:
+\begin{itemize}
+    \item allows for any number of processes and processors
+    \item simple and easy to verify
+    \item support multiple critical sections (each gets own variable)
+\end{itemize}
+Disadvantages:
+\begin{itemize}
+    \item starvation is possible: could fuck up when selecting which process gets access when the section is unlocked
+    \item deadlock is possible
+\end{itemize}
+In the real world we dont use hardware instructions, we implement mechanisms.
+
+\section{Semaphores}
+Some vocabulary
+\begin{itemize}
+    \item \textbf{semaphore} - a integer for signaling among processes, only three atomic operations (initialize, decrement, increment), decrement from blocking and increment from releasing
+    \item \textbf{binary semaphore} - a semaphore that only allows 0 or 1
+    \item \textbf{mutex} - like a binary semaphore but only the process that did the locking can do the unlocking
+    \item \textbf{condition varibales} - data that is used to block a process or thread
+    \item \textbf{monitor} - data structure that wraps data in one of an abstract data type, only allow access through one of it accessor functions which only allow one at a time, may have a queue of processes
+    \item \textbf{event flag} - memory word used for synchronization,
+\end{itemize}
+
+We can implement mutual exclusion through various messaging systems. Semaphores are an example of this with three functions:
+\begin{enumerate}
+     \item initalize: semaphore is initialized to some number indicating the max number of processes allowed in protected section
+    \item semWait: decrements the semaphore value if it becomes negative the process executing semWait is blocked
+    \item semSingal: increments semaphore value, if result is less than or equal to zero we unblock one process
+\end{enumerate}
+
+These same principals apply to binary semaphores and mutexs.
+
+We need a queue to hold the blocked processes. The standard algorithm is first in first out (its called a \textbf{strong semaphore} if this algorithm is used). When a semphore doe not specify the order to remove processes from its blocked queue it is called a \textbf{weak semaphore}. For all future discussion we use strong semaphores since weak ones are stupid.
+
+Often we implement mutual exclusion by wrapping the critical section in a semWait and semSignal and then wrapping that in some sort of loop.
+
+Semaphore primitives:
+\begin{lstlisting}
+    struct semaphore {
+        int count;
+        queueType queue;
+    };
+    void semWait(semaphore s){
+        s.count--;
+        if (s.count < 0) {
+            /* place this process in s.queue */;
+            /* block this process */;
+        }
+    }
+    void semSignal(semaphore s){
+        s.count++;
+        if (s.count<= 0) {
+            /* remove a process P from s.queue */;
+            /* place process P on ready list */;
+        }
+    }
+\end{lstlisting}
+
+\subsection{The Producer Consumer Problem}
+Simply put this is a problem where we have a producer producing data and a consumer consuming it asynchronously. Many producers are generating data for one consumer to use. We can only allow one agent in the buffer at a time. We need to ensure that the consumer does not try to consume data that the producer hasnt made yet. This can be solved if you add an extra semaphore around the counter to prevent interrupts messing up the count of the number of items the producer has made or consumer has consumed. This is a standard practice for any global variables.
+
+When implementing this we can use a straight forward binary semaphore, but this can result in a dead lock since binary semaphores allow -1 count and a block, but everything is waiting on it. The better solution is to use a general semaphore. Here we introduce a semaphore n which is the count of things in the buffer and semaphore s which is the number of processes accessing the buffer.
+
+We make the variable n representing the count of things in the buffer as a semaphore and the variable s a variable to protect the producer consumer relationship (that no consumer can enter while a producer is writing) by protecting the critical section. Be careful with the impelmentation of the n and s semaphores. We can flip the signal order order if we want since the buffer must wait on both semaphores, but we cannot swap the order of waits because this could introduce a deadlock. If the consumer enters its critical section while the bugger is empty (s = 0 and n = 0) no producer can get in since s is now 1 so it can never write, but the consumer can never exit since there is nothing to read.
+
+If we make the buffer a finite size. We treat it as a circular storage so the producer is blocked on a full buffer just like the consumer is blocked on an empty buffer. We introduce a semaphore e representing the number of empty spaces in the buffer.
+
+The final solution looks like:
+\begin{lstlisting}
+const int sizeofbuffer = /* some number */;
+sempahore s = 1, n = 0, e = sizeofbuffer;
+void producer() {
+    while(true) {
+        produce();
+        semWait(e);
+        semWait(s);
+        append();
+        semSignal(s);
+        semSignal(n);
+    }
+}
+
+void consumer() {
+    while(true) {
+        semWait(n);
+        semWait(s);
+        take();
+        semSignal(s);
+        semSignal(e);
+        consume();
+    }
+}
+\end{lstlisting}
+
+So how do we implement semaphores? Well semWait and semSignal must be atomic. We could implement them in hardware. The main problem is that of mutual exclusion. Doing this with software incurs substantial processing overhead. We could use the compare\&swap instruction which does implement some busy waiting, but these operations are relatively short so its not as bad. If we had a single processor system we could just disable interrupts as well.
+
+\section{Monitors}
+Monitors provide the same functionality of semaphores but are easier to control. It lets us put a monitor lock on any object. They are a module consisting of one or more procedures, an initializing sequence, and data. Local data variables are only accessible through the monitor's procedures and not by any external ones. A process can only enter the monitor through invoking one of its procedures. Only one process can execute a monitor procedure at a time, all others are blocked.
+
+This way we can protect a shared object by putting it in a monitor. So a process is blocked when the resource in use, but we also have to start it when the resource is released. This is implemented using condition variables contained in the monitor and accessible only in the monitor. This variable indicated if a process is in the monitor currently. We then have cwait and csignal operations that trigger with that condition variable.
+
+There is a slight difference with semaphore's wait and signal function. When a signal is called and there is no process waiting the signal is lost since we have no real counter for things. A monitor also stores waiting operations on an internal blocked queue. We can even have multiple ones if there are multiple condition variables (protected sections).
+
+It is important that the csignal call occurs at the end of the monitor procedure. If it is in the middle, the process issuing the signal is blocked to make the monitor avaialable and placed on a queue despite being partially through its task.
+
+Monitors are much cleaner than semaphores since all of the locking code exists in the monitor which makes it much easier to spot and test. It also ensure that a resource is protected from all processes not just processes that are programmed to correctly use semaphores.
+
+The classical definition of monitors has some drawbacks. You must always have a function in each condition queue otherwise the signal is lost which requires the process currently in the monitor to exit immediately or be blocked. If the process issuing the signal hasnt finished it needs two switches (to block it and to start the next one). Scheduling must also be perfect so that the protected area is never empty.
+
+A newer adaptation uses a cnotify function instead of csignal. The cnotify continues to signal to its blocked queue. The waiting process needs to make sure that no new process has entered the monitor before it starts up so it also checks its condition. This is as simple as replacing an if with a while.
+
+\begin{lstlisting}
+    void append (char x) {
+        while (count == N) cwait(notfull);
+        buffer[nextin] = x;
+        nextin = (nextin + 1) % N;
+        count++;
+        cnotify(notempty);
+    }
+    void take (char x) {
+        while (count == 0) cwait(notempty);
+        x = buffer[nextout];
+        nextout = (nextout + 1) % N);
+        count--;
+        cnotify(notfull);
+    }
+\end{lstlisting}
+
+We can refine this by adding a watchdog timer so that a process that has been waiting for a maximum amount of time can be placed on a ready queue regardless of the condition state. This timeout prevents starvation of a process if some other process fails before signaling.
+
+This also means that a process is notified rather than forcibly reactivated so we can add a cbroadcast that causes all waiting processes to be placed on a ready queue. This way the monitor doesn't have to know or care about the number of processes that should be running. Think of it the producer consumer worked in variable length blocks.
+
+Since every monitor checks the condition variable after being signaled we can signal incorrectly and the process will just wait.
+
+\section{Message Passing}
+This is another approach to enforcing mutual exclusion that also allows for interprocess communication. Message passing is usually in the form  of send and receive primitives.
+
+We need a level of synchronization when using message passing. We could have a blocking send which sends the message and is blocked until that message is received, or nonblocking that isnt. When a process issues a receive that usually means the message had previously been sent so execution continues. If there is no waiting message we can block the process until there is or just abandon the receive.
+
+So send and receive can be blocking or nonblocking:
+\begin{itemize}
+    \item both blocking: until the message is received bother sender and receiver processes are blocked, sometimes called \textbf{rendezvous}, allows for tight synchronization
+    \item nonblocking send, blocking receive: the sender continues but the receiver is blocked, the most useful combination, means a process can send more than one message to many destinations quickly
+    \item nonblocking both
+\end{itemize}
+
+Nonblocking send is the most common since it fits well with concurrency principals, but it can cause problems. An error can lead to a situation where a process loops generated messages, since there is no blocking it will spit out waaaay too many messages which could consume the system resources. It also places the burden on the programmer to know what message has been received.
+
+Blocking received is the most common since it also fits best with concurrency. Usually a process that is receiving data needs to wait for that data to arrive. We could run into problems if a message is lost or a process fails before the send. We could use a nonblocking receive but this means that if a message is send after a process executes a matching received the message will be lost. The fix for this is to test if the messages was waiting or allow multiple sources in a message.
+
+Both send and receive couple messages with addresses. There are two schemes for addressing.
+
+\textbf{Direct Addressing} is the inclusion of a specific identifier of the intented process (usually its pid). This requires that we know exactly what process we are communicating with, which is not always possible.
+
+\textbf{Indirect Addressing} is when messages are not sent from a sender to a receiver but to a shared data structure containing queues called mailboxes. This allows all combination of many-one relationships between senders and receivers.
+
+A typical message has a header containing the type, destination, source, length, and control information (think of a linked list of messages and other such data).
+
+We can also have many different queuing disciplines for the mailbox but FIFO is the standard. We could allow priorities or allow the receiver to pick one out.
+
+If we have a blocking receive and nonblocking send we can use messages to create mutual exclusion. Say a set of concurrent processes share a mailbox. Once a process received a message, it takes it out of the mailbox and executes its critical section, since the mailbox is now empty more processes get blocked on their receive until the first process is done an triggers a send.
+
+Using monitors to solve the finite buffer producer/consumer problem
+\begin{lstlisting}
+const int
+capacity = /* buffering capacity */ ;
+null = /* empty message */ ;
+int i;
+void producer() {
+    message pmsg;
+    while (true) {
+        receive (mayproduce,pmsg);
+        pmsg = produce();
+        send (mayconsume,pmsg);
+    }
+}
+void consumer() {
+    message cmsg;
+    while (true) {
+        receive (mayconsume,cmsg);
+        consume (cmsg);
+        send (mayproduce,null);
+    }
+}
+void main() {
+    create_mailbox (mayproduce);
+    create_mailbox (mayconsume);
+    for (int i = 1;i<= capacity;i++) send (mayproduce,null);
+    parbegin (producer,consumer);
+}
+\end{lstlisting}
+
+\section{Reader Writer Problem}
+This is similar to the producer/consumer problem which has been explored at length. Here we have a data area shared among a number of processes:
+\begin{itemize}
+    \item any number of readers at a time
+    \item only one writer at a time
+    \item a reader cannot enter while a writer is writing
+\end{itemize}
+
+Readers dont exclude each other, but writers exclude everything. We can solve this two ways, where the readers have priority and where the writers have priority.
+
+\textbf{Reader Priority }
+\begin{lstlisting}
+    int readcount;
+    semaphore x = 1,wsem = 1;
+    void reader() {
+        while (true){
+            semWait (x);
+            readcount++;
+            if(readcount == 1)
+                semWait (wsem);
+            semSignal (x);
+            READUNIT();
+            semWait (x);
+            readcount;
+            if(readcount == 0)
+                semSignal (wsem);
+            semSignal (x);
+        }
+    }
+    void writer() {
+        while (true){
+            semWait (wsem);
+            WRITEUNIT();
+            semSignal (wsem);
+        }
+    }
+    void main() {
+        readcount = 0;
+        parbegin (reader,writer);
+    }
+\end{lstlisting}
+We use wsem as a semaphore to enforce mutual exclusion on the write process so only one writer gets a go at a time. The reader also uses wsem to enforce that no writer is writing while readers are reading, so the first reader to enter waits wsem and the last reader out signals it. We use a variable to count the readers (to watch for the first or last) and a semaphore x to create mutual exclusion around that count variable.
+
+\textbf{Writer Priority}
+\begin{lstlisting}
+    int readcount,writecount;
+    void reader()  {
+        while (true){
+            semWait (z);
+                semWait (rsem);
+                    semWait (x);
+                    readcount++;
+                    if (readcount == 1)
+                        semWait (wsem);
+                    semSignal (x);
+                semSignal (rsem);
+            semSignal (z);
+            READUNIT();
+            semWait (x);
+                readcount--;
+                if (readcount == 0)
+                    semSignal (wsem);
+            semSignal (x);
+        }
+    }
+    void writer () {
+        while (true){
+            semWait (y);
+                writecount++;
+                if (writecount == 1)
+                    semWait (rsem);
+            semSignal (y);
+            semWait (wsem);
+            WRITEUNIT();
+            semSignal (wsem);
+            semWait (y);
+                writecount --;
+                if (writecount == 0)
+                    semSignal (rsem);
+            semSignal (y);
+        }
+    }
+    void main()
+    {
+    readcount = writecount = 0;
+    parbegin (reader, writer);
+    }
+\end{lstlisting}
+When readers have priority we risk writer starvation. Here the semaphore rsem blocks readers when there is a writer in the system. Variable writecount controls rsem and semaphore y controls the updating of writecount. Semaphore wsem still prevents multiple writers. The same as previously we have a readcount to watch for the first and last readers and a sempahore x to protect that variable. We also include a semaphore z to prevent a long queue of readers building on rsem which would prevent writers from jumping the queue. Now only one reader queues on rsem and the rest queue on z so that the writer only needs to wait on that one reader.
+
+
+
+
+
+\end{document}

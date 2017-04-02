@@ -1,0 +1,5 @@
+*.bc
+call_graph
+program
+test*/test*.err
+test*/test*.out

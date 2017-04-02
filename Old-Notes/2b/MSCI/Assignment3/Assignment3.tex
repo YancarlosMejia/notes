@@ -1,0 +1,167 @@
+\documentclass[12pt]{article}
+\usepackage{parskip,amsmath,graphicx,enumerate}
+\usepackage[margin=.6in]{geometry}
+\usepackage{color}
+\newcommand{\hilight}[1]{\colorbox{yellow}{#1}}
+\begin{document}
+\title{Assignment 3}
+\author{Lara Janecka, lajaneck, 20460089}
+\maketitle
+
+\subsection*{Ch7 q 87}
+The Southern Guru Copper Company operates a large mine in a South American country. A legislator said in the National Assembly that most of the capital for the mining operation was provided by loans from the World Bank; in fact, Southern Guru has only \$500,000 of its own money actually invested in the property. The cash flow for the mine is as follows:
+\begin{center}
+    \begin{tabular}{c c}
+    \textbf{Year} & \textbf{Cash Flow}(mill)\\
+    \hline
+    0 & -0.5\\
+    1 & 3.5\\
+    2 & 0.9\\
+    3 & 3.9\\
+    4 & 8.6\\
+    5 & 4.3\\
+    6 & 3.1\\
+    7 & 6.1\\
+    \end{tabular}
+\end{center}
+
+The legislature divided the \$30.4 million total profit by the \$0.5 million investment. This produced, he said a 6,080\% rate of return on the investment. Southern Guru claims the actual rate of return is much lower. They as you to compute their rate of return. Use a spreadsheet.
+
+\begin{center}
+    \begin{tabular}{|c|c|}
+    \hline
+    A & B\\
+    \hline
+    1 & -0.5\\
+    \hline
+    2 & 3.5\\
+    \hline
+    3 & 0.9\\
+    \hline
+    4 & 3.9\\
+    \hline
+    5 & 8.6\\
+    \hline
+    6 & 4.3\\
+    \hline
+    7 & 3.1\\
+    \hline
+    8 & 6.1\\
+    \hline
+    9 & 643\%=IRR(B1:B8)\\
+    \hline
+    \end{tabular}
+\end{center}
+
+
+\subsection*{Ch8 q6}
+Don Garlits is a landscaper. He is consid­ering the purchase of a new commercial lawn mower, either the Atlas or the Zippy. Construct a choice table for interest rates from 0\% to 100\%.
+
+\begin{center}
+    \begin{tabular}{p{5cm} r r}
+        & \textbf{Atlas} & \textbf{Zippy}\\
+        \hline
+        Initial Cost & 6700 & 16900\\
+        Annual operation and maintenance cost & 1500 & 1200\\
+        Annual benifit & 4000 & 4500\\
+        Salvage value & 1000 & 3500\\
+        Life & 3 & 6\\
+        \hline
+    \end{tabular}
+\end{center}
+
+\begin{center}
+    \begin{tabular}{c c }
+        \textbf{Interest Rate} & \textbf{Choice}\\
+        \hline
+        $0\leq$ i $\leq 6.8\%$ & Chose Zippy\\
+        $6.8\%<$ i & Chose Atlas\\
+        \hline
+    \end{tabular}
+\end{center}
+
+
+\subsection*{Ch8 q16}
+Three mutually exclusive projects are being considered:
+\begin{center}
+    \begin{tabular}{c c c c}
+        & \textbf{A}& \textbf{B}& \textbf{C}\\
+        \hline
+        First cost & 1000 & 2000 &3000\\
+        Annual Benefit & 150 & 150 & 0\\
+        Salvage value & 1000 & 2700 & 5600\\
+        Life & 5 & 6 & 7\\
+        \hline
+    \end{tabular}
+\end{center}
+
+When each project reaches the end of its useful life, it would be sold for its salvage value and there would be no replacement.
+\begin{enumerate}
+    \item Construct a choice table for 0\% to 100\%.
+        \begin{center}
+            \begin{tabular}{c c }
+                \textbf{Interest Rate} & \textbf{Choice}\\
+                \hline
+                $0\%\leq$ i $\leq 6.75\%$ & Chose C\\
+                $6.75\%\leq$ i $\leq 9.8\%$ & Chose B\\
+                $9.8\%\leq$ i $<15\%$ & Chose A\\
+                \hline
+            \end{tabular}
+        \end{center}
+    \item If 8\% is the desired rate of return which project should be chosen?
+        Chose option B.
+\end{enumerate}
+
+\subsection*{Ch8 q34}
+A firm is considering moving its manufacturing plant from Red Deer to a new location. The industrial engineering department was asked to identify the various alternatives together with the costs to relocate the plant, and the benefits. The engineers examined six likely sites, together with the do-nothing alternative of keeping the plant at its present location. Their findings are summarized as follows:
+\begin{center}
+    \begin{tabular}{c c c}
+    \textbf{Location} & \textbf{First Cost} & \textbf{Annual Benefits}\\
+    \hline
+    Halifax & 300 & 52\\
+    Edmonton & 550 & 137\\
+    Toronto & 450 & 117\\
+    Vancouver & 750 & 167\\
+    Calgary & 150 & 18\\
+    Regina & 200 & 49\\
+    Red Deer & 0 & 0\\
+    \end{tabular}
+\end{center}
+The annual benefits are expected to be constant over the eight-year analysis period. If the firm uses 10\% annual interest in its economic analysis, where should the manufacturing plant be located?
+
+The best location for the plant is \hilight{Edmonton}.
+
+\subsection*{Ch8 q36}
+The Financial Adviser is a weekly column in the local newspaper. Assume you must answer the following question: I recently retired at age 65, and I have a tax-free retirement annuity coming due soon. I have three options. I can receive
+\begin{enumerate}[(a)]
+    \item \$30,976 now
+    \item \$359.60 a month for the rest of my life (assume 20 years)
+    \item \$513.80 a month for the next 10 years
+\end{enumerate}
+What should I do?
+
+Ignore the timing of the monthly cash flows and assume that the payments are received at the end of the year.
+\begin{enumerate}[(a)]
+    \item Construct a choice table for interest rates from 0\% to 50\%. (You do not know what the reader's interest rate is.)
+    \item If i 9\%, use an incremental rate of return analysis to recommend which option should be chosen.
+\end{enumerate}
+
+\begin{center}
+    \begin{tabular}{c c }
+        \textbf{Interest Rate} & \textbf{Choice}\\
+        \hline
+        $0\%\leq$ i $\leq 8.84\%$ & Chose B\\
+        $8.84\%\leq$ i $\leq 12.64\%$ & Chose C\\
+        $14.97\%\leq$ i & Chose A\\
+        \hline
+    \end{tabular}
+\end{center}
+
+At i=9\% the reader should chose \hilight{option B}.
+
+\subsection*{Part B}
+WatGym plans to upgrade its exercise equipment, by adopting one of the three options below. The first option is to pay the entire price \$70,000 now. The second is to pay in 10 equal installments for \$10,000 each, from the end of the first year. The third is to pay \$30,000 now and \$5,000 at the end of each year for the next 10 years. The benefit of all options is the same, and we assume it is
+zero. With 8\% of MARR, which option should WatGym choose? Use an IRR comparison method. (Hint: The benefits of each option are the same. Use any number to solve the problem. I would use zero, but you can use 10 or 100.)
+
+The best option is the \hilight{third} one.
+\end{document}

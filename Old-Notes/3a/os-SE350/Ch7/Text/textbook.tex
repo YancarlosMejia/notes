@@ -1,0 +1,107 @@
+\documentclass[12pt]{article}
+\usepackage{parskip,enumerate,amsmath}
+\usepackage{pdfpages}
+\usepackage[margin=.6in]{geometry}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\begin{document}
+\includepdf[pages={327-348}]{Operating_Systems.pdf}
+\section{Memory Management Requirements}
+\subsection{Relocation}
+We need to be able to swap active processes in and out of main memory to allow us to maximize processor use. This means that we need the ability to relocate processes (they won't always be swapped back into the same place in main memory).
+
+The OS needs to know the location of :
+\begin{itemize}
+  \item the process control information
+  \item the execution stack
+  \item the entry point of execution
+\end{itemize}
+So these addresses need to be kept up to date with the new position of the process image and available for the OS to read. The processor must also deal with memory references within the program. We need a way to translate memory references in the program to the actual physical memory address (reflecting the new position of the program).
+
+\subsection{Protection}
+We need to make sure that other processes cannot muck with our local data or source code (any memory owned by us). Relocation makes this much harder since we cannot use direct memory addresses and instead we have to recalculate where the memory we are referencing is and if we are allowed to reference it. The best way is to have memory protection enacted by hardware and not software. This is because the OS cannot anticipate all memory references, instead we have the processor check at runtime.
+
+\subsection{Sharing}
+While protection is good we also want to be able to share memory across processes. Any memory management must allow this while still keeping up protection for everything else.
+
+\subsection{Local Organization}
+Main memory is almost always stored as a linear address space and physical memory works the same way. This model doesn't follow the way most programs are modeled (modules of varying access rights). If we can find a way to model memory based on modules we would get some advantages:
+\begin{itemize}
+  \item modules can be written and compiled independently with all references resolved at run time
+  \item degrees of protection can be model based
+  \item sharing of modules between processes
+\end{itemize}
+
+\subsection{Physical Organization}
+Computer memory is always organized in levels (bare minimum is main and secondary). These two serve two different purposes and flow between them can get tricky. We dont want to leave it to the programmer to work it out (its a huge waste of time, and in multiprogramming shit just becomes impossible).
+
+\section{Memory Partitioning}
+OSs use a complex system of virtual memory in order to bring process into main memory when they need to be executed.
+
+\subsection{Fixed Partitioning}
+This is a memory partitioning scheme were we break memory into fixed size chunks. It is by far the simplest.
+
+One method for this is to give all memory blocks the same size. This is really inefficient with lots of internal fragmentation (parts of the memory block being used). We also run into problems when the program image is too big to be stored in one memory block. We can lessen these problems by using unequal partition sized, but it doesn't solve them well.
+
+Where we load new programs can greatly effect the efficiency of our OS. For equal size partitions its easy because everything is the same size so you just use a FIFO type placement algorithm.
+
+When we get dynamic sized partitions we run into optimization issues. We could store the memory block in the smallest size that will accommodate it. This minimizes fragmentation but makes swapping things in and out much harder (need a scheduling queue for it). You can chose what to swap out based on some priority scale. We still have a fixed number of partitions which can limit the number of processes running. Because partition sizes are fixed at the start of the system we need to know how much it will need which isnt always practical.
+
+\subsection{Dynamic Partitioning}
+Here we have dynamic number of partitions each with their own crazy size. When a process is brought into memory it is given exactly the memory that it needs. If there isnt enough room another process is swapped out. This can result in external fragmentation (memory that is external to processes). We can fix this using compaction which is where the OS ocassionally shifts processes so that they are contiguous to merge together the fragments. This is suuper shitty to have to do.
+
+Because memory compaction is so shitty we want to use a clever placement algorithm to make it as unnecessary as possible. There are a few options:
+\begin{itemize}
+  \item Best-fit: put it in the block closest to its size
+  \item First-fit: scan memory until there is a availble block big enough and put it there
+  \item Next-fit: scan from the last place you put a block
+\end{itemize}
+The goodness of these three depends largely on what memory looks like and what order allocations are going in. First fit tends to be better than next fit since it doesnt fragment the really big block at the end like next fit does. But first fit also takes more time because you have to scan the front which is full of tiny little programs. Best fit is by far the worst because when we do cause fragments they are completely unusable (suuuper tiny).
+
+\subsection{Buddy System}
+This is a compromise between fixed and dynamic partitioning. Here we keep dividing a memory block in half until it is just big enough. This means that what ever blocks are left are big enough to fit at least this program and anything larger. We keep track of a tree like structure of memory that we go through to find one of the right size.
+
+\subsection{Relocation}
+Its  obvious from the above strategies that memory gets moved around a lot. The locations of instructions and data are not fixed. A logical address the a reference to some memory independent of where it currently exists in memory, we must translate it to get a physical address. A relative address is a version of a logical address where its location is an offset to some relative point (usually the start of the program). A physical address is an absolute address, basically where it is in main memory.
+
+When a process is loaded we load its starting physical address into a base register and the address of the end of its data (not including the stack) into a bounds register. We calculate physical addresses everytime we reference a relative address by adding its offset to the base register. We then compare this address to that of the bounds register to check for ownership.
+
+\section{Paging}
+Both fixed and dynamic partitioning have issues with fragmentation. Paging offers a better solution. Here we break main memory into lots of small fixed size chunks (called frames). Then we divide each process into chunks of the same size (called pages). We can can assign pages to frames. We maintain a list of free frames and when we need to load a process we take as many of those free frames as we need and assign them to the process via a look up table. Note the frames assigned to the process dont have to be contiguous. We back scatter them all around.
+
+The OS maintains a page table for each process that maps its pages to their associated frames. Each logical address contains a page number and offset. Now the processor must check the page table when computing the physical address of a logical address and add the offset to the frame number accordingly. If no entry is found we need to load some shit.
+
+The page and frame numbers are just the most x significant bits where x is the log of the page/frame size (the number of bits required to list them). We always use page sizes as powers of two for obvious reasons
+
+\section{Segmentation}
+As seen in paging we can segment the user program and we dont need them all to be the same length or contiguous. Here the segements can be varying size. We can also only load the segment we need at the time into memory. Unlike paging, segmentation is visible to the programmer. The programmer or compiler assigns the program segments (note: we still have to keep in mind the max page size).
+
+
+
+
+
+
+
+\end{document}

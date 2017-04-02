@@ -1,0 +1,182 @@
+\documentclass[12pt]{article}
+
+\usepackage{fullpage,url,amssymb,epsfig,color,xspace,enumerate,amsmath}
+\usepackage[pdftitle={CS 240 Assignment 2},%
+pdfsubject={University of Waterloo, CS 240, Spring 2014},%
+pdfauthor={Alejandro Lopez-Ortiz}]{hyperref}
+
+\renewcommand{\thesubsection}{Problem \arabic{subsection}}
+
+\begin{document}
+
+\begin{center}
+{\Large\bf University of Waterloo}\\
+\vspace{3mm}
+{\Large\bf CS240 - Spring 2014}\\
+\vspace{2mm}
+{\Large\bf Assignment 2}\\
+\vspace{3mm}
+\textbf{Due Date: Wednesday June 4 at 09:15am}
+\end{center}
+
+\definecolor{care}{rgb}{0,0,0}
+\def\question#1{\item[\bf #1.]}
+\def\part#1{\item[\bf #1)]}
+\newcommand{\pc}[1]{\mbox{\textbf{#1}}} % pseudocode
+
+Please read
+\url{http://www.student.cs.uwaterloo.ca/~cs240/s14/guidelines.pdf}
+for guidelines on submission.
+Problem 1 is a written
+problem; submit your solutions electronically as a PDF with file name {\tt a02wp.pdf} using MarkUs. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{[6+6+6+6+6+6+6+6=48 marks]}
+Historically, users would normally query a database and obtain as a result a report
+containing each and every item satisfying the given query conditions. Such reports
+in the 1970s and 1980s would extend to at most a few hundred items which were
+then printed for convenience.
+
+With the advent of databases containing millions
+of items in the late 1990s, such as a Web search engine, this usage quickly becomes impractical.
+For example a typical query to a search engine matches millions of documents.
+As you can imagine, this is not a good way to find a relevant page related to
+your query. To resolve this problem the operation ``Top K" has been added
+to search engines. Under this framework each result is given a score or {\it rank}
+and the result of the query consists of the top $k$ results by rank.
+
+For very large databases such as Google, Facebook or LinkedIn, the data
+is distributed across thousands of computers $S_1, S_2,\ldots, S_n$ and then aggregated by a main
+server $A$.
+
+Each computer $S_i$ implements a max heap containing its share of all results. The
+central server $A$ is then charged with obtaining the global top $k$ results. Let $S_i.Heap$ denote the heap on server
+$S_i$. The server $A$ initializes its own heap as follows
+
+\begin{verbatim}
+for i = 1 to n do
+   A.Heap.Insert(S_i.Heap.DeleteMax());
+\end{verbatim}
+Then it produces the top $k$ results as follows:
+
+\begin{verbatim}
+for j = 1 to k do
+   res=A.Heap.DeleteMax();
+   Let i be server of origin of the res item above
+   A.Heap.Insert(S_i.Heap.DeleteMax());
+   print res;
+\end{verbatim}
+\newcounter{saveenum}
+\begin{enumerate}[(a)]
+\item Argue that this method necessarily produces the top $k$ results in order
+(hint: use induction on $k$).\\\\
+Base case: k=1\\
+    The top 1 results are in order as  top result the top of the A.Heap is returned by DeleteMax(). This is then is deleted and the next best is retrieved from that server and inserted again. This initial highest element of A is now printed so this results in the top 1 elements of the A.Heap being printed.
+Induction Hypothesis: k=k\\
+Induction Step: k=k+1\\
+    Assuming that the first k times through the loop resulted in the top k elements being printed. We now delete the k+1th highest element in A.Heap and go to the server from which that came and grab the next highest value on it. This value is then inserted into the A.Heap. Since the Insert function maintains order we have now set the k+2th highest element correctly. Now the k+1th element which was stored at its deletion is printed.
+\item Assume that each server $S_i$ holds $m$ values in its heap. Give the time taken
+by $A$ in the code above to build the Heap. Do not forget to account for the time
+taken by the call to $S_i$.
+\begin{align*}
+\displaystyle\sum_{i=1}^n \text{A.Heap.Insert($S_i$.Heap.DeleteMax} &= \displaystyle\sum_{i=1}^n  (\text{A.Heap.Insert} + \text{$S_i$.Heap.DeleteMax}  )\\
+&= \displaystyle\sum_{i=1}^n (\log n + \log m )\\
+&= n\log n + n\log m\\
+& \in \Theta(n\log(nm))
+\end{align*}
+\item  Now give the time taken
+to produce the top $k$ results in the loop above in terms of $m$, $n$ and $k$.
+\begin{align*}
+\displaystyle\sum_{i=1}^k \bigg (\text{A.Heap.DeleteMax} + &\text{A.Heap.Insert} + \text{$S_i$.Heap.DeleteMax} + \text{print} \bigg ) \\
+&= \displaystyle\sum_{i=1}^k (\log n + \log n + \log m + 1 +1 )\\
+&= 2k\log n + k\log m + 2k\\
+&\in \Theta(k\log(nm))
+\end{align*}
+\setcounter{saveenum}{\value{enumi}}
+\end{enumerate}
+Marc missed the class on heaps and ended up implementing a simpler but less efficient
+algorithm.
+
+Each server $S_i$ holds a sorted linked list of values by
+decreasing rank. Then server $A$ assembles the results in a list
+of $k$ candidate results as follows:
+\begin{verbatim}
+for each i = 1 to n do
+  res = S_i.SortedList.DeleteMax()
+  A.SortedCandidateList.K_InsertionSort(k,res)
+\end{verbatim}
+where K\_InsertionSort maintains a doubly linked list sorted by decreasing rank with at most
+$k$ values as follows
+\begin{verbatim}
+procedure K_InsertionSort(int k, data item)
+  if (A.SortedCandidateList.Size == k) && (item.rank > A.SortedList.LastElem.rank )
+             // only insert elements big enough for the current top k
+    A.SortedCandidateList.LastElem = A.SortedCandidateList.LastElem.Prev
+    A.SortedCandidateList.Size--;     // drop last element about to be displaced
+
+  if (A.SortedCandidateList.Size < k) // if list doesn't yet have k elements
+    A.SortedCandidateList.InsertionSort(item)   // call classical insertion sort
+\end{verbatim}
+Producing the top $k$ values is as follows:
+\begin{verbatim}
+for j = 1 to k do
+  res=A.SortedCandidateList.DeleteMax();
+  Let i be server of origin of the res item above
+  res = S_i.SortedList.DeleteMax()
+  A.SortedCandidateList.K_InsertionSort(k,res)
+  print res;
+\end{verbatim}
+\begin{enumerate}[(a)]
+\setcounter{enumi}{\value{saveenum}}
+\item Argue that this method also produces the top $k$ results in order.\\\\
+Base case: k=1\\
+    The top 1 results are in order as  top result the top of the A.SortedList is returned by DeleteMax() and inserted into A.SortedCandidateList. This is then is deleted and the next best is retrieved from that server and inserted again. This initial highest element of A is now printed so this results in the top 1 elements of the A.Heap being printed.
+Induction Hypothesis: k=k\\
+Induction Step: k=k+1\\
+    Assuming that the first k times through the loop resulted in the top k elements being printed. We now delete the k+1th highest element in A.SortedCandidateList and insert it into A.SortedCandidateList with K\_InsertionSort. If this is less than the smallest element nothing is done, if the new element is higher than the lowest element it deletes the smallest element and decreases the size of the list so that the classical insertion sort is called for this element, adding it to the top k+1 results.
+\item Assume as before that each server $S_i$ holds $m$ results. Give the time taken in the worst
+case by $A$ in the code above to assemble its list of candidates in terms of $n$ and $k$. You may assume that $n\geq k$ where needed.
+\begin{align*}
+&\enspace \displaystyle\sum_{i=1}^n (\text{SortedList.DeleteMax} + \text{K\_InsertionSort})\\
+&= \displaystyle\sum_{i=1}^n 1 + \displaystyle\sum_{i=1}^k \text{InsertionSort} + \displaystyle\sum_{j=k+1}^{n}2 + \displaystyle\sum_{j=k+1}^{n}\text{InsertionSort}\\
+&\text{InsertionSort on a sorted list is time complexity n}\\
+&= n + \displaystyle\sum_{i=1}^k i  + 2n + \displaystyle\sum_{j=k+1}^{n}k\\
+&= n + \frac{k(k+1)}{2} + (n-k)2 +  (n-k)k\\
+&= n + \frac{1}{2}k^2 +\frac{1}{2}k + 2n -2k +nk- k^2\\
+&= 3n + kn -\frac{1}{2} k^2 -\frac{3}{2}k \\
+& \in \Theta(n + kn -k^2 -k)\\
+& \in \Theta(kn)
+\end{align*}
+\item  Now give the time taken 
+to produce the top $k$ results in the loop above in terms of $m$, $n$ and $k$.
+\begin{align*}
+\displaystyle\sum_{i=1}^k \bigg (& \text{A.SortedCandidateList.DeleteMax} + \text{$S_i$.Sorted CandidateList.DeleteMax} \\ &+ \text{A.SortedCandidateList.K\_InsertionSort} + \text{print} \bigg )\\
+&= \displaystyle\sum_{i=1}^k (4+k)\\
+&= 4k + k^2\\
+&\in \Theta(k^2)
+\end{align*}
+%n * [log n + log m]
+%n * [k]
+%k * [log n + log m]
+%k * [1 + k]
+\item Let $n=10,000$ and $m=10,000,000$ for what values of $k$ is Marc's solution faster, in big-Oh order terms, than the optimized
+heap solution above, in the worst case?
+\begin{align*}
+\text{Heap: }& \Theta(n\log(nm)) + \Theta(k\log(nm))\\
+\text{Marc: }& \Theta(kn) + \Theta(k^2)\\\\
+\Theta(kn) + \Theta(k^2) & < \Theta(n\log(nm)) + \Theta(k\log(nm))\\
+\Theta(kn + k^2) &< \Theta(n\log(nm) + k\log(nm))\\
+O(kn) &< \Theta(n\log(nm))\\
+\Theta(k) &< \Theta(\log(nm))\end{align*}
+\item Google actually uses $k\approx 1000$ and then applies a post-processing stage to produce the top ten
+results. Which solution would you use in the worst case knowing again that $m\approx 10^7$, and $n\approx 10^4$ assuming that the actual
+running time is a small constant times the number of operations you computed?\\
+\begin{align*} 
+\Theta(k) &< \Theta(\log(nm))\\
+\Theta(k) &< \Theta(36)
+\end{align*} 
+\end{enumerate}
+
+
+\end{document}
+\Theta() \Theta)(\Theta()

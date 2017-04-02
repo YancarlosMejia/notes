@@ -1,0 +1,169 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+
+\subsection*{Open Closed Principle}
+A module should be open for extension but closed to modification. You can only add new code, not change what already exists. A good example of this is polymorphism. We extend a parent class, but we cannot change what is in the parent class. You should not ever change the existing working code, only to add more to it.
+
+\subsection*{Inheriting Interface vs. Implementation}
+An abstract class can determine what parts of a member function the derived class inherits:
+\begin{enumerate}
+    \item interface (declaration) of member function - a pure virtual function, the client must implement this function to inherit this class
+    \item interface and overridable implementation (default) - there exists an implementation, but the client can make their own if they want
+    \item interface and non-overridable implementation - the client cannot implement this function, must use the provided one
+\end{enumerate}
+
+\subsection*{Implementation vs. Composition}
+When we are defining a new class that includes attributes of another class we tend to want to use composition over inheritance. Basically the class contains a member of that type.
+
+\begin{tabular}{|p{9cm} | p{9cm}|}
+\hline
+\textbf{Inheritance} & \textbf{Composition}\\
+\hline
+state relationship between classes & can change at runtime\\
+\hline
+difficult to change what is being used (hard to use base class) & always work with component interfaces\\
+\hline
+subtyping breaks encapsulation (if you had protected data members allow you to have subtypes with access to implementation of base class, also know as whitebox reuse& no chance to break encapsulation, called blackbox reuse\\
+\hline
+\end{tabular}
+
+We can often simulate a `has-a' relationship (composition) with a `is-a' relationship (inheritance), but not the other way around.
+
+\subsection{Using Inheritance}
+The best place to use inheritance is for subtyping (where we want a derived class that can be used as a substitute for the base class) and where the entire interface is being used.
+
+\subsection{Using Composition}
+Anytime that you are using only parts of the interface you should use composition.
+
+\subsection{Delegation}
+This adds to composition allowing it to simulate inheritance based method of reuse. The composite object delegates operation to the component object. It can also pass itself as a parameter to let the delegated operation refer to the composite object. The composite object contains a function that allows the user to call the similarly named funciton of the component object, allowing the class to call the correct function based on the type of the component object. This makes it so the client calls the same function each time, even when new component types have been added.
+
+\subsection{Composition and Open Closed Principle}
+The benifits of composition are maximised when the component is an abstract type that can be made concrete in different ways. For example accounts with varying statuses. We want to be able to change the status of the account and to add new types of status. This would be hard to do through inheritance, as the client code would need to have lots of checks for each of the different account types, and adding a new status would mean changing client code. We change this by making a status a member of the account instead of having many different kinds of accounts. Then we use delegation to allow the status type to change. This makes it so that the client code will never change even when you add many different status types.
+
+\subsection{Single Responsibility Principle}
+We should encapsulate each changeable design decision in a separate module.
+
+\subsection{Dependencey Inversion}
+Basically all modules should rely on abstractions rather than concrete classes. We can often invert the normal order of dependency from client to server module. Bow the client and server modules bother depend on an interface that represents the clients needs. This can also help break circular dependencies.
+
+When you have two concrete classes using each other we want to add some abstraction, so we add a abstract class between them. Now we have two concrete objects attached to a abstract class.
+
+\subsection*{Liskov Substitutability Principle}
+A derived class must be substitutable for its base class. This restricts what it means to be a derived class. The derived class must preserve the behavior of its base class so that it will work with the client code. Its link to its base class must now go beyond type compatibility.
+\begin{itemize}
+    \item objects accept the base class's messages
+    \item methods require no more than base class methods
+    \item methods promise no less than base class methods
+\end{itemize}
+
+Rules:
+\begin{itemize}
+    \item Signatures: The derived-class objects must have all of the methods of the base class, and their signatures must match.
+    \begin{itemize}
+        \item  Parameters of overridden virtual methods must have compatible types as the parameters of the base class's methods.
+        \item The return type of an overridden virtual method must be compatible with the return type of the base-class's method.
+        \item A derived-class method raises the same or fewer exceptions than the corresponding base-class method.
+    \end{itemize}
+    \item Method behaviours: Calls to derived-class methods must behave like calls to the corresponding base-class methods.
+    \begin{itemize}
+        \item Precondition rules - the places where that method can be used, we cannot have derived classes that can be used in places that the base class cant (we want the client to use either derived or base class seamlessly which would break if this were true). precondition of base class $\rightarrow$ precondition of derived class, weaker or same as
+        \item Postcondition rules - what the method can change, the derived class will alter things similarly to how the base class did. postcondition of derived class $\rightarrow$ postcondition of base class, stronger or same as
+    \end{itemize}
+    \item Properties: The derived class must preserve all properties of the base class objects.
+    \begin{itemize}
+        \item if things are invariant in the base class, the derived class cannot alter them
+        \item optimized for performance
+    \end{itemize}
+\end{itemize}
+
+
+EX: if we have an entity class with a constructor clone function. The derived class substitute entity has a constructor and a clone function. The only difference is that Entity's clone returns a pointer to a Entity object and the Substitute Entity's clone returns a pointer to a Substitute Entity object. So does this violate the Signature rule? This is ok because the we are allowed to use pointers to derived class (the c++ compiler will tell you when the signature rule is violated and here is gives the ok).
+
+EX:
+\begin{verbatim}
+    class Stack {
+        long* items_;
+        int tod_;
+    public:
+        Stack();
+        Stack(int);
+        ~Stack();
+        long top() const;
+            //precondition: stack is not empty
+            //postconidion: return the element at the top of the stack
+        long pop();
+        virtual void push(long);
+            //precondition: true
+            //postcondition: adds element onto top of stack
+    }
+
+    class CountStack : public Stack {
+        int count_;
+    public:
+        CountStack() { count_ = 0 }
+        void push(long);
+        int numpushes() const;
+    }
+
+
+    int CountStack::numpushes {
+        return count_;
+    }
+    void CountStack::push(long l) {
+        Stack::push(l);
+        count_ +=1;
+    }
+\end{verbatim}
+
+We can easily see in this example that the signatures are all good. We can assume that the client cannot tell the difference betweem the time differences between the pushes. The only method that might cause problems is the push(int) in CountStack because all other methods are just left alone and not overridden. This method is actually ok because it is just calling the base class verion. It doesnt change any of the conditions around the function (pre and post are the same). There is also a matter of the Stack having a constructor that the CountStack doesnt have, but we tend to just ignore constructors, they get exceptions when it comes to design patterns.
+
+EX:
+\begin{verbatim}
+    class Account {
+        int balance = 0;
+            //invariant balance > 0
+    public:
+        float getBalance();
+        void deposit(int amount);
+        void withdraw(int amount);
+            //if(balance > amount)
+    }
+
+    class ChequingAccount : public Account {
+        int creditLimit;
+            //ivariant balance > -creditLimit
+    public:
+        void withdraw();
+            //if(balance > amount - creditLimit)
+    }
+\end{verbatim}
+
+Here the precondition of the withdraw function on chequing is weaker than the precondition of the withdraw in the Account, which is good, we want that. The problem arises with the invariant, the invariant for the chequing account is different from that of the account (with a chequing account you can break the invariant of the account class).
+
+\subsection*{Law of Demeter}
+Modular design should hide design and implementation details, including information about components. We want to code it so that they client doesn't have to know anything about any of the member classes. We do this by delegating all operations that would interact with the member class.
+
+If we just chain commands (like in the example in the slides) we get some problems:
+\begin{itemize}
+    \item client must change if data representation changes
+    \item client code is very complex and error prone
+    \item massive data leaking to the client
+\end{itemize}
+
+The Law of Demeter tests the data encapsulation of your code, it states that objects can only talk to their neighbors. An object can only call methods of itself, its data members, parameters of its member functions and any objects created by its member functions.
+
+\subsection*{What's Wrong with this Design}
+\begin{itemize}
+    \item It doesnt follow the open close principle
+    \item the library admin doesnt follow the single responsibility principle, it controls far too much
+    \item the patron should probably be implemeneted using composition rather than inheritance (note: borrowable should be inheritance so its ok)
+\end{itemize}
+
+We should have the libraryAdmin call the borrowable checkout function correctly (delegation). To add the ability to fine members with overdue books. To add the ability to manage fines, we would need to add a compute fine function to the return function of borrowable and a check for outstanding fines in the checkout function. We would also add the compute fine to the loan class and fines to the patron class. Even though this was a relatively well done design we still have changes that are scattered throughout classes.
+
+To add the ability to reserve books we would have to alter checkout and return functions to monitor this we have to add a putOnReserve() and takeOffReserve() functions to the borrowable class and add a Reserve Status class with on and off subclasses with return and checkout functions. patron
+
+\end{document}

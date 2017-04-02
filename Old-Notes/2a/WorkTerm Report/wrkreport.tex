@@ -1,0 +1,164 @@
+\documentclass[12pt]{article}
+\usepackage{wkrpt}
+\setcounter{secnumdepth}{5}
+
+\begin{document}
+
+\title{The Creation of a Poll-able SNMP Agent Generator}
+{
+	Auvik Networks Inc.\\
+	51 Breithaupt Street, Waterloo, Ontario, Canada
+}
+{
+	Lariesa Janecka\\
+	Software Engineering 2A\\
+	20460089\\
+	lajaneck\\
+	May 12\textsuperscript{th}, 2014
+}
+
+
+\letter{The Creation of a Poll-able SNMP Agent Generator}{2A}{Auvik Networks Inc.}{Software Engineering}
+{
+	\noindent
+	Lariesa Janecka\\
+	271 Westcourt Pl.\\
+	Waterloo, N2T-2Y2
+}
+{
+	Description of your co-op position. This should be about three sentences
+}
+{
+	Description of report and how it related to co-op position.
+}
+{
+	Acknowledgements
+}
+{
+	Lariesa Janecka , 20460089  
+}
+
+
+\tocsection{Executive Summary}
+EXECUTIVE SUMMARY
+\newpage
+
+
+\toc
+% \lof
+% \lot
+
+
+\pagenumbering{arabic}
+\section{Introduction}
+\indent\indent As predicted by Moore's law, computers have increased in complexity at an exponential rate over the years, and with them the complexity of the infinite ways they can be combined in networks has swelled past the point of practicality. Due to the organic nature of this growth there is very little standardization to the various devices used to connect computers on a network, or really even amongst computers themselves. This causes a great many problems for those tasked with the management and administration of large networks of various devices each with their own configurations and settings.
+
+One attempt to consolidate information about network devices is to store them in accordance to the Simple Network Management Protocol (SNMP). A SNMP enabled device (called an agent) will populate a tree of Object Identification Numbers (OIDs) with corresponding values which can be accessed through knowing a community name with access to that data set in the agent's configuration.  These values are usually grouped by similar functionality and their meanings are defined in Management Information Bases (MIBs). MIBs are usually accompanied by Request for Comment (RFC) documents which define the structure of the MIBs themselves. Most devices come with certain basic MIBs installed and RFCs set rules for the creation and documentation of MIBs resulting in a well documented and semi standardized system for storing data about devices. The default MIBs contain information relating the the state of the device (CPU usage, bandwidth, etc) and the type of connections it has with other devices on the network. Due to its standardization and relevance of the information stored with it SNMP is one of the more favoured methods of monitoring a network. Auvik Networks' product aims to collect information through SNMP (among other protocols, this report will focus solely on SNMP) and display it in a user friendly interface to facilitate easier network monitoring and triage.
+
+Unfortunately SNMP allows for the creation of custom MIBs which many device manufactures use to override the default MIBs and store necessary information in nonstandard OIDs resulting in a great loss of standardization. Due to this Auvik Networks' product cannot rely on the default MIBs to display the needed information, it is necessary to find these custom MIBs and parse them into the necessary data. To test the accuracy of the product's ability to do this requires a device of that type to exist on the network used for testing. It is far too expensive and impractical to have one of every type of device to exist physically on the network, and even then these devices would not have predictable data resulting in great difficulty in testing. Not all information will be in the same place, and the only way to test if the information received is correct would be to manually compute what the values should be.
+
+In summary the main problem faced by network administrators is the complexity and non-standardization of networks, a problem that Auvik Networks is attempting to solve; the problem this report attempts to solve is to create a way to simulate many different devices on a network with consistent data to facilitate testing of Auvik Networks' product. Any potential solution must fulfil some basic criteria. The most important criteria is to create a agent that responds to SNMP get and set messages. It must also maintain any changes made in persistent memory. The design must also be able to create multiple agents on different ports, to only have one agent per machine returns the problem back to its roots. Similarly each of these agents must be able to convey different information. This information must be dynamic, consistent, and predictable for testing purposes. Lastly any successful design must be written in such a way as to be able to incorporate with Auvik Networks existing product. Due to the large number of agents the design will be required to make and the heavy load that Auvik Networks' product puts on a device, the final choice will be made based on the efficiency.
+
+This report is designed mainly for Auvik Networks an any other companies working on similar products. While the intended audience will most likely have a good understanding of the concepts used, sufficient information will be required to understand the core functionality of the solution, and no background knowledge is assumed on the readers part. The scope of this report is the solution developed specifically for Auvik Network's product testing, though its core design can be easily adapted to other situations. This report will describe three potential methods of solving the problem stated above, evaluate their abilities to satisfy the stated criteria, and justify the choice implemented.
+\section{REPORT BODY}
+\subsection{Problem Description and Criteria}
+\indent\indent There are two main problems with Auvik Networks' current testing set up, the first is that it relies on physical devices of different types to test the products ability to parse unique MIB configurations, and second is that it generates traffic on the network sporadically via the use of individuals in the office resulting in odd and inconstant data to test against. Summarily, this report describes the attempt made to solve these two problems.
+
+To consider the first problem solved a solution must be able to create multiple different agents (responders to SNMP get and set commands), at least 10 of them. These agents must retain any changes made through SNMP set commands (write data) for the length of the session and respond correctly to SNMP get commands (read data). Similarly the solution must display the correct data layout for the various options within the SNMP get commands. As there are hundreds of different combinations of SNMP display options this will be defined as returning a numerical value or a verbal description for a specific identification number, a nested tree like structure for less specific OIDs, and a table layout for table OIDs.
+
+Pictures of each structure
+
+To accommodate proprietary MIBs a successful solution must be able to populate custom MIBs along side the default MIBs. Since most proprietary MIBs are very large and labour intensive to implement this will be determined by the ability to place a value in a currently unassigned OID, for the machine used for testing .1.4.1 was an appropriate location to use, but this will not always be the case. The solution should allow a user to add any necessary rules to ensure that the data behaves in such a way as to reflect the real world implementation of that same data. The configuration of each agent should be easy to use and saved in persistent memory to allow the reuse of the same configuration multiple times. These configurations must be flexible to account for odd MIB arrangements and and provide default values for users that do not want to enter data for all possible OIDs.
+
+To consider the second problem solved a solution must also be able to generate dynamic, realistic data. Data meant to simulate traffic needs its rates to be set on a individual basis and allow for a simulation of constant and erratic traffic. The main MIBs used by Auvik  Networks' product uses are the system, ifMIB (which includes the ifTable, ifXTable, and stackTable), and any proprietary MIBs for the supported devices. The ifTable and ifXTable show data about the traffic on the various interfaces of a device often depict related or even synonymous data. Similarly the stackTable depicts the connections between devices which can determine the amount and direction of traffic on a device. While an ideal solution should be able to check for and handle any custom rule the user chooses to implement, it is impossible to test for this. A successful solution will be able to account for rules surrounding synonymous values, summed values, and layer dependent values, which are the main rules used in the ifMIB. For synonymous values the solution should be able to check that values deemed to be synonymous by their MIB definition have been set as equal numbers and incrimination values in the configuration file, and if only one value has been set the solution should set the other to be equal. For summed values the solution should calculate the correct initial value and incrementation value by summing the corresponding values as determined by its MIB definition. If a initial or incrementation value for summed value is defined in the configuration file the solution should use those values regardless of the rules that are being broken. This is done to allow the user to set specific values and not have to fix all of the values that sum to that one. For values that are layer dependent the solution should override any non-numeric values to the appropriate value as defined in its MIB. The reason numerical values are not overwritten is to avoid confusion by the user when a set value is changed. To account for user mistakes the solution should by check that the correct type of data has been entered in the configuration and does not fall outside of any set ranges.
+
+Solutions will be evaluated based on the number of the above criteria that can be met. With the exception of the criteria defining the rules between values, all of the above criteria are critical and any solutions that do not fulfil them should be immediately eliminated. Should all of these requirements be met the remaining proposed solutions are evaluated in terms of their efficiency. Auvik Networks' product currently puts a large load of the computer running it and the proposed solution will most likely be used to create a large number of agent, which makes the amount of resources the solution uses a very important factor.
+\subsection{Solution Description}
+\subsubsection{The Generator} \indent\indent The accepted solution, named The SNMP Agent Generator was built on a library called SNMP4J. As the name implies this is a library full of methods for writing code to integrate SNMP commands with java. The SNMP Agent Generator is, in its simplest terms, an generator class containing a list of agents, a start function to create agents and stop function to kill agents.
+
+Diagram of layout
+
+Starting the generator triggers the creation of agents in accordance to the provided configuration file. It does this by parsing a xml configuration file for a list of agents and their configurations, looping through that list it calls a function to create each agent. Then for each value in the agent's configuration it calls the corresponding function create and add the appropriate data structure to the agent. The xml configuration file used to create agents is formatted as a single generator tag with multiple agent tags contained in it. Each of these agents has a designated name and list of ports on which that agent can be reached. Each agent has a configuration in the form of a list of description data (device name, location, administrator contacts, etc) and any tables that the user wishes to have non-default values. Within these tables are a list of rows each with a list of values with key names corresponding to which column that value should be in.
+
+The stop function of the generator simply iterates through the list of agents contained in the generator calling the agent's stop function on each.
+\subsubsection{Creating Agents} 
+The function that creates agents really does little more than format the necessary data to create an instance of an agent, defined elsewhere. It pulls the IP-Address of the local machine and uses it to format the given ports in the agent configuration. It uses this newly formatted list of ports to create an instance of the Agent class and calls a initializing function on it.
+
+The initializing of an agent is done through the creation of a Agent Config Manager. This is a class from the SNMP4J library. The Agent Config Manager is, essentially, the agent. All information set by the user is stored in Managed Objects that are controlled by the Agent Config Manager. These MOs are usually created as Managed Object Scalars (MOScalar), or Managed  Object Tables (MOTables). A MOScalar is a instance of a single data point while a MOTable is a collection of defined columns to which rows are added. The Agent Config Manager handles access to and manipulation of these objects.
+
+The Agent Config Manager (from now on referred to as the agent) manages multiple objects that are created and passed to it in its construction. The main components of the agent is a Message Dispatcher, a Managed Object Server, a Thread Pool, a Managed Object Input Factory, and a Persistence provider. 
+
+A Message Dispatcher "decodes and dispatches incoming messages using MessageProcessingModel instances and encodes and sends outgoing messages using an appropriate TransportMapping instances". The Message Dispatcher is created by taking the list of formatted port addresses and adding a Transport Mapping for each to a Message Dispatcher. It parses SNMP commands into a usable message as determined by the Message Processing Model. The Messaging Process Model a series of implementing classes for each of the different versions of SNMP, the class that is chosen to be used is determined by the version listed by the imputed command. Once the message is correctly formatted it is passe to a Transport Mapping which literally maps the get and set commands to the appropriate address. 
+
+The Thread Pool is basically a collection of threads that are executed concurrently. This allows the agent to handle multiple commands at once and execute them in a more efficient manner.
+
+The  Managed Object Input Factory uses a Property Managed Object Input to read a property file and set the security configuration of the agent accordingly. This file is where the user sets which communities have access to which OIDs. The Property Managed Object Input can be used to set data values as well as security values and may be used to implement constant values in agent configuration in the future.
+
+The Managed Object Server is used by the agent to, as the name implies, manage all of the objects registered. It provides the function used to interact with the object and stores them in a sorted map. This can also interact with the agent's Persistence Provider to create persistent OIDs. The Persistence Provider essentially enables the writing to and reading from a file information about OIDs to keep their data passed when the application is killed.
+
+The Persistence Provider provides a place to save the agent's state. It takes a Managed Object Server, in this case the agent's, and a file in which to save the state and uses these to maintain a copy of the agent which can be used to load the state of the agent next time an agent is created with a Persistence Provider accessing the same file. This allows the user to make permanent changes to the agent through set commands that will be remembered after the application is restarted. Currently this is not implemented to avoid confusion, but may be in the future.
+
+Snmp get and set commands are initially handled by a Worker Pool which manages the multiple commands coming in to execute them in the most efficient manner. The Worker Pool passes commands to the agent's Message Dispatcher. This formats and redirects the commands to the appropriate locations. These commands are then run through the Managed Object Input Factory, which determines what Managed Object can be accessed. Then the command is passed to the Managed Object Server which creates the snmp structure based on the options in the command and the access rights of the community as determined by the Managed Object Input Factory. At this point the command would alter the persistent data using the agent's Persistence Provider. For simplicity sake this isnt implemented, instead this file is  cleared so that the agents start matching exactly their configuration file. This may be altered in the future.
+
+Image of how agent config manager works
+
+Once the agent has been initialized, any Managed Objects that have been created by the user are registered to the Managed Object server. Them the Agent Config Manager's run command is called. This basically maintains a state machine to monitor the running state of each piece of the Agent Config Manager. 
+\subsubsection{Creating Data}
+All data that is registered to the agent is either a scalar (a single value) or a table. Most MIBs contains mixes of the two so they are all grouped together and the MIB is registered to the agent as a whole. MOScalars are implemented by extending the MOScalar class in the SNMP4J library with a set Object Identification Number (OID) and set access level. Often the scalar will implement its own function to check that the value follows the correct rules and is in the correct format.
+
+Tables are created by extending SNMP4J's MOGroup class which gives methods to register and unregister Managed Objects and a method to add rows. Tables are just a array of Managed Object Columns. Each of these columns has a set syntax for entries with enforce the correct data types being entered, columns can also have value constraints attached to them to watch for OIDs that can only have a set number of values. The Table then contains a function to create rows which creates an instance of table specific row. If there are any rules that refer to values of multiple different rows, they are checked in the create row function.
+
+Each table has its own row class which extends SNMP4J's Default MO Mutable Row class. This class provides all of the functions required to get and set data in the row. The set and get functions are overwritten to customize how the values are handled. Rule checks and value incrementations are done with get and set commands for efficiency. The set command is overwritten to include the rules enforcing correspondence between values in the row and the rules surrounding value format and syntax. The get command is overwritten to increment values. It does this by choosing a random number in a range defined by the user in a constants file. Then it multiplies this number by the last get command and adds it to the current value. The get command returns this value and calls a set command to make this the new value. This is done mostly for any values that must simulate traffic over time. A row is initialized by passing an instance of an array of default values. This needed to be done because the row uses a pointer to the array of values, so a new array needed to be created for each new row, or they would all point to the same one that was just overwritten for each row creation. Using the default array of values also allows the user to only set values that are not default and not have to set the value of each column in the row. The row is populated by repeatedly calling the row's set value function for each user set value. This changes the value of only the array that that row point to, leaving all other rows the same. Once the row is created and populated accordingly it is added to the table.
+\subsection{Alternate Options}
+Other options with similar functionality have been created and were available for use. Both were implemented using the SNMP4J library as well and are probably very similarly implemented. 
+
+The first potential solution was an application created by Verax called The SNMP Simulator. It works by reading a xml configuration to get a list of agents and their corresponding text configuration files. This has a list of OIDs and what value these should be. The configuration file can include randomizer functions that increment the initial value by a amount set in the definition of the randomizer. This initial application was built on by checking the initial configuration file for any values that would break any rules that that value should follow, correct value type, and filling in default values for table rows.
+
+While this solution is much easier to implement is also much less flexible. Each data type must have a specific randomizer, but the developers did not implement a randomizer for TimeTick data types. This means that any data that represents time cannot move, which is quite obviously a problem. There is also very little logging and error checking which makes building on this application very tedious and difficult.
+
+The second solution explored was called SNMP Agent Simulator. It is by far the simplest to implement. It takes in a file containing OIDs and the value that each should be equal to and creates an agent to port 161 with those values. Unfortunately the simplicity of implementation resulted in a lack of adaptability. This cannot create dynamic values and all agents use the same configuration file meaning that all agents would have the same values. For these reasons this solution had to be discarded.
+
+The chosen solution was chosen mainly because the other two considered solutions had fatal flaws that would prevent them from fulfilling the core purpose of the project. As stated in the beginning one of the purposes of the project is to simulate the flow of traffic on a system which is impossible to do with static time variables. The inability of the Verax SNMP Simulator to vary its time values makes it unusable.  The SNMP Agent Simulator fails the core purpose of creating multiple different agents without the costly physical device. The SNMP Agent Simulator can only use one file of OID values meaning that although it can create multiple agent they will all have the same values which prevents the user from being able to simulate a network of devices as they would each have to have a different ifStackTable (a group of OIDs that display which devices are connected to the polled device). It also fails to simulate traffic on a network, a core purpose of the project, as all values are static. 
+
+Since the first two solutions had major limitations it was decided to implement a custom application built to fix all of the needs of the problem rather than attempting to force pre-existing applications to behave in a manner foreign to them. 
+\subsection{Drawbacks}
+As stated above it was decided to avoid prewritten applications in favour of a personally built application that would have not limitations. While this resulted in an unlimited solution that filled the specified needs as described in the problem criteria, it did result in some drawbacks. The main drawback was the difficulty of implementation. Data structures are much more difficult to implement than the simple editing of a file. Tables must be defined fully and functions to add rows must be written for each table. All data sturctures must be registered to the Manged Object Server.
+
+\section{Conclusions}
+
+
+
+\begin{itemize}
+	\item what degree the original problem has been solved
+	\item summaries of the conclusions drawn from report's analysis or synthesis
+	\item includes limitations on the result
+\end{itemize}
+\section{Recommendations}
+The Recommendations section clearly summarizes your recommendations for any actions to be taken (e.g., allocation of capital or human resources) as the result of your report's findings
+\begin{itemize}
+	\item Implement a MIB parser to make the use of custom MIBs easier
+	\item optimization
+	\item use persistent memory for efficiency
+\end{itemize}
+
+
+\newpage
+\addcontentsline{toc}{section}{\refname}
+\begin{thebibliography}{9}
+	\bibitem{sample0}
+		A.N. Onymous. "This is a sample reference." Internet: \url{http://thekev.in}, April 13, 2014.
+\end{thebibliography}
+\newpage
+
+
+\tocsection{Acknowledgements}
+ACKNOWLEDGEMENTS
+\newpage
+
+
+% \appendix{APPENDIX INDEX}{APPENDIX NAME}
+% APPENDICES
+% \newpage
+
+
+\end{document}

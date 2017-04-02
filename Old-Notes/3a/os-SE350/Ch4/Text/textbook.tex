@@ -1,0 +1,80 @@
+\documentclass[12pt]{article}
+\usepackage{parskip,enumerate}
+\usepackage{pdfpages}
+\usepackage[margin=.6in]{geometry}
+
+
+\begin{document}
+\includepdf[pages={178-193}]{Operating_Systems.pdf}
+\section{Processes and Threads}
+A process has two characteristics:
+\begin{itemize}
+    \item Resource ownership
+    \item scheduling/execution
+\end{itemize}
+These two things should be kept separate and independent. A unit of scheduling is called a thread or lightweight process and a unit of resource ownership is called a process or task.
+
+Multithreading is allowing multiple converrent paths of execution within a single process. Within a process threads share the process control block and the user address space, but each get their own thread control block, user stack, and kernel stack. All threads share the same state and resources since these are owned by the process. When a thread alters data it can fuck with all the other threads since they share memory. Similarly if a thread uses a resource (say reads a file) all threads can use it.
+
+Benifits of theads:
+\begin{itemize}
+    \item creating and terminating threads is much easier than createing and terminating processes (no memory management required)
+    \item it takes less time to switch between threads
+    \item it is easier to communicate between threads than it is between processes (no OS intervention required)
+\end{itemize}
+
+The most common uses of threads:
+\begin{itemize}
+    \item foreground/background work: threads that render and threads that compute make a more responsive UI
+    \item asynchronous processing
+    \item speed of execution: threads can be blocked while the process is not
+    \item modular program structure: group tasks by similar actions and shared resources
+\end{itemize}
+
+Threads have a similar state system as processes but they cannot be suspended. Actions that can change a thread state are:
+\begin{itemize}
+    \item spawn: a new process is spanded so the threads for that process are also created, threads can also spawn threads
+    \item block: a thread is waiting for an event (same as for processes)
+    \item unblock: the event occurs (same as for process)
+    \item finish: the thread completes
+\end{itemize}
+
+We need to be careful that a blocked thread doesn't block the process and thus all threads. We also need to be careful about multiple threads accessing the same resource simultaneously since they share everything.
+
+\section{Types of Threads}
+
+User level threads are handled by the user application and the kernel is not aware of them. These tend to come as libraries and are self managed.
+
+Advantages:
+\begin{itemize}
+     \item thread switching doesnt need kernel level privileges, no mode switch required
+     \item scheduling can be application specific, can be optimized based on the situation
+     \item can run on any OS
+\end{itemize}
+
+Disadvantages:
+\begin{itemize}
+    \item when a system call is made, all threads are blocked %need to learn why this is
+    \item cannot take advantage of multiprocessing
+\end{itemize}
+
+We can fix the thread blocking problem with jacketing, instead of a system call we make a application level call so that the application can manage blocked threads.
+
+Kernel level threads are handled by the kernel so there is no thread management code in the user level. Here the kernel can take advantage of multiprocessing when scheduling threads and can easily deal with a single blocked thread. The main disadvantage is that switching between threads is more costly since it requires a mode switch.
+
+The best approach is the combined approach where we have as many user level threads as we'd like and we group them so that we have a number of kernel level threads equal to the number of processors.
+
+Thread to Process configurations:
+\begin{itemize}
+    \item one to one: one devoted thread in the process
+    \item many to one: a process owns multiple threads (most common)
+    \item one to many: a thread can jump between multiple processes
+    \item many to many: craziness
+\end{itemize}
+
+
+\section{Multicore and Mulithreading}
+
+
+
+\end{document}

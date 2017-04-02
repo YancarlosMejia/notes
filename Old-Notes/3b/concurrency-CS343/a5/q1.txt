@@ -1,0 +1,11 @@
+Without PAD:
+    12.80u 0.01s 0:06.41
+With PAD:
+    12.79u 0.00s 0:06.39
+
+The time with padding is much higher due to cache thrashing. The addresses are near each other and so pulled into the
+same cache line and as each thread increments it the whole line gets mucked with.
+
+The global variables should have close addresses increasing by 64 in order of initialization.
+
+The cast to a void pointer is required when printing so that we can print the address in hex.

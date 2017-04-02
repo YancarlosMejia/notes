@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+opt -print-callgraph $1 1>/dev/null 2>call_graph
+
+../program call_graph ${2:-3} ${3:-65} ${4:-0}

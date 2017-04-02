@@ -1,0 +1,125 @@
+\documentclass[12pt]{article}
+\usepackage{parskip,amsmath,enumitem,graphicx}
+\usepackage[margin=.6in]{geometry}
+\usepackage{color}
+\newcommand{\hilight}[1]{\colorbox{yellow}{#1}}
+\begin{document}
+\begin{centering}	
+\subsection*{MSci 261 Engineering Economics: Financial Management for Engineers}
+\subsubsection*{Spring 2014}
+\subsubsection*{Assignment 1}
+\end{centering}
+\begin{itemize} 
+\item Print out the assignment and write down your answer in the blank place leave for you.
+\item Write down the steps and highlight your final answer.
+\item You need to submit this assignment by 5:00 pm on May 23 (Friday) TAs will pick it up exactly at 5:00 pm, and yours won’t be collected if you are late. You get zero for late submission.
+\item Only 5 questions will be marked. The 5 questions will be picked randomly.
+\item The marked assignment will be returned to you as quickly as possible. See Learn for any announcement of assignment pickup.	
+\end{itemize}
+First Name: Lariesa
+
+Last Name: Janecka
+
+Student ID: 20460089
+\\\\\\
+Total Mark: \line(1,0){100}
+\begin{center}
+\begin{tabular}{| p{3cm}| p{3cm}| p{3cm}| p{3cm}|}
+\hline
+Question 1 & & Question 6 &  \\[1cm]
+\hline
+Question 2 & & Question 7 &  \\[1cm]
+\hline
+Question 3 & & Question 8 &  \\[1cm]
+\hline
+Question 4 & & Question 9 &  \\[1cm]
+\hline
+Question 5 & & Question 10 &  \\[1cm]
+\hline
+\end{tabular}
+\end{center}
+\newpage
+\begin{enumerate}[label=\textbf{Q\arabic*}]
+\item For your bank account with an interest rate of 10\% compounded daily, if you deposit \$5,000 now, how much will you have after one year?
+\begin{align*}
+P &= 5000  &\vspace{20pt} F &= P(1+i)^n\\
+i &= \frac{0.1}{365} = 0.000273973 & &= 5000(1.000273973)^365\\
+n &= 365 & &= 5525.7797091
+\end{align*}
+I will have \hilight{\$5,525.78} after one year.
+\item Violeta has paid mortgage payments of \$2,000 per month for 10 years and paid off the mortgage. What is the original mortgage loan amount, given an interest rate of 12\%?
+\begin{align*}
+A &= 2000 &\vspace{20pt} &P = A\bigg [ \frac{(1+i)^n -1}{i(1+i)^{n}} \bigg ]\\
+i &= \frac{0.12}{12} = 0.01 & &= 2000\bigg [ \frac{(1.01)^{120} -1}{0.01(1.01)^{120}} \bigg ]\\
+n &= 10 * 12 = 120 & &= 139401.0440
+\end{align*}
+The original loan amount was \hilight{\$139,401.04}.
+\item You want to buy a \$2,000 laptop, but you now have only \$500. The seller gives you an introductory offer in which you pay \$500 now and \$2200 two years later. What monthly interest rate is the seller charging?
+\begin{align*}
+P &= 2000-500=1500 &\vspace{20pt} & F=P(1+i)^n\\
+F &= 2200 & & 2200= 1500(1 + \frac{i}{12})^{24}\\
+n &= 2 * 12 = 24 & &i= \sqrt[24]{\frac{2200}{1500}}-1\\
+& & & i = 0.016086017\\
+\end{align*}
+The monthly interest was \hilight{1.61\%}
+\item A local car dealer has an ad in the newspaper for a new car as follows: ``For a \$30,000 car we will give you \$1,000 cash back and 0\% interest for 36 months''. (In other words you only pay \$29,000 for the car.) If banks charge an annual interest rate on loans of 12\% compounded monthly, what is the present worth of the car?
+\begin{align*}
+P &= 29000 &\vspace{20pt} P &= A\bigg (\frac{(1+i)^n-1}{i(1+i)^n}\bigg )\\
+i &= (1+\frac{0.12}{12})^1 - 1= 0.01 & &= 805.5556\bigg ( \frac{(1.01)^{36}-1}{0.01(1.01)^{36}} \bigg )\\
+n &= 36 & &= 24253.40175\\
+A &= \frac{29000}{36} = 805.5556 & & \\
+\end{align*}
+The present worth of the car \hilight{\$24,253.40}.
+\item A \$25,000 bond, which carries a 16\% coupon rate with quarterly payments, is being offered for sale. The bond will mature eight years after it is sold. What is the highest amount that an investor, who wishes to earn a return of at least 12\% on her investment, would be willing to pay for the bond? (You need to check the textbook/internet for the meaning of coupon rate with quarterly payments.)
+\begin{align*}
+B &= 25000 &\vspace{20pt} &P = A\bigg (\frac{(1+i)^n-1}{i(1+i)^n}\bigg )\\
+i_1 &= 0.16 & &= 1000\bigg (\frac{1.12^{32}-1}{0.12(1.12)^{32}}\bigg )\\
+A &= 25000 * 0.16/4 = 1000 & &=8111.5943\\
+n &= 8*4 = 32 & & \\
+i_2 &= 0.12 & &\\
+\end{align*}
+The investor is willing to pay \hilight{\$8,111.59}
+\item Upon starting a job, you decided to open a savings account. The account is expected to pay 8\% interest rate, compounded quarterly, and you wish to save \$250,000 at the end of 20 years. Calculate the annuity if it is paid at the end of each quarter.
+\begin{align*}
+i &= \frac{0.08}{4} = 0.02 &\vspace{20pt} A&=F\bigg ( \frac{i}{(1+i)^n-1} \bigg ) \\
+F &=250000 &\vspace{20pt} &=250000\bigg ( \frac{0.02}{(1.02)^{80}-1} \bigg ) \\
+n &= 20*4 = 80 &\vspace{20pt} &= 1290.176364\\
+\end{align*}
+The annuity is \hilight{\$1,290.18} 
+\item Edward has just won a lottery in the United States. The jackpot, with the stated lump-sum amount of \$X, is divided into 20 equal amounts and paid out on an annual basis for 20 years starting from the end of this year. Edward has calculated that the present worth of the total payment is \$8 million. Assuming there’s no tax on the prize money and the interest rate is 6\%, what is the stated amount of the jackpot, \$X?
+\begin{align*}
+n &= 20 &\vspace{20pt} &F=20A\\
+P &= 8000000 & &=20P\bigg ( \frac{i(1+i)^n}{(1+i)^n-1} \bigg )\\
+i &= 0.06 & &=20*8000000\bigg ( \frac{0.06(1.06)^{20}}{(1.06)^{20}-1} \bigg )\\
+& & &=13949529.116296\\
+\end{align*}
+The jackpot was \hilight{\$13,949,529.12}
+\item Suppose you plan to buy a car that costs \$25,000. Not having enough money, you decided to get a loan from a bank. Two banks offered a loan to you. Bank A charges you a semi-annual interest rate of 6\% compounded monthly, and Bank B charges an interest rate of 12\% compounded quarterly. Which bank would you choose?
+\begin{align*}
+P &= 25000 &\vspace{20pt} F&=P(1+i)^n &\vspace{20pt} F&=P(1+i)^n\\
+i_A &=\frac{0.06}{6}= 0.01 & &=P(1+i_A)^{n_A} & &=P(1+i_B)^{n_B}\\
+i_B &=\frac{0.12}{4}=0.03  & &=25000(1.01)^{12} & &=25000(1.03)^4\\
+n_A &=12 & &=28170.6257 & &=28137.7202\\
+n_B &=4 \\
+\end{align*}
+\end{enumerate}
+\hilight{Bank B} is slightly better than Bank A.
+\begin{itemize}
+\item[\textbf{Q10}] Kim deposits \$5,000 every three years into a saving account, starting 13 years from now. If she deposits 20 times (i.e., for 60 years), what is the present worth of the deposit, given an interest rate of 6\%. First draw a cash flow diagram and find the present worth.
+\begin{figure}[ht]
+\centering
+\includegraphics[width=15cm]{cashflow.png}
+\end{figure}
+\begin{align*}
+A_3 &= 5000 &\vspace{20pt} F &= A_1 \bigg ( \frac{(1+i)^n}{i(1+i)^n} \bigg )\\
+A_3(1.06)^3 &= A_1(1.06) + A_1(1.06)^2 + A_1(1.06)^3 & &= 1764.67 \bigg ( \frac{(1.06)^{60}-1}{0.06} \bigg )\\
+A_1 &= 1764.67 & &=940795.31 \\
+n &= 20 & P&=F(1+i)^{-n} \\
+i &= 0.06 & &=940795.31(1.06)^{-73} \\
+& & &= 13371.095152
+\end{align*}
+\end{itemize}
+The present worth of the deposit is \hilight{\$13,371.10}.
+\newpage
+
+\end{document}

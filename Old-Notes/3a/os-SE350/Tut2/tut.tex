@@ -1,0 +1,70 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+
+\section{Kernel}
+Also nown as the nucleus. This is is in main memory and includes the most frequently used portions of the software. Run in privileged mode.
+
+\section{Multiprogramming}
+The ability to switch between multiple programs and increases cpu utilization and throughput. minimize response time for time sharing systems.
+
+\section{Process}
+A program execution. Scheduled and controlled by OS. Consists of program code, associated data, and context.
+
+\section{Execution Context}
+internal data buy which the os is able to supervise and control th process.
+
+\section{Problems}
+\subsection{2.1}
+Suppose we have multiprogrammed computer. Computation time T for a job half the time is spend in IO and other half in processor. Each job runs for a total of N periods. Using round robin scheduling. Only processing cycles cant overlap.
+
+For 1, 2, and 4 simultaneous jobs find:
+\begin{itemize}
+    \item turnaround time (actual time to complete the job):
+    \item throughput (average number of jobs completed per time period T)
+    \item Processor utilization (percentage of time the processor is active)
+\end{itemize}
+Assume first half of T is for IO and second is for processor.
+
+1 Job: The squence just alternates between IO and PRocessor, turnaround time is NT, throughput is $\frac{1}{N}$. Utilization is 50\%
+
+2 Jobs: Since both IO's can run at the same time they each just execute away but since the processor can only run one program at a time they must take turns using it. So turanound time is NT, throughput is $\frac{2}{N}$, utilization is 100\%.
+
+4 Jobs: Is an alternating sequence of 2 job sets so its turnaround is (2N-1)T, throughput is $\frac{4}{2N-1}$, and utilization is 100\%
+
+\subsection{2.1b}
+Repeate 2.1a but assume that the processor is for the first and last quarters ... see answer in slides
+
+
+\subsection{2.3}
+Show the difference between scheduling policies you might use to optimize time sharing system or a multiprogrammed batch system.
+
+Timesharing: minimize turn around so use dtime slicing to give all processes
+FUUUUCKKKKK POST THE GODDAMN SLIDES BEFORE CLASS YOU ASSHOLE
+
+
+\subsection{2.4}
+What is a system call and how do they relate to dual mode operation?
+
+System call (a program to invoke functions from the OS) is used to switch between modes.
+
+\section{Instruction Trace}
+This spits out the series of instructions that have happened in the program so far.
+
+\section{Process Creation}
+Creates a data struction for the OS and allocates memory for it. Caused by a new job, interactive log on, by the os to do stuff, created by the existing procress.
+
+\section{Process Pre-emption}
+The OS needs to stop the currently running process (probably for a more important one).
+
+\section{Modes of Operation}
+User mode: restrictions on what they can do and what memory can be access to keep the user from fucking shit up.
+
+Kernel mode: system has full access to processor, instructions, registers, etc.
+
+\section{Process Model}
+New (process is ready ) is admited (memory is allocated) into ready (ready to run). Ready is dispatched (started when processor is ready) to running. Running is then sent to blocked when there is a event wait where it stays until a the event occurs where it goes into ready. Running can go back to ready when there is a timeout. If neither of these things happen the process reaches exit by releasing the processor.
+\end{document}

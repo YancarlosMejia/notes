@@ -1,0 +1,227 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+\subsection*{Robust code can be messy}
+Nearly 50\% of code in c++ files is error handling and catching. To do this properly should not make it super ugly, but there is not way to do it seamlessly, but we try.
+\subsection*{Exceptions}
+This is any time that we find error with too little information to handle an error properly, it is usually fatal and kills the program (keeps it from meeting its postcondition). If should not be a programmer error. When an error is handled it should be seperate from normal code, we make risky code distinct from safe code and handle it accordingly (try/catch blocks). We CANNOT ignore exceptions (we can ignore errors though) and hope that they go away. We want to collect as much information about the error as possible into a object and pass that up in such away as to assist the client code in handling it.
+
+Rational values ADT example:
+\begin{verbatim}
+Rational::Rational (int numes, int denom) {
+    if(denome ==0) {
+        throw 0; //throws an exception of value 0
+        throw ``HELP''; // throws exception with error messasge
+        throw DivideByZeroException(numer); //throw object to let client code play with
+    }
+    reduce (numer, denom);
+}
+
+class Rational {
+public:
+    class DivideByZeroException { //we like to package exceptions with ADT's for which they have a specific function, any exceptions that need to be global probably already exist in c++ libraries
+        public:
+            DivideByZeroException(int n): numer_(n){}
+            int numer() const {return numer_;}
+        private:
+            int numer_;
+    }
+}
+\end{verbatim}
+
+We run into problems when you want an exception to pass a pointer because exceptions themselves return pointer to functions. If you return a pointer it creates a copy of that pointer, and if that pointer is on the stack it won't find it, it jumps from the stack and dumps it during an exception. Passing pointers can also cause object slicing, passing to exceptions is stricter than passing to functions.
+
+\subsection*{Throwing an Exception}
+Creates an exception object and saves it into a safe place. It theen transfers control to the handler. Finishes that it exists to the main fucntion again calling necessary destructors along the way.
+
+\subsection*{Catching an Exception}
+An exception is handled by the neared handler in the calling sequence of the program (the closest catch block). A local exception is when a exception is caught in exactly the same place as it is raised.
+
+\begin{verbatim}
+#include<climits>
+Rational operator* (const Rational& r, const Rational& s) {
+    long numer = (long)(r.numerator() * s.numerator());
+    long demon = (long)(r.denominator() * s.denominator());
+    try {
+        if(numer < INT_MAX && denom < INT_MAX) {
+            return Rational( (int) numer, (int) denom); //this is c casting, we would need c++ casting
+        }
+        throw 0;
+    }
+    catch (int) {
+        int num_of = (numer > INT_MAX) ? INT_MAX : numer;
+        int den_of = (denom > INT_MAX) ? INT_MAX : denom;
+        return Rational(num_of, den_of); //massage the value into our ADT
+    }
+}
+int main() {
+    Rational r;
+    try {
+        cin >> r;
+    }
+    catch (Rational::DivideByZero& e) {
+
+    }
+}
+\end{verbatim}
+Note: The above example hides the error from the client which isnt always what you want, but this is just an example.
+
+What about when exceptions are thrown in the constructor? We can wrap the constructor in a try/catch. Termination theory means that after the exception is caught move on to the next part and dont execute the risky code (this is what  c++ does), and Reentrant theory is execute the risky code after the exception is handled (the handler is meant to fix shit).
+\begin{verbatim}
+#include ``Base.h''
+#include ``C.h''
+
+class MyClass:public Base {
+    C comp_;
+public:
+    MyClass(int);
+}
+//what is the correct style for this?
+MyClass::MyClass(int d): try Base(d), comp_(d) {...} catch(type& e){//object is not constructed}
+
+class X {
+public:
+    class Trouble(){};
+    class Small: public Trouble {};
+    class Big: public Trouble {};
+    void f() { throw Big(); }
+}
+
+int main() {
+    X x;
+    try {
+        x.f();
+    }
+    catch (X::Small&) {
+        cout << ``Small'';
+        throw Trouble();
+    }
+    catch (X::Trouble&) {
+        cout << ``Trouble'';
+    }
+    catch (X:: Big&) {
+        cout << ``Big'';
+    }
+    catch (...) { //catches all exceptions
+        cout << ``any'';
+        throw; //rethrow existing exception
+    }
+}
+\end{verbatim}
+
+\subsection*{Stack Unwinding}
+When an exception is throws the system looks for a usable catch handler and as it does so it exits scopes safely, calling destructors and such along the way. So anything on the stack is safely deleted. The exception to this is pointers on the stack, these can result in memory leaks as just the pointer is deleted and not the object that it points to when the scope of the pointer is left.
+
+\subsection*{Exception Specifications}
+These are basically obsolete some of the standard libraries still have them, but we shouldnt implement them. Basically is a special way to describe what exceptions this function will throw to let you know what to expect. The reason these are not in use is that the exceptions thrown by the code varies alot which would break shit all of the time. If your code throws an exception that isnt in the specification the code will the terminate.
+
+\subsection*{Standard Exception}
+Basically it all standard exceptions inherit from a base exception class. Include the library containing the exception you want to use and weild away. Works just like regular classes. These classes do not take any parameters and exist only to be overridden. Contains a what function to tell the user what happened.
+
+\subsection{RAII Programming Idiom}
+This stands for Resource Acquisition Is Initialization and equates resource management with the lifetime of an object. It recognizes the fact that if we put objects on the onto the program stack, the compiler will create code to destroy these objects when we leave the scope for the stack. It tries to take advantage of that by putting anything we want to happen automatically at the end of a scope wrapped in an object to be destroyed at the end. This includes pointers to memory, files that have been opened, network connections, locks, any resource that one wants released cleanly. Wrap these in an object to be cleaned up at the end of the scope.
+
+\begin{verbatim}
+#include<cstdio>
+#include<stdexcept>
+class file {
+    file(const char* filename): file(sunderscoretd::fopen(filename, ``wt'')) {
+        if (!file_) {
+            throw std::runtime_error(``file open failed'');
+        }
+    }
+    ~file() {
+        std::fclose(file_));
+    }
+    void write(onst char* str);
+private:
+    std::FILE file_;
+    file(const file&);
+    file& operator=(const file&);
+}_ptr is not a su
+
+void example_usage() {
+    file logfile(``logfile.txt'');
+    logfile.write(``hello'');
+}
+\end{verbatim}
+
+\subsection{Smart Pointers}
+This is a ADT that implements the RAII for pointers
+
+\begin{verbatim}
+#include<memory>
+
+int main() {
+    auto_ptr<Rational> ar(new Rational);
+    auto_ptr<Rational> as(new Rational);
+    if (ar.get()) {
+        cin >> *ar;
+        cout << *ar << ``+'' << *ar << ``='' << (*ar)+(*as) <<endl; //basic operation
+    }
+    auto_ptr<Rational> at(ar); //copy constructor, here ar is unbound (its pointer is set to 0) and refers to *ar are NULL
+    ar = as; //ar refers to *as, as is now unbound as well
+    ar.reset(new Rational(100)); //old ar is cleaned up, ar refers to 100/1
+}
+When we leave  RAIIusethe scope:
+ar - cleaned up automatically
+at - cleaned up automatically
+as - not deleted again
+\end{verbatim}
+
+
+Auto\_ptr is not a substitute for pointer:
+\begin{itemize}
+    \item cannot have two auto\_ptr to the same object
+    \item cannot assign auto\_ptr to non auto\_ptr
+    \item cannot pass auto\_ptr to functions with params that are not auto\_ptr
+    \item cannot use auto\_ptr in STL containers
+\end{itemize}
+
+Best practices:
+\begin{itemize}
+    \item use in constructors and mutators (here is where exceptions should be thrown)
+    \item not used in accessors (if you have exceptions in your accessor you did something very wrong)
+    \item not used in destructors (resulsts in runtime error)
+    \item not used in copy constructors, assignments, operator (strongly advised not to)
+    \item use rAII to perform automatic cleanup on function return
+    \item Exceptions are for environmental problems, not problems with your logic. Use assertions to raise logic errors
+    \item dont use exception specifications
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

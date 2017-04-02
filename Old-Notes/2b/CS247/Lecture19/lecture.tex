@@ -1,0 +1,99 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\usepackage{listings,graphicx}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+\begin{document}
+\subsection*{Problem 1}
+Want to define a static data member in a base class (e.g. loan period in Borrowable) and set a unique value for each derived class (not for each object).
+\begin{itemize}
+  \item  A static data member in the base class will be the same value for all derived classes (value cannot be specialized).
+  \item If not declared in base class, then no guarantee that a derived class will include such a data member.
+\end{itemize}
+
+For this we want to implement a template pattern. This allows us to fix in borrowable what the subclasses can do. It still hides stuff, but allows for more change.
+Make checkout and return non-virtual and add pure virtual functions that subclasses will specialize during checkout and return to customize the function to each subclass. This is useful for when you are defining a class with strong methods that the subclasses can vary.
+
+\subsection*{Problem 2}
+Some Borrowable items may be available electronically.
+
+We will wrap Borrowable in a DecoratorLibrary which will have another subclass called decorator that will contain the return and checkout methods for the electronicBook class.
+
+\subsection*{Problem 3}
+Want to keep track of series (e.g., book series, journal series, conference series) as well as individual borrowable items.
+
+Now series and DectoratorLibrary classes will be subclasses of the Libten class in the form of a composite pattern (series is a collection of Libtens).
+
+\subsection*{Problem 4}
+Want to allow client code to iterate through collections of Library
+items (e.g., to report usage statistics of all items)
+
+This is quite obviously the iterator pattern. It models the hierarchy of the class in nested iterators.
+
+\subsection*{Problem 5}
+Want to support multiple types of iteration.
+
+Create more subclasses of out iterator class and link them to the respective ADT's.
+
+This could also be done through a strategy pattern that has different ways to create the necessary iterators. This is going to be harder to do, so we should stick to the inheritance of the iterator.
+
+\subsection*{Problem 6}
+UW, WLU, and Guelph share Library items. Want to keep each collection of items up to date with respect to availability.
+
+This should be implemented as a Observer pattern. We have a shared collection that observes the libraries. The collection will need to have an update function that updates the collection with any new changes that the libraries may do. Each collection (there is one per library) is also a subject in that they all talk to eachother. So every collection both observes (update) and is a subject(notify).
+
+
+\subsection*{Final}
+Design Patterns
+\begin{itemize}
+  \item when to use them
+  \item UML
+  \item implementation of one
+\end{itemize}
+STL
+\begin{itemize}
+  \item small program
+  \item given a senario how to you change it to use STL (think question 2 of assignment 3)
+  \item she will provide a list of algorithms to know
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

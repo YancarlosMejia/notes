@@ -1,0 +1,85 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+\section*{Tutorial1}
+\subsection*{Intro}
+Inheritence allows us to create clases which include the data members and function of other classes. A class which inherits from another class is sometimes called a derived class which the class it inherits from is called a base class.
+
+Object slicing occurs when only base class fields are copied from a subclass object. It can occur as a consequence of assigning a subclass object into a superclass variable, when passing subclass type objects by value to a parameter of the supercass type, or more deceptively when the subclass assignment operator is called between members of the subclass type. Because there isnt enough space. 
+
+\subsection{Splicing}
+
+A derived class has the members of its base class plus anything else that you have defined. When you use assignment between a refrence to a base class pointer to another object it uses the assignment of the base class and not the other object. Only the parameters of the base class get created. This is because the compiler doesn't know that the pointer is to a super class, it just uses the assignment operator that it knows which is that of the base class. 
+
+By default the binding of functions occur at compile time. This means that if we call a member function from a plymorphic base class pointer the function called will be the base calss implementation of that function regardless of the type of the object being pointer when the program is running.
+
+\subsection{Virtual}
+
+Virtual function are an example of dynamic binding, their bindings are resolved at run time. When we create a base class with a virtual function and call that function from a plymorphic pointer the function to be called will be decided at run time based on the class being pointed to. Adding the key word virtual is like saying def.
+
+\subsection{Pure virtual}
+
+When having an instance of a base class object doesn't make sense we can make that class abstract by having a pure virtual function. Pure virtual functions do not need a definition and prevent the class from being instantiated. Any subclass that is to be instantiated must implement the function. In class declaration set the function equal to 0.
+
+
+\section*{Tutorial 2}
+\subsection*{Intro}
+Wherever you need to define the copy constructor, destructor, or assignment operators, you gotta implement the other two as well. Ususally this is done to force deep copies.
+\subsection*{Copy Constructor}
+This is used:
+\begin{itemize}
+\item creating an object with values from another object
+\item passing object by value
+\item returning an object by value
+\end{itemize}
+
+\subsection*{Assignment}
+Used to copy one object onto another. Always make sure that this returns an object so that you can chain equals together without a problem. Do this by creating a new
+object with the copy constructor then swap old values of the object being assigned to with the values in the newly created object.
+
+\subsection*{Initialization Lists}
+Basically a list of all of the things to be initialized usually within class Blah{}.  Any object not initialized in the initialization list will have its default constructor called and references and const members cannot be initialize anywhere else. Things are initialized in the order they are in the class declaration.
+ 
+\subsection*{Const}
+This is a key word warning people to not change things. You can but its harder and gives errors telling the client they fucked up.  \\
+Examples are 
+const int* x: x is a pointer to a constant integer. *x cannot be changed, but x can.
+int* const y: y is a constant pointer to an integer. y cannot be changed, but *y can.
+const int* const z: z is a constant pointer to a constant integer. Neither z nor *z can be
+changed.
+
+We can use the keyword \textbf{extern} to extend the scope of a const variable.
+
+Functions promise not to change the object that it is called on (think of getters). Const objects demand const functions.
+
+We really like to pass objects as consts references:
+\begin{itemize}
+\item more efficient as it doesnt need to be copied 
+\item const so that you dont fuck up the object
+\item allows us to pass literals and temporary valyes
+\end{itemize}
+
+\subsection*{Implicit Conversion}
+Hapens with: \\
+Single argument constructors: 
+Assignment operators: assigning two different types to each other
+Type-cast operator
+
+You usually want to use static or dynamic casting. Dynamic for pointers and references, and static for rule breaking. Static casting doesnt actually check if what its doing makes sense while dynamic casting does. The syntax is:
+\begin{verbatim}
+dynamic_cast<new_type>(expression)
+static_cast<new_type>(expression)
+\end{verbatim}
+
+\subsection{GDB}
+This is a good debugger that formats messages for you. Fun the program with certain commands
+
+
+
+
+
+
+
+
+\end{document}

@@ -1,0 +1,60 @@
+#u lajaneck kcarruth
+#a 08
+#q 03
+
+
+#check PC
+proc main() {
+	@ n >= 0 @
+	i := n -1;
+	@ i == n - 1 @ 																%Asn
+	@ A j . i < j & j < n => b[j] == c[j] @ 									%Implied(VC1)
+	while (i >= 0) do {
+		@ A j . i < j & j < n => b[j] == c[j] & i >= 0 @ 						%Invariant & Guard
+		@ A j . i < j & j < n => b[j] == c[j] @ 								%Implied(and_e)
+		b[i] := c[i];
+		@ b[i] == c[i] @ 														%Asn
+		@ A j . i < j & j < n => b[j] == c[j] & b[i] == c[i] @ 					%Implied(and_i)
+		@ A j . i <= j & j < n => b[j] == c[j] @ 								%Implied(arith)
+		@ A j . i - 1 < j & j < n => b[j] == c[j] @ 							%Implied(arith)
+		i := i - 1;
+		@ A j . i < j & j < n => b[j] == c[j] @									%Asn
+	};
+	@ A j . i < j & j < n => b[j] == c[j] & i < 0 @								%Partial While
+	@ A k . 0 <= k & k < n => b[k] == c[k] @ 									%Implied(VC2)
+}
+
+%VC1
+n >= 0 & i == n - 1 |= A j . i < j & j < n => b[j] == c[j]
+1) n >= 0 																		premise
+2) i == n - 1 																	premise
+3) n - 1 >= -1 																	by arith(common) on 1
+4) i >= -1 																		by equals_e on 2, 3
+45) for every j {
+	5) assume i < j & j < n {
+		51) i < j 																by and_e on 5
+		52) j < n 																by and_e on 5
+		53) disprove !(b[j] == c[j]) {
+			531) -1 < j 														by arith(common) on 4, 51
+			532) j < 0 															by arith(common) on 1, 52
+			533) false 															by arith(common) on 531, 532
+		}
+		54) b[j] == c[j] 														by raa on 53-533
+	}
+	6) i < j & j < n => b[j] == c[j] 											by imp_i on 5-54
+}
+7) A j . i < j & j < n => b[j] == c[j] 											by forall_i on 45-6
+	
+%VC2
+A j . i < j & j < n => b[j] == c[j] & i < 0 |= A k . 0 <= k & k < n => b[k] == c[k]
+1) A j . i < j & j < n => b[j] == c[j] 											premise
+2) i < 0 																		premise
+3) for every kg {
+	31) assume 0 <= kg & kg < n {
+		311) i < kg & kg < n => b[kg] == c[kg] 									by forall_e on 1
+		312) 0 <= kg & kg < n => b[kg] == c[kg] 								by arith(common) on 2, 311
+		313) b[kg] == c[kg] 													by imp_e on 31, 312
+	}
+	32) 0 <= kg & kg < n => b[kg] == c[kg] 										by raa on 31-313
+}
+4) A k . 0 <= k & k < n => b[k] == c[k] 										by forall_i on 3-32

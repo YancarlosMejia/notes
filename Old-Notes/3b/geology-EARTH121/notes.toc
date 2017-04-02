@@ -1,0 +1,335 @@
+\contentsline {section}{\numberline {1}Chapter 1 Introduction}{5}{section.1}
+\contentsline {subsection}{\numberline {1.1}The Science of Geology}{5}{subsection.1.1}
+\contentsline {paragraph}{Sir William Logan}{5}{section*.2}
+\contentsline {subsection}{\numberline {1.2}Geologic Time}{5}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Early Evolution of Earth}{5}{subsection.1.3}
+\contentsline {paragraph}{Planet}{5}{section*.3}
+\contentsline {paragraph}{Core}{5}{section*.4}
+\contentsline {paragraph}{Crust}{5}{section*.5}
+\contentsline {paragraph}{Mantle}{5}{section*.6}
+\contentsline {paragraph}{Atmosphere}{6}{section*.7}
+\contentsline {subsection}{\numberline {1.4}Plate Tectonics}{6}{subsection.1.4}
+\contentsline {subsection}{\numberline {1.5}Planet of Shifting Plates}{6}{subsection.1.5}
+\contentsline {paragraph}{Divergent Boundaries}{6}{section*.8}
+\contentsline {paragraph}{Convergent Boundaries}{6}{section*.9}
+\contentsline {paragraph}{Transform Fault Boundaries}{6}{section*.10}
+\contentsline {subsection}{\numberline {1.6}Earth's Internal Structure}{7}{subsection.1.6}
+\contentsline {subsection}{\numberline {1.7}Earth's Spheres}{7}{subsection.1.7}
+\contentsline {paragraph}{Hydrosphere}{7}{section*.11}
+\contentsline {paragraph}{Atmosphere}{7}{section*.12}
+\contentsline {paragraph}{Biosphere}{7}{section*.13}
+\contentsline {paragraph}{Geosphere}{7}{section*.14}
+\contentsline {subsection}{\numberline {1.8}The Face of Earth}{8}{subsection.1.8}
+\contentsline {subsection}{\numberline {1.9}Rock Cycle}{8}{subsection.1.9}
+\contentsline {section}{\numberline {2}Ch 12 (272-277) : A Scientific Revolution Begins}{8}{section.2}
+\contentsline {subsection}{\numberline {2.1}Sea-floor Spreading Hypothesis}{8}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Geomagnetic Reversals}{8}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Last Puzzle Piece}{8}{subsection.2.3}
+\contentsline {section}{\numberline {3}Chapter 2 Minerals}{8}{section.3}
+\contentsline {subsection}{\numberline {3.1}Composition of Minerals}{9}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Structure of Minerals}{9}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Physical Properties of Minerals}{9}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Mineral Classes}{9}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Silicates}{9}{subsection.3.5}
+\contentsline {subsection}{\numberline {3.6}Common Silicate Minerals}{10}{subsection.3.6}
+\contentsline {subsection}{\numberline {3.7}Nonsilicate Minerals}{10}{subsection.3.7}
+\contentsline {paragraph}{Carbonite}{10}{section*.15}
+\contentsline {paragraph}{Sedementary rocks}{10}{section*.16}
+\contentsline {section}{\numberline {4}Ch 5 (109-120)}{11}{section.4}
+\contentsline {subsection}{\numberline {4.1}Earth's External Processes}{11}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Weathering}{11}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Mechincal Weathering}{11}{subsection.4.3}
+\contentsline {paragraph}{Frost Wedging}{11}{section*.17}
+\contentsline {paragraph}{Sheeting}{11}{section*.18}
+\contentsline {paragraph}{Biologic Activity}{11}{section*.19}
+\contentsline {subsection}{\numberline {4.4}Chemical Weathering}{11}{subsection.4.4}
+\contentsline {paragraph}{Dissolution}{11}{section*.20}
+\contentsline {paragraph}{Oxidation}{11}{section*.21}
+\contentsline {paragraph}{Hydrolysis}{12}{section*.22}
+\contentsline {paragraph}{Alerations Caused by Chemical Weathering}{12}{section*.23}
+\contentsline {subsection}{\numberline {4.5}Rates of Weathering}{12}{subsection.4.5}
+\contentsline {section}{\numberline {5}Ch 3: Igneous Rocks}{12}{section.5}
+\contentsline {subsection}{\numberline {5.1}Magma}{12}{subsection.5.1}
+\contentsline {paragraph}{Formation of Magma}{12}{section*.24}
+\contentsline {paragraph}{Nature of Magma}{12}{section*.25}
+\contentsline {paragraph}{Crystaline Rock}{12}{section*.26}
+\contentsline {subsection}{\numberline {5.2}How Magma Evolves}{12}{subsection.5.2}
+\contentsline {paragraph}{Bowen's Reaction Series}{13}{section*.27}
+\contentsline {paragraph}{Partial Melting}{13}{section*.28}
+\contentsline {subsection}{\numberline {5.3}Igenous Compositions}{13}{subsection.5.3}
+\contentsline {paragraph}{Felsic VS Mafic}{13}{section*.29}
+\contentsline {paragraph}{Other Groups}{13}{section*.30}
+\contentsline {paragraph}{Silica Content}{13}{section*.31}
+\contentsline {subsection}{\numberline {5.4}Igneous Texture}{13}{subsection.5.4}
+\contentsline {paragraph}{Crystal Size}{13}{section*.32}
+\contentsline {paragraph}{Types of Textures}{14}{section*.33}
+\contentsline {subsection}{\numberline {5.5}Naming Igneous Rocks}{14}{subsection.5.5}
+\contentsline {subsubsection}{\numberline {5.5.1}Felsic(Granitic)}{14}{subsubsection.5.5.1}
+\contentsline {subsubsection}{\numberline {5.5.2}Intermediate}{15}{subsubsection.5.5.2}
+\contentsline {subsubsection}{\numberline {5.5.3}Mafic(basaltic) and Ultramafic}{16}{subsubsection.5.5.3}
+\contentsline {subsubsection}{\numberline {5.5.4}Pyrocastic Rocks}{16}{subsubsection.5.5.4}
+\contentsline {subsection}{\numberline {5.6}Intrusive Igneous Bodies}{16}{subsection.5.6}
+\contentsline {paragraph}{Nature of Plutons}{16}{section*.34}
+\contentsline {paragraph}{Dykes}{16}{section*.35}
+\contentsline {paragraph}{Sills}{17}{section*.36}
+\contentsline {subsection}{\numberline {5.7}Laccoliths}{17}{subsection.5.7}
+\contentsline {subsection}{\numberline {5.8}Batholiths}{17}{subsection.5.8}
+\contentsline {paragraph}{Emplacement}{17}{section*.37}
+\contentsline {section}{\numberline {6}Chapter 4: Volcanoes}{17}{section.6}
+\contentsline {subsection}{\numberline {6.1}The Nature of Volcanic Eruptions}{17}{subsection.6.1}
+\contentsline {paragraph}{Viscosity}{17}{section*.38}
+\contentsline {paragraph}{Dissolved Gasses}{17}{section*.39}
+\contentsline {subsection}{\numberline {6.2}Materials Extruded Duraing Eruption}{17}{subsection.6.2}
+\contentsline {paragraph}{Lava Flows}{17}{section*.40}
+\contentsline {paragraph}{Gasses}{18}{section*.41}
+\contentsline {paragraph}{Pyroclastic Materials}{18}{section*.42}
+\contentsline {paragraph}{Nuee Ardente}{18}{section*.43}
+\contentsline {paragraph}{Lahars}{18}{section*.44}
+\contentsline {subsection}{\numberline {6.3}Volcanic Structures and Eruptive Styles}{18}{subsection.6.3}
+\contentsline {paragraph}{Anatomy}{18}{section*.45}
+\contentsline {paragraph}{Shield Volcanoes}{18}{section*.46}
+\contentsline {paragraph}{Cinder Cones}{18}{section*.47}
+\contentsline {paragraph}{Composite Volcanoes}{18}{section*.48}
+\contentsline {paragraph}{Calderas}{19}{section*.49}
+\contentsline {paragraph}{Fissure Eruptions and Lava Plateaus}{19}{section*.50}
+\contentsline {paragraph}{Lava Domes}{19}{section*.51}
+\contentsline {paragraph}{Volcanic Pipes and Necks}{19}{section*.52}
+\contentsline {section}{\numberline {7}Chapter 6: Sedimentary Rocks}{21}{section.7}
+\contentsline {subsection}{\numberline {7.1}What is a Sedimentary Rock}{21}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Turning Sediment to Rock}{21}{subsection.7.2}
+\contentsline {paragraph}{Compaction}{21}{section*.53}
+\contentsline {paragraph}{Cementation}{21}{section*.54}
+\contentsline {subsection}{\numberline {7.3}Environments}{21}{subsection.7.3}
+\contentsline {paragraph}{Continental Environments}{21}{section*.55}
+\contentsline {paragraph}{Transitional Environments}{21}{section*.56}
+\contentsline {paragraph}{Marine Environments}{21}{section*.57}
+\contentsline {subsection}{\numberline {7.4}Types of Sedimentary Rocks}{22}{subsection.7.4}
+\contentsline {subsection}{\numberline {7.5}Detrital Sedimentary Rocks}{22}{subsection.7.5}
+\contentsline {subsubsection}{\numberline {7.5.1}Mudrocks}{22}{subsubsection.7.5.1}
+\contentsline {subsubsection}{\numberline {7.5.2}Sandstone}{22}{subsubsection.7.5.2}
+\contentsline {subsubsection}{\numberline {7.5.3}Conglomerate and Breccia}{23}{subsubsection.7.5.3}
+\contentsline {subsection}{\numberline {7.6}Chemical Sedimentary Rocks}{23}{subsection.7.6}
+\contentsline {subsubsection}{\numberline {7.6.1}Limestone}{23}{subsubsection.7.6.1}
+\contentsline {paragraph}{Organic Limestones}{23}{section*.58}
+\contentsline {paragraph}{Inorganic Limestone}{23}{section*.59}
+\contentsline {subsubsection}{\numberline {7.6.2}Dolostone}{23}{subsubsection.7.6.2}
+\contentsline {subsubsection}{\numberline {7.6.3}Chert}{23}{subsubsection.7.6.3}
+\contentsline {subsubsection}{\numberline {7.6.4}Evaporites}{23}{subsubsection.7.6.4}
+\contentsline {subsection}{\numberline {7.7}Coal}{24}{subsection.7.7}
+\contentsline {subsection}{\numberline {7.8}Classification of Sedimentary Rocks}{24}{subsection.7.8}
+\contentsline {subsection}{\numberline {7.9}Sedimentary Stuctures}{24}{subsection.7.9}
+\contentsline {subsection}{\numberline {7.10}Fossils}{25}{subsection.7.10}
+\contentsline {section}{\numberline {8}Chapter 7: Metamorphic Rock}{25}{section.8}
+\contentsline {subsection}{\numberline {8.1}Metamorphism}{25}{subsection.8.1}
+\contentsline {subsection}{\numberline {8.2}Controlling Factors in Metamorphism}{25}{subsection.8.2}
+\contentsline {subsubsection}{\numberline {8.2.1}Heat as a Metamorphic Agent}{25}{subsubsection.8.2.1}
+\contentsline {subsubsection}{\numberline {8.2.2}Pressure as a Metamorphic Agent}{25}{subsubsection.8.2.2}
+\contentsline {paragraph}{Confining pressure}{25}{section*.60}
+\contentsline {paragraph}{Directed Pressure}{26}{section*.61}
+\contentsline {paragraph}{Foliation}{26}{section*.62}
+\contentsline {subsubsection}{\numberline {8.2.3}Chemically Active Fluids}{26}{subsubsection.8.2.3}
+\contentsline {subsection}{\numberline {8.3}Metamorphic Grade and Index Minerals}{26}{subsection.8.3}
+\contentsline {subsection}{\numberline {8.4}Burial Metamorphism}{26}{subsection.8.4}
+\contentsline {subsection}{\numberline {8.5}Contact Metamorphism}{26}{subsection.8.5}
+\contentsline {subsection}{\numberline {8.6}Regional Metamorphism}{26}{subsection.8.6}
+\contentsline {subsubsection}{\numberline {8.6.1}Regional Metamorphism and Shale}{26}{subsubsection.8.6.1}
+\contentsline {paragraph}{Slate}{27}{section*.63}
+\contentsline {paragraph}{Phyllite}{27}{section*.64}
+\contentsline {paragraph}{Schist}{27}{section*.65}
+\contentsline {paragraph}{Gneiss}{27}{section*.66}
+\contentsline {subsubsection}{\numberline {8.6.2}Regional Metamorphism and Basalt}{27}{subsubsection.8.6.2}
+\contentsline {paragraph}{Greenschist}{27}{section*.67}
+\contentsline {paragraph}{Amphibolite}{27}{section*.68}
+\contentsline {paragraph}{Granulite}{27}{section*.69}
+\contentsline {subsubsection}{\numberline {8.6.3}Upper Limit of Regional Metamorphism}{27}{subsubsection.8.6.3}
+\contentsline {subsubsection}{\numberline {8.6.4}Regional Metamorphism and Nonfoliated Rocks}{27}{subsubsection.8.6.4}
+\contentsline {subsection}{\numberline {8.7}Subduction Zone Metamorphism}{27}{subsection.8.7}
+\contentsline {subsection}{\numberline {8.8}Metamorphic Facies and Plate Tectonics}{28}{subsection.8.8}
+\contentsline {subsection}{\numberline {8.9}Ancient Metamorphic Environments}{28}{subsection.8.9}
+\contentsline {section}{\numberline {9}Chapter 8: Geologic Time}{28}{section.9}
+\contentsline {subsection}{\numberline {9.1}Relative Dating}{28}{subsection.9.1}
+\contentsline {subsubsection}{\numberline {9.1.1}Geologic Time}{28}{subsubsection.9.1.1}
+\contentsline {subsubsection}{\numberline {9.1.2}Law of Superposition}{28}{subsubsection.9.1.2}
+\contentsline {subsubsection}{\numberline {9.1.3}Principle of Original Horizontality}{28}{subsubsection.9.1.3}
+\contentsline {subsubsection}{\numberline {9.1.4}Principle of Cross Cutting Relations}{28}{subsubsection.9.1.4}
+\contentsline {subsubsection}{\numberline {9.1.5}Inclusion}{28}{subsubsection.9.1.5}
+\contentsline {subsubsection}{\numberline {9.1.6}Unconformities}{28}{subsubsection.9.1.6}
+\contentsline {paragraph}{Angular Unconformity}{28}{section*.70}
+\contentsline {paragraph}{Disconformity}{29}{section*.71}
+\contentsline {paragraph}{Nonconformity}{29}{section*.72}
+\contentsline {subsection}{\numberline {9.2}Correlation of Rock Layers}{29}{subsection.9.2}
+\contentsline {subsubsection}{\numberline {9.2.1}Correlation by Physical Criteria}{29}{subsubsection.9.2.1}
+\contentsline {subsubsection}{\numberline {9.2.2}Fossils and Correlation}{29}{subsubsection.9.2.2}
+\contentsline {subsection}{\numberline {9.3}Dating with Radioactivity}{29}{subsection.9.3}
+\contentsline {subsubsection}{\numberline {9.3.1}Radioactivity}{29}{subsubsection.9.3.1}
+\contentsline {subsubsection}{\numberline {9.3.2}Half Life}{29}{subsubsection.9.3.2}
+\contentsline {subsubsection}{\numberline {9.3.3}Radiometric Dating}{29}{subsubsection.9.3.3}
+\contentsline {subsubsection}{\numberline {9.3.4}Dating with Carbon-14}{30}{subsubsection.9.3.4}
+\contentsline {subsection}{\numberline {9.4}Geologic Time Scale}{30}{subsection.9.4}
+\contentsline {subsubsection}{\numberline {9.4.1}Structure of the Time Scale}{30}{subsubsection.9.4.1}
+\contentsline {subsection}{\numberline {9.5}Difficulties Dating the Geologic Time Scale}{30}{subsection.9.5}
+\contentsline {section}{\numberline {10}Chapter 9: Crustal Deformation}{30}{section.10}
+\contentsline {subsection}{\numberline {10.1}How Rocks Deform}{30}{subsection.10.1}
+\contentsline {paragraph}{Temperature and Confining Pressure}{30}{section*.73}
+\contentsline {paragraph}{Rock Type}{30}{section*.74}
+\contentsline {paragraph}{Time}{30}{section*.75}
+\contentsline {subsection}{\numberline {10.2}Mapping Geologic Structures}{31}{subsection.10.2}
+\contentsline {subsubsection}{\numberline {10.2.1}Strike and Drip}{31}{subsubsection.10.2.1}
+\contentsline {subsection}{\numberline {10.3}Folds}{31}{subsection.10.3}
+\contentsline {subsubsection}{\numberline {10.3.1}Types of Folds}{31}{subsubsection.10.3.1}
+\contentsline {subsubsection}{\numberline {10.3.2}Domes and Basins}{31}{subsubsection.10.3.2}
+\contentsline {subsection}{\numberline {10.4}Joints}{31}{subsection.10.4}
+\contentsline {subsection}{\numberline {10.5}Faults}{31}{subsection.10.5}
+\contentsline {subsubsection}{\numberline {10.5.1}Dip-Slip Faults}{31}{subsubsection.10.5.1}
+\contentsline {paragraph}{Normal Faults}{31}{section*.76}
+\contentsline {paragraph}{Reverse and Thrust Faults}{32}{section*.77}
+\contentsline {subsubsection}{\numberline {10.5.2}Strike-Slip Faults}{32}{subsubsection.10.5.2}
+\contentsline {section}{\numberline {11}Chapter 20: Minerals and Energy Resources}{32}{section.11}
+\contentsline {subsection}{\numberline {11.1}Metallic Minerals}{32}{subsection.11.1}
+\contentsline {subsubsection}{\numberline {11.1.1}Magmatic Deposits}{32}{subsubsection.11.1.1}
+\contentsline {paragraph}{Gravitational Settling}{32}{section*.78}
+\contentsline {paragraph}{Immiscibility}{32}{section*.79}
+\contentsline {paragraph}{Pegmatites}{32}{section*.80}
+\contentsline {subsubsection}{\numberline {11.1.2}Hydrothermal Deposits}{32}{subsubsection.11.1.2}
+\contentsline {subsubsection}{\numberline {11.1.3}Hydrothermal Deposits Associated with Igneous Activity}{32}{subsubsection.11.1.3}
+\contentsline {paragraph}{Vein Deposits}{32}{section*.81}
+\contentsline {paragraph}{Disseminated Deposits}{33}{section*.82}
+\contentsline {paragraph}{Volcanogenic Massive Sulphide Deposits}{33}{section*.83}
+\contentsline {subsubsection}{\numberline {11.1.4}Sediment-Associated Hydrothermal Deposits}{33}{subsubsection.11.1.4}
+\contentsline {paragraph}{Sedimentary Exhalative Deposits}{33}{section*.84}
+\contentsline {paragraph}{Sediment-Hosted Stratiform Deposits}{33}{section*.85}
+\contentsline {paragraph}{Mississippi Valley-Type Deposits}{33}{section*.86}
+\contentsline {subsubsection}{\numberline {11.1.5}Sedimentary Deposits}{33}{subsubsection.11.1.5}
+\contentsline {paragraph}{Banded Iron Formations}{33}{section*.87}
+\contentsline {paragraph}{Placer Deposits}{33}{section*.88}
+\contentsline {subsubsection}{\numberline {11.1.6}Metamorphic Deposits}{33}{subsubsection.11.1.6}
+\contentsline {subsubsection}{\numberline {11.1.7}Weathering Deposits}{33}{subsubsection.11.1.7}
+\contentsline {paragraph}{Bauxite}{33}{section*.89}
+\contentsline {paragraph}{Other Deposits}{34}{section*.90}
+\contentsline {subsection}{\numberline {11.2}Non-Metallic Mineral Resources}{34}{subsection.11.2}
+\contentsline {subsubsection}{\numberline {11.2.1}Aggregate and Stone}{34}{subsubsection.11.2.1}
+\contentsline {subsubsection}{\numberline {11.2.2}Industrial Minerals}{34}{subsubsection.11.2.2}
+\contentsline {paragraph}{Diamonds}{34}{section*.91}
+\contentsline {paragraph}{Clays}{34}{section*.92}
+\contentsline {paragraph}{Carbonate Minerals}{34}{section*.93}
+\contentsline {paragraph}{Evaporite Salts}{34}{section*.94}
+\contentsline {paragraph}{Phosphate}{34}{section*.95}
+\contentsline {paragraph}{Sulphur}{34}{section*.96}
+\contentsline {paragraph}{Other Industrial Mineral Deposits}{34}{section*.97}
+\contentsline {subsection}{\numberline {11.3}Non-Renewable Energy Resources}{34}{subsection.11.3}
+\contentsline {subsubsection}{\numberline {11.3.1}Petroleum}{34}{subsubsection.11.3.1}
+\contentsline {paragraph}{How its Formed}{34}{section*.98}
+\contentsline {paragraph}{Petroleum Migration}{35}{section*.99}
+\contentsline {paragraph}{Petroleum Traps}{35}{section*.100}
+\contentsline {subsubsection}{\numberline {11.3.2}Coal}{35}{subsubsection.11.3.2}
+\contentsline {subsection}{\numberline {11.4}Environmental Effects}{35}{subsection.11.4}
+\contentsline {subsection}{\numberline {11.5}Unconventional Fossil Fuel Deposits}{35}{subsection.11.5}
+\contentsline {paragraph}{Heavy Oil Sands}{35}{section*.101}
+\contentsline {paragraph}{Oil Shale}{35}{section*.102}
+\contentsline {paragraph}{Methane Hydrate}{35}{section*.103}
+\contentsline {paragraph}{Coal-Bed Methane and Shale Gas}{35}{section*.104}
+\contentsline {subsection}{\numberline {11.6}Nuclear Energy}{36}{subsection.11.6}
+\contentsline {paragraph}{Obstacles}{36}{section*.105}
+\contentsline {subsection}{\numberline {11.7}Renewable Energy Sources}{36}{subsection.11.7}
+\contentsline {subsubsection}{\numberline {11.7.1}Geothermal}{36}{subsubsection.11.7.1}
+\contentsline {subsubsection}{\numberline {11.7.2}Organic-Based Sources}{36}{subsubsection.11.7.2}
+\contentsline {paragraph}{Landfill Methane}{36}{section*.106}
+\contentsline {paragraph}{Biomass Energy}{36}{section*.107}
+\contentsline {subsubsection}{\numberline {11.7.3}Hydroelectric Power}{36}{subsubsection.11.7.3}
+\contentsline {subsection}{\numberline {11.8}Other}{36}{subsection.11.8}
+\contentsline {section}{\numberline {12}Chapter 10}{38}{section.12}
+\contentsline {subsection}{\numberline {12.1}What is an Earthquake}{38}{subsection.12.1}
+\contentsline {subsubsection}{\numberline {12.1.1}Earthquakes and Faults}{38}{subsubsection.12.1.1}
+\contentsline {subsubsection}{\numberline {12.1.2}Elastic Rebound}{38}{subsubsection.12.1.2}
+\contentsline {subsubsection}{\numberline {12.1.3}Foreshocks and Aftershocks}{38}{subsubsection.12.1.3}
+\contentsline {subsection}{\numberline {12.2}Seismology}{38}{subsection.12.2}
+\contentsline {subsection}{\numberline {12.3}Locating the Source of an Earthquake}{38}{subsection.12.3}
+\contentsline {subsubsection}{\numberline {12.3.1}Earthquake Belts}{38}{subsubsection.12.3.1}
+\contentsline {subsection}{\numberline {12.4}Measuring the Size of Earthquakes}{39}{subsection.12.4}
+\contentsline {subsubsection}{\numberline {12.4.1}Intensity Scales}{39}{subsubsection.12.4.1}
+\contentsline {subsubsection}{\numberline {12.4.2}Magnitude Scales}{39}{subsubsection.12.4.2}
+\contentsline {paragraph}{Richter Scale}{39}{section*.108}
+\contentsline {paragraph}{Other Scales}{39}{section*.109}
+\contentsline {paragraph}{Moment Magnitude}{39}{section*.110}
+\contentsline {subsection}{\numberline {12.5}Earthquake Destruction}{39}{subsection.12.5}
+\contentsline {subsubsection}{\numberline {12.5.1}Destruction from Seismic Vibrations}{39}{subsubsection.12.5.1}
+\contentsline {paragraph}{Amplification of Seismic Waves}{39}{section*.111}
+\contentsline {paragraph}{Liquefaction}{39}{section*.112}
+\contentsline {subsubsection}{\numberline {12.5.2}Tsunami}{39}{subsubsection.12.5.2}
+\contentsline {subsubsection}{\numberline {12.5.3}Landslides and Ground Subsidence}{40}{subsubsection.12.5.3}
+\contentsline {subsubsection}{\numberline {12.5.4}Fire}{40}{subsubsection.12.5.4}
+\contentsline {subsection}{\numberline {12.6}Can Earthquakes be Predicted}{40}{subsection.12.6}
+\contentsline {subsubsection}{\numberline {12.6.1}Short-Range Predictions}{40}{subsubsection.12.6.1}
+\contentsline {subsubsection}{\numberline {12.6.2}Long-Range Forecasts}{40}{subsubsection.12.6.2}
+\contentsline {subsection}{\numberline {12.7}Probing Earth's Interior}{40}{subsection.12.7}
+\contentsline {subsubsection}{\numberline {12.7.1}The Nature of Seismic Waves}{40}{subsubsection.12.7.1}
+\contentsline {subsubsection}{\numberline {12.7.2}Seismic Waves and Earth's Structure}{40}{subsubsection.12.7.2}
+\contentsline {subsection}{\numberline {12.8}Discovering Earth's Major Boundaries}{41}{subsection.12.8}
+\contentsline {subsubsection}{\numberline {12.8.1}The Crust-Mantel Boundary}{41}{subsubsection.12.8.1}
+\contentsline {subsubsection}{\numberline {12.8.2}The Core-Mantle Boundary}{41}{subsubsection.12.8.2}
+\contentsline {subsubsection}{\numberline {12.8.3}Disovery of the Inner Core}{41}{subsubsection.12.8.3}
+\contentsline {section}{\numberline {13}Chapter 14}{41}{section.13}
+\contentsline {subsection}{\numberline {13.1}Mass Wasting and Landform Development}{41}{subsection.13.1}
+\contentsline {subsubsection}{\numberline {13.1.1}The Role of Mass Wasting}{42}{subsubsection.13.1.1}
+\contentsline {subsubsection}{\numberline {13.1.2}Slopes Change through Time}{42}{subsubsection.13.1.2}
+\contentsline {subsection}{\numberline {13.2}Controls and Triggers}{42}{subsection.13.2}
+\contentsline {subsubsection}{\numberline {13.2.1}The Role of Water}{42}{subsubsection.13.2.1}
+\contentsline {subsubsection}{\numberline {13.2.2}Oversteepened Slopes}{42}{subsubsection.13.2.2}
+\contentsline {subsubsection}{\numberline {13.2.3}Removal of Vegetation}{42}{subsubsection.13.2.3}
+\contentsline {subsubsection}{\numberline {13.2.4}Earthquakes as Triggers}{42}{subsubsection.13.2.4}
+\contentsline {subsubsection}{\numberline {13.2.5}Liquefaction}{42}{subsubsection.13.2.5}
+\contentsline {subsection}{\numberline {13.3}Classification of Mass Wasting}{42}{subsection.13.3}
+\contentsline {subsubsection}{\numberline {13.3.1}Type of Motion}{42}{subsubsection.13.3.1}
+\contentsline {paragraph}{Fall}{42}{section*.113}
+\contentsline {paragraph}{Slide}{43}{section*.114}
+\contentsline {paragraph}{Flow}{43}{section*.115}
+\contentsline {subsubsection}{\numberline {13.3.2}Type of Material}{43}{subsubsection.13.3.2}
+\contentsline {subsubsection}{\numberline {13.3.3}Rate of Movement}{43}{subsubsection.13.3.3}
+\contentsline {subsection}{\numberline {13.4}Slump}{43}{subsection.13.4}
+\contentsline {subsection}{\numberline {13.5}Rock Slide}{43}{subsection.13.5}
+\contentsline {subsection}{\numberline {13.6}Debris Flow}{43}{subsection.13.6}
+\contentsline {subsubsection}{\numberline {13.6.1}Lahars}{43}{subsubsection.13.6.1}
+\contentsline {subsection}{\numberline {13.7}Earthflow}{43}{subsection.13.7}
+\contentsline {subsection}{\numberline {13.8}Slow Movements}{43}{subsection.13.8}
+\contentsline {subsubsection}{\numberline {13.8.1}Creep}{43}{subsubsection.13.8.1}
+\contentsline {subsubsection}{\numberline {13.8.2}Solifluction}{44}{subsubsection.13.8.2}
+\contentsline {subsubsection}{\numberline {13.8.3}Other Periglacial Features}{44}{subsubsection.13.8.3}
+\contentsline {section}{\numberline {14}Chapter 15}{44}{section.14}
+\contentsline {subsection}{\numberline {14.1}Hydrologic Cycle}{44}{subsection.14.1}
+\contentsline {subsubsection}{\numberline {14.1.1}From Sheet Flow to Channel Flow}{44}{subsubsection.14.1.1}
+\contentsline {subsection}{\numberline {14.2}Basic Components of a Stream}{44}{subsection.14.2}
+\contentsline {subsection}{\numberline {14.3}Streamflow}{44}{subsection.14.3}
+\contentsline {subsubsection}{\numberline {14.3.1}Gradient and Channel Characteristics}{44}{subsubsection.14.3.1}
+\contentsline {subsubsection}{\numberline {14.3.2}Discharge and Changes Downstream}{45}{subsubsection.14.3.2}
+\contentsline {subsection}{\numberline {14.4}Stream Erosion}{45}{subsection.14.4}
+\contentsline {subsection}{\numberline {14.5}Transport of Sediment by Streams}{45}{subsection.14.5}
+\contentsline {subsubsection}{\numberline {14.5.1}Dissolved Load}{45}{subsubsection.14.5.1}
+\contentsline {subsubsection}{\numberline {14.5.2}Suspended Load}{45}{subsubsection.14.5.2}
+\contentsline {subsubsection}{\numberline {14.5.3}Bed Load}{45}{subsubsection.14.5.3}
+\contentsline {subsubsection}{\numberline {14.5.4}Capacity and Competence}{45}{subsubsection.14.5.4}
+\contentsline {subsection}{\numberline {14.6}Deposition of Sediment by Streams}{45}{subsection.14.6}
+\contentsline {subsubsection}{\numberline {14.6.1}Channel Deposits}{45}{subsubsection.14.6.1}
+\contentsline {subsubsection}{\numberline {14.6.2}Floodplain Deposites}{46}{subsubsection.14.6.2}
+\contentsline {subsection}{\numberline {14.7}The Graded Stream Concept and Base Level}{46}{subsection.14.7}
+\contentsline {subsection}{\numberline {14.8}Stream Valleys}{46}{subsection.14.8}
+\contentsline {subsection}{\numberline {14.9}Types of Stream Systems}{46}{subsection.14.9}
+\contentsline {subsubsection}{\numberline {14.9.1}Braided Streams}{46}{subsubsection.14.9.1}
+\contentsline {subsubsection}{\numberline {14.9.2}Meandering Streams}{46}{subsubsection.14.9.2}
+\contentsline {subsubsection}{\numberline {14.9.3}Anastomosed Streams}{46}{subsubsection.14.9.3}
+\contentsline {subsection}{\numberline {14.10}Alluvial Fans and Deltas}{47}{subsection.14.10}
+\contentsline {subsubsection}{\numberline {14.10.1}Alluvial Fans}{47}{subsubsection.14.10.1}
+\contentsline {subsubsection}{\numberline {14.10.2}Deltas}{47}{subsubsection.14.10.2}
+\contentsline {subsection}{\numberline {14.11}Drainage Patterns}{47}{subsection.14.11}
+\contentsline {paragraph}{Drainage Patterns}{47}{section*.116}
+\contentsline {subsubsection}{\numberline {14.11.1}Headward Erosion and Stream Piracy}{47}{subsubsection.14.11.1}
+\contentsline {subsection}{\numberline {14.12}Flood and Flood Control}{47}{subsection.14.12}
+\contentsline {subsubsection}{\numberline {14.12.1}Causes and Types of Floods}{47}{subsubsection.14.12.1}
+\contentsline {paragraph}{Regional Floods}{47}{section*.117}
+\contentsline {paragraph}{Flash Floods}{47}{section*.118}
+\contentsline {paragraph}{Ice Jam Floods}{47}{section*.119}
+\contentsline {paragraph}{Dam Failure Floods}{47}{section*.120}
+\contentsline {subsubsection}{\numberline {14.12.2}Flood Control}{48}{subsubsection.14.12.2}
+\contentsline {paragraph}{Artificial Levees}{48}{section*.121}
+\contentsline {paragraph}{Flood Control Dams}{48}{section*.122}
+\contentsline {paragraph}{Channellization}{48}{section*.123}
+\contentsline {paragraph}{Non-Structural Approach}{48}{section*.124}

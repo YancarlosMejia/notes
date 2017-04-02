@@ -1,0 +1,24 @@
+a)
+enum credit{WD, CR, NCR, WF} ;
+Course {
+	union {
+		int i;
+		credit c;
+	}grade;
+public:
+	Course(const int i);
+	Course(const credit e);
+	string getGrade();
+}
+bool operator==(int i, const Course&);
+bool operator!=(int i, const Course&);
+bool operator>(int i, const Course&);
+bool operator<(int i, const Course&);
+bool operator<=(int i, const Course&);
+bool operator<<(int i, const Course&);
+
+b)
+The constructors are there to allow the client to create a grade with an integer, or a string. The comparison operators are usefull for the client to montior what the grade's value is, and the ostream operator allows the client to print their grade. Similarly the getGrade function allows the client to use the grades value (what it is viewed as).
+c)The default constructor was not implemented to prevent the client from creating empty grades which would mean nothing. The client should only be able to create grades with actual values in them.
+d)
+All of the comparison operations and the streaming operation are made nonmenmber functions in order to allow them to be called with values of different data types. For instance the client will probably want to compare a grade with an integer or output to an ostream. Everything else is made as a member functions in order to allow access to the private variables of the class.

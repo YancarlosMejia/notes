@@ -1,0 +1,48 @@
+├── branches
+├── COMMIT_EDITMSG
+├── config
+├── description
+├── HEAD
+├── hooks
+│   ├── post-commit
+│   ├── pre-commit
+│   └── pre-push
+├── index
+├── logs
+│   ├── HEAD
+│   └── refs
+│       ├── heads
+│       │   ├── eye_size
+│       │   ├── master
+│       │   └── two_eyes
+│       ├── remotes
+│       │   └── origin
+│       │       ├── gaze-tracking
+│       │       ├── HEAD
+│       │       └── master
+│       └── stash
+├── modules
+│   └── pygaze
+│       ├── branches
+│       ├── ...
+├── objects
+│   ├── 04
+│   │   └── 6f649d41c9f3d3acd8ab0f29ea9876c5dd791e
+│   ├── ...
+│   ├── info
+│   └── pack
+│       ├── pack-636f923c8fc664c8e78f7c946901e99bd12165f0.idx
+│       ├── pack-636f923c8fc664c8e78f7c946901e99bd12165f0.pack
+├── refs
+│   ├── heads
+│   │   ├── eye_size
+│   │   ├── master
+│   │   └── two_eyes
+│   ├── remotes
+│   │   └── origin
+│   │       ├── gaze-tracking
+│   │       ├── HEAD
+│   │       └── master
+│   ├── stash
+│   └── tags
+

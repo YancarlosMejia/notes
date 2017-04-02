@@ -1,0 +1,337 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage[margin=.6in]{geometry}
+
+\begin{document}
+\section*{Lecture 2}
+\label{sec:lecture_2}
+
+\paragraph{Requirements} 
+\label{par:requirements}
+A condition or capability that must be achieved. Expressed in terms of environmental phenomena
+
+\paragraph{Specification} 
+\label{par:specification}
+A description of the proposed system. Expressed in terms of interface phenomena. 
+
+The \textbf{environment} is the relevant subset of the world using posing a problem and the \textbf{system} is you solution to the problem. These two interact through the \textbf{interface}. 
+
+\paragraph{Domain Knowledge} 
+\label{par:domain_knowledge}
+We would like to show that specifications imply requirements but this is often impossible so we can make \textbf{assumptions} about how the environment behaves, denoted as domain knowledge. 
+
+This results in the \textbf{fundamental law of requirements} which says that domain knowledge (Dom) and specifications (Spec) imply requirements (Req). We also want to make sure that Dom $\wedge$ Spec is satisfiable. 
+
+\section*{Lecture 3}
+\label{sec:lecture_3}
+\paragraph{Project Types} 
+\label{par:project_types}
+\begin{itemize}
+	\item Rabbit: small projects, short lifetime, few stakeholders close by
+	\item Horse: medium project, medium lifetime, dozens of stakeholders, geographically distributed
+	\item Elephant: large project, some outsourced development, need for certification
+\end{itemize}
+
+\paragraph{Scope the Problem} 
+\label{par:scope_the_problem}
+Find the \textbf{purpose} of the project. Figure out some high level \textbf{goals} (measurable criteria). Look at the \textbf{scope} of the area that will be effected by the installation of the product and the \textbf{stakeholders} that are interested in it. Lastly consider the \textbf{constrictions} if the system (this includes other systems). 
+
+\paragraph{Context Diagram} 
+\label{par:context_diagram}
+This is a model of the environment in which you need to do your work. This allows you to modularize phenomena into domains. Basically you break up the environmental phenomena that might effect your solution and connect them to the task they effect through an edge.
+
+\paragraph{Stakeholders} 
+\label{par:stakeholders}
+These are people that have a stake in the success of the project. The \textbf{owner/client} is the stakeholder that is paying for the project to be developed. A \textbf{customer} is a stakeholder that pays for the product after is is finished. A \textbf{user} is a stakeholder that is an expert on the existing system or a competitors products that can give us feedback. When getting feedback make sure that the user base is diverse. The \textbf{domain expert} are stakeholders that know the problem very well. The \textbf{software engineer} is the stakeholder that is an exert in the technology involved. \textbf{Inspectors} are experts on regulations related to the problem. \textbf{Market Researchers} are experts in the customers needs and trends. \textbf{Lawyers} are experts in the legal requirements. Stakeholders can also be experts on adjacent systems that might be effected by your system. There can be stakeholders that don't want you project to succeed \textbf{negative stakeholders}. 
+
+\section*{Lecture 4}
+\label{sec:lecture_4}
+\paragraph{Use Cases} 
+\label{par:use_cases}
+We want to break down the work to be done into pieces to manage complexity.
+
+\paragraph{The Work} 
+\label{par:the_work}
+This includes what you are permitted to change, what you need to understand inorder to decide what to change, and anything that an be affected by the product. Consider all of these things when you when you decide the scope of the project.
+
+We break the work up into vertical slices called \textbf{use cases}. These represent some end to end functionality. You have a user or actor interacting with an actor. Time can be one of the actors to show a time trigger used case. Actors can be subclassed using the triangle notation seen in uml. We can label edges with an include statement that shows a sub usecase to be use within this (usually some form of validation).  
+
+
+\section*{Lecture 5}
+\label{sec:lecture_5}
+Basically domain models are just UML diagrams. Just include class names, attributes and operations.
+
+\section*{Lecture 6}
+\label{sec:lecture_6}
+Light weight modeling is fairly informal, like mind maps.
+
+\paragraph{Scenarios}
+\label{par:scenarios}
+These are one full exeuction path if a use case listing only the observable actions. Basically pretend to be a user doing something. Number steps as you go, allow logical expressions (like for and if) to have sob paths denoted (#.#). You can also list an \textbf{Alternatives}, sub use case that achieves the same goal through a different path (denoted A#). \textbf{Exceptions} are unwanted but inevitable deviations (denoted E#). A \textbf{negative scenario} is a scenario to be prohibited. A \textbf{misuse case} is a scenario that captures undesirable inputs from the user environment.
+
+\paragraph{Use Case} 
+\label{par:use_case}
+A use case is a collection of success and failure scenarios initiated by an external actor. These are different than scenarios. 
+
+\textbf{Template}:
+\begin{itemize}
+\item Business Event Name:
+\item Business Use Case Name and Number:
+\item Trigger:
+\item Preconditions: Sometimes certain conditions must exist before the use case is valid.
+	\begin{itemize}
+	\item Interested Stakeholders:
+	\item Active Stakeholders:
+	\item Normal Case Steps:
+	\item Step 1 . . .
+	\item Step 2 . . .
+	\item Step 3 . . .
+	\item Alternatives:
+	\item Exceptions:
+	\item Outcome:
+	\end{itemize}
+\end{itemize}
+
+\paragraph{Activity Diagram} 
+\label{par:activity_diagram}
+These are essential flow charts of actions and interactions from the user. Actions are denoted with circles and the results are branches off diamonds, if there is a fork that is denoted with a long bar. 
+
+\paragraph{Process Model} 
+\label{par:process_model}
+This is a decomposition of the work and data dependencies between functions denoted as actors rectangles flow data arrows to process circles and data store bars flowing into the process as well. 
+
+
+\section*{Lecture 7}
+\label{sec:lecture_7}
+\paragraph{Elicitation} 
+\label{par:elicitation}
+This is the process of getting information from your stakeholders. 
+\begin{itemize}
+	\item required functionality - what the software should do
+	\item quality attributes - desired characteristics of the software
+	\item design constraints - customer-specified limits on solution space
+	\item environmental assumptions - assumed context of the software
+	\item preferences
+\end{itemize}
+
+
+\paragraph{Documentation} 
+\label{par:documentation}
+Different project types require different amounts of elicitation and documentation.
+\begin{itemize}
+	\item Rabbit: requirements considered but probably not documented and mostly just stored in the heads of the stakeholders
+	\item Horse: requirements need to be documented so that the many stakeholders can be on the same page
+	\item Elephant: requirements are critical to get right and very well documented
+\end{itemize}
+
+\paragraph{Artifact based elicitation} 
+\label{par:artifact_based_elicitation}
+We want to learn as much as we can by studying artifacts(documentation, systems, and such) before asking stakeholders. \textbf{Documents} for system, environment, and domain analysis are used. \textbf{Norms} are known problems to improve on (build a better X). A \textbf{requirement taxonomy} is a classification of requirements to act as a checklist of details to be elicited.
+
+\paragraph{Model Based elicitation} 
+\label{par:model_based_elicitation}
+We want to re-express requirements in a different language to raise new questions. \textbf{Models} are often used to reveal holes in our understanding, make them simple enough for stakeholders to modify. \textbf{Analysis patterns} are like design patterns (in oo programming) for modeling business patterns. \textbf{Mockups and prototypes} are good for baiting stakeholders into providing new details.
+
+\paragraph{Stakeholder Based elicitation} 
+\label{par:stakeholder_based_elicitation}
+Acquire detailed information about the system that the stakeholders want and distill requirements from that. Analyzing current users through \textbf{questionnaires and interviews} is very helpful. Closed questions gather opinions and open questions gather suggestions. \textbf{Ethnographic analysis} is basically just watching a user do stuff and note what they try. Apprenticeship is to have the user teach you how to use the product. \textbf{Personas} are fake users to use when you don't have enough (think of stereotypes and how they will use the product). 
+
+\paragraph{Creativity Based elicitation} 
+\label{par:creativity_based_elicitation}
+We want to invent new crazy requirements to bring about innovation and get an advantage. \textbf{Systematic Thinking} is just thinking about the work to be done and not the future system. \textbf{Brainstorming} is another from of elicitation. \textbf{Creativity Workshops} create a risk free space for creating new ideas beyond the stakeholder requirements.
+
+\section*{Lecture 8}
+\label{sec:lecture_8}
+\paragraph{Functional Requirement} 
+\label{par:functional_requirement}
+These are used to describe what the product has to do to support and enable the work that needs to be done (basically how we can build the goal). 
+
+\paragraph{Atomic Requirements} 
+\label{par:atomic_requirements}
+These are derived from scenarios or shit you did previously. These should be written as a single sentence with a single verb (usually shall or must, or could, etc). You should also make atomic requirements for alternatives and exceptions. Once again you can include logical flow with ifs and whiles and such. Atomic requirements are accompanied with rationale explaining why the requirement exists. 
+
+\paragraph{Easy Approach to Requirements Syntax (EARS)} 
+\label{par:easy_approach_to_requirements_syntax_}
+This is just a template for structuring the syntax for atomic requirements
+\begin{verbatim}
+	<optional precondition><optional trigger> the <system name> shall <system response>
+\end{verbatim}
+An \textbf{ubiquitous requirements} is an invariant behavior (should always hold true, not precondition or trigger).
+
+Variants:
+\begin{itemize}
+	\item event driven: \texttt{WHEN <trigger> the <system> shall <response>}
+	\item state driven: \texttt{WHILE <in state> the <system> shall <response>}
+	\item options:	\texttt{WHERE <some feature is included> the <system> shall <reponse>}
+	\item unwanted events: \texttt{IF <trigger>, THEN the <system> shall <response>}
+\end{itemize}
+
+\paragraph{User Stories} 
+\label{par:user_stories}
+These provide a light-weight approach to managing requirements. Create a short statement of some new functionality but write it from the users perspective. Stories should fit on a index \textbf{card}. You should have a \textbf{conversation} with the product owner for requirements. Finally you should get \textbf{confirmations} to know the acceptance criteria for objectively determining if requirements are met. These are the three C's of user stories.
+
+\section*{Lecture 9}
+\label{sec:lecture_9}
+Conflict can arrise when chosing requiremetns and such:
+\begin{itemize}
+	\item data conflict: conflicting understandings of an issue
+	\item interest conflict: stakeholders have different goals
+	\item value conflict: stakeholders have different preferences 
+\end{itemize}
+
+\section*{Lecture 10}
+\label{sec:lecture_10}
+We have to figure out how to prioritize our requirements (usually into critical, standard, and optimal). 
+
+\paragraph{Kano Model} 
+\label{par:kano_model}
+Here we ask the user their reaction for if a requirement was included and if it was not included. Using these two values you can sort your requirements.
+
+\begin{itemize}
+	\item Basic: requirements that the customer takes for granted
+	\item Performance: requirements that the customer specifically asked for
+	\item Excitement: requirements that the customer does not request or expect
+	\item Reverse: requirements that the customer hates.
+	\item Indifferent: customer doesnt care
+	\item Questionable: customer gave mixed responses
+\end{itemize}
+
+\paragraph{100-Dollar Test} 
+\label{par:100_dollar_test}
+Basically we give stakeholders 100 points to assign to requirements.
+
+\paragraph{Analytic Hierarchy Process} 
+\label{par:analytic_hierarchy_process}
+This uses the stakeholders' pairwise comparison of requirements and produces a relative ranking. Make a grid and assign factors between requirements (ex. I like requirement A 1/2 as much as B and C  times as much as A). Then you normalize so each column sums to 1. Then sum each row and normalize the sums. These values are the priority rateings for each requirement.
+
+
+\section*{Lecture 11}
+\label{sec:lecture_11}
+\paragraph{Buisness Rule} 
+\label{par:buisness_rule}
+This is an assertion that defines or constrains some aspect of the work to be done (ex. a customer must be 18+). This is represented in object constraint language which complements the UML. Basically this is just text on an UML stating constraints. Functions on collections are denoted with - >.  Functions include, size, reject, select, exists, forall. These rules can be broken, they only state what should be. 
+
+\includepdf[pages=11-12]{slides11}
+
+
+\section*{Lecture 12}
+\label{sec:lecture_12}
+\paragraph{Process Model} 
+\label{par:process_model}
+These represent a single function rather than a full use case. 
+
+
+\section*{Lecture 13}
+\label{sec:lecture_13}
+\paragraph{Quality Requirements} 
+\label{par:quality_requirements}
+A functional requirement tells you what the software must do, a quality requirement tells you how well it has to do that for it to be acceptable.
+
+\paragraph{Motherhood Requirements} 
+\label{par:motherhood_requirements}
+These are reliable, user friendly, and maintainable requirements. Basically no one would ever ask for the opposite (no one will ask for unreliable, anti-user, or unmaintainable software).
+
+\paragraph{Fit Criteria} 
+\label{par:fit_criteria}
+This quantifies the exted to which a quality requirement must be met. For example the system should be usuable is a functionality requirement, the users shall judge the system to be usable is a quality requirement, and 75\% of users should judge the system as usuable is the fit criteria. We set values for an outstanding case, the target case, and the minimum based on stakeholder feedback.
+
+\paragraph{Monte Carlo techniques} 
+\label{par:monte_carlo_techniques}
+These are used to estimate an unknown quality to evaluate fit criteria that we cannot test before releasing (for example uptime per year). An example of doing this is to plot a bunch of points in a rectangle, then measure the area of some strange shape by comparing the ratio of points in the shape to the ration of area of the shape.
+
+
+\section*{Lecture 14}
+\label{sec:lecture_14}
+\paragraph{Risk} 
+\label{par:risk}
+A risk is an uncertain factor whose occurrence may result in some loss of satisfaction corresponding to some objective. We attempt to manage risk since elimination is impossible. 
+
+\paragraph{Defect Detection and Prevention} 
+\label{par:defect_detection_and_prevention}
+Process developed by NASA
+\begin{enumerate}
+	\item identify most critical requirements
+	\item identify potential risks
+	\item estimate the impact of each risk on those requirements
+	\item identify possible countermeasures
+	\item identify the most effective countermeasures
+\end{enumerate}
+
+This results in optimized collection of mitigating actions to apply to the project. Store this data in a risk consequence table. 
+
+\textbf{Tall Poles} are the most critical risks having the most severe consequence.
+
+The slides on this are shit, look it up later.
+
+\section*{Lecture 15}
+\label{sec:lecture_15}
+We like state machines since they are easy to draw. There needs to be a designate start and exit state denoted with black dots. Since these states don't actually exit they are called pseudo states. State transitions are labeled with the input event that triggers the transition, some condition to guard the transition, and an action that happens on it. Denoted \texttt{event(args)[condition]/action}
+
+\paragraph{Behavior Model} 
+\label{par:behavior_model}
+First identify the input and output events. Then think of natural partitioning into states (activity state, idle states, and system modes). Finally consider the behavior of the system in each state. 
+
+\paragraph{Completeness} 
+\label{par:completeness}
+For each state of the state machine we need to consider all events and make sure there is a transaction for them if needed. 
+
+
+If there is a set of similar states we can cluster them and for a hierarchy of states. We also need to prioritize events that might occur at the same time. The history is a pseudo state that designates the hild state of H's parent in a hierarchy. H* is the deep history for the descendant state of h*'s parent. 
+
+We can have concurrent sections. These look exactly how you think they would.
+
+We can denote a termination (non-safe exit) with an X.
+
+\paragraph{State Actions} 
+\label{par:state_actions}
+There can be actions within a state for things triggered on entry or exit (denoted entry/action) on on some condition.
+
+\section*{Lecture 16}
+\label{sec:lecture_16}
+Can you draw, good, then you know this slide set.
+
+\section*{Lecture 17}
+\label{sec:lecture_17}
+\textbf{Validation} is if we are building the right product and \textbf{verification} is are we building the product right.
+
+Techniques for reviewing specifications:
+\begin{itemize}
+	\item Peer reviews
+	\item walkthroughs
+	\item focused reviews: break into subtasks
+	\item formal inspections
+	\item active review: inspectors act as users
+\end{itemize}
+
+\textbf{Throwaway prototyping} is used to learn more about the problem then throw away the design and \textbf{evolutionary prototyping} is to learn about the solution and building on the prototype.
+
+\paragraph{Safety Analysis} 
+\label{par:safety_analysis}
+This looks for safety hazards in the system. We often use \textbf{fault tree analysis} which is a top-down backward analysis that starts with an undesired software event and tries to determine all the ways that it could occur. 
+
+You should probably get an independant third party to do some validation and verification on your requirements. Often accounts for 5-15\% of a project's cost. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

@@ -1,0 +1,17 @@
+i) 12.39u 0.09s 0:12.46
+The total time on the CPU is nearly identical to the total run time of the program because the depth was set to 0 so the function ran only recursively and no concurrency was used.
+
+0  7.38s user 0.10s system 100% cpu 7.462 total
+1  8.11s user 0.12s system 110% cpu 7.472 total
+2  8.14s user 0.13s system 110% cpu 7.497 total
+3  8.37s user 0.12s system 110% cpu 7.678 total
+4  8.49s user 0.13s system 111% cpu 7.754 total
+5  8.63s user 0.13s system 112% cpu 7.801 total
+6  8.88s user 0.12s system 114% cpu 7.875 total
+
+ii) The above times are all around the same duration. This is due to the fact that the speed up generated from more threads being used is counteracted by time being used in the creation and destruction of the threads. If this were a more complex program there would be a noticeable speed up with the addition of threads until you reach the number of cores your computer has at which point it would plateau.
+
+
+
+
+

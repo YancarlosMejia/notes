@@ -1,0 +1,37 @@
+\documentclass[24pt]{standalone}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+\begin{itemize}
+    \item Mutual exclusion (no sharing)
+    \item hold and wait (resource is owned)
+    \begin{itemize}
+        \item require process to request everything at its start and block process until all are granted at the same time
+    \end{itemize}
+    \item no preemption (ownership cannot be transfered).
+    \begin{itemize}
+        \item if a process is blocked access have it give up the resources it owns
+        \item favor later processes
+    \end{itemize}
+    \item circular wait
+    \begin{itemize}
+        \item linear order of resource types
+    \end{itemize}
+\end{itemize}
+\textbf{Problem 6.1}
+\begin{itemize}
+    \item mutual exclusion (being in intersection): only one car in the intersection at a time
+    \item hold and wait: each car is waiting on the car on its right and holding its entrace to the intersection
+    \item preemption: cannot move a car out of the way to use intersection
+    \item circular wait: each car is waiting on another in a circle
+\end{itemize}
+
+\textbf{Problem 6.6}
+We get a deadlock pretty clearly with this set up, but if you sort the get statements in alphabetical order will execute without deadlock (linear order property).
+
+\textbf{Problem 6.14}
+Yes, if you execute the first statement of each you get a deadlock on S and R. Starvation is however impossible here. Semaphores make it so that they have to alternated executions.
+
+\textbf{Problem 6.16}
+
+\end{document}

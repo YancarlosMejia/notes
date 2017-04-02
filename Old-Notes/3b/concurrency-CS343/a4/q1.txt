@@ -1,0 +1,16 @@
+STACK (compiled with 10000000000):
+    1: 4.16u 0.01s 0:04.17
+    2: 8.36u 0.00s 0:04.18
+    4: 16.70u 0.02s 0:04.18
+
+HEAP (compiled with 50000000):
+    1: 4.20u 0.01s 0:04.21
+    2: 112.03u 0.16s 0:56.04
+    4: 557.61u 1.07s 2:22.30
+
+We can see that the user time is equal to the realtime times the number of tasks used. This makes sense since the user is using that many cores for the full system time and the user time is the amount of time total across all cpu's.
+
+TODO: Figure this out
+The time taken for the stack based execution doesn't change with the number of tasks because each task uses memory on the stack so they don't have to memory management as the heap based execution must. This is why the heap based execution increases with the addition of new tasks.
+
+The above number show that stack based memory is much more efficient than heap based memory usage. This is because stack based memory allocation is just moving a pointer and heap based memory is much more costly. This is especially bad because each thread allocates a ton of memory.

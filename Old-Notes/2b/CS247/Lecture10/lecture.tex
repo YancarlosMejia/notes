@@ -1,0 +1,84 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+\section{UML}
+Unified <odeling Language is a collection of notations for representing different views of software design.
+
+Structure Diagrams
+\begin{itemize}
+    \item Class diagrams\
+    \item component diagram
+    \item composite dturcture diagram
+    \item deployment diagram
+    \item object diagram
+    \item package diagram
+    \item profile diagram
+\end{itemize}
+
+Behavior Diagrams
+\begin{itemize}
+    \item Activity diagram
+    \item Communication diagram
+    \item Interaction overview diagram
+    \item Sequence diagram
+    \item State diagram
+    \item Timing diagram
+    \item Use case diagram
+\end{itemize}
+
+\subsection*{Notation}
+A box represents a class and defines a name, set of  attributes, and set of operations.
+
+\subsection*{Abstraction}
+We can show different levels of abstraction in this by showing the operations associated with the class. We can even just not define things if we dont want to.
+
+Key
+\begin{itemize}
+    \item + = public
+    \item - = private
+    \item \# = protected
+    \item static = pure virtual
+\end{itemize}
+
+\subsection*{Associations}
+We use arrows to denote associations between classes. These aren't just used to show inheritance, but also a physical or conceptual link between objects. This can be in the form of shared data members or pointers to each other.
+
+Car Rental Example
+\begin{verbatim}
+    Class Rental Agreement
+        Date start;
+        Date end;
+        Person *driver;
+        Person *customer;
+        Vehicle *car;
+    }
+\end{verbatim}
+
+\subsection*{Multiplicities}
+We can constrain how many allowable links there are between objects. This is denoted \textbf{lower bound} .. \textbf{upper bound} on the linking line.
+
+\subsection*{Association Class}
+When data needs to be linked through something. This contains the data associated with the pair of objects. These are called association classes.
+
+\subsection*{Aggregation}
+Denotes a part of relation. Usually means that one is a data member of the other, but the part still has an identity outside of the aggregate. Denoted by an empty diamond at the link of the Aggregate. Elements can belong to multiple aggregates. They belong through shallow copies.
+
+\subsection*{Composition}
+Very tight bind. The object is part of another object, and does not exist outside of it. The part belongs to only one composite, the composite id responsible for creating and destroying its parts. Denoted by a filled diamond at the link of the composite.
+
+\subsection*{Generalization}
+This is used for subtype relationships. Denoted by a empty triangle at the superclass.
+
+
+\subsection*{Object Model}
+These show what objects should exists and their connections at a time in execution.
+
+\subsection*{Sequence Diagram}
+Each object's state of existence relative to other function calls. Vertical lines are objects related and horizontal lines are the function calls. Its basically a visual representation of a stack trace taken over a short period of time.
+
+
+
+
+
+\end{document}

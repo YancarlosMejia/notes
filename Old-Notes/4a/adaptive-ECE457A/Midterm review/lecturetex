@@ -1,0 +1,16 @@
+\documentclass[12pt]{article}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{pdfpages}
+\usepackage[margin=.6in]{geometry}
+\begin{document}
+	Time management
+
+	know time and space complexity
+
+	most questions are about constructing the solution not finding one
+
+	tabu search, SA, and GA
+
+	A2 will be helpful on the exam
+\end{document}
