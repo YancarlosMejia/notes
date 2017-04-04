@@ -97,7 +97,7 @@ $\Delta w^L = \delta^L x^{L-1}$ This is the relationship between layers. These w
 
 \begin{align*}
 	\Delta w_{ij}^L &= \eta \left[ t_i - o_i^L \right] f'(tot)_i^L o_J^{L-1}\\
-	f\(tot)_i^L = \frac{\deltaf(tot)^L}{\delta tot_i^L}\\
+	f(tot)_i^L &= \frac{\delta f(tot)^L}{\delta tot_i^L}\\
 	\delta_i^L &= \text{Error of the system}\\
 \end{align*}
 
@@ -149,7 +149,7 @@ We can accidentally have too many nodes, we say that this causes the system to b
 \includepdf[pages=39-41]{slides}
 The more varied your training data the better your system, but the more nodes you have might not improve things.
 
-\includepdf[pages=43{slides}
+\includepdf[pages=43]{slides}
 \includepdf[pages=44]{slides}
 \includepdf[pages=45]{slides}
 If the system is not converging you have to reshuffle your data or the structure of your network.
@@ -184,7 +184,7 @@ The behavior of the system depends on:
 	\end{itemize}
 	\item the behavior of the system or its linearity (you cannot control this)
 \end{itemize}
-^this is probably going to be on the exam
+this is probably going to be on the exam
 
 The interpolator solution can create a very good approximation of your system even if it is nonlinear.
 
