@@ -1,0 +1,233 @@
+\contentsline {section}{\numberline {1}Perspectives on the Religious Path}{2}
+\contentsline {paragraph}{The Sacred}{2}
+\contentsline {subsection}{\numberline {1.1}Studying Religious Experience}{2}
+\contentsline {subsection}{\numberline {1.2}Some Dimensions of Religion}{2}
+\contentsline {subsubsection}{\numberline {1.2.1}Human Involvement in Realm of Sacred}{3}
+\contentsline {subsubsection}{\numberline {1.2.2}Expression in Thought, Action, and Social Forms}{3}
+\contentsline {paragraph}{Religious Tradition}{3}
+\contentsline {paragraph}{Theoretical Mode}{3}
+\contentsline {paragraph}{Practical Mode}{3}
+\contentsline {paragraph}{Social Forms}{3}
+\contentsline {subsubsection}{\numberline {1.2.3}Total System of Symbols}{3}
+\contentsline {subsubsection}{\numberline {1.2.4}Path of Ultimate Transformation}{3}
+\contentsline {subsection}{\numberline {1.3}Basic Human Concerns and Religious Responses}{3}
+\contentsline {subsubsection}{\numberline {1.3.1}Sacred Story and Historical Context}{3}
+\contentsline {paragraph}{Myths}{4}
+\contentsline {subsubsection}{\numberline {1.3.2}Worlds of Meaning}{4}
+\contentsline {subsubsection}{\numberline {1.3.3}Ritual Practices and the Good Life}{4}
+\contentsline {subsection}{\numberline {1.4}Key Terms}{5}
+\contentsline {paragraph}{Aestetic}{5}
+\contentsline {paragraph}{Cosmogenic Myth}{5}
+\contentsline {paragraph}{Ethics}{5}
+\contentsline {paragraph}{Healing Rituals}{5}
+\contentsline {paragraph}{Kenosis}{5}
+\contentsline {paragraph}{liminal}{5}
+\contentsline {paragraph}{Monism}{5}
+\contentsline {paragraph}{Monotheism}{5}
+\contentsline {paragraph}{Myth}{5}
+\contentsline {paragraph}{Nondualsim}{5}
+\contentsline {paragraph}{Path of Transformation}{5}
+\contentsline {paragraph}{Plerosis}{5}
+\contentsline {paragraph}{Polytheism}{5}
+\contentsline {paragraph}{Religious Traditions}{5}
+\contentsline {paragraph}{Rites of Passage}{5}
+\contentsline {paragraph}{Rituals}{5}
+\contentsline {paragraph}{Sacred Space}{5}
+\contentsline {paragraph}{Sacred Story}{6}
+\contentsline {paragraph}{Sacred Time}{6}
+\contentsline {paragraph}{The Sacred}{6}
+\contentsline {paragraph}{Symbols}{6}
+\contentsline {paragraph}{Transformation}{6}
+\contentsline {paragraph}{Understanding}{6}
+\contentsline {paragraph}{Worship}{6}
+\contentsline {section}{\numberline {2}Hindu Sacred Story and Historical Context}{6}
+\contentsline {subsection}{\numberline {2.1}Foundations of the Hindu Tradition}{6}
+\contentsline {subsubsection}{\numberline {2.1.1}The Formative Period}{6}
+\contentsline {paragraph}{Varuna}{7}
+\contentsline {paragraph}{Indra}{7}
+\contentsline {paragraph}{Agni}{7}
+\contentsline {paragraph}{Soma}{7}
+\contentsline {subsubsection}{\numberline {2.1.2}The Many Faces of Hindu Tradition}{8}
+\contentsline {paragraph}{Yoga}{8}
+\contentsline {paragraph}{Dharma}{8}
+\contentsline {paragraph}{Ramayana}{8}
+\contentsline {paragraph}{Mahabharata}{8}
+\contentsline {subsection}{\numberline {2.2}Continuing Transformation in the Hindu Story}{8}
+\contentsline {subsubsection}{\numberline {2.2.1}Shaping the Sacred Ways: Puranas and Tantras}{9}
+\contentsline {paragraph}{Tantrism}{9}
+\contentsline {subsubsection}{\numberline {2.2.2}Rethinging the Vedic Truth: Philosophical Systems}{9}
+\contentsline {paragraph}{Nyaya}{9}
+\contentsline {paragraph}{Vaisheshika}{9}
+\contentsline {paragraph}{Mimamsa}{9}
+\contentsline {paragraph}{Samkhya-Yoga}{9}
+\contentsline {paragraph}{Vedanta}{10}
+\contentsline {paragraph}{Advakta}{10}
+\contentsline {paragraph}{Vishishtadvaita}{10}
+\contentsline {subsubsection}{\numberline {2.2.3}Musil Presence and Impact on India}{10}
+\contentsline {subsection}{\numberline {2.3}The Modern Era: Renaissance and Response to the West}{10}
+\contentsline {subsubsection}{\numberline {2.3.1}Reform Movement and Thinkers}{10}
+\contentsline {paragraph}{Ramakrishna Paramahamsa}{10}
+\contentsline {subsubsection}{\numberline {2.3.2}Independence and New Visions: Gandhi and Aurobindo}{10}
+\contentsline {subsection}{\numberline {2.4}Hindu Worlds of Meaning}{11}
+\contentsline {subsubsection}{\numberline {2.4.1}The Ultimate Real: Brahman}{11}
+\contentsline {subsubsection}{\numberline {2.4.2}God as Supreme Sacred Reality}{11}
+\contentsline {subsection}{\numberline {2.5}Existence in the World: Dharma and Samsara}{11}
+\contentsline {subsubsection}{\numberline {2.5.1}The World and Human Nature in Hindu Thought}{11}
+\contentsline {paragraph}{Creation Stories}{11}
+\contentsline {paragraph}{Time}{11}
+\contentsline {paragraph}{Humans Selves}{12}
+\contentsline {subsubsection}{\numberline {2.5.2}Samsara and the Problem of Existence}{12}
+\contentsline {subsection}{\numberline {2.6}Three Paths to Transformation and Liberation}{12}
+\contentsline {subsubsection}{\numberline {2.6.1}The Path of Knowledge}{12}
+\contentsline {subsubsection}{\numberline {2.6.2}Path of Action}{12}
+\contentsline {subsubsection}{\numberline {2.6.3}Path of Devotion}{12}
+\contentsline {paragraph}{Vishu}{13}
+\contentsline {paragraph}{Shiva}{13}
+\contentsline {paragraph}{Shakti}{13}
+\contentsline {section}{\numberline {3}Hindu Ritual and the Good Life}{13}
+\contentsline {subsection}{\numberline {3.1}Rituals and Sacred Times of Hinduism}{13}
+\contentsline {subsubsection}{\numberline {3.1.1}Vedic Rituals and Puja}{13}
+\contentsline {paragraph}{Vedic Rituals and Sacrifice}{13}
+\contentsline {paragraph}{Puja: Celebrating the Powerful Presence of God}{13}
+\contentsline {subsubsection}{\numberline {3.1.2}Ascetic and Meditational Practices: Yoga}{13}
+\contentsline {subsubsection}{\numberline {3.1.3}Ceremonies, Festivals, and Pilgrimages}{14}
+\contentsline {paragraph}{Daily Rituals}{14}
+\contentsline {paragraph}{Festival Calendar}{14}
+\contentsline {paragraph}{Sacred Geography}{14}
+\contentsline {subsubsection}{\numberline {3.1.4}Ritualizing the Passages of Life}{14}
+\contentsline {subsubsection}{\numberline {3.1.5}Healing and Medicinal Practices: Ayurveda}{15}
+\contentsline {paragraph}{Aryuveda}{15}
+\contentsline {subsubsection}{\numberline {3.1.6}Hindus and Sacred Art}{15}
+\contentsline {subsection}{\numberline {3.2}Society and Wholesome Life}{16}
+\contentsline {subsubsection}{\numberline {3.2.1}Structure of Hindu Society}{16}
+\contentsline {subsubsection}{\numberline {3.2.2}Living According to Dharma}{16}
+\contentsline {paragraph}{Four Stages of Life}{16}
+\contentsline {paragraph}{Four Aims of Life}{17}
+\contentsline {paragraph}{Leadership}{17}
+\contentsline {subsection}{\numberline {3.3}Key Terms}{17}
+\contentsline {paragraph}{Advaita}{17}
+\contentsline {paragraph}{Agni}{17}
+\contentsline {paragraph}{Aryans}{17}
+\contentsline {paragraph}{ashramas}{17}
+\contentsline {paragraph}{atman}{17}
+\contentsline {paragraph}{avatara}{17}
+\contentsline {paragraph}{Ayurveda}{17}
+\contentsline {paragraph}{Bhagavad-Gita}{17}
+\contentsline {paragraph}{bhakti}{17}
+\contentsline {paragraph}{brahma}{17}
+\contentsline {paragraph}{brahman}{18}
+\contentsline {paragraph}{brahmanas}{18}
+\contentsline {paragraph}{brahmans}{18}
+\contentsline {paragraph}{darshana}{18}
+\contentsline {paragraph}{devi}{18}
+\contentsline {paragraph}{Dharma}{18}
+\contentsline {paragraph}{divali}{18}
+\contentsline {paragraph}{durga}{18}
+\contentsline {paragraph}{gandhi}{18}
+\contentsline {paragraph}{ganesha}{18}
+\contentsline {paragraph}{guru}{18}
+\contentsline {paragraph}{holi}{18}
+\contentsline {paragraph}{indra}{18}
+\contentsline {paragraph}{indus valley civilization}{18}
+\contentsline {paragraph}{international society for krishna consciousness}{18}
+\contentsline {paragraph}{jati}{18}
+\contentsline {paragraph}{kali}{18}
+\contentsline {paragraph}{karma}{18}
+\contentsline {paragraph}{kirtana}{18}
+\contentsline {paragraph}{krishna}{18}
+\contentsline {paragraph}{kshatriyas}{18}
+\contentsline {paragraph}{lingam}{18}
+\contentsline {paragraph}{mahabharata}{19}
+\contentsline {paragraph}{mantra}{19}
+\contentsline {paragraph}{maya}{19}
+\contentsline {paragraph}{moksha}{19}
+\contentsline {paragraph}{path of action}{19}
+\contentsline {paragraph}{path of devotion}{19}
+\contentsline {paragraph}{path of knowledge}{19}
+\contentsline {paragraph}{prasad}{19}
+\contentsline {paragraph}{puja}{19}
+\contentsline {paragraph}{puranas}{19}
+\contentsline {paragraph}{rama}{19}
+\contentsline {paragraph}{ramakrishna}{19}
+\contentsline {paragraph}{ramanuja}{19}
+\contentsline {paragraph}{ramayana}{19}
+\contentsline {paragraph}{rebirth}{19}
+\contentsline {paragraph}{rig veda}{19}
+\contentsline {paragraph}{samhitas}{19}
+\contentsline {paragraph}{samkhya}{19}
+\contentsline {paragraph}{samnyasin}{19}
+\contentsline {paragraph}{samsara}{19}
+\contentsline {paragraph}{samskaras}{19}
+\contentsline {paragraph}{sati}{19}
+\contentsline {paragraph}{shakti}{20}
+\contentsline {paragraph}{shruti}{20}
+\contentsline {paragraph}{shudras}{20}
+\contentsline {paragraph}{smriti}{20}
+\contentsline {paragraph}{tantrism}{20}
+\contentsline {paragraph}{transcendental meditation}{20}
+\contentsline {paragraph}{upanayana}{20}
+\contentsline {paragraph}{upanishads}{20}
+\contentsline {paragraph}{vaishyas}{20}
+\contentsline {paragraph}{varna}{20}
+\contentsline {paragraph}{varuna}{20}
+\contentsline {paragraph}{vedanta societies}{20}
+\contentsline {paragraph}{vedas}{20}
+\contentsline {paragraph}{vishnu}{20}
+\contentsline {section}{\numberline {4}The Path of the Jains}{20}
+\contentsline {subsection}{\numberline {4.1}Sacred Story and Historical Context}{20}
+\contentsline {subsubsection}{\numberline {4.1.1}Mahavira Becomes the Jina for Our Age}{20}
+\contentsline {subsubsection}{\numberline {4.1.2}Historical Transformations in Jainism}{21}
+\contentsline {subsection}{\numberline {4.2}Jain Worlds of Meaning}{22}
+\contentsline {subsubsection}{\numberline {4.2.1}Ultimate Reality: Eternal Universe, Liberation}{22}
+\contentsline {subsubsection}{\numberline {4.2.2}Karmic Mattern and Eternal Souls}{22}
+\contentsline {subsubsection}{\numberline {4.2.3}Path of Liberation}{23}
+\contentsline {subsection}{\numberline {4.3}Ritual and the Good Life}{23}
+\contentsline {subsubsection}{\numberline {4.3.1}Ritual and Worship Among the Jains}{23}
+\contentsline {subsubsection}{\numberline {4.3.2}Society and Ethics}{24}
+\contentsline {subsection}{\numberline {4.4}Key Terms}{24}
+\contentsline {paragraph}{agamas}{24}
+\contentsline {paragraph}{ahimsa}{24}
+\contentsline {paragraph}{digambara}{24}
+\contentsline {paragraph}{diksa}{24}
+\contentsline {paragraph}{jina}{25}
+\contentsline {paragraph}{karma}{25}
+\contentsline {paragraph}{kevela}{25}
+\contentsline {paragraph}{mahavira}{25}
+\contentsline {paragraph}{parshva}{25}
+\contentsline {paragraph}{rebirth}{25}
+\contentsline {paragraph}{restraints}{25}
+\contentsline {paragraph}{shivetambara}{25}
+\contentsline {paragraph}{tirthankara}{25}
+\contentsline {section}{\numberline {5}Buddhist Sacred Story and Historical Context}{25}
+\contentsline {subsection}{\numberline {5.1}Story of the Buddha}{25}
+\contentsline {subsubsection}{\numberline {5.1.1}Sacred Biography of the Buddha}{25}
+\contentsline {paragraph}{Four Sights}{26}
+\contentsline {subsubsection}{\numberline {5.1.2}Word of the Buddha}{27}
+\contentsline {subsection}{\numberline {5.2}Historical Transformations: Shaping the Buddhist Way}{27}
+\contentsline {subsubsection}{\numberline {5.2.1}Ashoka, the Second Founder of Buddhism}{27}
+\contentsline {subsection}{\numberline {5.3}Theravada and Mahayana}{27}
+\contentsline {paragraph}{Madhyamika}{28}
+\contentsline {paragraph}{Yogacara}{28}
+\contentsline {paragraph}{Vahrayana}{28}
+\contentsline {subsubsection}{\numberline {5.3.1}Great Expansion of Buddhism into Asia}{28}
+\contentsline {paragraph}{East Asian Buddhism}{28}
+\contentsline {paragraph}{Tibetan Buddhism}{29}
+\contentsline {paragraph}{Dalia Lama}{29}
+\contentsline {subsection}{\numberline {5.4}Buddhism in the Modern Era}{29}
+\contentsline {subsubsection}{\numberline {5.4.1}Challengers from Without and Within}{29}
+\contentsline {paragraph}{Colonialism}{29}
+\contentsline {paragraph}{Politics}{29}
+\contentsline {subsubsection}{\numberline {5.4.2}Revitalization of Buddhism Today}{29}
+\contentsline {section}{\numberline {6}Buddhist Worlds of Meaning}{30}
+\contentsline {subsubsection}{\numberline {6.0.1}The Ultimate as Unconditioned Truth}{30}
+\contentsline {paragraph}{Dependent Co-arising}{30}
+\contentsline {paragraph}{Nirvana}{30}
+\contentsline {paragraph}{Emptiness and Suchness}{30}
+\contentsline {subsubsection}{\numberline {6.0.2}Going for Refuge in Buddha}{30}
+\contentsline {paragraph}{Three Body}{30}
+\contentsline {paragraph}{Dukkha}{31}
+\contentsline {paragraph}{Wisdom}{32}
+\contentsline {paragraph}{Moral Conduct}{32}
+\contentsline {paragraph}{Contemplation}{32}
+\contentsline {paragraph}{Meditation}{32}
+\contentsline {paragraph}{Two Paths}{33}
